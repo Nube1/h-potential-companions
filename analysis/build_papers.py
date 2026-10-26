@@ -1,86 +1,373 @@
-"""Build readable PDF manuscripts and standalone LaTeX from Markdown sources.
+"""Build the manuscripts from their Markdown sources.
 
-PDF uses ReportLab; LaTeX is also emitted for conventional journal typesetting.
-Equations in the PDF are deliberately linear ASCII notation, never rasterised.
+Each ``papers/0*.md`` produces a ``.tex`` file (always) and a ``.pdf``:
+
+* ``--engine latex`` (default when ``latexmk`` is installed) compiles the
+  generated LaTeX with pdflatex in Times.
+* ``--engine reportlab`` draws the PDF directly, for machines without TeX.
+
+The Markdown subset is small on purpose: ``#``/``##``/``###`` headings,
+paragraphs, pipe tables, fenced equation blocks (kept as fixed-width ASCII,
+never rasterised) and ``[n]`` reference entries under ``## References``.
 """
-from pathlib import Path
+
+from __future__ import annotations
+
+import argparse
 import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from dataclasses import dataclass, field
 from html import escape
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Preformatted, KeepTogether
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_LEFT
-from reportlab.lib.pagesizes import A4
+from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]
-styles=getSampleStyleSheet()
-styles['Heading2'].keepWithNext=True
-styles['Heading3'].keepWithNext=True
-styles.add(ParagraphStyle(name='BodyResearch',fontName='Times-Roman',fontSize=11,leading=15,spaceAfter=8,alignment=TA_LEFT))
-styles.add(ParagraphStyle(name='PaperTitle',fontName='Times-Bold',fontSize=18,leading=22,spaceAfter=14))
-styles.add(ParagraphStyle(name='SmallResearch',fontName='Helvetica',fontSize=8,leading=10,spaceAfter=5))
-styles.add(ParagraphStyle(name='EquationResearch',fontName='Courier',fontSize=8,leading=11,spaceBefore=5,spaceAfter=10))
+ROOT = Path(__file__).resolve().parents[1]
+PAPERS = ROOT / "papers"
+MAX_EQUATION_WIDTH = 89
+FOOTER = "H-potential | Companion research draft | Synthetic evidence only"
 
 
-def footer(canvas,doc):
-    canvas.saveState();canvas.setStrokeColor(colors.HexColor('#B0BAC4'));canvas.line(50,45,A4[0]-50,45)
-    canvas.setFont('Helvetica',8);canvas.setFillColor(colors.HexColor('#52606D'))
-    canvas.drawString(50,32,'H-potential | Companion research draft | Synthetic evidence only')
-    canvas.drawRightString(A4[0]-50,32,str(doc.page));canvas.restoreState()
+# --------------------------------------------------------------------------
+# Parsing
 
 
-def tex_escape(text):
-    chars={'\\':r'\textbackslash{}','&':r'\&','%':r'\%','$':r'\$','#':r'\#','_':r'\_','{':r'\{','}':r'\}','~':r'\textasciitilde{}','^':r'\textasciicircum{}'}
-    return ''.join(chars.get(c,c) for c in text)
+@dataclass
+class Block:
+    kind: str  # heading2, heading3, paragraph, equation, table, reference
+    text: str = ""
+    rows: list[list[str]] = field(default_factory=list)
+    lines: list[str] = field(default_factory=list)
 
 
-def build(path):
-    lines=path.read_text(encoding='utf-8').splitlines();story=[];tex=[];i=0
-    title=lines[0][2:]
-    tex.append(r'\documentclass[11pt,a4paper]{article}'+'\n'+r'\usepackage[margin=25mm]{geometry}'+'\n'+r'\usepackage[T1]{fontenc}'+'\n'+r'\usepackage{lmodern,amsmath,amssymb,longtable,booktabs,hyperref}'+'\n'+r'\hypersetup{hidelinks}'+'\n'+r'\title{'+tex_escape(title)+'}\n'+r'\author{Ronald Rethabile Malamule Mahomane}'+'\n'+r'\date{Companion research draft}'+'\n'+r'\begin{document}\maketitle'+'\n')
-    while i<len(lines):
-        line=lines[i]
-        if not line.strip(): i+=1;continue
-        if line.startswith('```'):
-            block=[];i+=1
-            while i<len(lines) and not lines[i].startswith('```'):
-                block.append(lines[i]);i+=1
-            if any(len(x)>89 for x in block): raise ValueError('Overlong equation in '+path.name)
-            story.append(Preformatted('\n'.join(block),styles['EquationResearch']))
-            tex.extend([r'\begin{verbatim}',*block,r'\end{verbatim}']);i+=1;continue
-        if line.startswith('|'):
-            rows=[]
-            while i<len(lines) and lines[i].startswith('|'):
-                row=[x.strip() for x in lines[i].strip('|').split('|')]
-                if not all(set(x)<=set('-: ') for x in row): rows.append(row)
-                i+=1
-            cells=[[Paragraph(escape(x),styles['SmallResearch']) for x in row] for row in rows]
-            widths=[(A4[0]-100)/len(rows[0])]*len(rows[0])
-            table=Table(cells,colWidths=widths,repeatRows=1,hAlign='LEFT')
-            table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#E8EEF3')),('LINEBELOW',(0,0),(-1,0),.6,colors.HexColor('#52728A')),('VALIGN',(0,0),(-1,-1),'TOP'),('BOTTOMPADDING',(0,0),(-1,-1),5),('TOPPADDING',(0,0),(-1,-1),5),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#F8FAFC')])]))
-            story.extend([table,Spacer(1,10)])
-            tex.append(r'\begin{longtable}{'+'l'*len(rows[0])+'}')
-            tex.extend(' & '.join(tex_escape(x) for x in row)+r' \\' for row in rows)
-            tex.append(r'\end{longtable}');continue
-        if line.startswith('# '):
-            story.append(Paragraph(escape(line[2:]),styles['PaperTitle']));i+=1;continue
-        if line.startswith('### '):
-            story.append(Paragraph(escape(line[4:]),styles['Heading3']));tex.append(r'\subsection*{'+tex_escape(line[4:])+'}');i+=1;continue
-        if line.startswith('## '):
-            story.append(Paragraph(escape(line[3:]),styles['Heading2']));tex.append(r'\section*{'+tex_escape(line[3:])+'}');i+=1;continue
-        paragraph=[line];i+=1
-        while i<len(lines) and lines[i].strip() and not lines[i].startswith(('#','|','```')):
-            paragraph.append(lines[i]);i+=1
-        value=' '.join(paragraph)
-        style=styles['SmallResearch'] if value.startswith('Research manuscript') or value.startswith('Computational methods') or value.startswith('Theoretical and computational') else styles['BodyResearch']
-        story.append(Paragraph(escape(value),style))
-        # author already printed by maketitle
-        if value!='Ronald Rethabile Malamule Mahomane':tex.append(tex_escape(value)+'\n')
-    doc=SimpleDocTemplate(str(path.with_suffix('.pdf')),pagesize=A4,rightMargin=50,leftMargin=50,topMargin=46,bottomMargin=60,title=title,author='Ronald Rethabile Malamule Mahomane')
-    doc.build(story,onFirstPage=footer,onLaterPages=footer)
-    tex.append(r'\end{document}');path.with_suffix('.tex').write_text('\n'.join(tex)+'\n',encoding='utf-8')
-    print(path.with_suffix('.pdf').name)
+@dataclass
+class Paper:
+    title: str
+    author: str
+    note: str
+    blocks: list[Block]
 
 
-if __name__=='__main__':
-    for p in sorted((ROOT/'papers').glob('0*.md')):build(p)
+def parse(path: Path) -> Paper:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or not lines[0].startswith("# "):
+        raise ValueError(f"{path.name}: first line must be '# Title'")
+    title = lines[0][2:].strip()
+    blocks: list[Block] = []
+    in_references = False
+    i = 1
+    while i < len(lines):
+        line = lines[i]
+        if not line.strip():
+            i += 1
+            continue
+        if line.startswith("```"):
+            body = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith("```"):
+                body.append(lines[i])
+                i += 1
+            if i == len(lines):
+                raise ValueError(f"{path.name}: unclosed code fence")
+            too_wide = [x for x in body if len(x) > MAX_EQUATION_WIDTH]
+            if too_wide:
+                raise ValueError(
+                    f"{path.name}: equation line over {MAX_EQUATION_WIDTH} chars: {too_wide[0]!r}"
+                )
+            blocks.append(Block("equation", lines=body))
+            i += 1
+            continue
+        if line.startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].startswith("|"):
+                row = [x.strip() for x in lines[i].strip().strip("|").split("|")]
+                if not all(set(x) <= set("-: ") for x in row):
+                    rows.append(row)
+                i += 1
+            if len({len(r) for r in rows}) != 1:
+                raise ValueError(f"{path.name}: table rows have unequal cell counts")
+            blocks.append(Block("table", rows=rows))
+            continue
+        if line.startswith("### "):
+            blocks.append(Block("heading3", line[4:].strip()))
+            i += 1
+            continue
+        if line.startswith("## "):
+            heading = line[3:].strip()
+            in_references = heading.lower() == "references"
+            blocks.append(Block("heading2", heading))
+            i += 1
+            continue
+        paragraph = [line]
+        i += 1
+        while i < len(lines) and lines[i].strip() and not lines[i].startswith(("#", "|", "```")):
+            paragraph.append(lines[i])
+            i += 1
+        text = " ".join(x.strip() for x in paragraph)
+        kind = "reference" if in_references and re.match(r"\[\d+\]", text) else "paragraph"
+        blocks.append(Block(kind, text))
+
+    # The first two paragraphs are the author line and the status note.
+    if len(blocks) < 2 or blocks[0].kind != "paragraph" or blocks[1].kind != "paragraph":
+        raise ValueError(f"{path.name}: expected author and status lines after the title")
+    return Paper(title, blocks[0].text, blocks[1].text, blocks[2:])
+
+
+# --------------------------------------------------------------------------
+# LaTeX
+
+_TEX_SPECIAL = {
+    "\\": r"\textbackslash{}",
+    "&": r"\&",
+    "%": r"\%",
+    "$": r"\$",
+    "#": r"\#",
+    "_": r"\_",
+    "{": r"\{",
+    "}": r"\}",
+    "~": r"\textasciitilde{}",
+    "^": r"\textasciicircum{}",
+    "<": r"\textless{}",
+    ">": r"\textgreater{}",
+}
+_URL = re.compile(r"https?://\S+")
+
+
+def tex_escape(text: str) -> str:
+    return "".join(_TEX_SPECIAL.get(c, c) for c in text)
+
+
+def tex_text(text: str) -> str:
+    """Escape prose; wrap URLs in ``\\url`` so they can break across lines."""
+    out, last = [], 0
+    for m in _URL.finditer(text):
+        url = m.group(0).rstrip(".,;)")
+        out.append(tex_escape(text[last : m.start()]))
+        out.append(r"\url{" + url.replace("%", r"\%").replace("#", r"\#") + "}")
+        last = m.start() + len(url)
+    out.append(tex_escape(text[last:]))
+    return "".join(out)
+
+
+_NUMERIC = re.compile(r"^-?\d+(\.\d+)?%?$")
+
+TEX_PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr}
+\usepackage[labelsep=none,skip=6pt,font=small]{caption}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{0.6\baselineskip}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize FOOTER}
+\fancyfoot[R]{\footnotesize\thepage}
+\fancypagestyle{plain}{\fancyhf{}%
+  \fancyfoot[L]{\footnotesize FOOTER}\fancyfoot[R]{\footnotesize\thepage}}
+"""
+
+
+def to_tex(paper: Paper) -> str:
+    out = [TEX_PREAMBLE.replace("FOOTER", tex_escape(FOOTER))]
+    out.append(r"\title{" + tex_escape(paper.title) + "}")
+    out.append(r"\author{" + tex_escape(paper.author) + "}")
+    out.append(r"\date{}")
+    out.append(r"\begin{document}")
+    out.append(r"\maketitle")
+    out.append(r"\begin{center}\small\itshape " + tex_text(paper.note) + r"\end{center}" + "\n")
+    in_refs = False
+    for block in paper.blocks:
+        if in_refs and block.kind != "reference":
+            out.append(r"\end{list}")
+            in_refs = False
+        if block.kind == "heading2":
+            out.append(r"\section*{" + tex_escape(block.text) + "}")
+        elif block.kind == "heading3":
+            out.append(r"\subsection*{" + tex_escape(block.text) + "}")
+        elif block.kind == "paragraph":
+            out.append(tex_text(block.text) + "\n")
+        elif block.kind == "equation":
+            out.append(r"{\footnotesize\begin{verbatim}")
+            out.extend(block.lines)
+            out.append(r"\end{verbatim}}")
+        elif block.kind == "table":
+            header, *body = block.rows
+            numeric = [all(_NUMERIC.match(r[j]) for r in body) for j in range(len(header))]
+            spec = "".join("r" if n else "l" for n in numeric)
+            out.append(r"\begin{table}[htbp]\centering\small")
+            out.append(r"\caption{}")
+            out.append(r"\begin{tabular}{" + spec + "}")
+            out.append(r"\toprule")
+            out.append(" & ".join(tex_escape(c) for c in header) + r" \\")
+            out.append(r"\midrule")
+            out.extend(" & ".join(tex_escape(c) for c in row) + r" \\" for row in body)
+            out.append(r"\bottomrule")
+            out.append(r"\end{tabular}")
+            out.append(r"\end{table}" + "\n")
+        elif block.kind == "reference":
+            if not in_refs:
+                out.append(
+                    r"\begin{list}{}{\setlength{\leftmargin}{2em}\setlength{\itemindent}{-2em}"
+                    r"\setlength{\itemsep}{0.3\baselineskip}}\small"
+                )
+                in_refs = True
+            out.append(r"\item " + tex_text(block.text))
+    if in_refs:
+        out.append(r"\end{list}")
+    out.append(r"\end{document}")
+    return "\n".join(out) + "\n"
+
+
+def compile_latex(tex_path: Path) -> Path:
+    """Compile with latexmk in a scratch folder; copy only the PDF back."""
+    with tempfile.TemporaryDirectory() as tmp:
+        cmd = [
+            "latexmk",
+            "-pdf",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            f"-outdir={tmp}",
+            str(tex_path),
+        ]
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        log = Path(tmp) / tex_path.with_suffix(".log").name
+        if proc.returncode != 0:
+            tail = log.read_text(errors="replace")[-3000:] if log.exists() else proc.stdout[-3000:]
+            raise RuntimeError(f"LaTeX failed for {tex_path.name}:\n{tail}")
+        overfull = re.findall(r"Overfull \\hbox \((\d+\.\d+)pt", log.read_text(errors="replace"))
+        if any(float(x) > 5 for x in overfull):
+            print(f"warning: {tex_path.name} has overfull lines: {overfull}", file=sys.stderr)
+        pdf = tex_path.with_suffix(".pdf")
+        shutil.copyfile(Path(tmp) / pdf.name, pdf)
+    return pdf
+
+
+# --------------------------------------------------------------------------
+# ReportLab fallback
+
+
+def build_reportlab(paper: Paper, pdf_path: Path) -> None:
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.platypus import (
+        Paragraph,
+        Preformatted,
+        SimpleDocTemplate,
+        Spacer,
+        Table,
+        TableStyle,
+    )
+
+    styles = getSampleStyleSheet()
+    body = ParagraphStyle("Body", fontName="Times-Roman", fontSize=11, leading=15, spaceAfter=8)
+    small = ParagraphStyle("Small", fontName="Times-Italic", fontSize=9, leading=12, spaceAfter=10)
+    title = ParagraphStyle(
+        "PaperTitle", fontName="Times-Bold", fontSize=17, leading=21, spaceAfter=10
+    )
+    h2 = ParagraphStyle("H2", parent=styles["Heading2"], fontName="Times-Bold", keepWithNext=True)
+    h3 = ParagraphStyle("H3", parent=styles["Heading3"], fontName="Times-Bold", keepWithNext=True)
+    eq = ParagraphStyle(
+        "Eq", fontName="Courier", fontSize=8, leading=11, spaceBefore=5, spaceAfter=10
+    )
+    cell = ParagraphStyle("Cell", fontName="Times-Roman", fontSize=9, leading=11)
+    ref = ParagraphStyle(
+        "Ref", parent=body, fontSize=9.5, leading=12, leftIndent=18, firstLineIndent=-18
+    )
+
+    def footer(canvas, doc):
+        canvas.saveState()
+        canvas.setStrokeColor(colors.HexColor("#999999"))
+        canvas.line(50, 45, A4[0] - 50, 45)
+        canvas.setFont("Times-Roman", 8)
+        canvas.drawString(50, 32, FOOTER)
+        canvas.drawRightString(A4[0] - 50, 32, str(doc.page))
+        canvas.restoreState()
+
+    story = [
+        Paragraph(escape(paper.title), title),
+        Paragraph(escape(paper.author), body),
+        Paragraph(escape(paper.note), small),
+    ]
+    n_table = 0
+    for block in paper.blocks:
+        if block.kind == "heading2":
+            story.append(Paragraph(escape(block.text), h2))
+        elif block.kind == "heading3":
+            story.append(Paragraph(escape(block.text), h3))
+        elif block.kind == "paragraph":
+            story.append(Paragraph(escape(block.text), body))
+        elif block.kind == "reference":
+            story.append(Paragraph(escape(block.text), ref))
+        elif block.kind == "equation":
+            story.append(Preformatted("\n".join(block.lines), eq))
+        elif block.kind == "table":
+            n_table += 1
+            story.append(Paragraph(f"Table {n_table}", cell))
+            cells = [[Paragraph(escape(c), cell) for c in row] for row in block.rows]
+            width = (A4[0] - 100) / len(block.rows[0])
+            table = Table(
+                cells, colWidths=[width] * len(block.rows[0]), repeatRows=1, hAlign="LEFT"
+            )
+            table.setStyle(
+                TableStyle(
+                    [
+                        ("LINEABOVE", (0, 0), (-1, 0), 0.8, colors.black),
+                        ("LINEBELOW", (0, 0), (-1, 0), 0.5, colors.black),
+                        ("LINEBELOW", (0, -1), (-1, -1), 0.8, colors.black),
+                        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ]
+                )
+            )
+            story.extend([table, Spacer(1, 10)])
+    doc = SimpleDocTemplate(
+        str(pdf_path),
+        pagesize=A4,
+        rightMargin=50,
+        leftMargin=50,
+        topMargin=46,
+        bottomMargin=60,
+        title=paper.title,
+        author=paper.author,
+    )
+    doc.build(story, onFirstPage=footer, onLaterPages=footer)
+
+
+# --------------------------------------------------------------------------
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Build manuscript .tex and .pdf files")
+    parser.add_argument("--engine", choices=("auto", "latex", "reportlab"), default="auto")
+    parser.add_argument("--tex-only", action="store_true", help="write .tex files, skip PDFs")
+    args = parser.parse_args(argv)
+    engine = args.engine
+    if engine == "auto":
+        engine = "latex" if shutil.which("latexmk") else "reportlab"
+        if engine == "reportlab":
+            print("latexmk not found; drawing PDFs with ReportLab", file=sys.stderr)
+
+    for md in sorted(PAPERS.glob("0*.md")):
+        paper = parse(md)
+        tex = md.with_suffix(".tex")
+        tex.write_text(to_tex(paper), encoding="utf-8")
+        if args.tex_only:
+            print(tex.name)
+            continue
+        if engine == "latex":
+            compile_latex(tex)
+        else:
+            build_reportlab(paper, md.with_suffix(".pdf"))
+        print(md.with_suffix(".pdf").name, f"({engine})")
+
+
+if __name__ == "__main__":
+    main()

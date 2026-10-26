@@ -1,5 +1,5 @@
 paper,equation,code,verification
-1,geometric CRF,hpotential/crf.py:H,test_axioms_grid
+1,geometric CRF,hpotential/crf.py:H,test_axioms_grid; CRFProperties
 1,CES family,hpotential/crf.py:contextual_mean,test_generalized_mean_and_limits
 1,geometric derivatives,hpotential/crf.py:gradients,test_geometric_gradient_finite_difference
 1,log decomposition,hpotential/crf.py:gap_decomposition,test_gap_and_units
@@ -8,4 +8,4 @@ paper,equation,code,verification
 2,anchored domains,hpotential/measurement.py:anchored,test_anchors_frozen
 3,population EDE,hpotential/crf.py:ede,test_ede_analytic_and_zero
 3,EDE derivatives,hpotential/crf.py:ede_gradient,test_population_gradient
-3,finite allocation,hpotential/crf.py:allocate,test_allocator_exact
+3,finite allocation,hpotential/crf.py:allocate,test_allocator_exact; test_allocator_tolerates_round_off

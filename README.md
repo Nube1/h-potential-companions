@@ -15,24 +15,29 @@ Three distinct manuscripts and executable research code grounded in the supplied
 Python 3.10 or newer. A virtual environment is recommended.
 
 ```sh
-python -m pip install -r requirements.txt
-python -m unittest discover -s tests -v
-python analysis/reproduce.py
-python analysis/build_papers.py
+python -m pip install -r requirements-dev.txt
+python -m pytest                  # 41 tests, including randomised property tests
+python analysis/reproduce.py      # regenerates results/
+python analysis/build_papers.py   # writes papers/*.tex and papers/*.pdf
+python analysis/verify_delivery.py
 ```
 
-The CRF and policy module uses only the standard library. Measurement scoring uses NumPy. PDF generation uses ReportLab. Exact locally observed versions are recorded in results/environment.txt and results/manifest.json. Version ranges permit installation; exact bitwise reproduction across numerical-library versions is not promised.
+`build_papers.py` compiles the PDFs with LaTeX (pdflatex, Times) when `latexmk` is installed and falls back to ReportLab otherwise. Force either with `--engine latex` or `--engine reportlab`. The Markdown files are the source; edit those, not the `.tex`.
 
-Command-line scoring of compatible research profiles:
+The CRF and policy code uses only the standard library. Measurement scoring uses NumPy.
+
+Command-line scoring of compatible research profiles (`pip install -e .` also gives a `hpotential` command):
 
 ```sh
 python -m hpotential score examples/profiles.csv results/example_scores.csv --alpha 0.5 --rho 0
 python -m hpotential ede results/example_scores.csv --epsilon 1
 ```
 
-Supply P in one common declared unit, S as social enablement, and R as structural freedom (1 minus a justified normalised burden). These inputs are not inferred or clinically calibrated by the command.
+Supply P in one common declared unit, S as social enablement, and R as structural freedom (1 minus a justified normalised burden). The command does not infer or clinically calibrate these inputs. Bad input gives a one-line error naming the CSV line, not a traceback.
 
-The generated CSV tables include a seed, version record and hashes. The manuscript tables are rounded from these results; see docs/claim_evidence.csv. LaTeX sources can be built with `pdflatex` in an environment with the declared packages. LaTeX compilation was not available locally; PDFs were generated directly with ReportLab and visually checked.
+## Reproducibility
+
+`reproduce.py` writes floats to 12 significant digits. The result files and their SHA-256 hashes in `results/manifest.json` are then identical across NumPy versions and operating systems; this was checked against the original Windows run (NumPy 2.3.5) and Linux runs with NumPy 2.1 and 2.5. The tests regenerate every table and compare it with the committed copy, and check that every number in the three manuscript tables equals the generated value rounded to four decimals.
 
 ## Scope of working code
 
@@ -47,9 +52,7 @@ The code does **not** fit a CFA, implement survey-weighted SEM, fit a survival m
 
 ## Relation to existing GitHub work
 
-The connected Nube1 account contains `Biomedical-Potential-Calculator-`, whose README describes a separate haemophilia PK/PD notebook. This companion project does not overwrite that notebook or treat its placeholder parameters as evidence for the thesis. The intended integration is an additive `thesis_companions/` directory on a research branch, subject to repository write access.
-
-GitHub branch creation was rejected by the session approval policy. This delivery is therefore a standalone local Git repository plus a portable Git bundle. It has not been pushed. No existing remote history has been rewritten. See docs/git_handoff.md for exact import commands.
+This project lives in the `thesis_companions/` folder of `Nube1/Biomedical-Potential-Calculator-`, beside the separate haemophilia PK/PD notebook at the repository root. It does not change that notebook or treat its placeholder parameters as evidence for the thesis. GitHub Actions runs the tests on Python 3.10 to 3.13 and on Windows, then rebuilds the results and the LaTeX PDFs and fails if any committed result changes.
 
 ## Thesis and approval status
 

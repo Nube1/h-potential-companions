@@ -87,7 +87,7 @@ Table 1 reports generated results rounded to four decimals, with coverage shown 
 | 30% missing | 3 | 0.8671 | 0.5031 | -0.0040 | 0.9505 |
 | Social drift | 1 | 0.9300 | 0.3727 | 0.0221 | 0.9485 |
 | Social drift | 2 | 0.9282 | 0.6258 | 0.5007 | 0.7200 |
-| Social drift | 3 | 0.9329 | 0.3654 | 0.0340 | 0.9567 |
+| Social drift | 3 | 0.9329 | 0.3654 | 0.0340 | 0.9568 |
 
 Missing indicators increase posterior uncertainty and reduce recovery of individual latent values. Mean posterior standard deviations rise from approximately 0.37 to 0.47-0.48. Coverage remains near the nominal level under this known, correctly specified Gaussian missingness experiment. The observed 0.9465-0.9538 complete-data coverage range is compatible with sampling variability; no claim of exact frequentist coverage is made from a single seed.
 

@@ -1,21 +1,62 @@
-"""Check deliverable integrity and claims against generated numerical outputs."""
-import csv, json, hashlib
+"""Check the delivered results and PDFs before release.
+
+Run after ``reproduce.py`` and ``build_papers.py``. Exits non-zero on failure.
+"""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import json
+import math
+import sys
 from pathlib import Path
+
 from pypdf import PdfReader
 
-root=Path(__file__).resolve().parents[1]
-manifest=json.loads((root/'results/manifest.json').read_text())
-for name,digest in manifest['csv_sha256'].items():
-    assert hashlib.sha256((root/'results'/name).read_bytes()).hexdigest()==digest,name
-with (root/'results/measurement.csv').open() as f:rows=list(csv.DictReader(f))
-drift=next(x for x in rows if x['scenario']=='social_intercept_shift' and x['domain']=='2')
-assert abs(float(drift['coverage95'])-.72)<1e-12
-assert abs(float(drift['bias'])-.5006630333845059)<1e-10
-for paper in sorted((root/'papers').glob('*.pdf')):
-    reader=PdfReader(paper)
-    text='\n'.join(p.extract_text() for p in reader.pages)
-    assert 'Abstract' in text and 'References' in text
-    assert len(reader.pages)>=4
-    assert paper.with_suffix('.md').exists() and paper.with_suffix('.tex').exists()
-    print(paper.name,len(reader.pages),'pages')
-print('CSV hashes, key numeric claims and PDF completeness verified')
+ROOT = Path(__file__).resolve().parents[1]
+
+# Headline numbers quoted in paper 2 (drift scenario, social domain).
+EXPECTED_DRIFT = {"coverage95": 0.72, "bias": 0.5006630333845059}
+
+
+def main() -> int:
+    failures: list[str] = []
+    manifest = json.loads((ROOT / "results/manifest.json").read_text(encoding="utf-8"))
+    for name, digest in manifest["csv_sha256"].items():
+        actual = hashlib.sha256((ROOT / "results" / name).read_bytes()).hexdigest()
+        if actual != digest:
+            failures.append(f"{name}: hash differs from manifest")
+
+    with (ROOT / "results/measurement.csv").open(encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    drift = next(
+        r for r in rows if r["scenario"] == "social_intercept_shift" and r["domain"] == "2"
+    )
+    for key, value in EXPECTED_DRIFT.items():
+        if not math.isclose(float(drift[key]), value, rel_tol=1e-9):
+            failures.append(f"drift {key}={drift[key]}, expected {value}")
+
+    for md in sorted((ROOT / "papers").glob("0*.md")):
+        pdf, tex = md.with_suffix(".pdf"), md.with_suffix(".tex")
+        if not pdf.exists() or not tex.exists():
+            failures.append(f"{md.name}: missing .pdf or .tex")
+            continue
+        reader = PdfReader(pdf)
+        text = "\n".join(page.extract_text() or "" for page in reader.pages)
+        for word in ("Abstract", "References"):
+            if word not in text:
+                failures.append(f"{pdf.name}: no '{word}' section")
+        if len(reader.pages) < 4:
+            failures.append(f"{pdf.name}: only {len(reader.pages)} pages")
+        print(f"{pdf.name}: {len(reader.pages)} pages")
+
+    if failures:
+        print("FAILED:\n  " + "\n  ".join(failures), file=sys.stderr)
+        return 1
+    print("CSV hashes, key numeric claims and PDF completeness verified")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

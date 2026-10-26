@@ -1,14 +1,30 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern,amsmath,amssymb,longtable,booktabs,hyperref}
-\hypersetup{hidelinks}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr}
+\usepackage[labelsep=none,skip=6pt,font=small]{caption}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{0.6\baselineskip}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize H-potential | Companion research draft | Synthetic evidence only}
+\fancyfoot[R]{\footnotesize\thepage}
+\fancypagestyle{plain}{\fancyhf{}%
+  \fancyfoot[L]{\footnotesize H-potential | Companion research draft | Synthetic evidence only}\fancyfoot[R]{\footnotesize\thepage}}
+
 \title{Measuring before predicting: uncertainty, missing indicators and measurement drift in H-potential domain scoring}
 \author{Ronald Rethabile Malamule Mahomane}
-\date{Companion research draft}
-\begin{document}\maketitle
-
-Computational methods manuscript draft. Known-parameter synthetic verification and an empirical analysis protocol; not a report of NHATS results.
+\date{}
+\begin{document}
+\maketitle
+\begin{center}\small\itshape Computational methods manuscript draft. Known-parameter synthetic verification and an empirical analysis protocol; not a report of NHATS results.\end{center}
 
 \section*{Abstract}
 A multidomain health construct can predict outcomes while failing to measure the intended construct comparably. We develop an outcome-independent computational workflow for H-potential domain scoring and evaluate its behaviour under controlled missingness and measurement drift. A Gaussian measurement model separates latent domains, indicators and residual error. Conditional means provide domain scores and conditional covariance matrices quantify scoring uncertainty, including records with partially or entirely missing indicators. A fixed synthetic experiment generates 4,000 observations with three correlated domains and nine indicators. With complete indicators, domain-score correlations with known latent values range from 0.9282 to 0.9329, and nominal 95\% posterior intervals cover 94.65\% to 95.38\% of latent values. Independent 30\% indicator missingness reduces correlations to 0.8671-0.8739. Adding an unmodelled 0.5-unit intercept shift to social indicators leaves correlation unchanged but raises social-score bias to 0.5007 and reduces interval coverage to 72.00\%. This demonstrates why ranking agreement alone is insufficient for comparable measurement. The implementation rejects unexpected columns to keep outcome information out of scoring and returns prior uncertainty for records without observations. We specify the further measurement, survey-design and survival-analysis work required for a legitimate NHATS evaluation. The current evidence verifies a scoring algorithm under known models; it neither estimates a confirmatory factor model nor establishes an empirically validated H-potential score.
@@ -25,28 +41,28 @@ This paper asks a narrower question: under a fully known continuous measurement 
 \section*{2. Measurement model and estimands}
 Let z be a k-dimensional latent vector and x a p-dimensional continuous indicator vector:
 
-\begin{verbatim}
+{\footnotesize\begin{verbatim}
 z ~ N(0,Phi);  x = nu + Lambda z + e;  e ~ N(0,Psi).
 Sigma = Lambda Phi Lambda' + Psi.                                    (1)
-\end{verbatim}
+\end{verbatim}}
 Phi is positive definite; Psi is diagonal with strictly positive entries. Residual independence is a modelling restriction, not a property guaranteed by a questionnaire. Lambda, nu, Phi and Psi are supplied to the algorithm. They are not estimated from the synthetic sample. Factor locations, signs and scales are therefore fixed by the generating specification. A real study would need an identified estimation model, including anchors and substantive direction, before using the scoring routine.
 
 For a record whose observed-indicator set is O, let Lambda\_O and Psi\_O denote the corresponding rows and residual covariance. Gaussian conditioning gives:
 
-\begin{verbatim}
+{\footnotesize\begin{verbatim}
 K_O = Phi Lambda_O' (Lambda_O Phi Lambda_O' + Psi_O)^(-1).
 m_O = E[z|x_O] = K_O (x_O-nu_O).
 V_O = Var[z|x_O] = Phi - K_O Lambda_O Phi.                             (2)
-\end{verbatim}
+\end{verbatim}}
 The conditional mean minimises posterior expected squared error. It is a shrinkage estimate, not an error-free observation of z. When O is empty, m=0 and V=Phi. Returning the prior is mathematically correct, but such a record must not be interpreted as an average-health person with reliable observations. The output covariance marks its lack of information.
 
 The software solves the observed covariance linear system rather than computing an explicit matrix inverse. Covariance symmetry is restored against round-off. Inputs are checked for finite parameters, compatible dimensions, unique names, positive residual variance and positive-definite latent covariance. Indicator NaNs denote missing entries; infinities fail validation.
 
 For a correctly specified complete-data model, the conditional covariance is constant and the law of total variance gives Var(m)=Phi-V. The model-implied factor determinacy for domain j is:
 
-\begin{verbatim}
+{\footnotesize\begin{verbatim}
 d_j = Corr(m_j,z_j) = sqrt[1 - V_jj/Phi_jj].                           (3)
-\end{verbatim}
+\end{verbatim}}
 This is an implication of a model, not an observed validity coefficient. A high value can coexist with a wrong model, a poorly defined construct or biased score levels. For missing records V changes with the observed pattern, so a single complete-case determinacy coefficient does not summarise everyone's precision.
 
 \section*{3. Nonlinear aggregation and uncertainty}
@@ -54,9 +70,9 @@ A later CRF requires domains on substantively anchored scales. The latent Gaussi
 
 If a future study defines admissible transformations X=g(z), uncertainty must be propagated through those transformations and the CRF. In general H(E[X|x]) differs from E[H(X)|x]. A first-order delta approximation is:
 
-\begin{verbatim}
+{\footnotesize\begin{verbatim}
 Var[H(X)|x] approximately grad(H)' Var[X|x] grad(H).                   (4)
-\end{verbatim}
+\end{verbatim}}
 Its adequacy deteriorates near boundaries or under broad posterior uncertainty. Posterior simulation on justified domain scales is then preferable. Parameter uncertainty requires an additional outer layer: refit the measurement model in resamples, or draw from its parameter distribution, then rescore and predict. The current implementation returns conditional uncertainty with parameters fixed. It must not be advertised as a complete bootstrap or multiple-imputation pipeline.
 
 \section*{4. Synthetic experiment}
@@ -71,8 +87,12 @@ For each domain we report correlation with the true latent value, root mean squa
 \section*{5. Results}
 Table 1 reports generated results rounded to four decimals, with coverage shown as a proportion. Domain 2 denotes the synthetic social domain; the names do not encode clinical measurements.
 
-\begin{longtable}{llllll}
+\begin{table}[htbp]\centering\small
+\caption{}
+\begin{tabular}{lrrrrr}
+\toprule
 Condition & Domain & Correlation & RMSE & Bias & Coverage \\
+\midrule
 Complete & 1 & 0.9300 & 0.3720 & 0.0014 & 0.9465 \\
 Complete & 2 & 0.9282 & 0.3754 & -0.0028 & 0.9475 \\
 Complete & 3 & 0.9329 & 0.3638 & 0.0029 & 0.9538 \\
@@ -81,8 +101,11 @@ Complete & 3 & 0.9329 & 0.3638 & 0.0029 & 0.9538 \\
 30\% missing & 3 & 0.8671 & 0.5031 & -0.0040 & 0.9505 \\
 Social drift & 1 & 0.9300 & 0.3727 & 0.0221 & 0.9485 \\
 Social drift & 2 & 0.9282 & 0.6258 & 0.5007 & 0.7200 \\
-Social drift & 3 & 0.9329 & 0.3654 & 0.0340 & 0.9567 \\
-\end{longtable}
+Social drift & 3 & 0.9329 & 0.3654 & 0.0340 & 0.9568 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 Missing indicators increase posterior uncertainty and reduce recovery of individual latent values. Mean posterior standard deviations rise from approximately 0.37 to 0.47-0.48. Coverage remains near the nominal level under this known, correctly specified Gaussian missingness experiment. The observed 0.9465-0.9538 complete-data coverage range is compatible with sampling variability; no claim of exact frequentist coverage is made from a single seed.
 
 The drift result is more instructive than the high complete-data correlations. Because the scoring function is linear and the drift is constant, the posterior score acquires a constant offset. Correlation is invariant to that offset and therefore stays unchanged. For the social domain the signed bias becomes 0.5007 and RMSE rises to 0.6258, while interval coverage falls to 0.72. Nonzero latent correlations allow the social-indicator drift to affect the other posterior domains as well. This is not evidence that a particular survey suffers this error; it is a controlled counterexample to correlation as a sufficient criterion of score comparability.
@@ -112,14 +135,11 @@ Outcome-independent construction can be enforced computationally, but it cannot 
 All 4,000 records are generated, with no NHATS or haemophilia participant data. No faculty, Senate or ethics approval is implied. The supervisor's instruction to retain a traditional Chapter One without case studies governs thesis organisation; this companion simulation is not inserted into that chapter. NHATS data must be handled under its current conditions of use [5], in an authorised institutional environment. This repository supplies synthetic inputs only. Authorship, affiliation, conflicts, funding and approval statements require confirmation before submission.
 
 \section*{References}
-[1] Freedman VA, Kasper JD. Cohort Profile: The National Health and Aging Trends Study (NHATS). International Journal of Epidemiology. 2019;48(4):1044-1045g. https://doi.org/10.1093/ije/dyz109
-
-[2] National Health and Aging Trends Study. Methods and documentation. https://www.nhats.org/nhats/methods-documentation
-
-[3] Putnick DL, Bornstein MH. Measurement invariance conventions and reporting: The state of the art and future directions for psychological research. Developmental Review. 2016;41:71-90. https://doi.org/10.1016/j.dr.2016.06.004
-
-[4] Collins GS, Reitsma JB, Altman DG, Moons KGM. Transparent reporting of a multivariable prediction model for individual prognosis or diagnosis (TRIPOD): the TRIPOD statement. BMJ. 2015;350:g7594. https://doi.org/10.1136/bmj.g7594
-
-[5] National Health and Aging Trends Study. Welcome researchers: conditions-of-use update. https://www.nhats.org/welcome
-
+\begin{list}{}{\setlength{\leftmargin}{2em}\setlength{\itemindent}{-2em}\setlength{\itemsep}{0.3\baselineskip}}\small
+\item [1] Freedman VA, Kasper JD. Cohort Profile: The National Health and Aging Trends Study (NHATS). International Journal of Epidemiology. 2019;48(4):1044-1045g. \url{https://doi.org/10.1093/ije/dyz109}
+\item [2] National Health and Aging Trends Study. Methods and documentation. \url{https://www.nhats.org/nhats/methods-documentation}
+\item [3] Putnick DL, Bornstein MH. Measurement invariance conventions and reporting: The state of the art and future directions for psychological research. Developmental Review. 2016;41:71-90. \url{https://doi.org/10.1016/j.dr.2016.06.004}
+\item [4] Collins GS, Reitsma JB, Altman DG, Moons KGM. Transparent reporting of a multivariable prediction model for individual prognosis or diagnosis (TRIPOD): the TRIPOD statement. BMJ. 2015;350:g7594. \url{https://doi.org/10.1136/bmj.g7594}
+\item [5] National Health and Aging Trends Study. Welcome researchers: conditions-of-use update. \url{https://www.nhats.org/welcome}
+\end{list}
 \end{document}

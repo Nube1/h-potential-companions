@@ -7,3 +7,9 @@ data/private/
 *.out
 *.synctex.gz
 .env
+.coverage
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+*.fdb_latexmk
+*.fls

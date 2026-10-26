@@ -4,10 +4,37 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hpotential-thesis-companions"
-version = "0.1.0"
+version = "0.2.0"
 description = "Research code and three companion manuscripts for the H-potential thesis"
+readme = "README.md"
 requires-python = ">=3.10"
+authors = [{ name = "Ronald Rethabile Malamule Mahomane" }]
 dependencies = ["numpy>=2.0,<3"]
+
+[project.optional-dependencies]
+papers = ["reportlab>=4.0,<5", "pypdf>=5,<7"]
+dev = ["pytest>=8", "pytest-cov>=5", "hypothesis>=6.100", "ruff>=0.6"]
+
+[project.scripts]
+hpotential = "hpotential.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["hpotential*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["hpotential"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM"]
+ignore = ["E731", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["N802"]
