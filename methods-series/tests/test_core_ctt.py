@@ -161,8 +161,8 @@ def test_factor_analyzer_backend_agrees_when_it_is_installed():
     except RuntimeError as exc:  # incompatible optional dependency versions
         pytest.skip(str(exc))
     ours = ctt.efa(data, n_factors=3, rotation="promax")
-    assert np.abs(ours.loadings.to_numpy()).max(axis=1).min() == pytest.approx(
-        np.abs(other.loadings.to_numpy()).max(axis=1).min(), abs=0.1
+    assert np.sort(np.abs(ours.loadings.to_numpy()).max(axis=1)) == pytest.approx(
+        np.sort(np.abs(other.loadings.to_numpy()).max(axis=1)), abs=0.01
     )
 
 

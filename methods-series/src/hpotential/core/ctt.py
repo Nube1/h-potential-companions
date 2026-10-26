@@ -515,7 +515,10 @@ def _efa_factor_analyzer(
         else [f"item{j + 1}" for j in range(values.shape[1])]
     )
     rot = None if rotation == "none" else rotation
-    model = FactorAnalyzer(n_factors=n_factors, rotation=rot, method="principal")
+    # minres converges to the same solution as iterated principal axis
+    # factoring. method="principal" would extract principal components
+    # instead, which give larger loadings and are not a like-for-like check.
+    model = FactorAnalyzer(n_factors=n_factors, rotation=rot, method="minres")
     try:
         model.fit(values)
     except TypeError as exc:  # pragma: no cover - version clash, not our code

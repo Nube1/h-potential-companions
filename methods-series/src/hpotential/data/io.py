@@ -6,7 +6,7 @@ import hashlib
 import json
 import platform
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -79,7 +79,7 @@ def load_dataset(
 
 def _manifest(bundle: DataBundle) -> dict[str, Any]:
     return {
-        "created_utc": datetime.now(UTC).isoformat(),
+        "created_utc": datetime.now(timezone.utc).isoformat(),
         "schema": {"name": bundle.schema.name, "version": bundle.schema.version},
         "source_sha256": bundle.source_sha256,
         "source_format": bundle.source_format,
