@@ -73,9 +73,17 @@ We compare complete indicators, an independently generated mask removing each in
 
 For each domain we report correlation with the true latent value, root mean squared error, signed mean error, mean posterior standard deviation and coverage of m_j +/- 1.95996 sqrt(V_jj). The experiment uses known parameters, so these are fixed-model posterior intervals rather than confidence intervals for fitted-model population parameters. All generated rows and environment versions are stored with SHA-256 hashes. A single run illustrates a mechanism; repeated Monte Carlo runs over multiple seeds would be required to estimate general simulation operating characteristics.
 
+Figure 1 shows the two determinacy properties the experiment relies on. On the left, the model-implied correlation between a single-factor score and its factor rises with the standardised loading and with the number of indicators; with two indicators of unit loading it equals sqrt(2/3), as the closed form requires, and weak loadings cannot reach the 0.80 rejection threshold with few indicators. On the right, the posterior standard deviation of the social domain rises each time one of its indicators goes missing. With all three missing it stays below the prior value of one, because the correlated biomedical and structural domains still carry information about it.
+
+![Figure 1. Left: model-implied correlation between a single-factor score and its factor, by loading and number of indicators. Right: posterior standard deviation of the social domain in the three-domain synthetic model as its indicators go missing; with all three missing it borrows strength from the correlated domains and stays below the prior SD of one.](../figures/proof_07_determinacy_and_missingness)
+
 ## 5. Results
 
 Table 1 reports generated results rounded to four decimals, with coverage shown as a proportion. Domain 2 denotes the synthetic social domain; the names do not encode clinical measurements.
+
+Figure 2 explains the drift row of Table 1. On the left, the known-model formula gives the bias of the social score as a straight line in the size of the intercept shift; at a shift of 0.5 it predicts a bias of 0.503, and the 4,000-record simulation gives 0.501. On the right, coverage of the nominal 95% posterior intervals stays near 0.95 for every domain under complete data and 30% missingness, but falls to 0.72 for the social domain under drift. Correlation with the truth is unchanged under drift, so a correlation-based check would not detect the problem; coverage and bias do.
+
+![Figure 2. Left: bias of the posterior social score as the intercepts of the social indicators drift, from the known-model formula (line) and from the 4,000-record simulation at a shift of 0.5 (marker). Right: coverage of 95% posterior intervals by domain and scenario, from results/measurement.csv; the dotted line is the nominal level.](../figures/proof_08_measurement_drift)
 
 | Condition | Domain | Correlation | RMSE | Bias | Coverage |
 |---|---|---|---|---|---|

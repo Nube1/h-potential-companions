@@ -3,8 +3,9 @@
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
-\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr}
+\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr,graphicx}
 \usepackage[labelsep=none,skip=6pt,font=small]{caption}
+\captionsetup[figure]{labelsep=period,justification=raggedright,singlelinecheck=false}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
@@ -58,6 +59,13 @@ W_1(H) = exp[sum_i q_i log(H_i)].                                     (2)
 \end{verbatim}}
 At epsilon=0 this is the population-weighted arithmetic mean. At epsilon=1 it is the geometric mean. Larger epsilon places greater priority on lower scores. The parameter is a normative input and should be reported across a predeclared range. It must not be selected because one preferred intervention wins at that value.
 
+Figure 1 traces (2) for the population (0.1, 0.4, 0.9). The EDE equals the mean at epsilon=0, equals the geometric mean 0.330 at epsilon=1 and falls towards the minimum as epsilon grows. Giving the worst-off person three times the weight lowers the whole curve, which shows that population weights and inequality aversion act separately and must both be reported.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.7\linewidth]{../figures/proof_09_ede_aversion.pdf}
+\caption{EDE of the population (0.1, 0.4, 0.9) against inequality aversion, unweighted and with three times the weight on the worst-off person. Dotted lines are the mean and the minimum.}
+\end{figure}
+
 For strictly positive H\_i differentiation yields:
 
 {\footnotesize\begin{verbatim}
@@ -88,6 +96,13 @@ The implementation therefore also evaluates binary action portfolios exactly. Fo
 Two hypothetical people have profiles (1,0.20,0.20) and (1,0.80,0.80). With alpha=0.5 their scores are 0.20 and 0.80. Action L increases both contextual domains of the first person by 0.10; action H increases both domains of the second person by 0.20. Each costs one arbitrary budget unit and the total budget is one, so both cannot be chosen. Responses and costs are assumptions selected to expose the allocation trade-off, not estimated treatment effects.
 
 Table 1 is generated from results/policy.csv. Both people have equal population weights. The no-action portfolio is also enumerated and is dominated for these positive responses.
+
+Figure 2 shows where the choice in Table 1 changes. It plots the EDE after each single action against epsilon. Below epsilon=0.538 the action with the larger total gain, H, gives the higher EDE; above it the smaller gain to the worse-off person, L, does. The exact enumeration in the software selects the higher curve at every tabulated aversion, so the reversal in Table 1 is a property of the objective and not of the search.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.7\linewidth]{../figures/proof_10_allocation_reversal.pdf}
+\caption{EDE of H after each single action for the two-person example of Table 1 in paper 3. Below the crossing the larger total gain wins; above it the gain to the worse-off person wins. The exact enumeration in hpotential.crf.allocate picks the higher curve at every tabulated aversion.}
+\end{figure}
 
 \begin{table}[htbp]\centering\small
 \caption{}

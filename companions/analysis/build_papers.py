@@ -36,7 +36,7 @@ FOOTER = "H-potential | Companion research draft | Synthetic evidence only"
 
 @dataclass
 class Block:
-    kind: str  # heading2, heading3, paragraph, equation, table, reference
+    kind: str  # heading2, heading3, paragraph, equation, table, reference, figure
     text: str = ""
     rows: list[list[str]] = field(default_factory=list)
     lines: list[str] = field(default_factory=list)
@@ -89,6 +89,15 @@ def parse(path: Path) -> Paper:
             if len({len(r) for r in rows}) != 1:
                 raise ValueError(f"{path.name}: table rows have unequal cell counts")
             blocks.append(Block("table", rows=rows))
+            continue
+        m = re.match(r"!\[(?P<cap>.*)\]\((?P<src>[^)]+)\)\s*$", line)
+        if m:
+            src = m.group("src")
+            if not (path.parent / f"{src}.pdf").exists():
+                raise ValueError(f"{path.name}: figure file {src}.pdf not found")
+            cap = re.sub(r"^Figure \d+\.\s*", "", m.group("cap"))
+            blocks.append(Block("figure", cap, lines=[src]))
+            i += 1
             continue
         if line.startswith("### "):
             blocks.append(Block("heading3", line[4:].strip()))
@@ -158,8 +167,9 @@ TEX_PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
-\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr}
+\usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr,graphicx}
 \usepackage[labelsep=none,skip=6pt,font=small]{caption}
+\captionsetup[figure]{labelsep=period,justification=raggedright,singlelinecheck=false}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
@@ -180,7 +190,19 @@ TEX_PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
 """
 
 
-def to_tex(paper: Paper) -> str:
+def _figure_width(png: Path) -> str:
+    """Wide multi-panel figures fill the line; single panels take 70%."""
+    try:
+        from PIL import Image
+
+        with Image.open(png) as im:
+            ratio = im.width / im.height
+    except (ImportError, OSError):
+        return "0.9"
+    return "1.0" if ratio > 2.2 else "0.7"
+
+
+def to_tex(paper: Paper, paper_dir: Path = PAPERS) -> str:
     out = [TEX_PREAMBLE.replace("FOOTER", tex_escape(FOOTER))]
     out.append(r"\title{" + tex_escape(paper.title) + "}")
     out.append(r"\author{" + tex_escape(paper.author) + "}")
@@ -217,6 +239,14 @@ def to_tex(paper: Paper) -> str:
             out.append(r"\bottomrule")
             out.append(r"\end{tabular}")
             out.append(r"\end{table}" + "\n")
+        elif block.kind == "figure":
+            out.append(r"\begin{figure}[htbp]\centering")
+            width = _figure_width(paper_dir / f"{block.lines[0]}.png")
+            out.append(
+                r"\includegraphics[width=" + width + r"\linewidth]{" + block.lines[0] + ".pdf}"
+            )
+            out.append(r"\caption{" + tex_text(block.text) + "}")
+            out.append(r"\end{figure}" + "\n")
         elif block.kind == "reference":
             if not in_refs:
                 out.append(
@@ -248,7 +278,9 @@ def compile_latex(tex_path: Path) -> Path:
             "SOURCE_DATE_EPOCH": os.environ.get("SOURCE_DATE_EPOCH", "1792972800"),
             "FORCE_SOURCE_DATE": "1",
         }
-        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
+        # Run beside the .tex so relative figure paths resolve.
+        cmd[-1] = tex_path.name
+        proc = subprocess.run(cmd, capture_output=True, text=True, env=env, cwd=tex_path.parent)
         log = Path(tmp) / tex_path.with_suffix(".log").name
         if proc.returncode != 0:
             tail = log.read_text(errors="replace")[-3000:] if log.exists() else proc.stdout[-3000:]
@@ -309,6 +341,7 @@ def build_reportlab(paper: Paper, pdf_path: Path) -> None:
         Paragraph(escape(paper.note), small),
     ]
     n_table = 0
+    n_figure = 0
     for block in paper.blocks:
         if block.kind == "heading2":
             story.append(Paragraph(escape(block.text), h2))
@@ -320,6 +353,16 @@ def build_reportlab(paper: Paper, pdf_path: Path) -> None:
             story.append(Paragraph(escape(block.text), ref))
         elif block.kind == "equation":
             story.append(Preformatted("\n".join(block.lines), eq))
+        elif block.kind == "figure":
+            from reportlab.platypus import Image
+
+            n_figure += 1
+            img = Image(str(pdf_path.parent / f"{block.lines[0]}.png"))
+            scale = (A4[0] - 100) / img.imageWidth
+            img.drawWidth, img.drawHeight = img.imageWidth * scale, img.imageHeight * scale
+            story.extend(
+                [img, Paragraph(f"Figure {n_figure}. " + escape(block.text), cell), Spacer(1, 8)]
+            )
         elif block.kind == "table":
             n_table += 1
             story.append(Paragraph(f"Table {n_table}", cell))

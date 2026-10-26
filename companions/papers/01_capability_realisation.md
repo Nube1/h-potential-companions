@@ -53,6 +53,12 @@ H_(alpha,rho) = P M_(alpha,rho);  M_(alpha,0) = S^alpha R^(1-alpha).     (2)
 
 For positive inputs, generalised-mean inequalities place M between min(S,R) and max(S,R). It therefore lies in [0,1]. Monotonicity follows by differentiating the powered sum; multiplying by P preserves it. As either contextual input tends to zero with rho<0, the corresponding negative power diverges and M tends to zero. The geometric limit has the same property. Normalisation follows by setting both inputs to one. These observations prove the stated axioms for rho<=0. As rho approaches negative infinity the mean tends to min(S,R).
 
+Figure 1 draws the level sets of the contextual mean for four members of the family. For rho<=0 every level set bends towards the axes and the mean is zero on them, so a shortfall in one contextual domain cannot be offset by the other; only the arithmetic comparator, rho=1, has straight level sets that cross the axes. Figure 2 plots the mean against rho for the three Table 1 profiles. Each curve is non-decreasing, passes through the geometric mean at rho=0 and approaches min(S,R) as rho becomes large and negative. The balanced profile is unaffected by rho, while the most unbalanced profile changes most, which is why the choice of rho must be declared rather than tuned.
+
+![Figure 1. Level sets of the contextual mean M(S, R) with equal weights for four members of the CES family. Markers are the three Table 1 profiles with the same arithmetic mean of 0.45. Curved level sets that meet the axes at zero show that a shortfall in one domain cannot be offset by the other.](../figures/proof_01_level_sets)
+
+![Figure 2. The CES contextual mean against rho for the three Table 1 profiles. Dotted lines mark min(S, R), the bottleneck limit. The balanced profile is flat; the more unbalanced the profile, the more the choice of rho matters.](../figures/proof_02_ces_family)
+
 The case rho=1 is the weighted arithmetic comparator. It deliberately violates essential enablement: at S=0 and R>0 it remains positive. Including this comparator is necessary to expose the consequence of the boundary axiom. Choosing rho on mortality outcomes changes the function into an outcome-selected predictor; it cannot then be presented as an independently specified measurement rule.
 
 ## 4. Consequences and interpretive limits
@@ -69,6 +75,12 @@ H_PR = (1-alpha) S^alpha R^(-alpha) > 0.                               (3)
 
 Capacity and context are complementary in the precise sense of positive cross-partials. This does not prove intersectionality as a social theory. Intersectional inquiry also concerns institutions, power, identity, histories and heterogeneous mechanisms that cannot be inferred from a positive interaction derivative. The formula is one representation of compounding disadvantage, with a scope narrower than the theory that motivated it.
 
+Figure 3 shows the ceiling: the realised share H/P never exceeds one, reaches one only when S=R=1 and is zero whenever either contextual domain is zero. Because the figure is drawn with P=30 in arbitrary units, it also illustrates unit equivariance; the plotted share is the same for any unit of P. Figure 4 shows the marginal effect of social enablement, H_S=alpha H/S, for three levels of structural freedom. The analytic curve and central finite differences agree to within 1e-6, and the gain from a unit of social enablement is larger when structural freedom is higher, which is the positive cross-partial in (3).
+
+![Figure 3. Share of biomedical capacity realised, H/P, against social enablement for four levels of structural freedom (P = 30 in arbitrary units). The ceiling at one is reached only with both domains at one.](../figures/proof_03_capacity_ceiling)
+
+![Figure 4. Analytic marginal effect of social enablement (lines) and central finite differences (open markers) for three levels of structural freedom, P = 1 and alpha = 0.5. The same gain in S is worth more when structural freedom is high.](../figures/proof_05_marginal_effects)
+
 At S=0 or R=0 some marginal derivatives are singular or direction dependent. The software refuses interior-gradient requests there. It returns a zero score at the boundary and leaves finite intervention analysis to explicit before-and-after calculations. Silently replacing zeros with a small positive constant would change the model and conceal the singularity.
 
 ### 4.2 Balance penalty
@@ -81,6 +93,10 @@ P S^alpha R^(1-alpha) <= P[alpha S+(1-alpha)R].                         (4)
 
 For P>0 equality holds exactly when S=R. For P=0 both sides vanish whatever the context. The difference measures the geometric penalty relative to this particular arithmetic comparator. It is not a loss measured against an observed counterfactual and must not be interpreted as an identified health gain available to a service.
 
+Figure 5 makes the penalty concrete. Holding the arithmetic mean of S and R at 0.45, it moves the two domains apart by d. The arithmetic score stays at 0.45, while the geometric score falls along sqrt(0.45^2-d^2), and the harmonic and bottleneck scores fall faster. The marked profiles are the rows of Table 1.
+
+![Figure 5. H against the gap between the two context domains when their arithmetic mean is held at 0.45. Markers are the Table 1 profiles. Every non-compensatory member penalises imbalance.](../figures/proof_04_balance_penalty)
+
 ### 4.3 Exact log decomposition
 
 For two positive, comparable profiles a and b:
@@ -91,6 +107,10 @@ log(H_a/H_b) = log(P_a/P_b) + alpha log(S_a/S_b)
 ```
 
 The result is algebraic and contains no residual. Components can oppose one another, making percentage contributions negative or greater than 100%; when the total gap is zero percentages are undefined. The decomposition describes a scoring identity rather than causal attribution.
+
+Figure 6 applies (5) to two profiles that differ only in structural freedom, 0.85 against 0.20, with the same P and S. The biomedical and social parts are zero and the whole gap of 0.723 in log H is structural; the parts sum to the directly computed log ratio to twelve decimal places.
+
+![Figure 6. Exact log decomposition of the gap between two profiles that differ only in structural freedom (0.85 against 0.20), from results/gap.csv. The whole gap is structural, as it should be.](../figures/proof_06_gap_decomposition)
 
 For populations, a valid direct extension decomposes differences in weighted mean log scores, provided weights sum to one in each group and scales are comparable. It does not generally decompose the log ratio of arithmetic mean H values by substituting arithmetic mean domains. Nonlinearity and within-group dependence prevent that shortcut. Group-average policy conclusions require individual calculations followed by the intended population aggregation.
 
