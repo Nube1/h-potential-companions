@@ -1,0 +1,133 @@
+# NHATS public-use files -> canonical analytic extract (docs/DATA_CONTRACT.md).
+#
+# Variable names follow the NHATS public-use naming pattern: a topic prefix,
+# the round number, then the item (hc1health = health conditions, round 1).
+# "{r}" is replaced by the baseline round and "{k}" by each follow-up round,
+# so one layout serves Round 1 and the Round 5 or Round 12 replenishment
+# cohorts.
+#
+# CHECK EVERY NAME AND CODE AGAINST THE NHATS CODEBOOK FOR YOUR RELEASE.
+# They were written from the NHATS naming conventions without the codebook to
+# hand. `hpotential nhats-check` lists every configured variable that is
+# absent from your files and every value outside the declared codes, and the
+# build refuses to run while any are missing.
+
+release:
+  baseline_round: 1
+  follow_up_rounds: [2, 3, 4, 5, 6]   # five annual follow-ups -> five-year horizon
+  days_per_round: 365.25               # NHATS interviews roughly a year apart
+
+files:                                  # file names inside --data-dir; .dta, .sas7bdat, .csv or .parquet
+  sp: "NHATS_Round_{r}_SP_File"
+  tracker: "NHATS_Round_{k}_Tracker_File"   # the latest tracker carries every earlier round's status
+
+ids:
+  person: spid
+
+design:
+  weight: "w{r}anfinwgt0"
+  stratum: "w{r}varstrat"
+  psu: "w{r}varunit"
+
+# NHATS negative codes are reasons for missingness, not values.
+special_missing: [-1, -2, -3, -4, -5, -6, -7, -8, -9]
+
+covariates:
+  age:
+    source: "r{r}d2intvrage"            # age category at interview, 1 = 65-69 ... 6 = 90+
+    map: {1: 67, 2: 72, 3: 77, 4: 82, 5: 87, 6: 92}   # band midpoints in years
+  sex:
+    source: "r{r}dgender"
+    map: {1: male, 2: female}
+  race_group:
+    source: "rl{r}dracehisp"
+    map: {1: White, 2: Black, 3: Other, 4: Hispanic}
+
+# Each indicator is oriented by `direction` in configs/study.yaml.
+indicators:
+  # Biomedical potential (higher = better)
+  bio_indicator_1:
+    label: Self-rated health (5 = excellent)
+    kind: reverse
+    source: "hc{r}health"               # 1 excellent ... 5 poor
+    range: [1, 5]
+  bio_indicator_2:
+    label: Conditions absent of ten
+    kind: count_absent
+    sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
+              "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]
+    present: [1, 7]                          # 1 = yes, 7 = previously reported
+  bio_indicator_3:
+    label: PHQ-2 and GAD-2 symptom-free score
+    kind: reverse_sum
+    sources: ["hc{r}depresan1", "hc{r}depresan2", "hc{r}depresan3", "hc{r}depresan4"]
+    range: [1, 4]                        # 1 not at all ... 4 nearly every day
+  # Social modifiers (higher = better)
+  social_indicator_1:
+    label: Valued activities taken part in, of four
+    kind: count_present
+    sources: ["pa{r}vistfrfam", "pa{r}attrelser", "pa{r}clbmtgrac", "pa{r}outfrenjy"]
+    present: [1]
+  social_indicator_2:
+    label: Social network size
+    kind: value
+    source: "sn{r}dnumsn"
+  social_indicator_3:
+    label: Community cohesion (3 = agree a lot)
+    kind: reverse_mean
+    sources: ["cm{r}knowwell", "cm{r}willnghlp", "cm{r}peoptrstd"]
+    range: [1, 3]                        # 1 agree a lot ... 3 do not agree
+  # Systemic burdens (higher = more burden)
+  systemic_indicator_1:
+    label: Income shortfall, minus log household income
+    kind: neg_log
+    source: "ia{r}totinc"
+  systemic_indicator_2:
+    label: Medicaid enrolment
+    kind: binary
+    source: "ip{r}cmedicaid"
+    present: [1]
+  systemic_indicator_3:
+    label: Years of schooling not completed (of 9 levels)
+    kind: reverse
+    source: "el{r}higstschl"             # 1 no schooling ... 9 post-graduate
+    range: [1, 9]
+
+# Comparators built from baseline items only, never from outcomes.
+comparators:
+  comorbidity_index:
+    kind: count_present
+    sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
+              "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]
+    present: [1, 7]
+  frailty_index:
+    kind: deficit_fraction               # share of listed deficits present
+    groups:
+      - sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
+                  "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]
+        deficit: [1, 7]                  # condition reported
+      - sources: ["pc{r}walk6blks", "pc{r}up20stair", "pc{r}car20pds", "pc{r}kneel", "pc{r}bdovrhd"]
+        deficit: [2]                     # 2 = could not do it
+
+# Outcomes from the tracker files. Event time is the midpoint of the interval
+# between the last round seen alive and the round that first reports the event.
+outcomes:
+  mortality:
+    status: "r{k}status"
+    event_codes: [62]                    # deceased: confirm in the tracker codebook
+  hospitalisation:
+    sp_item: "hc{k}hosptstay"            # overnight hospital stay since last interview, from follow-up SP files
+    present: [1]
+
+# Medical groupings for figures (labels only; same items as above).
+conditions:
+  heart_attack: "hc{r}disescn1"
+  heart_disease: "hc{r}disescn2"
+  hypertension: "hc{r}disescn3"
+  arthritis: "hc{r}disescn4"
+  osteoporosis: "hc{r}disescn5"
+  diabetes: "hc{r}disescn6"
+  lung_disease: "hc{r}disescn7"
+  stroke: "hc{r}disescn8"
+  dementia: "hc{r}disescn9"
+  cancer: "hc{r}disescn10"
