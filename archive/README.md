@@ -25,7 +25,6 @@ Contents:
 - [Earlier code repositories](#earlier-code-repositories)
 - [Notebooks](#notebooks)
 - [Companion papers, first delivery](#companion-papers-first-delivery)
-- [Reports](#reports)
 
 ## Thesis PDFs
 
@@ -453,11 +452,6 @@ Earlier single-paper drafts and the head-to-head study protocol.
 | [The_H_potential_Metric__A_Novel_Composite_Measure_Integrating_Biomedical__Social__and_Systemic_Determinants_to_Quantify_Holistic_Health_Dessertation.zip](papers/early-manuscripts/The_H_potential_Metric__A_Novel_Composite_Measure_Integrating_Biomedical__Social__and_Systemic_Determinants_to_Quantify_Holistic_Health_Dessertation.zip) | 2026-07-06 | 1.4 |  |
 | [The_H_potential_Metric__A_Novel_Composite_Measure_Integrating_Biomedical__Social__and_Systemic_Determinants_to_Quantify_Holistic_Health_Dessertation.pdf](papers/early-manuscripts/The_H_potential_Metric__A_Novel_Composite_Measure_Integrating_Biomedical__Social__and_Systemic_Determinants_to_Quantify_Holistic_Health_Dessertation.pdf) | 2026-07-06 | 2.5 |  |
 
-
-
-| File | Modified | MB | Note |
-|---|---|---:|---|
-
 ## Earlier code repositories
 
 The methods-series package (v1.1.0 is maintained in methods-series/) and the real-world pipeline (v1.0.0 is maintained in realworld-pipeline/).
@@ -490,13 +484,3 @@ The October 2026 package before refinement; the maintained version is companions
 | [h-potential-companions.bundle](code/companions-early/h-potential-companions.bundle) | 2026-10-26 | 0.1 | copy of `code/companions-early/codex-outputs/h-potential-companions.bundle` |
 | [codex-outputs/h-potential-companions.zip](code/companions-early/codex-outputs/h-potential-companions.zip) | 2026-10-26 | 0.1 |  |
 | [codex-outputs/h-potential-companions.bundle](code/companions-early/codex-outputs/h-potential-companions.bundle) | 2026-10-26 | 0.1 |  |
-
-## Reports
-
-Verification reports and supervisor review maps.
-
-| File | Modified | MB | Note |
-|---|---|---:|---|
-| [hpotential-supervisor-review-map/thumbnail.png](reports/hpotential-supervisor-review-map/thumbnail.png) | 2026-09-01 | 0.1 |  |
-| [hpotential-supervisor-review-map/debug.jsonl](reports/hpotential-supervisor-review-map/debug.jsonl) | 2026-09-01 | 0.0 |  |
-| [hpotential-supervisor-review-map/index.html](reports/hpotential-supervisor-review-map/index.html) | 2026-08-07 | 0.0 |  |
