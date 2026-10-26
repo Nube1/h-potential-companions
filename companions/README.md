@@ -52,7 +52,7 @@ The code does **not** fit a CFA, implement survey-weighted SEM, fit a survival m
 
 ## Relation to existing GitHub work
 
-This is a standalone repository. The separate haemophilia PK/PD notebook in `Nube1/Biomedical-Potential-Calculator-` is not changed, and its placeholder parameters are not treated as evidence for the thesis. GitHub Actions runs the tests on Python 3.10 to 3.13 and on Windows, then rebuilds the results and the LaTeX PDFs and fails if any committed result changes.
+This folder is one of several projects in the repository; see the repository README. The separate haemophilia PK/PD notebook in `Nube1/Biomedical-Potential-Calculator-` is not changed, and its placeholder parameters are not treated as evidence for the thesis. GitHub Actions runs the tests on Python 3.10 to 3.13 and on Windows, then rebuilds the results and the LaTeX PDFs and fails if any committed result changes.
 
 ## Thesis and approval status
 
@@ -63,7 +63,3 @@ All examples are synthetic. No patient or NHATS individual data are included. Th
 ## Submission status
 
 These are complete research drafts for supervisory review. Empirical validation, full literature/novelty coverage, author-approved affiliations/co-authors, declarations and journal-specific formatting remain before submission. No journal acceptance, ethics approval or thesis readiness is asserted. The source and code are provided together so reviewers can assess exactly what the reported evidence supports.
-
-## Archive
-
-The archive/ folder holds copies of every earlier H-potential file: thesis versions, the five-paper series, protocol submissions, decks, the poster and earlier code. See archive/README.md for the index. It is a record; the maintained code is the hpotential package above.
