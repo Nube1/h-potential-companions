@@ -354,7 +354,36 @@ rate rises. Asserted by
 
 The analysis does not treat hospitalisation as an unambiguous measure of worsening health. A person with greater access to care may have more observed hospitalisations than an equally ill person who faces barriers to care. This is precisely why hospitalisation is informative for the proposed framework but also why its interpretation requires caution.
 
-Both outcomes are times to an event with censoring, which fixes the class of model used to analyse them.
+Both outcomes are times to an event with censoring. Before the class of model can be chosen, the times themselves have to be built from the NHATS files, and the way that is done settles several questions the model cannot.
+
+\section{Construction of the Analytic File and Outcomes}
+\label{sec:construction}
+
+The analytic file is built by a scripted pipeline from the NHATS public-use files, without manual editing. It reads the Round~5 sample-person file for baseline information, the follow-up sample-person files for Rounds~6 to~10, and the latest tracker file for vital status. Every variable name and response code is declared in a single layout file. Before the file is built, the pipeline checks that each declared variable is present in the release in use and that every observed value is either a declared code or one of the NHATS reserved missing-data codes ($-1$ to $-9$), and it refuses to proceed while any is absent. Reserved codes are set to missing rather than read as values.
+
+\paragraph{Timing.} NHATS interviews are about a year apart, so an event is known only to have occurred between two interviews. Event times are set to the midpoint of that interval, and a person without the event is censored at the last interview at which their status was known. With five annual follow-ups there are therefore at most five distinct event times, and every survival quantity in the analysis is computed in a form that is exact for steps of this size: absolute risk uses the product-limit form of the Breslow estimate, $1-\prod_t\{1-\Delta\hat\Lambda(t)\}$, rather than $1-\exp\{-\hat\Lambda(t)\}$, which understates risk when the steps are large.
+
+\paragraph{Mortality.} Death is taken from the vital-status fields of the latest tracker file. Its time is the midpoint of the interval in which death was first recorded.
+
+\paragraph{Hospitalisation.} NHATS asks at each follow-up interview whether the person has had an overnight hospital stay since the last interview. The first reported stay is the event. The item does not separate planned from unplanned admissions, so the operational endpoint is the first overnight hospital stay; this is the definition the sensitivity analysis on outcome definitions (Section~\ref{sec:sensitivity}) varies. Death competes with hospitalisation. A death in the interval immediately after the last stay-free interview is counted as a competing event, because the person was seen without a stay and then died before the next interview could ask. A death after one or more missed interviews is not: the person is censored at the last answer, since whether a stay occurred in the unobserved interval is unknown. Treating such deaths as competing events would assume no stay occurred in the gap.
+
+\paragraph{Combined endpoint.} The secondary endpoint is the first of death or a first overnight stay, with the earlier of the two times.
+
+\paragraph{Absolute risk with a competing event.} For hospitalisation, two cause-specific Cox models are fitted, one for a first stay and one for death before a stay. The predicted five-year risk is the cumulative incidence
+\begin{equation}
+\hat F_1(\tau\mid x)=\sum_{t\le\tau}\hat S(t-\mid x)\,\Delta\hat\Lambda_1(t\mid x),\qquad
+\hat S(t\mid x)=\prod_{u\le t}\bigl\{1-\Delta\hat\Lambda_1(u\mid x)-\Delta\hat\Lambda_2(u\mid x)\bigr\},
+\label{eq:cif_construction}
+\end{equation}
+with each step capped so that the risk stays in $[0,1]$. Observed incidence in figures is the survey-weighted Aalen--Johansen estimate, which is the same estimator without covariates.
+
+\paragraph{Censoring in performance measures.} Calibration, the Brier score, the area under the curve and net benefit at five years need each person's status at five years, which is unknown for those censored earlier. Rather than drop them, which inflates the observed risk, the pipeline weights those with known status by the inverse of the Kaplan--Meier probability of remaining uncensored \citep{blanche_2013,steyerberg_2019}. People who had the competing event before five years are known non-cases. Calibration-in-the-large is the intercept of a logistic recalibration with the slope fixed at one, and the calibration slope comes from an unpenalised logistic fit of the outcome on the logit of predicted risk.
+
+\paragraph{Domain scores for the realisation function.} The realisation function needs each domain on $[0,1]$. The pipeline fits a one-factor model to the indicators of each domain in the development split, takes each person's score from the fitted loadings, and maps it onto the unit interval using the 1st and 99th percentiles of the development split as bounds, clipping values outside them. These bounds, like the loadings, are frozen before any outcome is used. Under this preregistered rule anyone below the 1st percentile is placed at, in effect, zero, where the geometric form gives no weight to the other domains. A fixed-floor sensitivity analysis maps the same bounds onto $[0.05,1]$ instead, so that no one is placed at zero (Section~\ref{sec:sensitivity}).
+
+\paragraph{Disclosure.} Counts below 11 are suppressed in every table and figure, and files that hold participant-level rows are kept out of the archived outputs.
+
+\emph{[Implementation status, removed in the final version: the pipeline fills missing indicators with the development-split median and fits a separate one-factor model to each domain. The multiple imputation and the joint confirmatory factor model specified in this chapter are still to be added, and Chapter~\ref{ch:results1} reports from those once they are.]}
 
 \section{Survival Modelling}
 \label{sec:survival}
@@ -527,8 +556,9 @@ The interpretation of subgroup differences is deliberately non-causal. A lower s
 The analyses so far each rest on a choice that could reasonably have been made differently. The sensitivity analyses put those choices under strain deliberately.
 
 \section{Pre-specified Sensitivity Analyses}
+\label{sec:sensitivity}
 
-Sensitivity analyses address five possible objections. First, models excluding indicators that overlap closely with the benchmark frailty measure test whether incremental validity is driven by construct duplication. Second, alternative factor structures test whether the higher-order score survives them. Third, formative or hybrid specifications test the consequences of treating social and structural indicators as components rather than reflective manifestations. Fourth, alternative handling of missingness and attrition tests robustness to informative missingness. Fifth, alternative outcome definitions test whether conclusions depend on a particular operational definition of hospitalisation.
+Sensitivity analyses address six possible objections. First, models excluding indicators that overlap closely with the benchmark frailty measure test whether incremental validity is driven by construct duplication. Second, alternative factor structures test whether the higher-order score survives them. Third, formative or hybrid specifications test the consequences of treating social and structural indicators as components rather than reflective manifestations. Fourth, alternative handling of missingness and attrition tests robustness to informative missingness. Fifth, alternative outcome definitions test whether conclusions depend on a particular operational definition of hospitalisation. Sixth, mapping each domain onto $[0.05,1]$ rather than clipping it at the 1st development-split percentile tests whether conclusions depend on placing the lowest scorers at zero, where the geometric realisation function ignores their other domains; both versions are reported.
 
 The algebraic expression developed in the appendices is treated as a mathematical sensitivity model rather than the empirical definition of $H_{\text{potential}}$. Its parameters are not tuned against mortality or hospitalisation. This preserves the distinction between a normative mathematical representation and an empirically estimated latent construct.
 

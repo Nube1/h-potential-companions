@@ -451,7 +451,7 @@ class Export:
             if e_i == 0:
                 rows.append(r"\addlinespace")
         self.rows["internal"] = "\n".join(rows) + "\n" + self._stamp_rows(3)
-        self.filled.append(f"tab:internal ({self.reps} bootstrap refits of scaling and Cox models)")
+        self.filled.append(f"tab:internal ({self.reps} bootstrap refits of the whole pipeline)")
 
     # -------------------------------------------------------------- figures
 
@@ -611,8 +611,8 @@ class Export:
                     f"{app['slope']:.3f} against {cor['slope']:.3f}"
                 )
             paras["optimism"] = (
-                f"Refitting the pipeline's domain scaling and Cox models in each of {n_ok} "
-                "bootstrap samples, with no imputation step, gave "
+                f"Refitting the domain factor models, the median imputation, the domain scaling "
+                f"and the Cox models in each of {n_ok} bootstrap samples gave "
                 + "; ".join(bits)
                 + " (Table~\\ref{tab:internal})."
             )
@@ -671,9 +671,10 @@ class Export:
             "filled": self.filled,
             "not_filled": self.unfilled,
             "differs_from_protocol": [
-                "The protocol scores H from a confirmatory factor model with multiple imputation; "
-                "the pipeline scores domains by percentile scaling of the observed indicators and "
-                "does not impute. The bootstrap refits that scaling, not a factor model.",
+                "The protocol scores H from a confirmatory factor model with multiple imputation. "
+                "The pipeline fits a one-factor model to each domain separately in the development "
+                "split, fills missing indicators with the development-split median, and scales each "
+                "domain between its 1st and 99th percentiles. The bootstrap refits all of that.",
                 "NHATS asks about any overnight hospital stay since the last interview; it does "
                 "not separate planned from unplanned stays.",
                 "A death in the interval straight after the last stay-free interview counts as "

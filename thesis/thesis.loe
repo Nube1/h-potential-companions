@@ -16,134 +16,134 @@
 \contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~3.1\else \numberline {3.1}\MakeUppercase definition\fi \thmtformatoptarg {Second-order measurement model}}{53}{definition.3.1}%
 \contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~3.2\else \numberline {3.2}\MakeUppercase definition\fi \thmtformatoptarg {Empirical $H_{\text {potential}}$ score}}{55}{definition.3.2}%
 \contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~3.1\else \numberline {3.1}\MakeUppercase proposition\fi \thmtformatoptarg {Censoring a competing risk overstates incidence}}{57}{proposition.3.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~3.3\else \numberline {3.3}\MakeUppercase definition\fi \thmtformatoptarg {Prognostic model}}{58}{definition.3.3}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~3.2\else \numberline {3.2}\MakeUppercase proposition\fi \thmtformatoptarg {Attenuation by measurement error}}{58}{proposition.3.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~3.3\else \numberline {3.3}\MakeUppercase definition\fi \thmtformatoptarg {Prognostic model}}{59}{definition.3.3}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~3.2\else \numberline {3.2}\MakeUppercase proposition\fi \thmtformatoptarg {Attenuation by measurement error}}{60}{proposition.3.2}%
 \addvspace {10\p@ }
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.1\else \numberline {4.1}\MakeUppercase proposition\fi \thmtformatoptarg {Axiomatic admissibility}}{70}{proposition.4.1}%
-\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~4.2\else \numberline {4.2}\MakeUppercase theorem\fi \thmtformatoptarg {Characterisation by constant domain elasticities}}{70}{theorem.4.6.2}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.3\else \numberline {4.3}\MakeUppercase proposition\fi \thmtformatoptarg {Balance or bottleneck penalty}}{71}{proposition.4.3}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.4\else \numberline {4.4}\MakeUppercase proposition\fi \thmtformatoptarg {Biomedical--context complementarity}}{72}{proposition.4.4}%
-\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~4.5\else \numberline {4.5}\MakeUppercase theorem\fi \thmtformatoptarg {Non-transportability}}{76}{theorem.4.11.5}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.1\else \numberline {4.1}\MakeUppercase proposition\fi \thmtformatoptarg {Axiomatic admissibility}}{72}{proposition.4.1}%
+\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~4.2\else \numberline {4.2}\MakeUppercase theorem\fi \thmtformatoptarg {Characterisation by constant domain elasticities}}{73}{theorem.4.6.2}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.3\else \numberline {4.3}\MakeUppercase proposition\fi \thmtformatoptarg {Balance or bottleneck penalty}}{74}{proposition.4.3}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~4.4\else \numberline {4.4}\MakeUppercase proposition\fi \thmtformatoptarg {Biomedical--context complementarity}}{76}{proposition.4.4}%
+\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~4.5\else \numberline {4.5}\MakeUppercase theorem\fi \thmtformatoptarg {Non-transportability}}{80}{theorem.4.11.5}%
 \addvspace {10\p@ }
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.1\else \numberline {5.1}\MakeUppercase definition\fi \thmtformatoptarg {Composite reliability}}{90}{definition.5.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.2\else \numberline {5.2}\MakeUppercase definition\fi \thmtformatoptarg {Average variance extracted}}{90}{definition.5.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.3\else \numberline {5.3}\MakeUppercase definition\fi \thmtformatoptarg {Fornell--Larcker criterion}}{90}{definition.5.3}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.4\else \numberline {5.4}\MakeUppercase definition\fi \thmtformatoptarg {Heterotrait--monotrait ratio}}{90}{definition.5.4}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~5.1\else \numberline {5.1}\MakeUppercase proposition\fi \thmtformatoptarg {The higher-order layer with three domains is just identified}}{93}{proposition.5.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.5\else \numberline {5.5}\MakeUppercase definition\fi \thmtformatoptarg {Factor determinacy}}{95}{definition.5.5}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~5.2\else \numberline {5.2}\MakeUppercase proposition\fi \thmtformatoptarg {Shrinkage of a factor score}}{96}{proposition.5.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.6\else \numberline {5.6}\MakeUppercase definition\fi \thmtformatoptarg {The four levels of measurement invariance}}{98}{definition.5.6}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.1\else \numberline {5.1}\MakeUppercase definition\fi \thmtformatoptarg {Composite reliability}}{97}{definition.5.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.2\else \numberline {5.2}\MakeUppercase definition\fi \thmtformatoptarg {Average variance extracted}}{97}{definition.5.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.3\else \numberline {5.3}\MakeUppercase definition\fi \thmtformatoptarg {Fornell--Larcker criterion}}{97}{definition.5.3}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.4\else \numberline {5.4}\MakeUppercase definition\fi \thmtformatoptarg {Heterotrait--monotrait ratio}}{97}{definition.5.4}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~5.1\else \numberline {5.1}\MakeUppercase proposition\fi \thmtformatoptarg {The higher-order layer with three domains is just identified}}{100}{proposition.5.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.5\else \numberline {5.5}\MakeUppercase definition\fi \thmtformatoptarg {Factor determinacy}}{102}{definition.5.5}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~5.2\else \numberline {5.2}\MakeUppercase proposition\fi \thmtformatoptarg {Shrinkage of a factor score}}{103}{proposition.5.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~5.6\else \numberline {5.6}\MakeUppercase definition\fi \thmtformatoptarg {The four levels of measurement invariance}}{105}{definition.5.6}%
 \addvspace {10\p@ }
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.1\else \numberline {6.1}\MakeUppercase derivation\fi \thmtformatoptarg {Cox partial likelihood for the $H_{\text {potential}}$ hazard ratio}}{106}{derivation.6.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.1\else \numberline {6.1}\MakeUppercase definition\fi \thmtformatoptarg {Hazard function and hazard ratio}}{107}{definition.6.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.2\else \numberline {6.2}\MakeUppercase derivation\fi \thmtformatoptarg {Scaled Schoenfeld residual test of proportional hazards}}{109}{derivation.6.2}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.3\else \numberline {6.3}\MakeUppercase derivation\fi \thmtformatoptarg {Concordance statistics for censored survival data}}{112}{derivation.6.3}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.2\else \numberline {6.2}\MakeUppercase definition\fi \thmtformatoptarg {Harrell's concordance statistic}}{112}{definition.6.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.3\else \numberline {6.3}\MakeUppercase definition\fi \thmtformatoptarg {Uno's concordance statistic}}{112}{definition.6.3}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.4\else \numberline {6.4}\MakeUppercase derivation\fi \thmtformatoptarg {Calibration-in-the-large and the calibration slope}}{114}{derivation.6.4}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.4\else \numberline {6.4}\MakeUppercase definition\fi \thmtformatoptarg {Calibration-in-the-large and the calibration slope}}{115}{definition.6.4}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~6.1\else \numberline {6.1}\MakeUppercase proposition\fi \thmtformatoptarg {Discrimination and calibration are independent properties}}{115}{proposition.6.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.5\else \numberline {6.5}\MakeUppercase derivation\fi \thmtformatoptarg {Net benefit in decision-curve analysis}}{121}{derivation.6.5}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.5\else \numberline {6.5}\MakeUppercase definition\fi \thmtformatoptarg {Net benefit and the threshold probability}}{121}{definition.6.5}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.6\else \numberline {6.6}\MakeUppercase derivation\fi \thmtformatoptarg {Pooling under Rubin's rules}}{127}{derivation.6.6}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.6\else \numberline {6.6}\MakeUppercase definition\fi \thmtformatoptarg {Optimism and the bootstrap correction}}{127}{definition.6.6}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.7\else \numberline {6.7}\MakeUppercase derivation\fi \thmtformatoptarg {Bootstrap optimism correction}}{128}{derivation.6.7}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~6.2\else \numberline {6.2}\MakeUppercase proposition\fi \thmtformatoptarg {The measurement model must be refitted inside every resample}}{129}{proposition.6.2}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.1\else \numberline {6.1}\MakeUppercase derivation\fi \thmtformatoptarg {Cox partial likelihood for the $H_{\text {potential}}$ hazard ratio}}{113}{derivation.6.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.1\else \numberline {6.1}\MakeUppercase definition\fi \thmtformatoptarg {Hazard function and hazard ratio}}{114}{definition.6.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.2\else \numberline {6.2}\MakeUppercase derivation\fi \thmtformatoptarg {Scaled Schoenfeld residual test of proportional hazards}}{116}{derivation.6.2}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.3\else \numberline {6.3}\MakeUppercase derivation\fi \thmtformatoptarg {Concordance statistics for censored survival data}}{119}{derivation.6.3}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.2\else \numberline {6.2}\MakeUppercase definition\fi \thmtformatoptarg {Harrell's concordance statistic}}{119}{definition.6.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.3\else \numberline {6.3}\MakeUppercase definition\fi \thmtformatoptarg {Uno's concordance statistic}}{119}{definition.6.3}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.4\else \numberline {6.4}\MakeUppercase derivation\fi \thmtformatoptarg {Calibration-in-the-large and the calibration slope}}{121}{derivation.6.4}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.4\else \numberline {6.4}\MakeUppercase definition\fi \thmtformatoptarg {Calibration-in-the-large and the calibration slope}}{122}{definition.6.4}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~6.1\else \numberline {6.1}\MakeUppercase proposition\fi \thmtformatoptarg {Discrimination and calibration are independent properties}}{122}{proposition.6.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.5\else \numberline {6.5}\MakeUppercase derivation\fi \thmtformatoptarg {Net benefit in decision-curve analysis}}{128}{derivation.6.5}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.5\else \numberline {6.5}\MakeUppercase definition\fi \thmtformatoptarg {Net benefit and the threshold probability}}{128}{definition.6.5}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.6\else \numberline {6.6}\MakeUppercase derivation\fi \thmtformatoptarg {Pooling under Rubin's rules}}{134}{derivation.6.6}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~6.6\else \numberline {6.6}\MakeUppercase definition\fi \thmtformatoptarg {Optimism and the bootstrap correction}}{134}{definition.6.6}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.7\else \numberline {6.7}\MakeUppercase derivation\fi \thmtformatoptarg {Bootstrap optimism correction}}{135}{derivation.6.7}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~6.2\else \numberline {6.2}\MakeUppercase proposition\fi \thmtformatoptarg {The measurement model must be refitted inside every resample}}{136}{proposition.6.2}%
 \addvspace {10\p@ }
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.1\else \numberline {7.1}\MakeUppercase derivation\fi \thmtformatoptarg {Construct invariance under indicator substitution}}{138}{derivation.7.1}%
-\contentsline {assumption}{\ifthmt@listswap \MakeUppercase assumption~7.1\else \numberline {7.1}\MakeUppercase assumption\fi \thmtformatoptarg {What indicator substitution requires}}{139}{assumption.7.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.2\else \numberline {7.2}\MakeUppercase derivation\fi \thmtformatoptarg {Measurement invariance across populations}}{145}{derivation.7.2}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~7.1\else \numberline {7.1}\MakeUppercase proposition\fi \thmtformatoptarg {A raw difference of cohort means is uninterpretable without scalar invariance}}{145}{proposition.7.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.3\else \numberline {7.3}\MakeUppercase derivation\fi \thmtformatoptarg {Delphi consensus and stability criteria}}{149}{derivation.7.3}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.4\else \numberline {7.4}\MakeUppercase derivation\fi \thmtformatoptarg {Recalibration of the translated score}}{155}{derivation.7.4}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.1\else \numberline {7.1}\MakeUppercase derivation\fi \thmtformatoptarg {Construct invariance under indicator substitution}}{145}{derivation.7.1}%
+\contentsline {assumption}{\ifthmt@listswap \MakeUppercase assumption~7.1\else \numberline {7.1}\MakeUppercase assumption\fi \thmtformatoptarg {What indicator substitution requires}}{146}{assumption.7.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.2\else \numberline {7.2}\MakeUppercase derivation\fi \thmtformatoptarg {Measurement invariance across populations}}{152}{derivation.7.2}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~7.1\else \numberline {7.1}\MakeUppercase proposition\fi \thmtformatoptarg {A raw difference of cohort means is uninterpretable without scalar invariance}}{152}{proposition.7.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.3\else \numberline {7.3}\MakeUppercase derivation\fi \thmtformatoptarg {Delphi consensus and stability criteria}}{156}{derivation.7.3}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.4\else \numberline {7.4}\MakeUppercase derivation\fi \thmtformatoptarg {Recalibration of the translated score}}{162}{derivation.7.4}%
 \addvspace {10\p@ }
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~8.1\else \numberline {8.1}\MakeUppercase derivation\fi \thmtformatoptarg {Why the two-stage design avoids outcome-driven circularity}}{168}{derivation.8.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~8.2\else \numberline {8.2}\MakeUppercase derivation\fi \thmtformatoptarg {Incremental prognostic value over a baseline model}}{169}{derivation.8.2}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~8.1\else \numberline {8.1}\MakeUppercase derivation\fi \thmtformatoptarg {Why the two-stage design avoids outcome-driven circularity}}{175}{derivation.8.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~8.2\else \numberline {8.2}\MakeUppercase derivation\fi \thmtformatoptarg {Incremental prognostic value over a baseline model}}{176}{derivation.8.2}%
 \addvspace {10\p@ }
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~9.1\else \numberline {9.1}\MakeUppercase derivation\fi \thmtformatoptarg {From the conceptual formula to the latent measurement model}}{189}{derivation.9.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~9.2\else \numberline {9.2}\MakeUppercase derivation\fi \thmtformatoptarg {Propagating factor-score uncertainty into the prognostic model}}{193}{derivation.9.2}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~9.1\else \numberline {9.1}\MakeUppercase derivation\fi \thmtformatoptarg {From the conceptual formula to the latent measurement model}}{196}{derivation.9.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~9.2\else \numberline {9.2}\MakeUppercase derivation\fi \thmtformatoptarg {Propagating factor-score uncertainty into the prognostic model}}{200}{derivation.9.2}%
 \addvspace {10\p@ }
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.1\else \numberline {A.1}\MakeUppercase remark\fi \thmtformatoptarg {What is inherited}}{200}{remark.A.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.1\else \numberline {A.1}\MakeUppercase definition\fi \thmtformatoptarg {Population and index time}}{200}{definition.A.1}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.2\else \numberline {A.2}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{200}{remark.A.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.2\else \numberline {A.2}\MakeUppercase definition\fi \thmtformatoptarg {Domain profile}}{200}{definition.A.2}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.3\else \numberline {A.3}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{201}{remark.A.3}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.3\else \numberline {A.3}\MakeUppercase definition\fi \thmtformatoptarg {Dominance}}{201}{definition.A.3}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.4\else \numberline {A.4}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{201}{remark.A.4}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.4\else \numberline {A.4}\MakeUppercase definition\fi \thmtformatoptarg {Admissible aggregator}}{202}{definition.A.4}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.5\else \numberline {A.5}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{202}{remark.A.5}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.1\else \numberline {A.1}\MakeUppercase proposition\fi \thmtformatoptarg {Dominance preservation}}{202}{proposition.A.1}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.6\else \numberline {A.6}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{202}{remark.A.6}%
-\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~A.2\else \numberline {A.2}\MakeUppercase theorem\fi \thmtformatoptarg {Ordinal representation is not cardinal measurement}}{202}{theorem.A.3.2}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.7\else \numberline {A.7}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{203}{remark.A.7}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.5\else \numberline {A.5}\MakeUppercase definition\fi \thmtformatoptarg {Additive form}}{203}{definition.A.5}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.3\else \numberline {A.3}\MakeUppercase proposition\fi \thmtformatoptarg {Compensation}}{203}{proposition.A.3}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.8\else \numberline {A.8}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{203}{remark.A.8}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.6\else \numberline {A.6}\MakeUppercase definition\fi \thmtformatoptarg {CES contextual mean and realised potential}}{204}{definition.A.6}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.9\else \numberline {A.9}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{204}{remark.A.9}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.4\else \numberline {A.4}\MakeUppercase proposition\fi \thmtformatoptarg {Admissibility}}{205}{proposition.A.4}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.10\else \numberline {A.10}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{205}{remark.A.10}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.5\else \numberline {A.5}\MakeUppercase proposition\fi \thmtformatoptarg {Constant substitution elasticity}}{205}{proposition.A.5}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.11\else \numberline {A.11}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{206}{remark.A.11}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.6\else \numberline {A.6}\MakeUppercase proposition\fi \thmtformatoptarg {Geometric marginal effects}}{206}{proposition.A.6}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.12\else \numberline {A.12}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{206}{remark.A.12}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.7\else \numberline {A.7}\MakeUppercase proposition\fi \thmtformatoptarg {Capacity--context complementarity}}{206}{proposition.A.7}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.13\else \numberline {A.13}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{206}{remark.A.13}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.8\else \numberline {A.8}\MakeUppercase proposition\fi \thmtformatoptarg {Aggregation can reverse rankings}}{206}{proposition.A.8}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.14\else \numberline {A.14}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{206}{remark.A.14}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.7\else \numberline {A.7}\MakeUppercase definition\fi \thmtformatoptarg {Normalized relational aggregator}}{207}{definition.A.7}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.9\else \numberline {A.9}\MakeUppercase proposition\fi \thmtformatoptarg {Properties of the relational model}}{207}{proposition.A.9}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.15\else \numberline {A.15}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{207}{remark.A.15}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.10\else \numberline {A.10}\MakeUppercase proposition\fi \thmtformatoptarg {The ontology is not selected by fit alone}}{208}{proposition.A.10}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.16\else \numberline {A.16}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{208}{remark.A.16}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.8\else \numberline {A.8}\MakeUppercase definition\fi \thmtformatoptarg {Deprivation count}}{208}{definition.A.8}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.17\else \numberline {A.17}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{208}{remark.A.17}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.9\else \numberline {A.9}\MakeUppercase definition\fi \thmtformatoptarg {Reflective model}}{209}{definition.A.9}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.10\else \numberline {A.10}\MakeUppercase definition\fi \thmtformatoptarg {Formative model}}{209}{definition.A.10}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.18\else \numberline {A.18}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{209}{remark.A.18}%
-\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~A.11\else \numberline {A.11}\MakeUppercase theorem\fi \thmtformatoptarg {Latent scale indeterminacy}}{210}{theorem.A.8.11}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.19\else \numberline {A.19}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{210}{remark.A.19}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.12\else \numberline {A.12}\MakeUppercase proposition\fi \thmtformatoptarg {Second-order implied covariance}}{210}{proposition.A.12}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.20\else \numberline {A.20}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{210}{remark.A.20}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.11\else \numberline {A.11}\MakeUppercase definition\fi \thmtformatoptarg {Four distinct objects}}{210}{definition.A.11}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.13\else \numberline {A.13}\MakeUppercase proposition\fi \thmtformatoptarg {Non-equivalence}}{211}{proposition.A.13}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.21\else \numberline {A.21}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{211}{remark.A.21}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.12\else \numberline {A.12}\MakeUppercase definition\fi \thmtformatoptarg {Failure conditions}}{212}{definition.A.12}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.22\else \numberline {A.22}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{212}{remark.A.22}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.13\else \numberline {A.13}\MakeUppercase definition\fi \thmtformatoptarg {Net health benefit}}{212}{definition.A.13}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.23\else \numberline {A.23}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{212}{remark.A.23}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.14\else \numberline {A.14}\MakeUppercase proposition\fi \thmtformatoptarg {Need does not imply cost-effectiveness}}{213}{proposition.A.14}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.24\else \numberline {A.24}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.24}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.14\else \numberline {A.14}\MakeUppercase definition\fi \thmtformatoptarg {Distribution-sensitive evaluation}}{213}{definition.A.14}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.25\else \numberline {A.25}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.25}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.15\else \numberline {A.15}\MakeUppercase definition\fi \thmtformatoptarg {Jurisdiction-indexed policy evidence vector}}{214}{definition.A.15}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.26\else \numberline {A.26}\MakeUppercase remark\fi \thmtformatoptarg {Relation to the eight-coordinate form}}{214}{remark.A.26}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.27\else \numberline {A.27}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{214}{remark.A.27}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.15\else \numberline {A.15}\MakeUppercase proposition\fi \thmtformatoptarg {A policy decision is not generally transportable}}{215}{proposition.A.15}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.28\else \numberline {A.28}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{215}{remark.A.28}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.1\else \numberline {A.1}\MakeUppercase remark\fi \thmtformatoptarg {What is inherited}}{207}{remark.A.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.1\else \numberline {A.1}\MakeUppercase definition\fi \thmtformatoptarg {Population and index time}}{207}{definition.A.1}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.2\else \numberline {A.2}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{207}{remark.A.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.2\else \numberline {A.2}\MakeUppercase definition\fi \thmtformatoptarg {Domain profile}}{207}{definition.A.2}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.3\else \numberline {A.3}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{208}{remark.A.3}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.3\else \numberline {A.3}\MakeUppercase definition\fi \thmtformatoptarg {Dominance}}{208}{definition.A.3}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.4\else \numberline {A.4}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{208}{remark.A.4}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.4\else \numberline {A.4}\MakeUppercase definition\fi \thmtformatoptarg {Admissible aggregator}}{209}{definition.A.4}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.5\else \numberline {A.5}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{209}{remark.A.5}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.1\else \numberline {A.1}\MakeUppercase proposition\fi \thmtformatoptarg {Dominance preservation}}{209}{proposition.A.1}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.6\else \numberline {A.6}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{209}{remark.A.6}%
+\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~A.2\else \numberline {A.2}\MakeUppercase theorem\fi \thmtformatoptarg {Ordinal representation is not cardinal measurement}}{209}{theorem.A.3.2}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.7\else \numberline {A.7}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{210}{remark.A.7}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.5\else \numberline {A.5}\MakeUppercase definition\fi \thmtformatoptarg {Additive form}}{210}{definition.A.5}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.3\else \numberline {A.3}\MakeUppercase proposition\fi \thmtformatoptarg {Compensation}}{210}{proposition.A.3}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.8\else \numberline {A.8}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{210}{remark.A.8}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.6\else \numberline {A.6}\MakeUppercase definition\fi \thmtformatoptarg {CES contextual mean and realised potential}}{211}{definition.A.6}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.9\else \numberline {A.9}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{211}{remark.A.9}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.4\else \numberline {A.4}\MakeUppercase proposition\fi \thmtformatoptarg {Admissibility}}{212}{proposition.A.4}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.10\else \numberline {A.10}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{212}{remark.A.10}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.5\else \numberline {A.5}\MakeUppercase proposition\fi \thmtformatoptarg {Constant substitution elasticity}}{212}{proposition.A.5}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.11\else \numberline {A.11}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.11}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.6\else \numberline {A.6}\MakeUppercase proposition\fi \thmtformatoptarg {Geometric marginal effects}}{213}{proposition.A.6}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.12\else \numberline {A.12}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.12}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.7\else \numberline {A.7}\MakeUppercase proposition\fi \thmtformatoptarg {Capacity--context complementarity}}{213}{proposition.A.7}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.13\else \numberline {A.13}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.13}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.8\else \numberline {A.8}\MakeUppercase proposition\fi \thmtformatoptarg {Aggregation can reverse rankings}}{213}{proposition.A.8}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.14\else \numberline {A.14}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{213}{remark.A.14}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.7\else \numberline {A.7}\MakeUppercase definition\fi \thmtformatoptarg {Normalized relational aggregator}}{214}{definition.A.7}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.9\else \numberline {A.9}\MakeUppercase proposition\fi \thmtformatoptarg {Properties of the relational model}}{214}{proposition.A.9}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.15\else \numberline {A.15}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{214}{remark.A.15}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.10\else \numberline {A.10}\MakeUppercase proposition\fi \thmtformatoptarg {The ontology is not selected by fit alone}}{215}{proposition.A.10}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.16\else \numberline {A.16}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{215}{remark.A.16}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.8\else \numberline {A.8}\MakeUppercase definition\fi \thmtformatoptarg {Deprivation count}}{215}{definition.A.8}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.17\else \numberline {A.17}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{215}{remark.A.17}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.9\else \numberline {A.9}\MakeUppercase definition\fi \thmtformatoptarg {Reflective model}}{216}{definition.A.9}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.10\else \numberline {A.10}\MakeUppercase definition\fi \thmtformatoptarg {Formative model}}{216}{definition.A.10}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.18\else \numberline {A.18}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{216}{remark.A.18}%
+\contentsline {theorem}{\ifthmt@listswap \MakeUppercase theorem~A.11\else \numberline {A.11}\MakeUppercase theorem\fi \thmtformatoptarg {Latent scale indeterminacy}}{217}{theorem.A.8.11}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.19\else \numberline {A.19}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{217}{remark.A.19}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.12\else \numberline {A.12}\MakeUppercase proposition\fi \thmtformatoptarg {Second-order implied covariance}}{217}{proposition.A.12}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.20\else \numberline {A.20}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{217}{remark.A.20}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.11\else \numberline {A.11}\MakeUppercase definition\fi \thmtformatoptarg {Four distinct objects}}{217}{definition.A.11}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.13\else \numberline {A.13}\MakeUppercase proposition\fi \thmtformatoptarg {Non-equivalence}}{218}{proposition.A.13}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.21\else \numberline {A.21}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{218}{remark.A.21}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.12\else \numberline {A.12}\MakeUppercase definition\fi \thmtformatoptarg {Failure conditions}}{219}{definition.A.12}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.22\else \numberline {A.22}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{219}{remark.A.22}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.13\else \numberline {A.13}\MakeUppercase definition\fi \thmtformatoptarg {Net health benefit}}{219}{definition.A.13}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.23\else \numberline {A.23}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{219}{remark.A.23}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.14\else \numberline {A.14}\MakeUppercase proposition\fi \thmtformatoptarg {Need does not imply cost-effectiveness}}{220}{proposition.A.14}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.24\else \numberline {A.24}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{220}{remark.A.24}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.14\else \numberline {A.14}\MakeUppercase definition\fi \thmtformatoptarg {Distribution-sensitive evaluation}}{220}{definition.A.14}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.25\else \numberline {A.25}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{220}{remark.A.25}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~A.15\else \numberline {A.15}\MakeUppercase definition\fi \thmtformatoptarg {Jurisdiction-indexed policy evidence vector}}{221}{definition.A.15}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.26\else \numberline {A.26}\MakeUppercase remark\fi \thmtformatoptarg {Relation to the eight-coordinate form}}{221}{remark.A.26}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.27\else \numberline {A.27}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{221}{remark.A.27}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~A.15\else \numberline {A.15}\MakeUppercase proposition\fi \thmtformatoptarg {A policy decision is not generally transportable}}{222}{proposition.A.15}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~A.28\else \numberline {A.28}\MakeUppercase remark\fi \thmtformatoptarg {In plain language}}{222}{remark.A.28}%
 \addvspace {10\p@ }
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.1\else \numberline {B.1}\MakeUppercase definition\fi \thmtformatoptarg {Deterministic state}}{217}{definition.B.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.2\else \numberline {B.2}\MakeUppercase definition\fi \thmtformatoptarg {Universal deterministic model}}{217}{definition.B.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.3\else \numberline {B.3}\MakeUppercase definition\fi \thmtformatoptarg {Patient state and stochastic model}}{217}{definition.B.3}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.4\else \numberline {B.4}\MakeUppercase definition\fi \thmtformatoptarg {Population state}}{217}{definition.B.4}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.1\else \numberline {B.1}\MakeUppercase proposition\fi \thmtformatoptarg {Existence and uniqueness}}{218}{proposition.B.1}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.2\else \numberline {B.2}\MakeUppercase proposition\fi \thmtformatoptarg {Deterministic equilibrium}}{219}{proposition.B.2}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.3\else \numberline {B.3}\MakeUppercase proposition\fi \thmtformatoptarg {Reduction to the ODE}}{220}{proposition.B.3}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.4\else \numberline {B.4}\MakeUppercase proposition\fi \thmtformatoptarg {Population consistency}}{221}{proposition.B.4}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~B.1\else \numberline {B.1}\MakeUppercase remark\fi }{221}{remark.B.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.5\else \numberline {B.5}\MakeUppercase definition\fi \thmtformatoptarg {Probability density, drift, diffusion}}{221}{definition.B.5}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.5\else \numberline {B.5}\MakeUppercase proposition\fi \thmtformatoptarg {Mass conservation}}{222}{proposition.B.5}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~B.2\else \numberline {B.2}\MakeUppercase remark\fi \thmtformatoptarg {Boundary conditions and interpretation}}{223}{remark.B.2}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.6\else \numberline {B.6}\MakeUppercase definition\fi \thmtformatoptarg {Time-varying biomedical term}}{223}{definition.B.6}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.6\else \numberline {B.6}\MakeUppercase proposition\fi \thmtformatoptarg {Differentiability}}{223}{proposition.B.6}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.1\else \numberline {B.1}\MakeUppercase definition\fi \thmtformatoptarg {Deterministic state}}{224}{definition.B.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.2\else \numberline {B.2}\MakeUppercase definition\fi \thmtformatoptarg {Universal deterministic model}}{224}{definition.B.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.3\else \numberline {B.3}\MakeUppercase definition\fi \thmtformatoptarg {Patient state and stochastic model}}{224}{definition.B.3}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.4\else \numberline {B.4}\MakeUppercase definition\fi \thmtformatoptarg {Population state}}{224}{definition.B.4}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.1\else \numberline {B.1}\MakeUppercase proposition\fi \thmtformatoptarg {Existence and uniqueness}}{225}{proposition.B.1}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.2\else \numberline {B.2}\MakeUppercase proposition\fi \thmtformatoptarg {Deterministic equilibrium}}{226}{proposition.B.2}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.3\else \numberline {B.3}\MakeUppercase proposition\fi \thmtformatoptarg {Reduction to the ODE}}{227}{proposition.B.3}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.4\else \numberline {B.4}\MakeUppercase proposition\fi \thmtformatoptarg {Population consistency}}{228}{proposition.B.4}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~B.1\else \numberline {B.1}\MakeUppercase remark\fi }{228}{remark.B.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.5\else \numberline {B.5}\MakeUppercase definition\fi \thmtformatoptarg {Probability density, drift, diffusion}}{228}{definition.B.5}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.5\else \numberline {B.5}\MakeUppercase proposition\fi \thmtformatoptarg {Mass conservation}}{229}{proposition.B.5}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~B.2\else \numberline {B.2}\MakeUppercase remark\fi \thmtformatoptarg {Boundary conditions and interpretation}}{230}{remark.B.2}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~B.6\else \numberline {B.6}\MakeUppercase definition\fi \thmtformatoptarg {Time-varying biomedical term}}{230}{definition.B.6}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~B.6\else \numberline {B.6}\MakeUppercase proposition\fi \thmtformatoptarg {Differentiability}}{230}{proposition.B.6}%
 \addvspace {10\p@ }
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.1\else \numberline {C.1}\MakeUppercase definition\fi \thmtformatoptarg {Clotting-factor state}}{226}{definition.C.1}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.2\else \numberline {C.2}\MakeUppercase definition\fi \thmtformatoptarg {Linear reference model}}{227}{definition.C.2}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.1\else \numberline {C.1}\MakeUppercase proposition\fi \thmtformatoptarg {Linear approximation}}{227}{proposition.C.1}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.2\else \numberline {C.2}\MakeUppercase proposition\fi \thmtformatoptarg {Stability}}{227}{proposition.C.2}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.3\else \numberline {C.3}\MakeUppercase proposition\fi \thmtformatoptarg {Inhibitor threshold}}{228}{proposition.C.3}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.3\else \numberline {C.3}\MakeUppercase definition\fi \thmtformatoptarg {Immune tolerance induction}}{230}{definition.C.3}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.4\else \numberline {C.4}\MakeUppercase proposition\fi \thmtformatoptarg {ITI extinction}}{230}{proposition.C.4}%
-\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.4\else \numberline {C.4}\MakeUppercase definition\fi \thmtformatoptarg {Gene therapy}}{231}{definition.C.4}%
-\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.5\else \numberline {C.5}\MakeUppercase proposition\fi \thmtformatoptarg {Gene-therapy equilibrium}}{231}{proposition.C.5}%
-\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~C.1\else \numberline {C.1}\MakeUppercase remark\fi \thmtformatoptarg {Coupled regimes}}{232}{remark.C.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.1\else \numberline {C.1}\MakeUppercase definition\fi \thmtformatoptarg {Clotting-factor state}}{233}{definition.C.1}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.2\else \numberline {C.2}\MakeUppercase definition\fi \thmtformatoptarg {Linear reference model}}{234}{definition.C.2}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.1\else \numberline {C.1}\MakeUppercase proposition\fi \thmtformatoptarg {Linear approximation}}{234}{proposition.C.1}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.2\else \numberline {C.2}\MakeUppercase proposition\fi \thmtformatoptarg {Stability}}{234}{proposition.C.2}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.3\else \numberline {C.3}\MakeUppercase proposition\fi \thmtformatoptarg {Inhibitor threshold}}{235}{proposition.C.3}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.3\else \numberline {C.3}\MakeUppercase definition\fi \thmtformatoptarg {Immune tolerance induction}}{237}{definition.C.3}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.4\else \numberline {C.4}\MakeUppercase proposition\fi \thmtformatoptarg {ITI extinction}}{237}{proposition.C.4}%
+\contentsline {definition}{\ifthmt@listswap \MakeUppercase definition~C.4\else \numberline {C.4}\MakeUppercase definition\fi \thmtformatoptarg {Gene therapy}}{238}{definition.C.4}%
+\contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~C.5\else \numberline {C.5}\MakeUppercase proposition\fi \thmtformatoptarg {Gene-therapy equilibrium}}{238}{proposition.C.5}%
+\contentsline {remark}{\ifthmt@listswap \MakeUppercase remark~C.1\else \numberline {C.1}\MakeUppercase remark\fi \thmtformatoptarg {Coupled regimes}}{239}{remark.C.1}%

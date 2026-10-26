@@ -186,6 +186,15 @@ keeps the metric bounded and interpretable, and it flags the relational case as 
 separate claim to be made explicitly.
 \end{reading}
 
+Figure~\ref{fig:E-ceiling} shows the capacity ceiling numerically: the share of biomedical potential that is realised, $H/P$, rises with social enablement at every level of structural freedom, but reaches one only when both contextual domains are at one.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_03_capacity_ceiling.pdf}
+\caption{Share of biomedical potential realised, $H/P$, against social enablement $S$ for four levels of structural freedom $R$, under the geometric realisation function with $\alpha=0.5$. The ceiling of one is reached only with both $S$ and $R$ at one.}
+\label{fig:E-ceiling}
+\end{figure}
+
 \section{Capability Realisation Family}
 \label{sec:E-family}
 For $0<\alpha<1$ and $\rho\leq0$, define \citep{arrow_chenery_1961}
@@ -294,6 +303,22 @@ same boundary property because both exponents are positive.
 The axioms admit a family, not a function. Narrowing the family to one member
 needs an assumption the axioms do not supply, and that assumption should be
 visible rather than buried.
+
+Figure~\ref{fig:E-levelsets} draws the level sets of the contextual mean $M(S,R)=[\alpha S^{\rho}+(1-\alpha)R^{\rho}]^{1/\rho}$ with $\alpha=0.5$. For $\rho\le0$ every level set bends towards the axes, so a shortfall in one domain cannot be made good by the other; only the arithmetic comparator, $\rho=1$, has straight level sets that cross the axes. Figure~\ref{fig:E-cesfamily} follows three profiles with the same arithmetic mean as $\rho$ changes. The balanced profile does not move, and the more unbalanced the profile, the more the choice of $\rho$ matters, which is why $\rho$ is declared in advance rather than tuned.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\linewidth]{../companions/figures/proof_01_level_sets.pdf}
+\caption{Level sets of the contextual mean $M(S,R)$ with $\alpha=0.5$ for four members of the family. Markers are three profiles with the same arithmetic mean, 0.45: $(S,R)=(0.45,0.45)$, $(0.70,0.20)$ and $(0.89,0.01)$.}
+\label{fig:E-levelsets}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_02_ces_family.pdf}
+\caption{The contextual mean against $\rho$ for the three profiles of Figure~\ref{fig:E-levelsets}. Dotted lines mark $\min(S,R)$, the bottleneck limit as $\rho\to-\infty$.}
+\label{fig:E-cesfamily}
+\end{figure}
 
 \section{Characterisation of the Primary CRF}
 \label{sec:E-characterisation}
@@ -410,6 +435,15 @@ average of $0.45$. Asserted by
 With the form fixed, its derivatives can be taken, and they turn out to say
 something the theory has so far only asserted.
 
+Figure~\ref{fig:E-balance} illustrates the balance penalty. Holding the arithmetic mean of $S$ and $R$ at 0.45 and moving the two apart, the arithmetic score does not change, while every non-compensatory member of the family falls.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_04_balance_penalty.pdf}
+\caption{Realised capability against the gap between the two contextual domains when their arithmetic mean is held at 0.45, for members of the family and the arithmetic comparator. Markers are the three profiles of Figure~\ref{fig:E-levelsets}.}
+\label{fig:E-balance}
+\end{figure}
+
 \section{Marginal Effects and Complementarity}
 \label{sec:E-marginal}
 For the primary geometric model, suppressing person subscripts, \citep{cobb_douglas_1928}
@@ -455,6 +489,15 @@ intersectional disadvantage is invisible to it.
 Cross-partials describe how the model behaves at a point. Comparing two people,
 or two groups, needs a result about differences, and on the log scale the
 multiplicative form gives an unusually clean one.
+
+Figure~\ref{fig:E-marginal} checks the complementarity result numerically: the analytic marginal effect of social enablement agrees with central finite differences, and the same gain in $S$ is worth more where structural freedom is higher.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_05_marginal_effects.pdf}
+\caption{Analytic marginal effect of social enablement, $\partial H/\partial S$ (lines), and central finite differences (open markers) for three levels of structural freedom, with $P=1$ and $\alpha=0.5$.}
+\label{fig:E-marginal}
+\end{figure}
 
 \section{Exact Capability-Gap Decomposition}
 \label{sec:E-gap}
@@ -525,6 +568,15 @@ the total. Asserted by
 \texttt{test\_theorem\_gap\_decomposition\_is\_exact} and
 \texttt{test\_worked\_example\_gap\_is\_entirely\_structural}.}
 \end{workedexample}
+
+Figure~\ref{fig:E-gap} applies the decomposition to two profiles that differ only in structural freedom, $(0.30,0.70,0.85)$ and $(0.30,0.70,0.20)$. The biomedical and social parts are zero and the structural part is the whole gap of 0.723 on the log scale.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_06_gap_decomposition.pdf}
+\caption{Exact log decomposition of the capability gap between $(P,S,R)=(0.30,0.70,0.85)$ and $(0.30,0.70,0.20)$ into biomedical, social and structural parts.}
+\label{fig:E-gap}
+\end{figure}
 
 \section{Policy Gradient Under a Budget Constraint}
 \label{sec:E-gradient}
@@ -762,6 +814,22 @@ Asserted by \texttt{test\_proposition\_social\_weight}.}
 The construction is now complete. What remains is to show that it can be
 exercised numerically and, more importantly, that it can be shown to be wrong.
 
+Figure~\ref{fig:E-ede} traces the equally distributed equivalent for a population of three people with capability 0.1, 0.4 and 0.9. It equals the mean when inequality aversion is zero, equals the geometric mean, 0.330, when aversion is one, and falls towards the minimum as aversion grows. Figure~\ref{fig:E-reversal} shows that the choice of action can reverse with aversion. Two people have profiles $(1,0.2,0.2)$ and $(1,0.8,0.8)$. One action raises both contextual domains of the worse-off person by 0.1; the other raises those of the better-off person by 0.2. The second gives the larger total gain and is preferred at low aversion; above an aversion of about 0.54 the first is preferred.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_09_ede_aversion.pdf}
+\caption{Equally distributed equivalent of the population $(0.1,0.4,0.9)$ against inequality aversion $\varepsilon$, unweighted and with three times the weight on the worst-off person. Dotted lines are the mean and the minimum.}
+\label{fig:E-ede}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{../companions/figures/proof_10_allocation_reversal.pdf}
+\caption{Equally distributed equivalent after each of two single actions for the two-person example in the text, against inequality aversion. Below the crossing the action with the larger total gain is preferred; above it, the action that helps the worse-off person.}
+\label{fig:E-reversal}
+\end{figure}
+
 \section{Simulation Experiments}
 \label{sec:crf_simulations}
 The reproducible script \texttt{analysis/02\_crf\_simulation.py} constructs four
@@ -799,6 +867,22 @@ The generated CSV files preserve every plotted value and include model-implied
 marginal gains for biomedical, social, and burden-reducing interventions. These
 gradients illustrate how aggregation can change priorities; they are not causal
 treatment effects.
+
+Two measurement checks bear on whether the domain inputs can be trusted. Figure~\ref{fig:E-determinacy} shows how the determinacy of a single-factor score depends on the loadings and the number of indicators, and how the uncertainty of the social domain grows as its indicators go missing while staying below the prior because the domains are correlated. Figure~\ref{fig:E-drift} shows the bias that follows when the intercepts of the social indicators drift between populations, and the coverage of the 95\% posterior intervals in each simulated scenario.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\linewidth]{../companions/figures/proof_07_determinacy_and_missingness.pdf}
+\caption{Left: model-implied correlation between a single-factor score and its factor, by loading and number of indicators. Right: posterior standard deviation of the social domain in a three-domain synthetic model as its indicators go missing.}
+\label{fig:E-determinacy}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\linewidth]{../companions/figures/proof_08_measurement_drift.pdf}
+\caption{Left: bias of the posterior social score as the intercepts of the social indicators drift, from the known-model formula (line) and from simulation (marker). Right: coverage of 95\% posterior intervals by domain and scenario; the dotted line is the nominal level.}
+\label{fig:E-drift}
+\end{figure}
 
 \section{Falsification and Empirical Comparison}
 \label{sec:E-falsification}
