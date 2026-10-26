@@ -1,0 +1,10 @@
+line-length = 110
+
+
+extend-exclude = ["archive"]
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[lint.per-file-ignores]
+"tools/*" = ["E501"]

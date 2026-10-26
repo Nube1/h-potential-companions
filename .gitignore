@@ -16,3 +16,7 @@ data/private/
 *.egg-info/
 .venv/
 *RESTRICTED*
+.venvs/
+dist/
+realworld-pipeline/data/raw/
+realworld-pipeline/outputs/

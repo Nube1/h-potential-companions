@@ -1,0 +1,47 @@
+name: Release
+
+# Push a tag such as v0.3.0 to build every paper and figure and attach them to
+# a GitHub release. Workflow dispatch builds the same bundle as an artifact.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # git describe needs the tags
+          sparse-checkout: |
+            companions
+            methods-series
+            realworld-pipeline
+            tools
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install TeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends latexmk texlive-latex-recommended texlive-fonts-recommended
+      - run: python tools/hp.py setup
+      - run: python tools/hp.py guard
+      - run: python tools/hp.py test
+      - run: python tools/hp.py build
+      - name: Bundle
+        run: python tools/hp.py dist --tag "${GITHUB_REF_NAME}"
+      - uses: actions/upload-artifact@v5
+        with:
+          name: h-potential-${{ github.ref_name }}
+          path: dist/*.zip
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" dist/*.zip --title "H-potential ${GITHUB_REF_NAME}" --generate-notes

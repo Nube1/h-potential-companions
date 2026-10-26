@@ -1,0 +1,32 @@
+# Install once:  pip install pre-commit && pre-commit install
+# Each ruff hook reads the nearest pyproject.toml, so every project keeps its own rules.
+repos:
+  - repo: local
+    hooks:
+      - id: guard-data
+        name: block participant data and RESTRICTED outputs
+        entry: python tools/guard_data.py
+        language: system
+        pass_filenames: true
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        files: ^(companions|realworld-pipeline|methods-series|tools)/
+        exclude: ^archive/
+      - id: ruff-format
+        files: ^(companions|realworld-pipeline|tools)/
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        files: ^methods-series/(src|tests|scripts)/
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=51200"]
+        exclude: ^archive/
+      - id: check-merge-conflict
+      - id: check-yaml
+        exclude: ^archive/

@@ -21,16 +21,45 @@ Each project is self-contained, with its own README, dependencies and tests. All
 
 ## Quick start
 
-Python 3.10 or newer. From the repository root:
+Python 3.10 or newer. One command drives everything; each project gets its own environment in `.venvs/` because all three install a package called `hpotential`.
 
 ```sh
-cd companions
-python -m pip install -r requirements-dev.txt
-python -m pytest
-python analysis/reproduce.py
+python tools/hp.py setup     # create the environments
+python tools/hp.py test      # every test suite
+python tools/hp.py build     # results, LaTeX papers and every figure
+python tools/hp.py dist      # bundle papers and figures into dist/
+python tools/hp.py all       # data guard, tests, build and bundle
 ```
 
-The other projects follow the same pattern: `cd` into the folder, `pip install -e ".[dev]"` (or `".[full,dev]"` for methods-series), then `pytest`. Each folder's README gives the details.
+`make setup`, `make test` and so on do the same where `make` is available.
+
+## NHATS data
+
+The real-world pipeline reads the NHATS public-use files directly. Register with NHATS, download the Round 1 sample-person file, the follow-up sample-person files and the latest tracker file into one folder, then:
+
+```sh
+python tools/hp.py nhats --data-dir PATH/TO/NHATS
+```
+
+This checks every variable named in `realworld-pipeline/configs/nhats_layout.yaml`, builds the analytic extract, fits the models and draws the figures into `realworld-pipeline/outputs/nhats/`. The layout's variable names follow NHATS naming and were written without the codebook to hand: `nhats-check` lists any that are absent or carry undeclared codes, and the build stops until they are fixed. Data and participant-level outputs stay on your machine; the guard below blocks them from git.
+
+## Figures
+
+| Set | Where | What it shows |
+|---|---|---|
+| Mathematical proofs | `companions/figures/` | Ten figures, one per result in the companion papers, each with a numeric check the build enforces |
+| Methods series | `methods-series/figures/` | Determinacy, attenuation, Delphi, solver verification, costed access and value of information |
+| Biostatistics | `realworld-pipeline/outputs/*/figures/` | Cohort flow, missingness, distributions, Kaplan-Meier and cumulative incidence, calibration, decision curves, discrimination, subgroups |
+| Medical | same | Domain profiles by number of conditions, H by age and sex, condition contrasts |
+| Economics and policy | same | Concentration curves by income, inequality aversion, the exact split of the income gap |
+
+Every figure separates its series by shade and by line style or hatch, so it reads in black and white. Each folder has `FIGURES.md` and `figure_index.json` with captions and the numbers behind each figure. The demo figures in a fresh checkout come from made-up NHATS-shaped files and are not evidence about anyone.
+
+## Working with git
+
+- **Pre-commit checks.** `pip install pre-commit && pre-commit install` runs the linters and `tools/guard_data.py` on every commit. The guard refuses statistical data files, anything marked RESTRICTED, files under `data/raw/` or `data/processed/`, CSVs carrying the NHATS person ID, and large files outside Git LFS. CI runs the same guard on every push.
+- **Releases.** Push a tag such as `v0.3.0` and GitHub Actions rebuilds everything and attaches the bundle to a GitHub release.
+- **Large files.** The archive is stored in Git LFS, so a clone downloads small pointer files until you run `git lfs pull`.
 
 ## The archive
 
