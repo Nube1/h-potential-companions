@@ -396,7 +396,15 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
         stays_df = pd.DataFrame(stays)
         first_stay = stays_df & ~stays_df.shift(1, axis=1, fill_value=False).cummax(axis=1)
         t, e = _outcome_times(pd.DataFrame(answered), first_stay, layout)
-        died_first = (out["mortality_event"] == 1) & (out["mortality_time"] < t.fillna(np.inf))
+        # A death in the interval straight after the last stay-free interview is
+        # a competing event: the person was seen stay-free, then died before the
+        # next interview could ask. A death after missed interviews stays
+        # censored at the last answer, since the gap was not observed. No
+        # answered follow-up at all (death before the first follow-up) counts too.
+        seen_until = t.where(e.notna(), 0.0).fillna(0.0)
+        died_first = (out["mortality_event"] == 1) & (
+            out["mortality_time"] <= seen_until + layout.days_per_round
+        )
         censor_at_death = died_first & (e != 1)
         t = t.where(~censor_at_death, out["mortality_time"])
         e = e.where(~censor_at_death, 0.0)

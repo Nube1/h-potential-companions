@@ -184,13 +184,17 @@ def survival_by_h(ctx: RunContext, index: style.FigureIndex) -> None:
             cell.set_linewidth(0)
         ax.set_xlabel("")
         tab.set_xlabel("Years since baseline interview (numbers at risk below)")
-        name = f"bio_{4 + e_i:02d}_{'km' if endpoint == 'mortality' else 'cuminc'}_{endpoint}"
+        prefix = f"bio_{4 + e_i:02d}" if e_i < 2 else f"bio_05{chr(ord('a') + e_i - 1)}"
+        name = f"{prefix}_{'km' if endpoint == 'mortality' else 'cuminc'}_{endpoint}"
+        what = {
+            "mortality": "Survival",
+            "combined": "Cumulative incidence of the combined endpoint (death or first stay)",
+        }.get(endpoint, f"Cumulative incidence of first {endpoint}")
         index.save(
             fig,
             name,
             GROUP,
-            f"{'Survival' if endpoint == 'mortality' else 'Cumulative incidence of first ' + endpoint} "
-            "by thirds of the capability score, survey-weighted "
+            f"{what} by thirds of the capability score, survey-weighted "
             + (
                 "Aalen-Johansen estimates with death before a first stay as a competing event"
                 if spec.get("competing")
@@ -214,8 +218,16 @@ def _comp(frame, spec):
 
 
 def calibration(ctx: RunContext, index: style.FigureIndex) -> None:
+    """Primary endpoints in one figure; any secondary endpoint in its own."""
+    primary = list(_primary(ctx))
+    secondary = [e for e in ctx.endpoints if e not in primary]
+    _calibration(ctx, index, primary, "bio_06_calibration")
+    if secondary:
+        _calibration(ctx, index, secondary, "bio_06b_calibration_secondary")
+
+
+def _calibration(ctx: RunContext, index: style.FigureIndex, endpoints, name) -> None:
     test = ctx.test()
-    endpoints = list(ctx.endpoints)
     fig, axes = plt.subplots(1, len(endpoints), figsize=(3.1 * len(endpoints), 3.1), squeeze=False)
     numbers = {}
     for ax, endpoint in zip(axes[0], endpoints):
@@ -259,9 +271,9 @@ def calibration(ctx: RunContext, index: style.FigureIndex) -> None:
         ax.legend(loc="upper left")
     index.save(
         fig,
-        "bio_06_calibration",
+        name,
         GROUP,
-        "Calibration in the hold-out split: mean predicted risk against observed risk (Kaplan-Meier, "
+        f"Calibration in the hold-out split ({', '.join(endpoints)}): mean predicted risk against observed risk (Kaplan-Meier, "
         "or Aalen-Johansen where death competes) "
         "within tenths of predicted risk, for the age-and-sex model and the model adding H. "
         "The dotted line is perfect calibration.",
