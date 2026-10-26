@@ -1,0 +1,246 @@
+% ============================================================
+% APPENDIX F -- Verification: the code that asserts the results
+% ============================================================
+
+\label{app:verification}
+
+\begin{ataglance}[How to read this appendix]
+Every numbered result in this thesis that can be checked by computation is
+checked by computation, and this appendix is the record.
+
+\S\ref{sec:F_why} says what the suite does and, more importantly, what it does
+not do: it verifies mathematics, not medicine, and passing it is not evidence
+about any patient. \S\ref{sec:F_arch} describes the reference implementation
+and the naming rule that ties one test to one numbered statement.
+\S\ref{sec:F_run} says how to run it. \S\ref{sec:F_results} prints the outcome
+of the run that produced this copy of the thesis. \S\ref{sec:F_found} records
+the two errors the suite caught, because a verification appendix that reports
+only successes is a marketing document. \S\ref{sec:F_limits} sets out what
+remains unverified and why.
+\end{ataglance}
+
+\section{What the Suite Is For, and What It Cannot Do}
+\label{sec:F_why}
+
+A proof establishes that a statement follows from its premises. It does not
+establish that the statement was transcribed correctly into the thesis, that
+the arithmetic in a worked example is right, or that the implementation someone
+later writes computes the object the proof was about. Those are different
+failures, they are common, and they are the ones a test suite catches.
+
+The suite here does four things. It checks that each stated property holds for
+the implemented function across a grid of inputs, which catches a
+transcription error in a formula. It checks that each worked example in the
+text returns the number the text prints, which catches arithmetic slips and,
+more usefully, catches them again whenever a parameter is later edited. It
+checks the internal consistency of the running cases, so that Mrs~A's realised
+capability is the same figure in Chapter~\ref{ch:introduction} and in
+Chapter~\ref{app:crf}. And it checks the qualitative claims the prose makes
+about the mathematics, such as that lowering the substitution parameter
+punishes imbalance harder, which are the claims most easily asserted and least
+often verified.
+
+What it does not do needs stating plainly, because verification suites attract
+more credit than they deserve.
+
+\begin{itemize}
+\item \textbf{It is not a proof.} A property that holds on a finite grid of
+inputs may fail elsewhere. The proofs are in
+Appendix~\ref{app:mathematical_foundations} and Chapter~\ref{app:crf}; the tests check
+that the implementation agrees with them, which is a weaker and different
+claim.
+
+\item \textbf{It is not empirical validation.} No participant data are used.
+Nothing here says whether the three domains exist, whether the indicators
+measure them, or whether the construct predicts anything. Those questions
+belong to Chapters~\ref{ch:results1} and~\ref{ch:results2} and are answered by
+data, not by assertions in Python.
+
+\item \textbf{It cannot check the axioms.} Whether capacity boundedness is the
+right commitment, or whether $\varepsilon$ should be $0$ or $2$, are questions
+no test can settle. The suite verifies that the mathematics does what the
+axioms say; it is silent on whether the axioms are correct.
+
+\item \textbf{Passing is not a quality claim.} A suite tests what its author
+thought to test. Its value lies in what it caught, which
+\S\ref{sec:F_found} reports, and in the fact that it will catch the same class
+of error again when the thesis is next edited.
+\end{itemize}
+
+The honest summary is that this appendix raises confidence in the
+\emph{bookkeeping} of a long mathematical argument. That is worth having. It is
+not worth more than it is.
+
+\section{Architecture and the Naming Rule}
+\label{sec:F_arch}
+
+The code lives in \texttt{verification/} in the thesis archive and has two
+parts. The package \texttt{hpv} is a reference implementation: one module per
+mathematical layer, with every function carrying the number of the result it
+implements. The directory \texttt{tests/} holds the assertions.
+
+\begin{table}[htbp]\centering
+\caption{The reference implementation. Each module implements the objects of
+one mathematical layer of the thesis.}
+\label{tab:F_modules}
+\footnotesize
+\begin{tabular}{p{3.4cm} p{2.4cm} p{7.6cm}}
+\toprule
+\textbf{Module} & \textbf{Source} & \textbf{Objects implemented} \\
+\midrule
+\texttt{hpv/crf.py} & App.~\ref{app:mathematical_foundations}, Ch.~\ref{app:crf} &
+Domain profile, CES contextual mean and its geometric limit, the additive and
+relational comparators, deprivation counting, gradients and elasticities,
+cross-partials, the gap decomposition, the Atkinson equally distributed
+equivalent and its social weights \\
+\addlinespace
+\texttt{hpv/dynamics.py} & App.~\ref{app:dynamical} &
+Michaelis--Menten and Hill terms, the drift of the deterministic model, its
+closed-form equilibrium, the Lipschitz constant, fixed-step RK4,
+Euler--Maruyama, and a conservative finite-volume Fokker--Planck step \\
+\addlinespace
+\texttt{hpv/haemophilia.py} & App.~\ref{app:hemo_dynamics} &
+Neutralisation fraction, the factor steady state, the inhibitor threshold, the
+linear reference model, the ITI equilibrium and its critical suppression, the
+gene-therapy equilibrium \\
+\addlinespace
+\texttt{hpv/economics.py} & App.~\ref{app:a-economics}, \ref{app:computation} &
+Net health benefit, incremental net monetary benefit, displaced health, budget
+impact, discounting, the ICER, and the DALY identity \\
+\addlinespace
+\texttt{hpv/prognostic.py} & Ch.~\ref{ch:methods}, \ref{ch:results2} &
+Hazard-ratio to absolute-risk conversion, cumulative incidence under a
+competing risk against the Kaplan--Meier complement, decision-curve net
+benefit, and classical-error attenuation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The naming rule is the part that makes the suite usable rather than
+decorative. Every test function is named for the statement it asserts:
+\texttt{test\_proposition\_inhibitor\_threshold},
+\texttt{test\_theorem\_gap\_decomposition\_is\_exact},
+\texttt{test\_worked\_example\_mrs\_a\_absolute\_risk}. A reader who doubts
+Proposition~\ref{prop:C_threshold} can find the test that asserts it by name,
+read the assertion, and change the numbers. Every test carries a docstring
+naming the result and saying in one sentence what would be wrong if it failed.
+
+This is also why the pointer beneath each proposition in the appendices reads
+\emph{Verified numerically by} and then a test name. In the previous version of
+this thesis those pointers named tests in a package called \texttt{volos} that
+did not exist. Announcing a verification engine one has not written is worse
+than writing nothing, and the pointers now name tests that run.
+
+\section{Running the Suite}
+\label{sec:F_run}
+
+The suite needs Python 3.10 or later, \texttt{pytest} and \texttt{numpy}, and
+nothing else. From the \texttt{verification/} directory:
+
+\begin{lstlisting}[style=hpcode,language=bash]
+pip install pytest numpy
+python3 -m pytest tests/ -q          # run everything
+python3 -m pytest tests/ -q -k threshold   # run one result
+python3 run_verification.py          # run everything and write the table below
+\end{lstlisting}
+
+\noindent
+The runner writes two files. \texttt{verification\_results.tex} is the table in
+\S\ref{sec:F_results}, regenerated on every build, so the table cannot drift
+away from the code that produced it. \texttt{verification\_results.json} is the
+same record in machine-readable form, with the timestamp, the Python version
+and the platform, so a reader can tell whether the printed table came from the
+code they are holding.
+
+Stochastic tests fix their seeds. The Monte Carlo comparisons use tolerances
+set from the standard error of the estimator rather than tuned until they
+passed, and the seeds are declared in the source so a failure can be
+reproduced.
+
+\section{Results of the Run That Produced This Document}
+\label{sec:F_results}
+
+\input{verification/verification_results}
+
+\noindent
+A failing row would appear here, in this table, in the submitted thesis. That
+is the intention. A verification appendix whose table is generated by the same
+command that builds the document cannot quietly report a state of affairs that
+has ceased to be true.
+
+\section{What the Suite Caught}
+\label{sec:F_found}
+
+Two errors surfaced on the first runs. Both are recorded because the value of a
+test suite is measured in what it finds, and because both are instructive about
+what kinds of checking catch what kinds of mistake.
+
+\subsection{A worked example that proved nothing}
+
+The compensation example in \S\ref{app:a-additivity} was written with Mr~B's
+structural freedom falling from $0.20$ to $0.05$ while immune tolerance
+induction raised his biomedical potential from $0.30$ to $0.60$. The additive
+index scores the change as an improvement, which was the point. The realisation
+function was supposed to score it as a deterioration, and does not: both
+profiles return exactly $0.112$, because
+$0.60\sqrt{0.70\times0.05}$ and $0.30\sqrt{0.70\times0.20}$ are the same
+number. The example demonstrated a difference between the two rules that, at
+those particular numbers, did not exist.
+
+The parameter was changed to $0.04$, where the realisation function returns
+$0.100$ against $0.112$ and the two rules disagree about the sign of the
+change. The point survives; the arithmetic that was supposed to carry it now
+does.
+
+The general lesson is that a hand-worked example is a piece of evidence, and
+like any piece of evidence it can be checked or taken on trust. This one had
+been read several times by a human and the coincidence was not noticed.
+
+\subsection{A sign error that mass conservation could not see}
+
+The finite-volume Fokker--Planck step in \texttt{hpv/dynamics.py} was written
+with the advective flux entering the assembled operator with the wrong sign, so
+a positive drift moved the population density towards lower biomarker values
+instead of higher ones.
+
+The interesting part is which test failed. The mass-conservation test of
+Proposition~\ref{prop:B_mass} passed throughout, both before and after the
+correction, because a sign error in the flux still leaves the operator's column
+sums at zero: probability was conserved perfectly while flowing the wrong way.
+Only the test asserting that drift moves the mean and diffusion widens the
+variance, which is the qualitative claim the prose in \S\ref{sec:B_fp} makes,
+caught it.
+
+Conservation properties are the natural thing to test in a discretised
+transport problem, and they are insensitive to direction. A suite built only
+from the invariants a numerical analyst would think to check would have shipped
+this. The test that caught it was written to verify a sentence in the
+manuscript rather than a property of the scheme, which is an argument for
+writing tests from the prose as well as from the mathematics.
+
+\section{What Remains Unverified}
+\label{sec:F_limits}
+
+Three classes of claim in this thesis are not covered, and it is better to name
+them than to let the table above imply a coverage it does not have.
+
+\textbf{Everything that needs data.} The measurement model, the factor
+structure, the invariance tests, the survival models and every performance
+statistic in Chapters~\ref{ch:results1} and~\ref{ch:results2} require the NHATS
+extract, which is not part of this archive. The R scripts under
+\texttt{analysis/} validate their inputs and record session information but
+cannot reproduce a numerical result until a documented extract and variable
+mapping are supplied. What the Python suite covers on the prognostic side is
+the arithmetic of hazard conversion, competing risks, net benefit and
+attenuation, which is the part that can be checked without a cohort.
+
+\textbf{The proofs themselves.} No theorem prover is used. The tests check
+agreement between the implementation and the stated result on sampled inputs;
+they cannot establish that a proof is valid, and a reader who doubts a proof
+should read the proof.
+
+\textbf{The normative content.} The axioms, the choice of $\alpha$, the range
+of $\rho$, the value of $\varepsilon$ and the opportunity-cost threshold
+$\lambda$ are judgements. The suite verifies what follows from a given choice.
+It has nothing to say about whether the choice is defensible, and no amount of
+green output should be read as though it did.

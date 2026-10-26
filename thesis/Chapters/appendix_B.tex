@@ -1,0 +1,550 @@
+% ============================================================
+% APPENDIX B -- General Dynamical Extension of the H-potential
+% Rewritten to mirror Appendix A: Purpose -> Definitions ->
+% Propositions -> Proofs -> Remarks -> Summary.
+% ============================================================
+
+\label{app:dynamical}
+
+\begin{ataglance}[How to read this appendix]
+Appendix~\ref{app:mathematical_foundations} asked what a person's health
+capability is at one moment. This appendix asks what it does next, and it
+answers in three layers of increasing realism.
+
+The first layer is a single ordinary differential equation for one patient with
+no randomness (\S\ref{sec:B_ode}). It says the disease marker rises with
+treatment and repair and falls with inhibition and clearance, and it settles at
+a level where those balance. The second layer adds noise, because two patients
+on identical regimens do not follow identical curves (\S\ref{sec:B_sde}). The
+third layer stops following individuals and follows the whole cohort as a
+density that flows and spreads (\S\ref{sec:B_fp}). The last section reconnects
+the machinery to the conceptual score by letting it move in time
+(\S\ref{sec:B_timevarying}).
+
+The clinical reader may recognise the whole structure from pharmacokinetics.
+Layer one is a one-compartment model; layer two is that model with
+between-dose variability; layer three is the population-PK view in which the
+object of interest is the distribution of trough levels across a clinic rather
+than any one patient's curve. Mr~B is the worked case throughout, and
+Appendix~\ref{app:hemo_dynamics} makes the haemophilia version explicit.
+
+None of this is used in the empirical validation. It is a proposed direction.
+\end{ataglance}
+
+\section{Purpose and Scope}
+\label{sec:B_purpose}
+This appendix records a disease-independent dynamical extension of the
+$H_{\text{potential}}$ framework of Chapter~\ref{ch:theory} and
+Appendix~\ref{app:mathematical_foundations}. Where Appendix~\ref{app:mathematical_foundations}
+treats the static conceptual score and its measurement, this appendix asks how
+the biomedical state that feeds that score evolves in time, and how individual
+trajectories aggregate to a population distribution. The material is a proposed
+direction for future work: the specifications are theoretical and the figures
+are illustrative rather than empirical. Nothing here is used in the measurement
+or prognostic validation of Chapters~\ref{ch:methods} to \ref{ch:results2}.
+
+Saying what the appendix is not part of leaves open what it is attached to, and
+the mapping between the two matters for reading the notation.
+
+\section{Relationship to the Validated Framework}
+\label{sec:B_relationship}
+The definitions of the conceptual variables $L,Q,S,B$ and the latent construct
+$\zeta$ are given in Appendix~\ref{app:mathematical_foundations}. This appendix
+adds a state variable $X(t)$ that stands behind the biomedical term $L$: in the
+time-varying form of Section~\ref{sec:B_timevarying}, $L$ becomes a function of
+$X(t)$, so the static score of Appendix~\ref{app:mathematical_foundations} is the
+$t$-independent special case of the construction here. The disease-specific
+realisation of this appendix is Appendix~\ref{app:hemo_dynamics}, and its
+numerical implementation is Appendix~\ref{app:computation}.
+
+Each proposition below is stated as a claim a computer can check, and each is
+checked. The line beneath a proposition names the test that asserts it; the
+tests live in \texttt{verification/tests/test\_dynamics.py} in the thesis
+archive and Appendix~\ref{app:verification} reports the outcome of running
+them.
+
+With the correspondence fixed, the objects can be defined precisely enough to
+prove things about.
+
+\section{Definitions}
+\label{sec:B_definitions}
+
+\begin{definition}[Deterministic state]
+\label{def:B_state}
+Let $X(t)\in\mathbb{R}_+$ denote the latent disease state of an individual,
+measured by an observable biomarker appropriate to the disease (for example
+factor~VIII concentration, viral load, tumour burden, or HbA1c). The remaining
+mechanism variables are the inhibitory factor $Y\ge0$, the homeostatic
+(restorative) factor $Z\ge0$, the therapeutic input $T\ge0$, and the natural
+clearance rate $k_{\text{elim}}>0$.
+\end{definition}
+
+\begin{definition}[Universal deterministic model]
+\label{def:B_ode}
+The disease marker evolves by the ordinary differential equation \citep{coddington_levinson_1955}
+\begin{equation}
+\frac{dX}{dt}=\mathbf{f}(T)-\mathbf{g}(Y,X)+\mathbf{h}(Z)-k_{\text{elim}}X,
+\label{eq:B_ode}
+\end{equation}
+with treatment input $\mathbf{f}(T)=V_{\max}T/(K_m+T)$ (Michaelis--Menten),
+cooperative stabilisation $\mathbf{h}(Z)=\gamma Z^n/(K_d^n+Z^n)$ (Hill), with
+maximal stabilisation rate $\gamma>0$, and bilinear
+inhibition $\mathbf{g}(Y,X)=k_{\text{inh}}YX$.
+\end{definition}
+
+\begin{definition}[Patient state and stochastic model]
+\label{def:B_sde}
+The patient state is the stochastic process $X(t)$ governed by \citep{oksendal_2003}
+\begin{equation}
+dX(t)=\big[\mathbf{f}-\mathbf{g}+\mathbf{h}-k_{\text{elim}}X(t)\big]\,dt+\sigma(X,t)\,dW_t,
+\label{eq:B_sde}
+\end{equation}
+where $W_t$ is a standard Wiener process \citep{oksendal_2003} and $\sigma(X,t)\ge0$ scales the
+perturbation. Patient-specific treatment sensitivity $S_T=f(\{G_i\},\{I_j\},\text{env})$
+modulates the drift, personalising \eqref{eq:B_sde}.
+\end{definition}
+
+\begin{definition}[Population state]
+\label{def:B_population}
+The population state is the probability density $\rho(x,t)$ of patient states
+$X(t)$ across a cohort, with drift $\mu(x,t)$ inherited from the SDE and
+diffusion $D(x,t)=\sigma(x,t)\sigma(x,t)^\top$.
+
+Three objects have now been defined: a patient, a noisy patient and a
+population. They are taken in that order, because each is built from the one
+before and because the first is the only one for which existence can be settled
+by hand.
+\end{definition}
+
+\section{The Deterministic Backbone}
+\label{sec:B_ode}
+
+\begin{proposition}[Existence and uniqueness]
+\label{prop:B_existence}
+If the parameters are bounded and $\mathbf{f},\mathbf{g},\mathbf{h}$ are
+Lipschitz \citep{coddington_levinson_1955} on the admissible range, then the right-hand side of \eqref{eq:B_ode}
+is globally Lipschitz in $X$ with constant $L=k_{\text{inh}}Y+k_{\text{elim}}$, and
+\eqref{eq:B_ode} admits a unique solution for each initial condition. Moreover,
+since the $X$-derivative of the right-hand side equals $-L<0$, two solutions
+whose initial conditions differ by $\delta_0$ satisfy
+$|X_1(t)-X_2(t)|=\delta_0e^{-Lt}$: trajectories contract, and contract faster
+the larger $L$ is.
+\end{proposition}
+\begin{proof}
+Only $-\mathbf{g}(Y,X)-k_{\text{elim}}X=-(k_{\text{inh}}Y+k_{\text{elim}})X$
+depends on $X$ (the saturable $\mathbf{f}$ and $\mathbf{h}$ do not), so the
+$X$-derivative of the right-hand side is the constant
+$-(k_{\text{inh}}Y+k_{\text{elim}})$; hence the map is globally Lipschitz with
+that constant. Picard--Lindel\"of then gives local existence and uniqueness, and
+the linear growth bound extends the solution to all $t\ge0$. Two solutions from
+initial data differing by $\delta_0$ stay within $\delta_0 e^{Lt}$ by Gr\"onwall
+\citep{gronwall_1919}.
+\end{proof}
+
+\begin{reading}[Why an existence proof is not a formality]
+This proposition says that the model has exactly one answer and that the answer
+does not jump. Both halves matter clinically.
+
+Uniqueness means that if two people run the simulation with the same starting
+factor level and the same regimen, they get the same trajectory. A model
+without it can produce two different predictions from one set of inputs, which
+would make any dosing recommendation drawn from it arbitrary.
+
+The Gr\"onwall bound is the stability half. It says that if Mr~B's true
+starting factor activity differs from what the assay reported, the gap between
+the two predicted trajectories is bounded rather than growing without limit.
+Since every clinical input is measured with error, a model lacking this
+property would amplify assay noise into confident nonsense.
+
+Here the bound is generous, because the $X$-derivative of the right-hand side
+is $-(k_{\text{inh}}Y+k_{\text{elim}})$, which is negative. Two solutions
+starting $\delta_0$ apart therefore close to $\delta_0e^{-Lt}$: they converge,
+and they converge faster the larger $L$ is. An error in the assumed starting
+factor level is forgotten, and a higher inhibitor titre makes it forgotten
+sooner, because neutralisation and clearance together pull every trajectory
+towards the same steady state. What a high titre does not do is make the
+steady state itself easy to hit, which is the subject of the next
+proposition.
+\end{reading}
+
+\begin{workedexample}[apb-gronwall]{Two trajectories from two assay readings}
+Mr~B's true starting factor activity is $2$ and the assay reported $3$, so
+$\delta_0=1$. Take the illustrative parameter set of
+\texttt{verification/tests/test\_dynamics.py}: $V_{\max}=100$, $K_m=10$, $T=20$,
+$k_{\text{inh}}=0.05$, $Y=2$, $\gamma=30$, $K_d=50$, $n=2$, $Z=80$,
+$k_{\text{elim}}=0.8$. The Lipschitz constant is
+$L=k_{\text{inh}}Y+k_{\text{elim}}=0.05\times2+0.8=0.9$.
+
+Integrating both starting values and taking the difference gives $0.407$ at
+$t=1$, $0.011$ at $t=5$ and $0.00012$ at $t=10$, matching $e^{-0.9t}$ to three
+figures at every point. Raise the titre to $Y=20$ and $L$ becomes $1.8$: the
+gap at $t=5$ falls to $0.00012$, ninety times smaller than at $Y=2$.
+
+\begin{wecode}[Python]
+import math
+from hpv.dynamics import integrate_ode, lipschitz_constant
+
+P = dict(Vmax=100.0, Km=10.0, T=20.0, k_inh=0.05, Y=2.0,
+         gamma=30.0, Kd=50.0, n=2.0, Z=80.0, k_elim=0.8)
+L = lipschitz_constant(k_inh=P["k_inh"], Y=P["Y"], k_elim=P["k_elim"])
+print("L =", L)
+for t in (1.0, 2.0, 5.0, 10.0):
+    gap = abs(integrate_ode(2.0, t, P) - integrate_ode(3.0, t, P))
+    print(f"t {t:>5.1f}   gap {gap:.6f}   exp(-Lt) {math.exp(-L * t):.6f}")
+
+hi = dict(P, Y=20.0)
+print("gap at t=5 with Y=20:",
+      round(abs(integrate_ode(2.0, 5.0, hi) - integrate_ode(3.0, 5.0, hi)), 6))
+\end{wecode}
+
+\weanswer{$L=0.9$; the gap falls from $0.407$ at $t=1$ to $1.23\times10^{-4}$ at
+$t=10$, tracking $e^{-Lt}$ throughout. At $Y=20$ the same gap is reached by
+$t=5$. Assay error is forgotten, and forgotten sooner at a higher titre.
+Asserted by
+\texttt{test\_worked\_example\_gronwall\_two\_assay\_readings} and
+\texttt{test\_proposition\_trajectories\_converge\_not\_diverge}.}
+\end{workedexample}
+\checkedby{tests/test_dynamics.py::test_proposition_existence_lipschitz_constant}
+
+\begin{proposition}[Deterministic equilibrium]
+\label{prop:B_equilibrium}
+For constant inputs the ODE has the unique stable fixed point
+$X^\ast=(\mathbf{f}+\mathbf{h})/(k_{\text{inh}}Y+k_{\text{elim}})$.
+\end{proposition}
+\begin{proof}
+Setting $dX/dt=0$ gives
+$\mathbf{f}+\mathbf{h}=(k_{\text{inh}}Y+k_{\text{elim}})X^\ast$; the Jacobian
+$-(k_{\text{inh}}Y+k_{\text{elim}})<0$ makes it stable.
+\end{proof}
+
+\begin{reading}[The steady state as a trough level]
+$X^\ast=(\mathbf f+\mathbf h)/(k_{\text{inh}}Y+k_{\text{elim}})$ is input over
+output: everything putting factor into the circulation, divided by everything
+taking it out. It is the same arithmetic as a steady-state drug concentration,
+dose rate over clearance, and it can be read the same way.
+
+For Mr~B the numerator is his infusion and whatever endogenous stabilisation
+von~Willebrand factor provides. The denominator has two parts, and only one is
+ordinary. Clearance $k_{\text{elim}}$ is the usual half-life term. The other,
+$k_{\text{inh}}Y$, is his inhibitor, and it enters the denominator, so anything
+that doubles the denominator halves the steady state for a given dose.
+
+That is why the arithmetic of inhibitors is so unforgiving. Raising the dose
+raises the numerator linearly, so it can compensate, but only in proportion,
+and the ceiling is set by what can be infused and afforded. The equation makes
+the case for immune tolerance induction quantitative: reducing $Y$ acts on the
+denominator, and is worth more per unit than pushing the numerator.
+\end{reading}
+
+\begin{workedexample}[apb-trough]{The steady state read as a trough level}
+Use the same illustrative parameters as Worked Example~\ref{ex:apb-gronwall}.
+The infusion term is $\mathbf f=V_{\max}T/(K_m+T)=100\times20/30=66.67$ and the
+stabilisation term is $\mathbf h=\gamma Z^n/(K_d^n+Z^n)=30\times
+6400/8900=21.57$, so the numerator is $88.24$. The denominator is
+$k_{\text{inh}}Y+k_{\text{elim}}=0.9$. The trough is therefore
+$X^\ast=88.24/0.9=98.04$.
+
+Now raise the titre from $Y=2$ to $Y=20$. The denominator becomes
+$0.05\times20+0.8=1.8$, exactly twice as large, and the trough falls to
+$49.02$, exactly half. It takes a tenfold rise in titre to halve the trough
+here only because clearance still dominates the denominator at $Y=2$; in a
+patient whose clearance term were smaller, the same halving would follow a much
+smaller rise.
+
+\begin{wecode}[Python]
+from hpv.dynamics import equilibrium, michaelis_menten, hill, integrate_ode
+
+P = dict(Vmax=100.0, Km=10.0, T=20.0, k_inh=0.05, Y=2.0,
+         gamma=30.0, Kd=50.0, n=2.0, Z=80.0, k_elim=0.8)
+f = michaelis_menten(P["T"], P["Vmax"], P["Km"])
+h = P["gamma"] * hill(P["Z"], P["Kd"], P["n"])
+den = P["k_inh"] * P["Y"] + P["k_elim"]
+print(f"numerator {f + h:.3f} = {f:.3f} + {h:.3f}   denominator {den:.3f}")
+print(f"trough {equilibrium(**P):.3f}   solver from x0=0: "
+      f"{integrate_ode(0.0, 60.0, P):.3f}")
+print("trough at Y=20:", round(equilibrium(**dict(P, Y=20.0)), 3))
+\end{wecode}
+
+\weanswer{$X^\ast=98.044$, which the integrator reaches from any starting
+value; at $Y=20$ it is $49.022$, exactly half. Asserted by
+\texttt{test\_worked\_example\_trough\_level\_for\_mr\_b} and
+\texttt{test\_proposition\_equilibrium\_matches\_the\_solver}.}
+\end{workedexample}
+
+Stability also tells us what the model cannot do. It converges to one level and
+stays there, so it cannot generate a spontaneous bleed in a patient whose
+average factor level is adequate. Real patients have those. The next layer adds
+the randomness that produces them.
+\checkedby{tests/test_dynamics.py::test_proposition_equilibrium_matches_the_solver}
+
+\section{Stochastic Extension}
+\label{sec:B_sde}
+
+\begin{proposition}[Reduction to the ODE]
+\label{prop:B_reduction}
+As $\sigma\to0$ the solution of the SDE \eqref{eq:B_sde} converges to the
+solution of the ODE \eqref{eq:B_ode} with the same initial condition.
+\end{proposition}
+\begin{proof}
+With $\sigma\equiv0$ the stochastic integral vanishes and \eqref{eq:B_sde}
+reduces to \eqref{eq:B_ode} pathwise. For $\sigma>0$, take expectations of
+\eqref{eq:B_sde} and use $\mathbb E[dW_t]=0$: the drift of \eqref{eq:B_ode} is
+affine in $X$ on the admissible range, so $\mathbb E[X(t)]$ satisfies
+\eqref{eq:B_ode} exactly, as Proposition~\ref{prop:B_consistency} states. The
+deviation of any individual path from that mean is $O(\sigma)$ in the
+mean-square sense by the standard It\^o isometry bound, so the law of $X(t)$
+concentrates on the deterministic solution as $\sigma\to0$. The numerical
+check reported in Appendix~\ref{app:verification} confirms the rate rather than
+establishing it.
+\end{proof}
+\checkedby{tests/test_dynamics.py::test_proposition_sde_reduces_to_ode_as_noise_vanishes}
+
+\begin{proposition}[Population consistency]
+\label{prop:B_consistency}
+If the drift is affine in $X$ and the noise has zero mean, the expectation
+$\mathbb{E}[X(t)]$ satisfies the deterministic ODE. For the linear model
+$dX=(a-bX)\,dt+\sigma\,dW$, $\ \mathbb{E}[X(t)]=a/b+(x_0-a/b)e^{-bt}$.
+\end{proposition}
+\begin{proof}
+Taking expectations of \eqref{eq:B_sde} and using $\mathbb{E}[dW_t]=0$ gives
+$d\mathbb{E}[X]/dt=\mathbb{E}[\text{drift}]$, which for affine drift equals the
+drift evaluated at $\mathbb{E}[X]$; solving $m'=a-bm$ yields the stated mean.
+\end{proof}
+
+\begin{reading}[The average patient is not a patient]
+These two propositions are a pair, and the second contains a trap worth
+labelling.
+
+The first says the stochastic model contains the deterministic one: turn the
+noise down and the two coincide. That is the sanity check any extension should
+pass.
+
+The second says that when the drift is affine, the \emph{mean} of the
+stochastic paths follows the deterministic curve exactly. It is tempting to
+conclude that the deterministic model is therefore good enough. It is not,
+because clinical outcomes are rarely affine functions of the state. What
+matters for Mr~B is not his mean factor activity but the proportion of hours he
+spends below the protective threshold, and that is a highly non-linear function
+of the path.
+
+Two patients can share a mean trough of $3$~IU/dL, one holding steady and one
+oscillating between $0.5$ and $5.5$. The deterministic model calls them
+identical. The second bleeds. This is the same reason that HbA1c and glycaemic
+variability are both measured: an average conceals the excursions that cause
+the damage. Jensen's inequality is the formal name for the gap, and the whole
+point of the stochastic layer is to keep it visible.
+\end{reading}
+\checkedby{tests/test_dynamics.py::test_proposition_population_consistency_affine_drift}
+
+\begin{remark}
+The Euler--Maruyama and Milstein schemes integrate \eqref{eq:B_sde}; the Milstein
+correction $\tfrac12\sigma\sigma'(dW^2-dt)$ raises the strong order to one. The
+Euler--Maruyama scheme is implemented in \texttt{hpv/dynamics.py}; the Milstein
+correction is not, because none of the results below turn on the difference.
+\end{remark}
+
+Simulating enough individual paths to describe a clinic is expensive and
+indirect. The density of the whole cohort obeys an equation of its own, and
+solving that equation once is cheaper than following everybody.
+
+\section{Population-Level Extension: the Fokker--Planck Equation}
+\label{sec:B_fp}
+
+\begin{definition}[Probability density, drift, diffusion]
+\label{def:B_fp_terms}
+Let $\rho(x,t)$ be the density of patient states, normalised so
+$\int\rho(x,t)\,dx=1$; let $\mu(x,t)$ be the drift of \eqref{eq:B_sde} and
+$D(x,t)=\sigma\sigma^\top$ the diffusion.
+\end{definition}
+
+The density evolves by the Fokker--Planck (Kolmogorov forward) equation \citep{risken_1996}
+\begin{equation}
+\frac{\partial\rho}{\partial t}
+=-\frac{\partial}{\partial x}\big[\mu(x,t)\rho\big]
++\frac{1}{2}\frac{\partial^2}{\partial x^2}\big[D(x,t)\rho\big]
+=-\frac{\partial J}{\partial x},\qquad
+J=\mu\rho-\tfrac12\frac{\partial}{\partial x}(D\rho).
+\label{eq:B_fp}
+\end{equation}
+
+\begin{proposition}[Mass conservation]
+\label{prop:B_mass}
+Under reflecting (zero-flux) boundaries $J=0$ at the ends of the domain, total
+probability is conserved: $\tfrac{d}{dt}\int\rho\,dx=0$.
+\end{proposition}
+\begin{proof}
+Integrating \eqref{eq:B_fp} over the domain $[x_L,x_R]$,
+$\tfrac{d}{dt}\int_{x_L}^{x_R}\rho\,dx=-[J]_{x_L}^{x_R}=0$ when the boundary
+fluxes vanish. The conservative finite-volume discretisation inherits this: the
+assembled operator has zero column sums (numerically $\sim10^{-14}$), so the
+backward-Euler step preserves total mass exactly.
+\end{proof}
+
+\begin{reading}[What the Fokker--Planck equation is actually saying]
+Stop tracking patients and start tracking the crowd. Let $\rho(x,t)$ be the
+proportion of a clinic population whose factor activity is near $x$ at time
+$t$: a histogram that changes shape as the day goes on.
+
+The equation says the histogram changes for exactly two reasons, and the two
+terms name them. The first term, the one with the single derivative, is
+\emph{drift}: everyone is being pushed the same way, so the whole histogram
+slides. Start a clinic on prophylaxis and the bulk of the distribution moves
+right. The second term, with the second derivative, is \emph{diffusion}:
+individual variation spreads the histogram out, flattening the peak and
+thickening the tails, without moving its centre.
+
+The clinically important quantity is usually the left tail, the fraction of the
+clinic below the protective threshold at any moment. A policy can shift that
+fraction in two quite different ways, and the equation separates them. Raising
+everyone's dose is drift. Reducing variability, through better adherence
+support, more reliable supply, or a longer-acting product, is diffusion. A
+service with a good mean and a fat left tail needs the second, and an
+intervention aimed at the first will not help it.
+\end{reading}
+
+\begin{workedexample}[apb-driftdiff]{Drift and diffusion, separated numerically}
+Start a clinic at a Gaussian density on $x\in[0,10]$ with $401$ cells, centred
+at $5.0$ with variance $0.25$, and take the protective level to be $4.5$. At
+the start, $15.3$ per cent of the clinic sits below it. Run the
+Fokker--Planck step of Proposition~\ref{prop:B_mass} for $50$ backward-Euler
+steps of $dt=0.02$, that is to $t=1$, under three policies.
+
+Doing nothing, with only the baseline diffusion $D=0.05$, leaves the mean at
+$5.00$, raises the variance from $0.25$ to $0.30$ and pushes the tail to
+$17.5$ per cent. A drift policy, $\mu=0.5$ with the same $D$, moves the mean to
+$5.50$ and leaves the variance at $0.32$; the tail collapses to $3.6$ per cent.
+A variability policy that instead raises $D$ to $0.8$ with no drift leaves the
+mean at $5.00$ and takes the variance to $1.05$; the tail rises to $30.8$ per
+cent.
+
+\begin{wecode}[Python]
+import numpy as np
+from hpv.dynamics import fokker_planck_step
+
+x = np.linspace(0.0, 10.0, 401); dx = x[1] - x[0]
+base = np.exp(-((x - 5.0) ** 2) / 0.5); base /= base.sum() * dx
+mean = lambda r: float((x * r).sum() * dx)
+var = lambda r: float(((x - mean(r)) ** 2 * r).sum() * dx)
+tail = lambda r: float(r[x < 4.5].sum() * dx)
+
+def run(mu, D, steps=50, dt=0.02):
+    r = base.copy()
+    for _ in range(steps):
+        r, _ = fokker_planck_step(r, x, mu, D, dt)
+    return r
+
+zero = np.zeros_like(x)
+runs = {"start": base,
+        "no policy": run(zero, np.full_like(x, 0.05)),
+        "drift 0.5": run(np.full_like(x, 0.5), np.full_like(x, 0.05)),
+        "diffusion 0.8": run(zero, np.full_like(x, 0.8))}
+for name, r in runs.items():
+    print(f"{name:<14} mean {mean(r):.3f}  var {var(r):.3f}  tail<4.5 {tail(r):.3f}")
+\end{wecode}
+
+\weanswer{Drift moves the mean $5.00\to5.50$ and leaves the variance at $0.32$;
+diffusion holds the mean at $5.00$ and moves the variance $0.30\to1.05$. The
+tail below the protective level goes to $0.036$ under drift and $0.308$ under
+diffusion, so the two policies are opposite in effect on the quantity that
+matters. Asserted by
+\texttt{test\_worked\_example\_drift\_and\_diffusion\_in\_numbers} and
+\texttt{test\_fokker\_planck\_separates\_drift\_from\_diffusion}.}
+\end{workedexample}
+\checkedby{tests/test_dynamics.py::test_proposition_fokker_planck_conserves_mass}
+
+\begin{remark}[Boundary conditions and interpretation]
+Reflecting boundaries model a closed cohort in which patients neither enter nor
+leave the biomarker range; absorbing boundaries would model an exit event (for
+example death at $x=0$). The stationary density, where it exists, is the
+long-run population distribution of disease states, and its variance and tail
+mass are the quantities a policy would seek to shift.
+\end{remark}
+
+For a cohort of size $N$ the coupled system tracks individual states $X_i(t)$
+with summaries $\overline X(t)=\tfrac1N\sum_i X_i(t)$ and
+$\operatorname{Var}[X](t)=\tfrac1N\sum_i(X_i-\overline X)^2$; heterogeneity enters
+through distributions of the kinetic parameters.
+
+The three layers describe how a disease marker moves. They say nothing yet
+about the conceptual score of Chapter~\ref{ch:theory}, which was defined at a
+single moment. Connecting them means letting that score move too.
+
+\section{A Time-Varying Form of the Conceptual Model}
+\label{sec:B_timevarying}
+
+\begin{definition}[Time-varying biomedical term]
+\label{def:B_timevarying}
+Let $L(t)=\phi(X(t),\overline X(t),\text{comorbidities},\text{age})$ with $\phi$
+differentiable and increasing in $X$. The time-resolved metric is
+\begin{equation}
+H_{\text{potential}}(t)=L(t)\,Q(t)\,S(t)-B(t).
+\label{eq:B_timevarying}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Differentiability]
+\label{prop:B_differentiable}
+If $L,Q,S,B$ are differentiable in $t$, then $H_{\text{potential}}(t)$ is
+differentiable, with
+$\dot H = \dot L QS + L\dot Q S + LQ\dot S - \dot B$.
+\end{proposition}
+\begin{proof}
+Products and differences of differentiable functions are differentiable; the
+product rule applied to $LQS$ gives the stated derivative.
+\end{proof}
+
+\begin{reading}[Reading $\dot H$ as a rate of change of capability]
+The score differentiated here is the heuristic $(LQ)S-B$, which
+Chapter~\ref{ch:theory} demotes and Chapter~\ref{app:crf} replaces. It is used
+in this appendix because it is the simplest object that can be made to move in
+time, and the structural point below carries over unchanged to the
+realisation function.
+
+The derivative $\dot H=\dot LQS+L\dot QS+LQ\dot S-\dot B$ has one term per
+thing that can change, and the coefficient on each says how much that change is
+worth in this patient's current circumstances.
+
+The middle terms carry the argument. The value of improving quality, $\dot Q$,
+is multiplied by $LS$: it is worth more in someone with years ahead of them and
+circumstances that let them use those years. The value of improving social
+conditions, $\dot S$, is multiplied by $LQ$: worth more in someone whose
+biology still has something to give.
+
+For Mr~B this is the difference between two funding decisions taken at
+different ages. At $58$, with $L$ still substantial, a change in $S$ or $B$ buys
+a lot. The same change at $85$ buys much less, not because he matters less but
+because $L$ has shrunk. The model makes that trade explicit rather than
+leaving it to be made silently, which is the most it can honestly claim to do.
+\end{reading}
+\checkedby{tests/test_dynamics.py::test_time_varying_score_is_differentiable}
+
+This is a theoretical generalisation of the static model of
+Chapter~\ref{ch:theory}; it is not estimated or validated here. Simulating
+$X(t)$ over time would yield time-resolved trajectories for individuals and
+cohorts.
+
+What the appendix has established, and what it has only proposed, are worth
+separating before the disease-specific version is attempted.
+
+\section{Summary}
+\label{sec:B_summary}
+This appendix set out a disease-agnostic ODE--SDE--PDE architecture: a
+deterministic backbone with a unique stable equilibrium
+(Propositions~\ref{prop:B_existence}--\ref{prop:B_equilibrium}), a stochastic
+extension that reduces to the backbone as noise vanishes and whose mean obeys the
+deterministic law (Propositions~\ref{prop:B_reduction}--\ref{prop:B_consistency}),
+a conservative population-level Fokker--Planck layer
+(Proposition~\ref{prop:B_mass}), and a differentiable time-varying form of the
+conceptual score (Proposition~\ref{prop:B_differentiable}). The next appendix
+specialises this framework to haemophilia; Appendix~\ref{app:computation} gives
+its numerical implementation.
+
+Every proposition above is checked automatically. The nine tests in
+\texttt{verification/tests/test\_dynamics.py} assert the Lipschitz constant, the
+convergence of nearby trajectories, agreement between the closed-form
+equilibrium and the integrator, the vanishing-noise limit, the affine-drift
+mean, mass conservation under reflecting boundaries, the separation of drift
+from diffusion, and the product rule for the time-varying score.
+Appendix~\ref{app:verification} prints the result of the run that produced this
+document, and records the sign error in the Fokker--Planck assembly that the
+drift test caught while the conservation test passed.

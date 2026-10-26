@@ -1,0 +1,750 @@
+
+\label{ch:results1}
+
+\begin{ataglance}[How to read this chapter]
+The chapter asks one question and refuses to answer any other: can the three
+domains be measured? Prediction is Chapter~\ref{ch:results2}'s problem, and
+nothing here is allowed to consult it.
+
+The order is the order in which a measurement claim can fail. Who is in the
+sample (\S\ref{sec:sample}); whether the model can be estimated at all
+(\S\ref{sec:anal-estimation}); whether the covariance structure the theory
+implies matches the one observed (\S\ref{sec:anal-fit}); whether each indicator
+belongs where the theory put it (\S\ref{sec:anal-loadings}); whether the
+domains are reliable and, more demandingly, whether they are distinguishable
+from one another (\S\ref{sec:anal-validity}); and only then whether the three
+can legitimately be read as one thing (\S\ref{sec:anal-secondorder}). Scores
+are derived last (\S\ref{sec:anal-scores}) and stress-tested
+(\S\ref{sec:anal-robust}).
+
+Two conventions run through the chapter. Every statistical term is given its
+clinical twin at first use, so that a reader who thinks in diagnostic tests can
+follow a reader who thinks in loadings. And Mrs~A, introduced in
+Chapter~\ref{ch:introduction}, is the person the numbers are applied to
+wherever an abstraction needs a body.
+\end{ataglance}
+
+This chapter presents the empirical evaluation of the proposed measurement model for the latent construct $H_{\text{potential}}$. The objective is to determine whether the theoretical framework developed in Chapter~\ref{ch:theory} can be operationalised as a statistically coherent higher-order latent variable within the National Health and Aging Trends Study (NHATS).
+
+Unlike conventional frailty indices, which aggregate observable deficits into a summary score, the present model assumes that latent health potential is not directly observable but is reflected through several interconnected domains. The model therefore specifies three first-order latent constructs, Biomedical Potential, Social Modifiers, and Systemic Burdens, which together define the higher-order construct $H_{\text{potential}}$. The empirical task of this chapter is to evaluate whether the observed indicators reproduce the theoretical structure proposed earlier, and whether the resulting construct meets accepted standards of psychometric quality.
+
+Following COSMIN recommendations for evaluating measurement instruments \citep{mokkink_2010, mokkink_2018}, the assessment proceeds in stages. The characteristics of the analytic sample are described first. The adequacy of the proposed factor structure is then evaluated by confirmatory factor analysis. Individual indicator performance is assessed through standardised factor loadings and explained variance. Internal consistency, convergent validity, and discriminant validity are examined next. Finally, the second-order structure is evaluated to determine whether the three domains can legitimately be interpreted as manifestations of a single higher-order construct.
+
+The chapter concludes by deriving individual estimates of $H_{\text{potential}}$, which serve as the principal predictor in the prognostic analyses reported in Chapter~\ref{ch:results2}. The chapter therefore addresses the construct-validation component of Aim~2 and establishes whether the proposed representation has sufficient psychometric integrity for the predictive modelling that follows.
+
+\begin{quote}
+\small\itshape
+Note to the reader. The numerical results in this chapter are produced by the analysis of NHATS described in Chapter~\ref{ch:methods}. Tables and figures are laid out for those results, and bracketed placeholders mark values to be inserted once the analysis is complete. This note is removed in the final version.
+\end{quote}
+
+\section{Analytic Sample}
+\label{sec:sample}
+The analytic sample was derived according to the inclusion and exclusion criteria set out in Chapter~\ref{ch:methods}. Participants were required to have sufficient information across the indicators of the three domains to permit latent-variable estimation. Observations with missingness above the pre-specified threshold were either excluded or handled by the multiple-imputation procedure described earlier, so that the estimation sample was neither reduced to complete cases alone nor biased by the ad hoc deletion of informative records.
+
+Who is in the sample decides what the model can be asked. With that settled, the model itself has to be made to run, which in a three-factor structure is less automatic than it sounds.
+
+The resulting sample comprises approximately 3\,500 community-dwelling adults aged 65 years and older at the Round~5 baseline. A sample of this size provides adequate power for a second-order structural equation model of the present complexity and exceeds conventional guidance for confirmatory factor analysis, which recommends several hundred observations depending on the number of indicators and the size of the loadings \citep{kline_2015, brown_2015}. A large sample also stabilises the estimation of standard errors and of the fit statistics reported below.
+
+Table~\ref{tab:sample} summarises the demographic, clinical, and socioeconomic characteristics of the participants. These variables span biological health, functional status, and social circumstance, and they show substantial variation across the sample. This heterogeneity is the setting the analysis requires: it allows a test of whether a small number of latent domains can account for variation across a wide and apparently diverse set of indicators.
+
+The observed characteristics are not treated as outcomes in their own right. Each is an empirical manifestation of one of the latent domains defined in the theoretical framework, and its distribution provides context for interpreting the measurement properties reported in the remainder of the chapter. Where a characteristic is markedly skewed or sparse in one tail, this is noted, because such features affect both the estimator chosen and the interpretation of the corresponding loading.
+
+\begin{table}[h]
+\centering
+\caption{Baseline characteristics of the analytic sample ($N \approx 3\,500$).}
+\label{tab:sample}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{6.5cm} p{4.5cm}}
+\toprule
+\textbf{Characteristic} & \textbf{Value} \\
+\midrule
+Age, years, mean (SD) & [\,--\,] \\
+Female, n (\%) & [\,--\,] \\
+Multimorbidity, count of conditions, median (IQR) & [\,--\,] \\
+Any ADL limitation, n (\%) & [\,--\,] \\
+Any IADL limitation, n (\%) & [\,--\,] \\
+Cognitive impairment, n (\%) & [\,--\,] \\
+Positive depression screen (PHQ-2), n (\%) & [\,--\,] \\
+Low social participation, n (\%) & [\,--\,] \\
+Dual Medicare/Medicaid eligibility, n (\%) & [\,--\,] \\
+Less than high-school education, n (\%) & [\,--\,] \\
+Reported care delayed for cost or transport, n (\%) & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+\noindent\emph{[Placeholder: brief narrative on the composition of the sample, the balance of the domains, and any characteristic whose distribution bears on the estimation choices below.]}
+
+\section{Estimation of the Measurement Model}
+\label{sec:anal-estimation}
+The measurement model was estimated by confirmatory factor analysis within the structural equation modelling framework of Chapter~\ref{ch:methods}. Three correlated first-order latent variables were specified, each measured by its own observed indicators, and together they define a single second-order latent factor representing $H_{\text{potential}}$. Fixing the pattern of loadings in advance, rather than letting the data determine which indicators belong to which factor, is what makes this a confirmatory test of the theory rather than an exploratory search.
+
+Maximum likelihood estimation with robust standard errors served as the primary estimator, because it is efficient under approximately continuous measurement and tolerant of moderate departures from multivariate normality. Because several indicators are ordinal or categorical, the model was re-estimated with the weighted least squares mean- and variance-adjusted (WLSMV) estimator, which treats ordinal indicators through a threshold model rather than assuming interval measurement \citep{muthen_1984,rhemtulla_2012}, as implemented in \texttt{lavaan} \citep{rosseel_2012}. Agreement between the two estimators is not a formality: it provides evidence that the recovered structure reflects stable relationships in the data rather than an artefact of a single set of distributional assumptions. Where the two disagree, the WLSMV solution is given greater weight for the ordinal indicators, and the disagreement is reported.
+
+Estimation was checked for convergence, admissibility, and local identification. Particular attention was paid to Heywood cases, negative residual variances, non-positive-definite covariance matrices, and standardised loadings at or above one, each of which can signal misspecification, empirical underidentification, or insufficient separation between constructs. Where a solution was inadmissible, the source was diagnosed before any change was made. Model respecification was considered only where a modification was supported at the same time by a substantive reading of the indicator and by the statistical evidence; changes driven by modification indices alone, without a theoretical rationale, were not made, since these capitalise on chance and inflate apparent fit.
+
+\medskip
+\noindent\emph{[Placeholder: convergence status, chosen estimator, treatment of ordinal indicators, admissibility of the solution, and any respecification with its justification.]}
+
+\begin{reading}[Heywood cases and what they mean]
+A Heywood case is a negative residual variance: the model says an indicator
+contains less than none of its own noise, which is impossible. It is the
+statistical equivalent of a laboratory returning a negative haematocrit. The
+value is not merely surprising, it is outside the range the quantity can take,
+and the correct response is to look for a fault in the machinery rather than to
+report it.
+
+Here the usual faults are two. Either the model has more parameters than the
+data can support, so the estimate is unstable, which is empirical
+underidentification. Or two domains are so highly correlated that the estimator
+cannot tell them apart and drives a variance below zero to reconcile them. The
+second diagnosis matters for the theory, because it would mean the three-domain
+partition has failed in a way no amount of respecification can rescue.
+\end{reading}
+
+A model that converges to an admissible solution has cleared the lowest bar. Whether that solution reproduces what the data actually look like is the next question.
+
+\section{Global Model Fit}
+\label{sec:anal-fit}
+The adequacy of the measurement structure was judged from several complementary fit indices rather than from any single statistic, because each index is sensitive to a different aspect of misfit. Interpretation rests on the overall pattern of evidence.
+
+The comparative fit index (CFI) and the Tucker--Lewis index (TLI) measure improvement over an independence model in which the indicators are assumed uncorrelated. The root mean square error of approximation (RMSEA) measures residual misfit per degree of freedom, and so penalises unnecessary complexity; it is reported with its 90\% confidence interval, which conveys the precision of the estimate. The standardised root mean square residual (SRMR) is the average standardised difference between the observed and model-implied correlations, and gives a direct sense of how far the model reproduces the data. Together these indices assess whether the covariance structure implied by the theoretical model matches the covariance actually observed. Conventional thresholds are CFI and TLI of at least 0.95, RMSEA of at most 0.06, and SRMR of at most 0.08 \citep{hu_bentler_1999}.
+
+The model chi-square is reported for completeness, but is not used as the primary criterion. In samples of several thousand, the chi-square test is sensitive to trivial departures from the model and will often be significant even when the model reproduces the data well. For this reason the approximate fit indices, which are less dependent on sample size, carry greater weight in the interpretation. Where all indices meet their thresholds, the latent structure is treated as an adequate representation of the observed relationships. Where one index falls short while the others hold, the shortfall is examined and interpreted rather than treated as an automatic rejection of the model.
+
+\begin{table}[h]
+\centering
+\caption{Global fit of the second-order measurement model.}
+\label{tab:fit}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.5cm} p{3cm} p{3cm} p{2.2cm}}
+\toprule
+\textbf{Index} & \textbf{ML estimate} & \textbf{WLSMV estimate} & \textbf{Threshold} \\
+\midrule
+$\chi^2$ (df), $p$ & [\,--\,] & [\,--\,] & -- \\
+CFI & [\,--\,] & [\,--\,] & $\geq 0.95$ \\
+TLI & [\,--\,] & [\,--\,] & $\geq 0.95$ \\
+RMSEA (90\% CI) & [\,--\,] & [\,--\,] & $\leq 0.06$ \\
+SRMR & [\,--\,] & [\,--\,] & $\leq 0.08$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+\noindent\emph{[Placeholder: whether the model meets the fit criteria under each estimator, and interpretation of any index that does not.]}
+
+\begin{reading}[Why the chi-square test is set aside]
+The model chi-square tests a null hypothesis that the model reproduces the
+population covariance matrix exactly. In a sample of several thousand it will
+reject that null for departures too small to matter, which is the same
+phenomenon a clinician meets when a trial of fifty thousand people finds a
+statistically significant two-millimetre difference in blood pressure.
+
+Significance answers whether a difference exists. It says nothing about whether
+the difference is large enough to change anything. The approximate fit indices
+are reported because they measure how far the model is from the data rather
+than whether the distance is exactly zero.
+
+The conventional cut-offs of 0.95 and 0.06 carry the opposite risk. They were
+derived from simulations under specific conditions and have hardened into rules
+that get applied everywhere, which is how an eGFR of 59 came to be treated as a
+different kind of thing from an eGFR of 61. They are read here as reference
+points and not as a pass mark.
+\end{reading}
+
+Global fit is an average over the whole model, and an average can hide a
+single indicator sitting in the wrong domain. The loadings say where the fit
+comes from.
+
+\section{Measurement Quality: Factor Loadings}
+\label{sec:anal-loadings}
+Standardised factor loadings quantify the association between each observed indicator and its latent construct. A high loading indicates that the indicator captures a large share of the construct; a low loading indicates greater measurement error or that the indicator taps something beyond the intended construct. Loadings are read here not on statistical grounds alone but against the theoretical expectations set out in Chapter~\ref{ch:theory}.
+
+Biomedical indicators are expected to show consistently strong positive relationships with Biomedical Potential, because multimorbidity, functional limitation, cognition, and psychological wellbeing directly reflect physiological and cognitive reserve. Social indicators are expected to show moderate to strong loadings on Social Modifiers, reflecting the broader environmental context that shapes health trajectories; some attenuation is anticipated here, since social participation and support are measured with more heterogeneity than clinical variables. Indicators of Systemic Burdens are expected to load together in a way that captures structural constraint operating independently of biological capacity, with the sign of each loading following the reverse-coding described in Chapter~\ref{ch:methods}.
+
+The proportion of variance explained ($R^2$) for each indicator estimates its reliability within the model. Indicators with low explained variance are flagged: they may point to a domain that needs conceptual refinement, or to the need for additional observed measures in a later implementation of the construct. An indicator that loads weakly on its intended factor but appreciably on another is noted as a possible cross-loading, since this bears directly on the discriminant validity examined in the next section.
+
+\begin{table}[h]
+\centering
+\caption{Standardised factor loadings by domain.}
+\label{tab:loadings}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5.5cm} p{2.6cm} p{2.2cm} p{2cm}}
+\toprule
+\textbf{Indicator} & \textbf{Loading (SE)} & \textbf{$p$} & \textbf{$R^2$} \\
+\midrule
+\multicolumn{4}{l}{\textit{Biomedical Potential}} \\
+\quad Multimorbidity & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad ADL/IADL limitation & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Cognitive function & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Psychological wellbeing & [\,--\,] & [\,--\,] & [\,--\,] \\
+\addlinespace
+\multicolumn{4}{l}{\textit{Social Modifiers}} \\
+\quad Social participation & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Support network & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Communication & [\,--\,] & [\,--\,] & [\,--\,] \\
+\addlinespace
+\multicolumn{4}{l}{\textit{Systemic Burdens}} \\
+\quad Economic vulnerability & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Educational attainment & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Environmental stress & [\,--\,] & [\,--\,] & [\,--\,] \\
+\quad Healthcare barriers & [\,--\,] & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+\noindent\emph{[Placeholder: which indicators load as expected, which are weak or cross-load, and what this implies for the domain definitions.]}
+
+\begin{reading}[Reading a loading, and reading a cross-loading]
+A standardised loading is the correlation between an indicator and the latent
+variable it is meant to measure. Squared, it is the share of that indicator's
+variance the construct explains, which is the model's estimate of how good a
+window onto the construct the indicator is.
+
+The clinical parallel is a diagnostic test's association with the disease it is
+meant to detect. A loading of 0.8 is a test that tracks the underlying state
+closely. A loading of 0.3 is a test that mostly measures something else.
+
+A cross-loading is the more interesting failure. Suppose Mrs~A's missed
+appointments were entered as an indicator of Systemic Burdens, on the reasoning
+that they record a transport barrier. If that indicator also loads on
+Biomedical Potential, the model is saying that missed appointments partly track
+how ill people are, which is true and which makes the indicator a poor measure
+of structural constraint specifically. The remedy is conceptual rather than
+statistical: find an indicator that records the barrier without recording the
+illness.
+\end{reading}
+
+Strong loadings show that indicators track their own domain. They say nothing
+about whether the three domains are three things or one thing wearing three
+names, which is the question the validity evidence has to settle.
+
+\section{Reliability and Construct Validity}
+\label{sec:anal-validity}
+Construct validation requires more than showing that indicators cluster together statistically. It requires evidence that they represent coherent theoretical domains and that those domains are empirically distinct from one another.
+
+Reliability is assessed by composite reliability, which evaluates the internal consistency of each latent variable using the estimated loadings and so avoids the assumption of equal loadings that limits Cronbach's alpha \citep{raykov_1997}. Cronbach's alpha is also reported, to allow comparison with earlier literature that relies on it, but it is read as a lower bound rather than as the primary criterion. Values of composite reliability of about 0.70 or higher are taken to indicate adequate internal consistency for research use.
+
+Convergent validity is assessed by the average variance extracted (AVE), the share of indicator variance a factor explains rather than leaves to measurement error. An AVE above 0.50 indicates that the factor accounts for more than half of the variance in its indicators, and so that the indicators converge on a common construct \citep{fornell_1981}. Where an AVE falls below this level while composite reliability remains adequate, this is noted, since it suggests a factor that is reliable but broad.
+
+Discriminant validity addresses a different question: whether constructs that are theoretically distinct remain empirically separable. Two complementary criteria are used. The Fornell--Larcker criterion compares the square root of each factor's AVE with its correlations with the other factors; discriminant validity holds where the former exceeds the latter \citep{fornell_1981}. The heterotrait--monotrait ratio of correlations (HTMT) compares the average correlation of indicators across constructs with the average correlation within constructs, and is the more sensitive of the two in detecting a lack of separation \citep{henseler_2015}; values below about 0.85 support discriminant validity. Reporting both guards against the known limitations of either used alone. Table~\ref{tab:reliability} reports reliability and convergent validity, and Table~\ref{tab:discriminant} reports the discriminant-validity matrix.
+
+\begin{definition}[Composite reliability]
+\label{def:meas:omega}
+Let a factor carry $k$ standardised indicators with loadings
+$\lambda_1,\dots,\lambda_k$ and uncorrelated residuals of variance
+$\theta_j=1-\lambda_j^{2}$. Composite reliability is
+\begin{equation}
+  \omega=\frac{\Bigl(\sum_{j=1}^{k}\lambda_j\Bigr)^{2}}
+              {\Bigl(\sum_{j=1}^{k}\lambda_j\Bigr)^{2}+\sum_{j=1}^{k}\theta_j},
+  \label{eq:omega}
+\end{equation}
+the share of the variance of the unit-weighted total score that the factor
+explains \citep{raykov_1997}. Cronbach's $\alpha$ is the same quantity computed
+as though every loading were the same size. Under that condition, called
+tau-equivalence, $\alpha=\omega$; where the loadings differ, $\alpha\le\omega$,
+and the gap widens with their spread. This is why $\alpha$ is read here as a
+lower bound and $\omega$ as the estimate.
+\end{definition}
+
+\begin{definition}[Average variance extracted]
+\label{def:meas:ave}
+For the same factor,
+\begin{equation}
+  \mathrm{AVE}=\frac{1}{k}\sum_{j=1}^{k}\lambda_j^{2},
+  \label{eq:ave}
+\end{equation}
+the mean share of an indicator's variance that the factor explains
+\citep{fornell_1981}. An $\mathrm{AVE}$ above $0.50$ says the factor accounts
+for more of the average indicator than measurement error does. It is an
+average and not a total, so adding a further indicator of similar quality
+raises $\omega$ and leaves $\mathrm{AVE}$ where it was. A factor can therefore
+be reliable and still be broad.
+\end{definition}
+
+\begin{definition}[Fornell--Larcker criterion]
+\label{def:meas:fl}
+Let $\varphi_{kl}$ be the estimated correlation between factors $k$ and $l$.
+Discriminant validity holds for factor $k$ by the Fornell--Larcker criterion
+when
+\begin{equation}
+  \sqrt{\mathrm{AVE}_k}>\max_{l\neq k}\lvert\varphi_{kl}\rvert,
+  \label{eq:fornell}
+\end{equation}
+that is, when the factor shares more variance with its own indicators than
+with any other factor \citep{fornell_1981}.
+\end{definition}
+
+\begin{definition}[Heterotrait--monotrait ratio]
+\label{def:meas:htmt}
+Let factor $k$ have $p_k$ indicators and factor $l$ have $p_l$, and let
+$r_{gh}$ denote an observed indicator correlation. The heterotrait--monotrait
+ratio is the mean correlation between indicators of different factors divided
+by the geometric mean of the two mean within-factor correlations:
+\begin{equation}
+  \mathrm{HTMT}_{kl}=
+  \frac{\dfrac{1}{p_kp_l}\displaystyle\sum_{g=1}^{p_k}\sum_{h=1}^{p_l}r_{g^{(k)}h^{(l)}}}
+       {\sqrt{\dfrac{2}{p_k(p_k-1)}\displaystyle\sum_{g<h}r_{g^{(k)}h^{(k)}}\;
+              \cdot\;
+              \dfrac{2}{p_l(p_l-1)}\displaystyle\sum_{g<h}r_{g^{(l)}h^{(l)}}}}.
+  \label{eq:htmt}
+\end{equation}
+It estimates the correlation the two constructs would have if both were
+measured without error, so a value near one says they are the same construct.
+Values below about $0.85$ are taken to support discriminant validity
+\citep{henseler_2015}.
+\end{definition}
+
+\begin{table}[h]
+\centering
+\caption{Reliability and convergent validity by domain.}
+\label{tab:reliability}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.5cm} p{2.6cm} p{2.6cm} p{2.6cm}}
+\toprule
+\textbf{Domain} & \textbf{Composite reliability} & \textbf{Cronbach's $\alpha$} & \textbf{AVE} \\
+\midrule
+Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
+Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
+Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Discriminant validity: Fornell--Larcker (diagonal, $\sqrt{\text{AVE}}$; off-diagonal, factor correlations) with HTMT ratios in brackets.}
+\label{tab:discriminant}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.5cm} p{2.8cm} p{2.8cm} p{2.8cm}}
+\toprule
+\textbf{Domain} & \textbf{Biomedical} & \textbf{Social} & \textbf{Systemic} \\
+\midrule
+Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
+Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
+Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+\noindent\emph{[Placeholder: reliability and validity interpretation, and whether the three domains are empirically distinguishable under both criteria.]}
+
+\begin{reading}[Discriminant validity, and why it is the test this thesis can fail]
+Discriminant validity asks whether two instruments are measuring the same thing
+under different names. It is the psychometric form of a question clinicians ask
+about new biomarkers: does this add anything to the panel we already run, or is
+it troponin measured a second way?
+
+The Fornell--Larcker criterion asks whether each domain shares more variance
+with its own indicators than with the other domains. The heterotrait--monotrait
+ratio compares correlations across constructs with correlations within them,
+and it catches failures that Fornell--Larcker misses, which is why both are
+reported.
+
+The live risk here is between Social Modifiers and Systemic Burdens. Mrs~A's
+thin social support and her forty-minute bus journey are conceptually
+different, one relational and one structural, and they may not be empirically
+different, because the same disadvantage tends to produce both. An HTMT ratio
+near 1.0 between those two domains would mean the theory's three-way partition
+is a two-way partition in the data, and the honest response would be to report
+two domains rather than to insist on three.
+\end{reading}
+
+\begin{workedexample}[meas-omega]{Composite reliability and AVE from a set of loadings}
+Suppose the analysis returns standardised loadings of $0.82$, $0.74$, $0.68$
+and $0.55$ for the four indicators of Biomedical Potential. The loadings sum
+to $2.79$, so the squared sum is $7.784$. The residual variances are
+$1-\lambda_j^{2}$ and sum to $2.015$. Equation~\eqref{eq:omega} gives
+$\omega=7.784/(7.784+2.015)=0.794$.
+
+Cronbach's $\alpha$ on the same model-implied covariance matrix is $0.789$.
+The gap is small here because the loadings are not far apart; it would widen
+if one indicator loaded at $0.30$ and another at $0.90$.
+
+The squared loadings sum to $1.985$, so $\mathrm{AVE}=1.985/4=0.496$, a
+fraction below the $0.50$ convention, and $\sqrt{\mathrm{AVE}}=0.704$. The
+domain is reliable enough to use and explains slightly less than half of the
+average indicator. That is a statement about the breadth of the indicator set
+and not a reason to discard the domain.
+
+\begin{wecode}[Python]
+from hpv.measurement import (composite_reliability,
+                             cronbach_alpha_from_loadings,
+                             average_variance_extracted)
+
+loadings = [0.82, 0.74, 0.68, 0.55]
+print(f"omega {composite_reliability(loadings):.3f}")
+print(f"alpha {cronbach_alpha_from_loadings(loadings):.3f}")
+print(f"AVE   {average_variance_extracted(loadings):.3f}")
+\end{wecode}
+
+\weanswer{$\omega=0.794$, $\alpha=0.789$, $\mathrm{AVE}=0.496$. Asserted by
+\texttt{test\_worked\_example\_reliability\_and\_ave\_from\_loadings} and
+\texttt{test\_alpha\_equals\_omega\_only\_under\_equal\_loadings}.}
+\end{workedexample}
+
+\begin{workedexample}[meas-htmt]{An HTMT ratio, and where the 0.85 line falls}
+Take the pair the chapter is most worried about, Social Modifiers against
+Systemic Burdens. Suppose the three social indicators correlate at $0.52$,
+$0.47$ and $0.44$ among themselves, mean $0.477$; the six pairs of systemic
+indicators average $0.418$; and the twelve cross-construct correlations
+average $0.294$.
+
+Equation~\eqref{eq:htmt} gives
+$0.294/\sqrt{0.477\times0.418}=0.659$. The two domains are
+separable on this criterion, and not by a wide margin.
+
+How far is the margin? Holding the within-construct correlations fixed, the
+mean cross-construct correlation would have to rise from $0.294$ to $0.380$,
+by about $29$ per cent, for the ratio to reach $0.85$. A single social
+indicator that also records a structural barrier could move it that far, which
+is the cross-loading problem of \S\ref{sec:anal-loadings} arriving at the
+domain level.
+
+\begin{wecode}[Python]
+from hpv.measurement import htmt
+
+within_social   = [0.52, 0.47, 0.44]
+within_systemic = [0.49, 0.41, 0.38, 0.45, 0.36, 0.42]
+cross = [0.34, 0.29, 0.31, 0.36,
+         0.30, 0.26, 0.28, 0.33,
+         0.27, 0.24, 0.25, 0.30]
+print(f"HTMT {htmt(within_social, within_systemic, cross):.3f}")
+print(f"at 0.85 the cross mean would be "
+      f"{0.85 * (0.4767 * 0.4183) ** 0.5:.3f}")
+\end{wecode}
+
+\weanswer{$\mathrm{HTMT}=0.659$, against a threshold of $0.85$ that would need
+a mean cross-construct correlation of $0.380$. Asserted by
+\texttt{test\_definition\_and\_worked\_example\_htmt}.}
+\end{workedexample}
+
+If the domains are distinguishable, the framework's central claim can finally be
+put: that these three distinguishable things are nevertheless facets of one
+underlying quantity.
+
+\section{Second-Order Structure and Domain Contributions}
+\label{sec:anal-secondorder}
+The defining claim of the framework is that Biomedical Potential, Social Modifiers, and Systemic Burdens are not free-standing latent variables but complementary dimensions of a single higher-order construct describing latent health potential. The second-order loadings provide the most direct test of that claim.
+
+Strong and statistically significant second-order loadings indicate that the three domains share enough common variance to be read as manifestations of one overarching construct. Weak or non-significant loadings would indicate the opposite: that the domains are better treated as correlated but separate constructs, in which case the higher-order specification would not be supported and the interpretation of a single $H_{\text{potential}}$ would need to be revised. The direction of each second-order loading is examined against the theoretical expectation from Chapter~\ref{ch:theory}, namely that Biomedical Potential and Social Modifiers contribute positively and Systemic Burdens negatively, with the latter carried through the reverse-coding of its indicators.
+
+The second-order loadings are interpreted as associations between the candidate general factor and the domain-level constructs, not as causal effects or policy weights. Their magnitude indicates how strongly each domain participates in the common covariance structure. Table~\ref{tab:secondorder} reports the estimated loadings and their uncertainty. If the higher-order model is not empirically supported, the domain profile is retained rather than forcing the domains into a scalar score.
+
+\begin{table}[h]
+\centering
+\caption{Second-order loadings and standardised domain weights.}
+\label{tab:secondorder}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.5cm} p{2.8cm} p{3cm} p{2.4cm}}
+\toprule
+\textbf{Domain} & \textbf{$\hat{\gamma}_k$ (SE)} & \textbf{$\hat{\gamma}_k^{\text{std}}$} & \textbf{Weight $w_k$} \\
+\midrule
+Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
+Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
+Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+\noindent\emph{[Placeholder: whether the second-order structure holds, whether the loading directions match the hypotheses of Chapter~\ref{ch:theory}, and how the domain weights are distributed.]}
+
+
+\begin{proposition}[The higher-order layer with three domains is just identified]
+\label{prop:meas:justid}
+Standardise the three first-order factors of Definition~\ref{def:secondorder},
+so their covariance matrix is the correlation matrix $\Phi$ with unit diagonal,
+and write the higher-order layer as $\eta_k=\gamma_k\zeta+\delta_k$ with
+$\operatorname{Var}(\zeta)=1$ and the $\delta_k$ mutually uncorrelated. The
+layer has six free parameters, $\gamma_1,\gamma_2,\gamma_3$ and
+$\psi_1,\psi_2,\psi_3$, and six moments to reproduce, the six distinct entries
+of $\Phi$. Its degrees of freedom are zero. Whenever
+$\gamma_1^{2}=\varphi_{12}\varphi_{13}/\varphi_{23}$ lies in $(0,1]$ and the
+three correlations share a consistent sign pattern, the layer reproduces $\Phi$
+exactly, the implied indicator covariance $\Sigma_Y$ equals that of the
+correlated three-factor model, and $\chi^{2}$, CFI, TLI, RMSEA and SRMR take
+identical values under the two models. Global fit therefore carries no
+information about whether the higher-order structure holds.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Standardisation gives $\varphi_{kk}=\gamma_k^{2}+\psi_k=1$ and
+$\varphi_{jk}=\gamma_j\gamma_k$ for $j\neq k$. The three off-diagonal
+equations solve in closed form,
+$\gamma_1=\sqrt{\varphi_{12}\varphi_{13}/\varphi_{23}}$,
+$\gamma_2=\varphi_{12}/\gamma_1$, $\gamma_3=\varphi_{13}/\gamma_1$, and the
+three diagonal equations then fix $\psi_k=1-\gamma_k^{2}$. Six equations, six
+unknowns, no residual, so the fitted $\Phi$ equals the unrestricted $\Phi$ of
+the correlated model and both models imply the same $\Sigma_Y$. The count is
+the standard three-indicator identification result applied one level up
+\citep{bollen_1989}. The only way the data can contradict the layer is
+through admissibility: a solved $\gamma_k^{2}$ above one forces $\psi_k<0$,
+which is a Heywood case at the second order.
+\end{proof}
+
+\begin{reading}[Why the fit table cannot settle the second-order question]
+Table~\ref{tab:fit} reports the fit of the second-order model. Proposition
+\ref{prop:meas:justid} says those numbers would be exactly the same if the
+higher-order factor were deleted and the three domains simply allowed to
+correlate. The second-order specification adds no constraint that the data can
+refuse, so it cannot earn credit for fitting.
+
+This is the psychometric version of a familiar clinical trap. A model with as
+many parameters as observations will always pass through the observations, and
+passing through them is then no evidence of anything. Fit indices are reported
+in this chapter because they test the first-order structure, where there are
+degrees of freedom to spend. They are silent one level up.
+
+What is left to look at is the three estimated $\gamma_k$, their standard
+errors, and whether the implied disturbance variances are positive. The next
+box reads those quantities substantively.
+\end{reading}
+
+\begin{reading}[What a weak second-order loading would mean]
+The second-order loadings decide whether $H_{\text{potential}}$ exists as a
+single number or only as a profile. This is not a technicality that can be
+settled by choosing the better-fitting model, because with only three
+first-order factors the higher-order layer is close to just identified and good
+fit is nearly guaranteed.
+
+Suppose the loadings come back at 0.82 for Biomedical Potential, 0.78 for
+Social Modifiers and 0.31 for Systemic Burdens. Global fit would probably still
+look acceptable. The substantive reading would be that the general factor is
+mostly a biological and social construct, and that structural burden is largely
+doing its own work outside it.
+
+Collapsing to a scalar in that situation would average away the one domain a
+health system can act on directly. For Mrs~A it would mean her score improves
+if her knees improve and barely moves if the bus route changes, which inverts
+the practical point of measuring her at all. A weak third loading is therefore
+a reason to report the profile, not a reason to report the scalar with a
+caveat.
+\end{reading}
+
+If the higher-order structure holds, each participant can be given a number.
+What that number is, and what it is not, needs stating before it is used.
+
+\section{Derivation and Distribution of $H_{\text{potential}}$ Scores}
+\label{sec:anal-scores}
+Once the second-order model was estimated, individual factor scores were computed for each participant using Equation~\eqref{eq:factorscore}. Unlike a simple additive index, a factor score reflects both the measurement quality of the individual indicators and the estimated contribution of each domain, so that indicators measured with more error, or domains that contribute less to the common structure, carry proportionately less weight in a person's score.
+
+The distribution of these scores describes latent health potential across the study population. Its shape is examined for ceiling and floor effects, for skewness, and for heterogeneity across participants, since each of these bears on how the score behaves as a predictor in the next chapter. A pronounced ceiling, for example, would compress differences among healthier participants and limit discrimination at that end of the range. Because the scores are standardised latent quantities rather than observed measurements, their absolute values carry no intrinsic clinical meaning. What is interpretable is relative position: a difference between two participants represents a difference in their estimated standing on the latent continuum defined by the measurement model. Figure~\ref{fig:score_dist} shows the distribution, and the accompanying text reports its mean, standard deviation, and range.
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: distribution of estimated $H_{\text{potential}}$ factor scores across the analytic sample.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Distribution of estimated $H_{\text{potential}}$ scores in the analytic sample.}
+\label{fig:score_dist}
+\end{figure}
+
+\medskip
+\noindent\emph{[Placeholder: descriptive statistics of the score, the shape of its distribution, and any feature that bears on its use as a predictor.]}
+
+These factor scores are the principal explanatory variable in the prognostic analyses of Chapter~\ref{ch:results2}, where their association with mortality and hospitalisation is formally evaluated.
+
+
+\begin{definition}[Factor determinacy]
+\label{def:meas:determinacy}
+For a factor $\zeta$ with $\operatorname{Var}(\zeta)=1$, loading vector
+$\lambda$ and indicator covariance $\Sigma_Y$, the determinacy of the score
+$\widehat H$ of Definition~\ref{def:factorscore} is the correlation between the
+factor and its own score,
+\begin{equation}
+  \rho_{\mathrm{det}}=\operatorname{corr}(\zeta,\widehat H)
+  =\sqrt{\lambda^{\!\top}\Sigma_Y^{-1}\lambda}\,,
+  \label{eq:determinacy}
+\end{equation}
+which lies in $[0,1]$ \citep{grice_2001}. Its square is the reliability of the
+score. A determinacy of $0.90$ or above is the usual condition for treating
+scores as a stand-in for the factor; below about $0.80$ two score sets built
+from the same fitted model can rank people differently, and the score should
+not be carried into a second analysis as though it were an observation.
+\end{definition}
+
+\begin{proposition}[Shrinkage of a factor score]
+\label{prop:meas:shrinkage}
+Take the one-factor case of Definition~\ref{def:factorscore} with
+$\zeta\sim N(0,1)$, standardised indicators $y_j=\lambda_j\zeta+\varepsilon_j$
+and independent $\varepsilon_j\sim N(0,\theta_j)$. Write
+$I=\sum_j\lambda_j^{2}/\theta_j$ for the information the indicators carry about
+$\zeta$. Then
+\begin{equation}
+  \widehat H=\mathbb E[\zeta\mid y]=\rho\,\widehat\zeta_{\mathrm{ML}},
+  \qquad \rho=\frac{I}{1+I},
+  \qquad \operatorname{Var}(\zeta\mid y)=1-\rho,
+  \label{eq:shrinkage}
+\end{equation}
+where $\widehat\zeta_{\mathrm{ML}}=\bigl(\sum_j\lambda_jy_j/\theta_j\bigr)/I$.
+Hence $\mathbb E[\widehat H\mid\zeta]=\rho\zeta$: the score is biased towards
+the population mean, and the factor of compression is $\rho$, which is the
+reliability of the score and the square of its determinacy
+(Definition~\ref{def:meas:determinacy}).
+
+In the linear normal case $I$ is the same for everyone. Two departures make it
+person-specific. Where a participant leaves items blank, their $I$ is the sum
+over the items they answered, so a sparse record compresses harder. Where the
+indicators are ordinal and enter through the threshold model of
+Chapter~\ref{ch:methods}, the posterior is a product of item likelihoods whose
+peaks need not coincide; a discordant profile gives a flatter posterior, a
+larger $\operatorname{Var}(\zeta\mid y)$ and so a smaller $\rho_i$. Compression
+is worst for the participants whose indicators agree least with each other.
+
+Chapter~\ref{ch:results2} inherits the consequence. A predictor compressed by
+$\rho$ produces a coefficient attenuated by the same factor, which is
+Proposition~\ref{prop:attenuation}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The likelihood in $\zeta$ is Gaussian with precision $I$ centred at
+$\widehat\zeta_{\mathrm{ML}}$; the prior is Gaussian with precision $1$ centred
+at $0$. Conjugate updating adds precisions and takes the precision-weighted
+mean, giving posterior precision $1+I$ and posterior mean
+$I\widehat\zeta_{\mathrm{ML}}/(1+I)$. Since
+$\mathbb E[\widehat\zeta_{\mathrm{ML}}\mid\zeta]=\zeta$, the compression
+follows. That $\rho=\lambda^{\!\top}\Sigma_Y^{-1}\lambda$, and so equals the
+squared determinacy of Definition~\ref{def:meas:determinacy}, is the
+Sherman--Morrison identity applied to $\Sigma_Y=\lambda\lambda^{\!\top}+\Theta$.
+The reading box below gives the clinical version.
+\end{proof}
+
+\begin{reading}[Shrinkage, or regression to the mean, in a factor score]
+A factor score is a conditional expectation, so it is pulled towards the
+population mean by an amount that depends on how much information the
+indicators carry. Statisticians call this shrinkage; clinicians know the same
+phenomenon as regression to the mean, which is why a single alarming blood
+pressure reading is repeated before anyone acts on it.
+
+The consequence is systematic rather than random. People whose indicators all
+point the same way are estimated precisely and shrink little. People with an
+unusual pattern are estimated imprecisely and shrink a lot. Mrs~A, adequate
+biologically and poor on both contextual domains, is the second kind. Her point
+estimate will sit closer to the mean than her circumstances warrant, and her
+standard error will be wide.
+
+This matters for the next chapter. Shrinkage compresses the range of the
+predictor, and a compressed predictor produces a hazard ratio nearer to one
+than the truth. The attenuation is not a nuisance to be apologised for; it is a
+known direction of bias, and it means that a null result in
+Chapter~\ref{ch:results2} is weaker evidence against the construct than a
+positive result is for it.
+\end{reading}
+
+\begin{workedexample}[meas-shrink]{Shrinkage on a simulated latent variable}
+Take the four Biomedical Potential loadings of Worked
+Example~\ref{ex:meas-omega}. Their information is
+$I=\sum\lambda_j^{2}/(1-\lambda_j^{2})=4.557$, so
+$\rho=4.557/5.557=0.820$ and the determinacy is $\sqrt{0.820}=0.906$.
+
+Simulate two hundred thousand people from the model, keep those whose true
+$\zeta$ lies within $0.05$ of $-2.00$, and average their scores. The
+proposition predicts $0.820\times(-2.00)=-1.64$, and the simulation returns
+$-1.64$. Someone genuinely two standard deviations below the mean is reported
+as $1.64$ below it.
+
+Now drop the two strongest indicators and score the same people on the
+remaining two. Information falls to $1.294$ and $\rho$ to $0.564$, so the
+proposition puts the same person at $0.564\times(-2.00)=-1.13$ and the
+simulation returns $-1.15$, the difference being Monte Carlo noise over the
+thousand or so people in the window. Nothing about her has changed. The
+instrument has less to go on, so the model leans harder on the population
+average.
+
+\begin{wecode}[Python]
+import numpy as np
+from hpv.measurement import shrinkage_factor, factor_determinacy
+
+lam = np.array([0.82, 0.74, 0.68, 0.55]); theta = 1 - lam**2
+info = float(np.sum(lam**2 / theta))
+rng = np.random.default_rng(20260902)
+z = rng.standard_normal(200_000)
+y = np.outer(z, lam) + rng.standard_normal((200_000, 4)) * np.sqrt(theta)
+post = (y @ (lam / theta)) / (1 + info)
+extreme = (z > -2.05) & (z < -1.95)
+print(f"rho {shrinkage_factor(lam):.3f}  determinacy "
+      f"{factor_determinacy(lam):.3f}")
+print(f"true -2.00 comes back at {post[extreme].mean():.2f}")
+
+lam2, theta2 = lam[2:], theta[2:]           # keep only the weaker two
+info2 = float(np.sum(lam2**2 / theta2))
+post2 = (y[:, 2:] @ (lam2 / theta2)) / (1 + info2)
+print(f"on two indicators, rho {shrinkage_factor(lam2):.3f}, "
+      f"-2.00 comes back at {post2[extreme].mean():.2f}")
+\end{wecode}
+
+\weanswer{A true score of $-2.00$ is reported as $-1.64$ at $\rho=0.820$, and
+as $-1.15$ against a predicted $-1.13$ when only two indicators are observed.
+Asserted by
+\texttt{test\_worked\_example\_shrinkage\_on\_a\_simulated\_latent\_variable}
+and \texttt{test\_proposition\_shrinkage\_compresses\_towards\_the\_mean}.}
+\end{workedexample}
+
+Everything above rests on a set of estimation choices that could have been made
+differently. The last section puts them under strain.
+
+\section{Robustness Checks}
+\label{sec:anal-robust}
+The stability of the measurement model was examined before its scores were carried forward. Three checks are reported. First, the model was re-estimated under the WLSMV estimator, and the loadings and fit compared with the maximum-likelihood solution, so that the recovered structure is not tied to one set of distributional assumptions. Second, the sensitivity of the solution to the indicator set was examined by re-estimating the model with individual indicators removed in turn, to confirm that no single indicator drives the structure. Third, where the sample size allows, measurement invariance \citep{meredith_1993,vandenberg_lance_2000} was tested across sex and across age band, by comparing configural, metric, and scalar models. Invariance matters because a score can only be compared across groups if the instrument measures the same construct in the same way in each group; a failure of invariance would qualify any later subgroup comparison and is reported as such.
+
+\begin{definition}[The four levels of measurement invariance]
+\label{def:meas:invariance}
+Let groups $g=1,\dots,G$ each have loading matrix $\Lambda^{(g)}$, indicator
+intercepts $\tau^{(g)}$ and residual covariance $\Theta^{(g)}$. Four nested
+levels are tested in order \citep{meredith_1993,putnick_bornstein_2016}:
+\begin{enumerate}
+  \item \emph{Configural.} The same indicators load on the same factors in
+        every group, with the same pattern of fixed and free entries in
+        $\Lambda$. Nothing is constrained to be equal across groups.
+  \item \emph{Metric, or weak.} Configural, with
+        $\Lambda^{(1)}=\dots=\Lambda^{(G)}$. The unit of the latent scale is
+        then common, so a regression coefficient on the factor may be
+        compared across groups.
+  \item \emph{Scalar, or strong.} Metric, with
+        $\tau^{(1)}=\dots=\tau^{(G)}$. The origin of the scale is then common,
+        so latent means may be compared.
+  \item \emph{Strict.} Scalar, with
+        $\Theta^{(1)}=\dots=\Theta^{(G)}$. Observed composite scores then carry
+        the same measurement error in each group and may themselves be
+        compared.
+\end{enumerate}
+Each level adds constraints to the one before, so the levels are compared by
+change in approximate fit rather than by the difference in $\chi^{2}$ alone,
+for the reason given in \S\ref{sec:anal-fit} \citep{vandenberg_lance_2000}.
+\end{definition}
+
+\medskip
+\noindent\emph{[Placeholder: agreement between estimators, sensitivity to the indicator set, the level of measurement invariance achieved, and any limit this places on the generality of the construct.]}
+
+\begin{reading}[Why invariance is not optional for this particular measure]
+Measurement invariance asks whether the instrument means the same thing in
+different groups. Configural invariance says the same indicators belong to the
+same domains; metric invariance says they carry the same weight; scalar
+invariance says that people with the same underlying level give the same
+answers.
+
+Only scalar invariance licenses comparing group means, and that is exactly what
+a measure built to describe inequity is for. A score that reports lower
+capability among poorer participants is worth nothing if the questions mean
+something different to poorer participants. The failure would be invisible in
+the results and would look like a finding.
+
+The parallel is a symptom questionnaire that has not been validated in the
+language it is being used in. It will still produce numbers, the numbers will
+still differ between groups, and the difference will be an artefact of
+translation. Where full invariance is not supported, the thesis reports the
+non-invariance and narrows the comparison rather than proceeding as though the
+question had not arisen.
+\end{reading}
+
+\section{Summary}
+This chapter reported the development and validation of the $H_{\text{potential}}$ measurement model. Subject to the results above, it establishes whether the construct can be represented as a valid higher-order latent variable with acceptable fit, reliability, convergent validity, and discriminant validity, which is the first study hypothesis, and it derives the individual scores used in the analyses that follow. The next chapter tests whether those scores predict five-year all-cause mortality and first unplanned hospitalisation, and whether they add value over established measures.

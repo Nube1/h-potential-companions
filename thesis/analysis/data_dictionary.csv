@@ -1,0 +1,18 @@
+analysis_name,domain,role,required,source_variable,coding,missing_rule
+participant_id,administrative,id,yes,TO_MAP,unique identifier,none
+survey_weight,administrative,weight,yes,TO_MAP,positive numeric,document special missing codes
+age,biomedical,predictor,yes,TO_MAP,years,document special missing codes
+sex,administrative,covariate,yes,TO_MAP,factor with declared reference,document special missing codes
+mortality_time,outcome,time,yes,TO_MAP,days from baseline,right censored
+mortality_event,outcome,event,yes,TO_MAP,0 censored; 1 death,none
+hospital_time,outcome,time,yes,TO_MAP,days from baseline,right censored
+hospital_event,outcome,event,yes,TO_MAP,0 censored; 1 first unplanned admission,none
+bio_indicator_1,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+bio_indicator_2,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+bio_indicator_3,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+social_indicator_1,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+social_indicator_2,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+social_indicator_3,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
+systemic_indicator_1,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes
+systemic_indicator_2,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes
+systemic_indicator_3,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes

@@ -1,0 +1,1424 @@
+% Chapter 2 revised: critical literature synthesis, August 2026
+\label{ch:theory}
+
+\begin{ataglance}[The argument in outline]
+This chapter treats the literature as an argument, not a catalogue. It moves in six steps.
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \emph{Set out the field as a taxonomy.} Five ontological traditions each answer a different question about what ``health'' names; they are placed side by side rather than listed (Table~\ref{tab:taxonomy}).
+\item \emph{Find the gap.} None isolates the object the thesis tests: health-related capability, meaning biological capacity converted, or blocked, by enabling and constraining context.
+\item \emph{Choose an ontology.} Two candidates, capacity-ceiling and relational, differ on whether context can only convert existing capacity or can also create it.
+\item \emph{State the identification problem.} Observed functioning cannot tell a free choice from a blocked one, so capability must be modelled from capacity and context, not read off behaviour.
+\item \emph{Make measurement part of the theory.} Reflective and formative \citep{bollen_lennox_1991,edwards_bagozzi_2000} indicators are not interchangeable, and the construct must be shown distinct from frailty, social vulnerability and general wellbeing.
+\item \emph{End in falsifiable propositions,} not a declaration of validity.
+\end{enumerate}
+\end{ataglance}
+
+\noindent
+The central problem addressed in this chapter is not whether health is multidimensional. That proposition is well established. Nor is it whether health can be represented by a composite score. The literature contains several successful examples of multidimensional measurement, including the Global Burden of Disease framework, health-expectancy measures, frailty indices, intrinsic-capacity measures, capability measures and latent health metrics developed through factor analysis and item-response theory. The more difficult question is what is gained, and what is lost, when these traditions are brought together in a single construct intended to represent an individual's health-related potential rather than a current health state, a count of deficits, or a probability of an adverse event.
+
+The chapter therefore treats the literature as an argument rather than a catalogue. Five bodies of scholarship are placed in dialogue: (i) health-state and health-loss measurement; (ii) frailty and deficit accumulation; (iii) the WHO healthy-ageing and intrinsic-capacity framework; (iv) capability theory and capability measurement; and (v) social determinants and social vulnerability. The purpose of bringing these traditions together is not to imply that they are interchangeable. On the contrary, their differences provide the theoretical problem that the thesis must resolve. If intrinsic capacity describes what an individual is able to draw upon, functional ability describes what is realised in context, capability describes the opportunity to achieve valued states and activities, and social vulnerability describes accumulated exposure to social disadvantage, then a proposed health-capability construct must specify precisely where it sits among these concepts.
+
+This leads to a deliberately restrictive claim. The $H_{\text{potential}}$ is not proposed as the first multidimensional health measure, the first latent health score, or the first measure to incorporate social conditions. ATHLOS, for example, constructed a longitudinal health metric using exploratory and confirmatory factor analysis followed by Bayesian multilevel item-response theory, while the WHO framework explicitly links intrinsic capacity, environment and functional ability. \citep{caballero_athlos_2017,who_2015_ageing,who_healthy_ageing_2026} Capability measures such as ICECAP-O likewise demonstrate that capability can be operationalised at the individual level, although the measure is intentionally broader than health. \citep{icecap_o,icecap_o_validation} The proposed contribution is narrower: to test whether a health-bounded construct can explicitly connect biological and functional capacity with enabling social conditions and structural constraints, and whether that construct remains empirically distinguishable from established measures of intrinsic capacity, frailty, social vulnerability and current health.
+
+The chapter consequently ends not with a declaration that the proposed construct is valid, but with a set of propositions that the empirical work must attempt to falsify. The logic is important. A thesis of this kind is strongest when the data are allowed to demonstrate that the proposed construct is unnecessary, multidimensional without a valid general factor, or prognostically redundant. The objective is not to protect the proposed index from such findings but to determine what the evidence can legitimately support.
+
+\section{What Does It Mean to Measure Health?}
+
+Measurement begins with a construct, not an algorithm. A score can be calculated whenever observations are combined, but calculation does not establish that the resulting quantity corresponds to a meaningful latent attribute. This distinction is particularly important in multidimensional health research because the word \emph{health} is used to describe states, capacities, functionings, opportunities, vulnerabilities and outcomes that occupy different conceptual levels.
+
+The WHO healthy-ageing framework provides an important starting point because it explicitly distinguishes intrinsic capacity from functional ability. Intrinsic capacity refers to the composite of an individual's physical and mental capacities, while functional ability emerges from the interaction between those capacities and relevant environmental characteristics. The environment is defined broadly, including physical, social and policy contexts and the systems and relationships through which people live. \citep{who_2015_ageing,who_healthy_ageing_2026} This formulation prevents a common measurement error: interpreting an observed limitation as evidence that the underlying biological capacity is absent when the observed limitation may instead reflect an environmental barrier.
+
+The distinction can be expressed conceptually, for person $i$, as
+\begin{equation}
+\boxed{FA_i=f(IC_i,E_i,IC_i\times E_i)},
+\label{eq:who_fa_conceptual}
+\end{equation}
+where $FA_i$ denotes realised functional ability, $IC_i$ intrinsic capacity and
+$E_i$ the relevant environment. Equation~\ref{eq:who_fa_conceptual} is a
+translation of the WHO conceptual architecture into notation; it is not an
+equation estimated or endorsed by WHO. Writing the interaction among the
+arguments of $f$ does not assert a linear interaction term, a multiplicative
+production function or any particular scale.
+
+\begin{definition}[Functional ability in the WHO framework]
+\label{def:lit-fa}
+For person $i$, let $IC_i$ denote intrinsic capacity, $E_i$ the relevant
+environment and $FA_i$ realised functional ability. The WHO healthy-ageing
+architecture, written in the notation of \eqref{eq:who_fa_conceptual}, posits a
+function $f$ with
+\[
+  FA_i=f\bigl(IC_i,E_i,IC_i\times E_i\bigr).
+\]
+The definition fixes no scale for $IC$ or $E$, no sign for the interaction and
+no functional form for $f$. \citep{who_2015_ageing,who_healthy_ageing_2026}
+\end{definition}
+
+\begin{assumption}[The interaction is not redundant]
+\label{ass:lit-interaction}
+In Definition~\ref{def:lit-fa}, $f$ is not additively separable in its first
+two arguments: there exist profiles at which
+$\partial^2 f/\partial IC\,\partial E\neq0$.
+\end{assumption}
+
+Stated as an assumption rather than folded into the definition, because it is
+the substantive claim and it can fail. If the cross-partial were zero
+everywhere, capacity and environment would contribute independently, the third
+argument of $f$ would carry no information, and an additive index would lose
+nothing. Everything the thesis goes on to build rests on this assumption being
+false, and Chapter~\ref{ch:results2} is where it is put at risk.
+
+\begin{reading}[Why the interaction term is the whole argument]
+Strip \eqref{eq:who_fa_conceptual} of the notation and it says three things.
+What a person can do depends on their body. It depends on their surroundings.
+And, third, it depends on the two together in a way neither explains alone.
+The first two are uncontroversial. The third is the claim.
+
+The clinical case for it is easy to state. Two women have identical hip
+radiographs, identical grip strength and identical gait speed: the same $IC$.
+One lives in a bungalow with a stairlift-free front door and a supermarket
+across the road. The other lives on the second floor of a walk-up. Their $FA$
+differs, and it differs by more than either the hips or the stairs would
+predict separately, because the stairs matter more when the hips are worse.
+That excess is $IC_i\times E_i$.
+
+A measure that omits the interaction is committed to saying the stairs cost
+every woman the same. They do not, and the cost of pretending they do falls
+hardest on the women for whom the answer matters most.
+\end{reading}
+
+The conceptual sequence used in this thesis is \citep{who_2015_ageing}
+\begin{equation}
+\boxed{\begin{aligned}
+\text{health conditions}&\longrightarrow\text{intrinsic capacities}
+\longrightarrow\text{health-related capabilities}\\
+&\longrightarrow\text{functional ability}
+\longrightarrow\text{observed outcomes}
+\end{aligned}},
+\label{eq:conceptual_sequence}
+\end{equation}
+with environmental and social structures acting across the sequence. The
+arrows express theoretical ordering, not identified causal effects.
+
+\begin{definition}[The conceptual sequence]
+\label{def:lit-sequence}
+The sequence of \eqref{eq:conceptual_sequence} is the ordered chain
+\[
+  \text{health conditions}\rightarrow IC\rightarrow
+  \text{health-related capability}\rightarrow FA\rightarrow
+  \text{observed outcomes},
+\]
+with environmental and social structure acting on every arrow. Each arrow is a
+many-to-one map, so information present at one stage need not survive to the
+next. The ordering is theoretical: it says which quantity is upstream of which,
+and it does not assert an identified causal effect at any arrow.
+\end{definition}
+
+Each arrow in \eqref{eq:conceptual_sequence} is a place where information is
+lost, and naming the losses is the point of writing the sequence out. Mrs~A's
+osteoarthritis is a health condition. Her reduced quadriceps strength and
+slowed gait are the intrinsic capacities it produces. Her capability to leave
+the flat is what those capacities plus a second-floor walk-up amount to. Her
+functional ability is what she in fact does, which is to go out twice a week.
+Her observed outcome is a missed clinic appointment recorded in an
+administrative dataset.
+
+Reading backwards along that chain is where measurement goes wrong. The missed
+appointment is compatible with severe disease, with a difficult journey, or
+with a woman who had something better to do. Existing measures mostly sample
+the right-hand end of the sequence and infer leftwards. This thesis samples the
+left and middle and refuses to infer from behaviour, which is the position the
+next equation formalises.
+
+The thesis therefore asks whether underlying health-related potential can be
+measured separately from realised function. Its general construct statement is
+\begin{equation}
+\boxed{H_{P,i}=f(BP_i,SM_i,SB_i)},
+\label{eq:hp_general_class}
+\end{equation}
+where $BP_i$ is biological and functional capacity, $SM_i$ comprises social and
+environmental enabling conditions, and $SB_i$ comprises structural and social
+barriers. The mapping $IC\rightarrow BP$ is approximate rather than an asserted
+equivalence. Likewise, $E\rightarrow(SM,SB)$ separates enabling conditions from
+constraints without implying that every environmental variable belongs inside
+the construct. Whether social structure is a component, determinant or modifier
+is tested through competing specifications.
+
+\begin{definition}[The H-potential construct class]
+\label{def:lit-hpclass}
+An H-potential representation is any function $f$ of three domain scores,
+\[
+  H_{P,i}=f\bigl(BP_i,SM_i,SB_i\bigr),
+\]
+where $BP_i$ is biological and functional capacity, $SM_i$ enabling social and
+environmental conditions and $SB_i$ structural and social barriers, as in
+\eqref{eq:hp_general_class}. The definition names a class, not a member. It
+commits to two claims and no more: that the three domains partition what
+matters for health potential, and that they can be measured apart. Choice of
+$f$ within the class is the subject of Section~\ref{sec:lit-candidates} and
+Chapter~\ref{app:crf}.
+\end{definition}
+
+\begin{reading}[What \eqref{eq:hp_general_class} does and does not commit to]
+The equation is deliberately almost empty. It names three domains and asserts
+that health potential is some function of them. It does not say the function is
+addition, or multiplication, or anything else; $f$ is unspecified on purpose,
+because choosing its form is a separate argument made in
+Chapter~\ref{app:crf} and not smuggled in here.
+
+Two things are being claimed even so, and both can fail. The first is that
+these three domains are the right partition: that nothing important about
+health potential falls outside biological capacity, social enablement and
+structural burden. The second is that they are separable enough to be measured
+apart. If the NHATS indicators cannot distinguish social enablement from
+structural burden, the partition collapses to two domains and the thesis has to
+say so.
+
+Note also what sits outside the equation. There is no time index, so this is a
+snapshot; the dynamic version is Appendix~\ref{app:dynamical}. And there is no
+outcome on either side, which is the separation the whole design turns on.
+\end{reading}
+
+\begin{table}[htbp]
+\centering
+\caption{Conceptual and empirical roles in the H-Potential argument}
+\label{tab:concept_roles}
+\small
+\begin{tabular}{p{0.22\linewidth}p{0.22\linewidth}p{0.44\linewidth}}
+\hline
+Concept & Mathematical representation & Empirical role \\
+\hline
+Intrinsic capacity & $IC$ & Latent or domain-specific capacities; principal clinical predecessor \\
+Environment & $E$ & Context, enablement or constraint; not presumed reflective \\
+Functional ability & $FA=f(IC,E,IC\times E)$ & Realised capability and functioning \\
+Frailty & $F$ & Competing formative/composite construct \\
+Social vulnerability & $SV$ & Contextual competitor and possible determinant \\
+H-Potential & $H_P=f(BP,SM,SB)$ & Proposed health-bounded construct \\
+Mortality & $(T,D)$ & Downstream prognostic outcome, never a defining indicator \\
+Hospitalisation & $(T_H,D_H)$ & Downstream outcome with death as a competing event \\
+QALY & utility $\times$ survival & Cardinal economic comparator, not a latent-score interpretation \citep{whitehead_2010,drummond2015} \\
+Health expectancy & survival/function & Population-level comparator \\
+\hline
+\end{tabular}
+\end{table}
+
+The capability approach provides a second conceptual bridge. Sen distinguishes achieved functionings from the capability to achieve alternative functionings. \citep{sen_1993} This distinction is useful in health because the same observed outcome can arise from different opportunity structures. A person may not participate in an activity because of choice, because of impaired capacity, or because environmental and institutional constraints make participation difficult. A measurement system that observes only achieved functioning can therefore conflate inability with constrained opportunity.
+
+However, the capability approach cannot be imported into health measurement without qualification. Capability is a theory of human freedom and wellbeing, not a ready-made psychometric definition of health. ICECAP-O illustrates this boundary explicitly: it was developed as a measure of capability wellbeing in older people and intentionally extends beyond health states. \citep{icecap_o,icecap_o_validation} Empirical comparisons also suggest that ICECAP-O and direct health measures overlap only partially, particularly in physical functioning. \citep{icecap_o_validation} This is not a weakness of ICECAP-O; it is evidence that capability and health are related constructs with different scopes.
+
+The present thesis therefore uses the term \emph{health-related capability} in a deliberately restricted sense. It refers to the capacity and opportunity to sustain health-related functioning under the biological and social conditions in which an individual lives. It is not intended to measure total human capability, flourishing, life satisfaction or general wellbeing. This boundary is necessary for discriminant validity: if the construct can only be distinguished from general wellbeing by its name, its theoretical specification is inadequate.
+
+A further distinction is required between a latent construct and a prognostic outcome. A score derived from NHATS is not itself future health. It is an estimate of a latent state hypothesised to be associated with subsequent outcomes. Mortality and hospitalisation therefore cannot be used to define the construct without creating circularity. The measurement model must be developed before the prognostic model is evaluated. Prediction is evidence relevant to validity, but prediction alone does not establish construct meaning.
+
+If several conceptions of health are in play, the first task is to lay them out and see which question each answers. The next section does that side by side rather than in sequence, because the differences between them are the argument.
+
+\section{A Taxonomy of Ontological Traditions}
+
+Five ontological traditions define what the word \emph{health} names, and each answers
+a different question. To make the gap the thesis addresses precise, they are set out as
+a taxonomy rather than a list, alongside the health-economic, social-vulnerability and
+capability-wellbeing measures that serve as comparators. Table~\ref{tab:taxonomy}
+states, for each, the construct it targets, how it is structurally represented, its
+conceptual limit, and the role it plays in the H-potential argument. The point of the
+taxonomy is negative: while every entry is well founded for its own question, none
+isolates the object the thesis tests, namely health-related capability as biological
+capacity converted, or blocked, by enabling and constraining context.
+
+\begin{table}[htbp]
+\centering
+\caption{A taxonomy of ontological traditions in health measurement, and the role of each in the H-potential argument.}
+\label{tab:taxonomy}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{0.17\linewidth} p{0.17\linewidth} p{0.17\linewidth} p{0.20\linewidth} p{0.20\linewidth}}
+\toprule
+\textbf{Tradition} & \textbf{Primary construct target} & \textbf{Structural representation} & \textbf{Conceptual limit} & \textbf{Role in the argument} \\
+\midrule
+Biostatistical naturalism (Boorse \citep{boorse_1977}) & Statistically typical biological function vs a reference class & Species-typical functional norms & Places social context outside health & Fixes the biological pole; motivates $BP$ but is too narrow alone \\
+\addlinespace
+Action-theoretic holism (Nordenfelt) & Ability to reach vital goals in standard circumstances & Agent-and-goal ability & ``Standard circumstances'' hides structural oppression & Introduces agency; shows why context must be explicit \\
+\addlinespace
+Capability approach (Sen; Venkatapuram) & Substantive opportunity to achieve valued functionings & Functionings vs the capability set & Broader than health; risks construct conflation & Supplies the capability/functioning distinction, bounded here to health \\
+\addlinespace
+Deficit accumulation / frailty (Rockwood \citep{rockwood_mitnitski_2007,searle_2008}; Mitnitski) & Accumulated physiological vulnerability & Formative ratio $FI=\sum\text{deficits}/\text{total}$ & Agnostic on cause; omits enabling structures & The competing composite for risk stratification \\
+\addlinespace
+Intrinsic capacity / healthy ageing (WHO) & Internal physical and mental reserve & Reflective/formative domains & Heterogeneous operationalisation; excludes external context & The biological foundation, $BP$ \\
+\midrule
+Health-economic summaries (QALY / DALY) & Evaluative preference utility, or disease loss & Composite ratio/interval scale & Evaluates consequences; omits enabling context & Cardinal economic comparator \\
+\addlinespace
+Social vulnerability & Contextual disadvantage & Composite index of social deficits & Treats context as a personal deficit & Direct contextual competitor \\
+\addlinespace
+Capability wellbeing (ICECAP-O) \citep{icecap_o,coast_2008} & General human flourishing & Preference-weighted index & Exceeds the health domain & Boundary marker for health-specific freedom \\
+\midrule
+\textbf{$H_{\text{potential}}$} & Health-related capability in context & Axiomatic non-compensatory realisation function & Requires multi-stage identification and external calibration & The proposed construct \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{reading}[How to read the taxonomy]
+Each row is legitimate for the question it was built to answer; the table is not a
+list of failures. Its work is to locate a gap: read down the ``conceptual limit''
+column and every established tradition either excludes context, or dissolves the
+boundary of health, or treats disadvantage as a personal deficit. The final row is
+the thesis's wager that a health-bounded, non-compensatory construct can sit in that
+gap, and the rest of the chapter tests whether it can be told apart from its
+neighbours.
+\end{reading}
+
+A gap in a table is not yet a justification. Whether anything belongs in that
+gap depends on what one thinks health is, and on that question the philosophy
+of medicine is openly divided.
+
+\section{Rival Philosophies of Health and Their Mathematical Consequences}
+
+The word \emph{health} does not name a philosophically uncontested natural
+kind. A naturalist position, associated most prominently with Boorse's
+biostatistical theory, locates health in statistically typical biological
+functioning relative to an appropriate reference class. Contemporary defences
+retain the attraction of separating biological description from judgements
+about whether a condition is undesirable. \citep{schwartz_2014_boorse} On this
+view, housing, transport, income and institutional access influence welfare and
+the consequences of disease, but they are not themselves parts of health.
+
+This position supplies an important objection to H-Potential. If health is
+biological functional efficiency, placing social enablement inside a health
+score commits a category error. The naturalist model would instead write
+\[
+H_i^{N}=P_i,
+\qquad
+FA_i=f(P_i,E_i),
+\]
+so that $P_i$ measures health and $E_i$ helps explain realised functional
+ability. This is a serious comparator, not a straw position. It protects the
+medical construct from expanding until every social good becomes health.
+
+Applied to Mr~B, the naturalist reads his health off his factor level, his
+joint scores and his inhibitor titre, and says his formulary is a fact about
+his country rather than a fact about him. There is something right in that. A
+haematologist who recorded ``poor drug funding'' in the problem list alongside
+``high-titre inhibitor'' would be making a category error, and a health measure
+that let policy failures show up as sickness in the patient would be doing the
+same thing at scale. The objection has to be answered rather than waved
+through, and the answer this thesis gives is the layered position at the end of
+this section: report $P$ separately, always.
+
+Nordenfelt's action-theoretic account moves in a different direction. Health is
+connected to a person's ability, under accepted circumstances, to achieve vital
+goals. \citep{nordenfelt_1995} This captures something the biological account
+misses: intact organs do not guarantee the practical ability to act. Yet it
+introduces difficult questions. Which goals are vital? Which circumstances
+count as accepted or standard? If an inaccessible environment is treated as
+standard, injustice may be normalized; if every adverse circumstance is
+incorporated, health risks becoming indistinguishable from general welfare.
+
+Sen's capability approach separates achieved functionings from the real
+opportunities to achieve them. \citep{sen_1993} It therefore explains why the
+same observed functioning may arise from choice, biological limitation or
+constraint. Venkatapuram extends this reasoning by presenting health capability
+as a meta-capability shaped by biomedical and social causes and connected to
+human dignity and justice. \citep{health_capability_right,venkatapuram_2011}
+This supports a relational model in which capability is jointly constituted:
+\[
+H_i^{R}=G(P_i,S_i,R_i),
+\]
+without assuming that biomedical capacity is an external ceiling.
+
+The clinical intuition behind the relational reading is also familiar. A person
+with paraplegia and a well-fitted wheelchair in an accessible city is not
+described by their spinal cord alone; a person with the same lesion, no
+wheelchair and no ramps is differently placed in a way that ``same disease,
+different circumstances'' does not quite capture. The relational account says
+the difference is in their health capability, not merely alongside it.
+
+Daniels provides a further bridge to policy. On a Rawlsian account, protecting
+health matters because departures from normal functioning restrict the range of
+opportunities open to people; fair health policy must therefore address both
+health needs and fair procedures when not all needs can be met.
+\citep{daniels_2007} This approach does not imply that one composite score can
+settle priority. It makes procedural legitimacy, reasons, revisability and
+opportunity effects part of the assessment.
+
+These positions generate two rival ontologies for the thesis. The
+\emph{capacity-ceiling ontology} treats $P$ as the maximum potentially
+realisable quantity and context as a conversion factor:
+\[
+H^{C}(P,S,R)=P\,M(S,R),\qquad 0\le H^{C}\le P.
+\]
+The \emph{relational ontology} permits technology, assistance and institutions
+to enlarge effective capability beyond what an unaided capacity measure would
+predict:
+\[
+H^{R}(P,S,R)=G(P,S,R),\qquad H^{R}\not\le P\text{ necessarily}.
+\]
+Neither is selected by terminology. The ceiling model is more conservative and
+clinically anchored; the relational model is more faithful to capability and
+disability scholarship. The empirical analysis can examine their consequences,
+but fit cannot decide the philosophical question by itself.
+
+\begin{definition}[Capacity-ceiling ontology]
+\label{def:lit-ceiling}
+Write the profile as $(P,S,R)$ with $R=1-B$. The capacity-ceiling ontology
+takes biomedical capacity to be the maximum realisable quantity and context to
+be a conversion factor $M:[0,1]^2\rightarrow[0,1]$:
+\[
+  H^{C}(P,S,R)=P\,M(S,R),\qquad 0\le H^{C}(P,S,R)\le P .
+\]
+The upper bound is the substantive content. Context can convert capacity that
+exists and cannot create capacity that does not, so $P=0$ forces $H^{C}=0$ for
+every $S$ and $R$.
+\end{definition}
+
+\begin{definition}[Relational ontology]
+\label{def:lit-relational}
+The relational ontology drops the ceiling. Capability is jointly constituted by
+capacity and context through a function $G$,
+\[
+  H^{R}(P,S,R)=G(P,S,R),
+\]
+with no requirement that $H^{R}\le P$. Technology, assistance and institutions
+may therefore enlarge effective capability past what an unaided capacity
+measure predicts, and $P=0$ need not force $H^{R}=0$.
+\end{definition}
+
+\begin{reading}[What the two definitions disagree about]
+Definitions \ref{def:lit-ceiling} and \ref{def:lit-relational} differ in one
+inequality. The ceiling says a wheelchair cannot give a person legs; it can
+only let the legs they have carry them further. The relational account says
+that a person with a chair, a ramp and a lift is able to do things, and that
+being able to do things is what health capability was supposed to mean.
+
+Both are defensible. Neither is chosen here. The thesis carries both, reports
+where they diverge, and treats the divergence as a result rather than a
+nuisance.
+\end{reading}
+
+\begin{reading}[The one case that separates them]
+The two ontologies agree almost everywhere and disagree at a boundary. Take a
+person with $P$ at or near zero and excellent circumstances. Under the ceiling
+model, $H^C=P\,M(S,R)$, and multiplying zero by anything gives zero: their
+health capability is nil regardless of the ramps. Under the relational model,
+$G$ need not vanish, so their circumstances still count.
+
+Which answer is right is not a question data can settle, because the two
+models make identical predictions everywhere else and this corner of the
+profile space is sparsely observed. Choosing by fit would mean letting the
+distribution of a convenience sample decide a question in the philosophy of
+medicine, which is why the thesis carries both and reports where they diverge
+rather than picking one and calling the choice a finding.
+\end{reading}
+
+The thesis therefore adopts a layered position. Biomedical Potential is
+reported as a distinct clinical domain. The multidomain profile is primary.
+Scalar aggregation is secondary and conditional. Both ceiling and relational
+aggregations are sensitivity models. This prevents a philosophical commitment
+from being concealed inside a single equation.
+
+Both ontologies share one difficulty, and it is prior to either of them. Each
+treats capability as something a person has. Nobody has ever observed one.
+
+\section{Epistemology: Why Capability Cannot Be Read Directly from Function}
+
+Let $\mathcal C_i$ be the set of health-related functionings genuinely
+available to person $i$, and let the achieved functioning be
+\[
+F_i=\chi_i(\mathcal C_i),
+\]
+where $\chi_i$ represents choice under the person's information, preferences
+and circumstances. It follows that
+\[
+F_i=F_j\not\Rightarrow\mathcal C_i=\mathcal C_j.
+\]
+Two people may display the same activity while one had several genuine options
+and the other had none. Conversely, non-achievement does not establish
+incapability.
+
+\begin{definition}[Achieved functioning map]
+\label{def:lit-choicemap}
+Let $\mathcal U$ be the set of health-related functionings and let
+$\mathcal C_i\subseteq\mathcal U$ be the capability set of person $i$, meaning
+the functionings genuinely available to them. The achieved functioning is
+\[
+  F_i=\chi_i(\mathcal C_i),\qquad \chi_i(\mathcal C)\in\mathcal C ,
+\]
+where the selector $\chi_i$ represents choice under the person's information,
+preferences and circumstances. Only $F_i$ is recorded.
+\end{definition}
+
+\begin{theorem}[Observed functioning does not identify the capability set]
+\label{thm:lit-identification}
+Let $\mathcal C$ range over the non-empty subsets of $\mathcal U$ and let
+$\chi$ be a selector in the sense of Definition~\ref{def:lit-choicemap}. If
+$|\mathcal U|\ge2$ then $\chi$ is not injective, and consequently
+\[
+  F_i=F_j\;\not\Rightarrow\;\mathcal C_i=\mathcal C_j .
+\]
+No function of observed functioning alone recovers $\mathcal C_i$. For any
+candidate inverse $g$ with $g(F)\in2^{\mathcal U}$, and any $F$ chosen from $k$
+distinct capability sets, $g$ returns the right set for at most one of the $k$
+people and is wrong for the other $k-1$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Take $u\in\mathcal U$ and any two distinct sets $\mathcal C_i,\mathcal C_j$ that
+both contain $u$; a selector with $\chi_i(\mathcal C_i)=\chi_j(\mathcal
+C_j)=u$ exists whenever $|\mathcal U|\ge2$, so $\chi$ is not injective and the
+implication fails. The counting claim follows because $g$ is a function: it
+assigns one value to the argument $F$, and that value equals at most one of the
+$k$ distinct sets. Identification therefore requires information outside $F$,
+which is what Definition~\ref{def:lit-hpclass} supplies by modelling capability
+from capacity and context.
+\end{proof}
+
+\begin{reading}[What the theorem does not say]
+It does not say observed functioning is uninformative. A record of what someone
+did is evidence about what they could have done, and in a large sample it
+carries a great deal. The theorem says something narrower and harder: the
+evidence does not determine the answer, so the gap has to be closed by
+assumption, and the assumption has to be stated.
+
+It also sets the price of the alternative. Modelling capability from capacity
+and context replaces an unidentified quantity with an estimated one. That is
+progress only if the model is written down, published and allowed to fail.
+\end{reading}
+
+\begin{reading}[The identification problem, at the bedside]
+This is the most consequential piece of algebra in the chapter and it says
+something a clinician already knows. Observed behaviour is a choice made from
+an opportunity set, and only the choice is recorded.
+
+Three people did not attend the diabetic eye-screening appointment. The first
+could not afford the bus. The second was too breathless to travel. The third
+read the invitation, weighed it, and decided her cataract surgery next month
+made it pointless. The administrative dataset records one variable, DNA, and
+$F_i$ is identical for all three. Their opportunity sets $\mathcal C_i$ are
+completely different, and so is what should be done about them.
+
+Now run it the other way. Two men both walk four hundred metres. One does it
+easily. One does it because he must collect his own medication and has spent
+the rest of the day recovering. Same $F$, different $\mathcal C$. Every measure
+built on observed functioning, which includes most activities-of-daily-living
+scales, is blind to this by construction.
+
+The formal statement $F_i=F_j\not\Rightarrow\mathcal C_i=\mathcal C_j$ is the
+reason the thesis models capability from capacity and context rather than
+reading it off behaviour. It also states the price: capability is not directly
+observable, so it must be inferred, and an inference can be wrong in ways an
+observation cannot.
+\end{reading}
+
+\begin{workedexample}[lit-identification]{Three people, one recorded outcome}
+Three women were invited to diabetic eye screening and none attended. The
+dataset records the same value of $F$ for all three: did not attend. Their
+capability sets are not the same.
+
+\begin{center}\small
+\begin{tabular}{p{0.20\linewidth}p{0.40\linewidth}p{0.28\linewidth}}
+\toprule
+Person & Capability set $\mathcal C_i$ & Recorded $F_i$ \\
+\midrule
+No fare & \{home\} & did not attend \\
+Breathless & \{home, attend\} & did not attend \\
+Informed refusal & \{home, attend, attend and shop\} & did not attend \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The sets have one, two and three elements. Theorem
+\ref{thm:lit-identification} applies with $k=3$: any rule that reads a
+capability set off the record returns one set, so it is right for one woman and
+wrong for two. The clinical responses differ completely. The first needs the
+fare, the second needs transport and a review of her breathlessness, the third
+needs nothing at all.
+
+\begin{wecode}[Python]
+sets = {
+    "no fare":          frozenset({"home"}),
+    "breathless":       frozenset({"home", "attend"}),
+    "informed refusal": frozenset({"home", "attend", "attend and shop"}),
+}
+observed = {name: "home" for name in sets}       # chi_i(C_i), identical
+print(len(set(observed.values())), "recorded value(s)")
+print(len(set(sets.values())), "distinct capability sets")
+for guess in sets.values():
+    right = sum(1 for c in sets.values() if c == guess)
+    print("a fitted inverse gets", right, "right and", len(sets) - right, "wrong")
+\end{wecode}
+
+\weanswer{One recorded value, three distinct capability sets, and any inverse
+map is wrong for two of the three. Asserted by
+\texttt{test\_theorem\_lit\_choice\_map\_is\_not\_injective}.}
+\end{workedexample}
+
+This is an identification problem. Cross-sectional functioning cannot uniquely
+recover an unobserved opportunity set. Self-report does not solve it completely
+because expectations can adapt to long-standing deprivation, while external
+assessment may substitute professional values for those of the person. The
+claim made by H-Potential must therefore remain modest: it estimates selected
+conditions relevant to health-related opportunity; it does not directly observe
+freedom.
+
+The implication for validity is that statistical covariance is insufficient.
+Content validation must include clinicians, patients and affected communities;
+the indicators must be checked against what people have reason to value; and
+discordance between observed functioning, reported opportunity and structural
+conditions must be studied rather than averaged away.
+
+With the conceptual and epistemic ground laid, the established measurement
+traditions can be read critically instead of catalogued. Each of the
+next six sections takes one of them and asks the same question: what does it
+see, and what is it built not to see?
+
+\section{From Health Loss to Health Potential: QALYs, DALYs and Health Expectancy}
+
+QALYs and DALYs established the importance of constructing common measures across heterogeneous health states. QALYs combine duration and health-related quality, while DALYs combine years of life lost and years lived with disability. Their principal achievement is comparability: health consequences that arise from different diseases can be represented on a common evaluative scale. \citep{whitehead_2010,drummond2015,sundmacher_2017}
+
+Their conceptual purpose, however, differs from that of the present thesis. QALYs and DALYs are primarily measures of health gain, health loss and population burden. Their construction requires explicit valuation choices concerning health states, disability and, in some applications, time. These choices are not neutral technical operations. They encode assumptions about what counts as a loss and how different states should be compared. \citep{drummond2015}
+
+The economic case for these measures should not be understated. A common unit
+permits opportunity costs to be discussed across diseases and makes otherwise
+implicit allocation choices open to scrutiny. The objection is not that QALYs
+are too simple and should be displaced by a richer score. It is that their
+question is different. A QALY is an evaluative consequence measure; it does not
+claim to identify the biological reserve, social opportunity and institutional
+conditions from which a health state arose. Nor does an H-Potential factor score
+have the preference-based or ratio-scale properties needed to replace a QALY.
+
+\begin{workedexample}[lit-qaly]{The same two options, valued twice}
+Mrs~A's profile is $(0.55,0.35,0.40)$, so under the geometric realisation
+function of Chapter~\ref{app:crf} her capability is
+$0.55\sqrt{0.35\times0.40}=0.206$. Two options are on the table. A knee
+replacement raises $P$ to $0.70$. A bus pass with the clinic co-payment waived
+raises $R$ to $0.70$. Neither changes the other domains.
+
+Under the realisation function the knee gives
+$0.70\sqrt{0.35\times0.40}=0.262$, a gain of $0.056$, and the transport package
+gives $0.55\sqrt{0.35\times0.70}=0.272$, a gain of $0.066$. The transport
+package wins.
+
+Now value the same two options as QALYs. Suppose, conditionally, that the knee
+raises her health-state utility by $0.05$ and that she has eight years left, so
+the gain is $0.05\times8=0.40$ QALYs. Suppose the bus pass changes no dimension
+of the EQ-5D descriptive system, so its gain is $0$ QALYs. The knee wins, by
+everything to nothing.
+
+\begin{wecode}[Python]
+from hpv import crf
+
+base      = crf.H(0.55, 0.35, 0.40)
+knee      = crf.H(0.70, 0.35, 0.40)   # raises P
+transport = crf.H(0.55, 0.35, 0.70)   # raises R
+print(f"base {base:.4f}  knee {knee - base:+.4f}  transport {transport - base:+.4f}")
+print(f"QALYs: knee {0.05 * 8:.2f}  transport {0.0:.2f}")
+\end{wecode}
+
+\noindent The reversal is not a disagreement about the facts. The QALY asks
+what the options are worth in valued health time; the realisation function asks
+which constraint on her capability each one removes. Both answers are correct
+for their own question, and an appraisal that reported only one of them would
+be hiding the other.
+
+\weanswer{Capability gains $+0.056$ and $+0.066$ against QALY gains $0.40$ and
+$0$: the two instruments rank the options oppositely. Asserted by
+\texttt{test\_worked\_example\_lit\_qaly\_versus\_crf}. The figures are
+illustrative, not NHATS estimates.}
+\end{workedexample}
+
+Capability-based criticism adds a second qualification. Cookson showed that the
+capability approach can inform health evaluation in several ways, but direct
+estimation and valuation of capability sets presents serious empirical
+difficulties; standard health-state instruments may remain useful when the
+health consequences of an intervention are the decision-maker's principal
+concern. \citep{cookson_2005} H-Potential therefore complements rather than
+supersedes economic evaluation.
+
+Health expectancy moves closer to the present problem because it introduces time directly. Healthy life expectancy and related measures combine mortality and morbidity or disability information to estimate expected years lived in a specified health state. \citep{who_hale_2019} Yet health expectancy is principally a population-level demographic quantity. It is particularly valuable for describing inequalities between populations and changes over time, but it does not necessarily provide an individual-level latent representation of the mechanisms that generate future health.
+
+This creates an important conceptual bridge. Health expectancy asks, in effect, \emph{how many years of life are expected to be lived in a defined health state?} A prognostic risk model asks \emph{what is the probability of a specified event?} The proposed construct asks a different question: \emph{what level of health-related capacity and opportunity is available now, given the person's biological and social context?} The empirical relationship between that state and future outcomes must then be demonstrated rather than built into the definition.
+
+The distinction prevents a recurring problem in composite-index development: a predictive score can perform well while remaining theoretically uninterpretable. Conversely, a theoretically coherent construct may predict only modestly because its purpose is broader than any single outcome. The thesis therefore treats prognostic performance as one form of validity evidence rather than the criterion by which the construct is created.
+
+Health-loss measures value states from the outside, by preference weights
+elicited from populations. The next tradition asks the person.
+
+\section{Quality of Life, Functioning and the Problem of the Observed State}
+
+Health-related quality-of-life instruments provide an indispensable account of experienced health. Generic measures such as EQ-5D \citep{dolan2000,euroqol2020} and disease-specific measures such as Haem-A-QoL capture symptoms, functioning and perceived impact with a degree of clinical specificity that a broad latent construct cannot reproduce. Their value is precisely that they remain close to the lived health state.
+
+The limitation for the present purpose is conceptual rather than methodological. A current health-state instrument does not necessarily distinguish between the capacity to function and the circumstances that permit that capacity to be realised. This is especially relevant to chronic disease, where treatment can preserve biological function while social circumstances determine whether that function can be translated into participation, access, independence and continuity of care.
+
+The haemophilia literature makes this distinction particularly important. Modern management has substantially altered the natural history of haemophilia, making survival increasingly compatible with long-term management of musculoskeletal damage, treatment burden, mental health, comorbidity and access to specialist care. \citep{mauser_2009,srivastava_2020} A disease-specific quality-of-life measure can capture consequences of these processes, but it should not be expected to serve simultaneously as a model of biological reserve, social opportunity and structural constraint.
+
+This gives rise to a testable requirement for $H_{\text{potential}}$: it should correlate with established health-state measures because they share substantive information, but it should not be reducible to them. If the proposed score explains no information beyond current function, its claim to represent \emph{potential} is weakened. If it is almost independent of established health measures, its health content is also questionable. Convergent and discriminant validity therefore need to be considered together.
+
+Quality-of-life instruments describe how things are now. Frailty research asks a
+different question, about what is left in reserve, and it is the closest
+established neighbour to the construct proposed here.
+
+\section{Frailty: A Precedent for Multidimensional Vulnerability}
+
+Frailty provides perhaps the strongest precedent for the thesis because it demonstrates that heterogeneous observations can be aggregated into a meaningful state variable with prognostic consequences. The deficit-accumulation model treats symptoms, diseases, disabilities and other deficits as accumulated manifestations of vulnerability. The resulting frailty index has a characteristic distribution and predicts adverse outcomes. \citep{rockwood_mitnitski_2007}
+
+Deficit accumulation matters for more than the score it produces. It demonstrates that a high-dimensional representation of health can possess regular empirical properties even when individual deficits are heterogeneous. Earlier work also showed that different sets of deficits can produce broadly comparable prognostic information, suggesting that the construct captures a general state of vulnerability rather than the effect of a single disease. \citep{rockwood_mitnitski_2007}
+
+Yet frailty does not solve the problem posed here. Frailty is principally concerned with vulnerability and reduced reserve. The proposed construct is intended to represent both capacity and the conditions under which capacity can be exercised. Moreover, deficit accumulation generally treats observed deficits as components of vulnerability. Social disadvantage may appear as a deficit, but the framework does not necessarily distinguish between a biological limitation and an external barrier that constrains its expression.
+
+A fair counterargument is that this distinction may not justify another score.
+Frailty already summarises vulnerability efficiently, predicts clinically
+important outcomes and is familiar to geriatric practice. A parsimonious
+frailty model may be preferable to a theoretically richer index that is harder
+to calculate, explain or act upon. Deficit accumulation is deliberately
+agnostic about the causal origin of each deficit; that apparent theoretical
+limitation contributes to its robustness across different deficit sets.
+
+H-Potential can answer this objection only through evidence. It must show either
+that two people with similar frailty can have meaningfully different
+health-related opportunity because their enabling conditions differ, or that
+the domain profile changes interpretation, prediction or intervention planning.
+If it merely reverses the sign of frailty and appends socioeconomic variables,
+parsimony favours frailty.
+
+This distinction creates an empirical challenge rather than a rhetorical one. If the H-potential score is simply a positively oriented frailty index, the conceptual contribution is limited. The analysis must therefore compare the proposed score against a pre-specified frailty measure and determine whether it captures information not already contained in deficit accumulation. This comparison should be performed both at the measurement level and at the outcome level.
+
+The comparison also exposes a deeper measurement issue. A frailty index is commonly formative or composite in logic: the deficits contribute to the state rather than being interchangeable manifestations of a single latent trait. A conventional reflective CFA, in which every observed indicator is assumed to be an effect of one common factor, is therefore not automatically appropriate for all health constructs. The thesis must not choose a measurement model because SEM makes it convenient; it must choose the model that best represents the ontology of the construct.
+
+Frailty counts what has been lost. The WHO framework counts what remains, which
+sounds like the same thing measured from the other end and is not.
+
+\section{Intrinsic Capacity: From Conceptual Framework to Measurement Problem}
+
+WHO's intrinsic-capacity framework provides the most direct biological predecessor to the proposed Biomedical Potential domain. Intrinsic capacity encompasses multiple physical and mental capacities, conventionally organised into locomotor, cognitive, psychological, sensory and vitality domains. \citep{who_intrinsic_capacity_2017,beard_intrinsic_2019}
+
+The framework is theoretically powerful because it shifts attention from diagnosed disease to what a person is able to draw upon. It also provides a direct bridge to functional ability: declining intrinsic capacity need not translate into equivalent loss of functioning when environments are supportive. \citep{who_2015_ageing,who_healthy_ageing_2026} This is precisely the conceptual space in which a health-capability construct might reside.
+
+However, the intrinsic-capacity literature contains an important unresolved measurement problem. A scoping review of 31 papers found substantial inconsistency in the conceptualisation and operationalisation of intrinsic capacity, with studies implicitly or explicitly treating the construct as both reflective and formative \citep{koivunen_2022}. This is not a minor technical disagreement. If intrinsic capacity is reflective, observed capacities are treated as manifestations of an underlying common trait. If it is formative, the capacities jointly define the construct and may change independently without implying that the latent state has changed in the same direction.
+
+The same review found heterogeneity in how the five domains are measured, with variation in both domain selection and score construction, and most studies not stating which measurement model they assumed \citep{koivunen_2022}. This heterogeneity creates both a limitation and an opportunity for the present research. The limitation is that a proposed H-potential score cannot assume that a single canonical operationalisation of intrinsic capacity exists. The opportunity is that the thesis can make the measurement assumptions explicit and test competing structures.
+
+Longitudinal evidence provides an additional bridge. Intrinsic-capacity measures have been associated with subsequent disability, hospital admission and mortality. \citep{beard_intrinsic_2019,intrinsic_capacity_predictive_2023} Such findings support the prognostic relevance of capacity but do not establish that intrinsic capacity is equivalent to a broader health-capability construct. Indeed, if intrinsic capacity already predicts the outcomes of interest strongly, the burden of proof shifts to H-potential: it must demonstrate incremental information, and reproducing the same association will not do.
+
+The most direct criticism comes from within gerontology. Hoogendijk and
+colleagues argue that revisions to the domain structure, heterogeneous
+operationalisations, uncertain reflective-versus-formative logic and limited
+independent validation have made intrinsic capacity difficult to interpret.
+They further warn that studies often measure the absence of familiar deficits
+rather than capacity itself, risking the relabelling of established knowledge.
+\citep{hoogendijk_2023} Advocates respond that a capacity-centred framework
+corrects limitations of disease-counting and can organise prevention around
+functions that matter in later life, while acknowledging that interventions to
+optimise intrinsic capacity still require testing. \citep{geerinck_2022}
+
+This debate makes intrinsic capacity both the closest clinical framework and a
+cautionary case. H-Potential closes no gap merely by adding context to an
+uncertain total score. Its proposed advance is procedural: define the domain
+ontology before estimation; separate capacity indicators from conditions that
+convert capacity into function; compare reflective, formative and profile
+interpretations; and permit the analysis to reject a general score.
+
+If the difficulty were only conceptual, better definitions would fix it. The
+next section shows that the problem survives good empirical execution.
+
+\section{Multidimensional Health Metrics: ATHLOS and the Problem of Novelty}
+
+The ATHLOS project is a particularly important precedent because it demonstrates that a single longitudinal health metric can be constructed from heterogeneous indicators using modern latent-variable methods. Caballero et al. used exploratory and second-order confirmatory factor analysis to identify a multidimensional structure and then applied Bayesian multilevel item-response theory to create a health score that could be compared across waves. \citep{caballero_athlos_2017}
+
+This work directly challenges any claim that the proposed thesis is novel merely because it uses factor analysis, IRT or longitudinal health measurement. ATHLOS also demonstrates that the move from many indicators to one score is not trivial: the investigators first investigated dimensionality and then calibrated a score using item-response methods. The methodological lesson is important for H-potential. A general score must be earned by evidence of common structure, not assumed because a scalar index is convenient.
+
+At the same time, ATHLOS and H-potential address different conceptual questions. ATHLOS operationalised health as a multidimensional state of functioning and used a large set of indicators to derive a general health metric. The present thesis is more explicitly concerned with the relationship between biological capacity, enabling social conditions and structural constraints. The distinction must therefore be tested rather than asserted. If the proposed domains collapse empirically into a general health factor that is indistinguishable from established health metrics, the novelty claim should be narrowed accordingly.
+
+The appropriate lesson from ATHLOS is therefore methodological humility. The thesis should adopt the successful part of the precedent, which is explicit investigation of dimensionality and longitudinal comparability, while resisting the temptation to treat any general factor as evidence of a new construct. Construct identity depends on the content and causal interpretation of the indicators, not on the existence of a statistically adequate one-factor model.
+
+So far every tradition reviewed has stayed inside the boundary of health.
+Capability theory does not, and that is both its contribution and its danger.
+
+\section{Capability Theory and the Boundary Between Health and Wellbeing}
+
+Capability theory supplies the normative bridge between capacity and realised functioning. Sen's central distinction is between what people actually achieve and the substantive opportunities available to them. \citep{sen_1993} This is particularly relevant when health is measured in social context because observed functioning can be constrained by factors external to the individual.
+
+ICECAP-O provides the clearest operational precedent. It was developed through qualitative work with older people and was designed to capture broader capability wellbeing rather than health alone. \citep{icecap_o} Subsequent validation has shown associations with both health and wellbeing, while comparisons with direct health measures indicate incomplete overlap. \citep{icecap_o_validation} The evidence therefore supports the conceptual usefulness of capability measurement while simultaneously warning against collapsing capability wellbeing into health status.
+
+For H-potential, the implication is that capability theory should function as a bridge, not as a replacement for health measurement. The proposed construct must remain health-bounded. Its social domains should represent conditions relevant to the maintenance or realisation of health-related functioning, rather than every determinant of a good life.
+
+There is, however, a fundamental empirical difficulty. Functionings can often
+be observed, but capability is a set of genuine opportunities, including options
+not chosen. The same non-participation may represent preference, temporary
+circumstance, coercion or inability. Inferring an opportunity set from observed
+behaviour therefore risks calling constrained adaptation a free choice, while
+self-report can be affected by expectations and adaptation. \citep{cookson_2005}
+
+H-Potential does not claim to observe the complete capability set. It makes the
+more limited claim that selected biological capacities and documented enabling
+or constraining conditions contain information about health-related opportunity.
+The score is an estimate under a stated measurement model, not a direct reading
+of human freedom. Qualitative work and content validation remain necessary
+because covariance cannot establish that the selected opportunities are those
+people value.
+
+This distinction also has consequences for indicator selection. Variables such as social participation or perceived security may be relevant because they influence health-related capability, but their inclusion requires a theoretical pathway. They should not be included simply because they correlate with wellbeing. The code should therefore maintain a transparent mapping from each indicator to the theoretical proposition it is intended to operationalise.
+
+Capability supplies the concept of a conversion factor without saying what the
+factors are. The social-determinants literature has spent forty years
+identifying them.
+
+\section{Social Determinants and the Conversion of Capacity into Function}
+
+The social-determinants literature supplies the contextual bridge that biological models alone cannot provide. The WHO framework distinguishes structural determinants and socioeconomic position from intermediary determinants, emphasising that individual health is patterned by the social organisation of resources and opportunities. \citep{solar_irwin_2010}
+
+This matters because a health-capability construct can otherwise commit an attribution error. A person may possess adequate physical capacity but be unable to use it because of transport barriers, unsafe housing, inadequate financial resources, limited access to care or social isolation. These are not simply additional biomedical deficits. They are conditions that alter the conversion of capacity into functioning.
+
+The life-course perspective strengthens this argument. Social advantage and disadvantage accumulate through education, employment, income, housing, exposure and access to resources. Consequently, an observed social condition in later life can be both a current constraint and the downstream expression of earlier exposures. The relevance to H-potential is therefore temporal: the construct is measured at a point in time but should be interpreted as the current expression of a process extending across the life course.
+
+Empirical evidence supports the importance of these pathways. Social determinants have been associated with mortality among older adults, and ATHLOS analyses have demonstrated relationships among social determinants, health status and long-term mortality. \citep{social_determinants_mortality_2014,athlos_social_determinants_2018} These findings justify the inclusion of social conditions as theoretically relevant information. They do not, however, establish that social variables should be reflective indicators of a latent health factor. Their causal or contextual status must remain explicit.
+
+Including social conditions inside an individual score creates a serious
+counterargument. It may conflate the person with the conditions imposed upon
+them. A low score could then be read as an individual deficiency when the
+appropriate conclusion is that housing, transport, income or service access is
+inadequate. It can also hide policy-relevant information: two people can receive
+the same total through very different combinations of biological limitation and
+structural constraint.
+
+The theory addresses this by preserving domain scores and treating the scalar
+score as conditional rather than essential. Biomedical Potential describes
+capacity-related information; Social Modifiers describe enablement; Systemic
+Burdens describe constraints. A total is reported only if common structure and
+an interpretable aggregation rule are supported. Even then, the profile remains
+available so that structural burden is never silently reclassified as personal
+pathology.
+
+One strand of that literature has already built the composite measure this
+thesis most resembles, and the resemblance has to be confronted rather than
+managed.
+
+\section{Social Vulnerability: The Most Direct Competitor}
+
+Social vulnerability is perhaps the most important comparator because it already aggregates adverse social circumstances into an individual-level construct and has demonstrated prognostic relevance. Andrew, Mitnitski and Rockwood showed that social vulnerability was associated with mortality in older adults, while subsequent SHARE analyses demonstrated associations with mortality and disability across countries. \citep{andrew_social_vulnerability_2008,social_vulnerability_share_2014}
+
+The existence of this literature changes the burden of proof for H-potential. It is no longer sufficient to argue that social conditions matter. They clearly do. The question is whether the proposed Social Modifiers and Systemic Burdens represent something more specific than social vulnerability, and whether their integration with biological capacity adds information that neither component provides independently.
+
+This suggests a three-way empirical comparison. First, does H-potential differ from biomedical capacity measures? Second, does it differ from social vulnerability? Third, does it retain information when both are considered? If the answer to the third question is no, the proposed integrated construct may have little justification as a separate metric even if its individual domains are meaningful.
+
+The comparison should also consider the direction of interpretation. Social vulnerability is generally framed as accumulated disadvantage and risk. H-potential is intended to be framed positively as available health-related potential, while systemic burdens reduce that potential. These are not merely opposite labels. A positive transformation of a risk score is not automatically a new construct. The thesis must demonstrate that the proposed score changes the information structure, interpretation or empirical utility rather than simply reversing an existing scale.
+
+The difference turns out to be structural rather than substantive: not which
+variables are included, but how they are allowed to combine.
+
+\section{Intersectionality and the Limits of Additive Social Models}
+
+The literature on social inequality further complicates the assumption that social determinants can simply be added together. Intersectionality draws attention to the ways in which social positions and systems of power interact, producing experiences that may not be adequately represented by examining each dimension separately. \citep{crenshaw_1991,bowleg_2008}
+
+The implication for measurement is not that every possible interaction must be included in the primary latent model. Such a strategy would rapidly become statistically unstable and conceptually opaque. The stronger implication is that the meaning of the proposed indicators may vary across groups. Income, education, housing, race, sex, social support and access to care do not necessarily operate identically in every population.
+
+Accordingly, equity is a measurement question as well as a prediction question. A score can predict equally well across groups while measuring different latent quantities, and a score can demonstrate scalar differences while exhibiting non-invariance in the relationship between indicators and the latent construct. The thesis therefore needs measurement-invariance analysis before interpreting group comparisons as substantive differences in health-related potential.
+
+There is also an ethical distinction between measuring constraint and assigning blame. If inadequate transport or unstable housing lowers an individual's H-potential score, the interpretation should be that the person's health-related capability is constrained by context, not that the individual possesses an intrinsic personal deficit. This distinction becomes essential if the metric is ever translated into clinical prioritisation, resource allocation or policy targeting.
+
+That structural argument has a direct methodological consequence, and it is one
+that most composite-index work treats as a technical afterthought.
+
+\section{The Measurement Model Is Part of the Theory}
+
+The preceding literatures converge on a methodological point that is often treated as secondary: the statistical form of the measurement model expresses a claim about what the construct is.
+
+A reflective model assumes that an underlying latent variable generates covariance among its indicators. Removing one indicator should therefore not fundamentally redefine the construct, although precision may change. A formative or composite model instead treats indicators as contributors to the construct. Indicators may therefore be weakly correlated or even conceptually heterogeneous while remaining jointly necessary. The distinction is especially consequential when biological capacities are combined with social conditions.
+
+The intrinsic-capacity literature itself has not resolved this issue. The scoping review of the field found that most studies did not clearly define the measurement model and that both reflective and formative interpretations appear in the literature \citep{koivunen_2022}. This makes it inappropriate for the present thesis to state that SEM has validated H-potential simply because fit indices are acceptable.
+
+The empirical programme must therefore distinguish at least three questions. First, is there coherent covariance within each domain? Second, are the domains empirically related strongly enough to justify a higher-order construct? Third, does collapsing them into a scalar score retain rather than destroy substantive information? These questions lead naturally to competing models rather than a single confirmatory endpoint.
+
+The planned comparisons are therefore: (i) a correlated-domain model; (ii) a second-order model in which a general factor explains covariance among domains; and, where identification and sample size permit, (iii) a bifactor or related general-specific representation. Model choice should consider substantive interpretation, parameter stability, local fit, factor determinacy, discriminant validity and measurement invariance. Information criteria may assist comparison, but the statistically best-fitting model is not automatically the theoretically correct model.
+
+The same logic applies to indicator selection. Modification indices should not become a mechanism for discovering the theory after seeing the data. Correlated residuals, cross-loadings and item removals require substantive justification and should be treated as sensitivity analyses where possible. Otherwise the model risks becoming a description of idiosyncrasies in one sample rather than a measurement theory capable of replication.
+
+Misspecifying formative indicators as reflective, or the reverse, can bias
+structural relations and produce apparently satisfactory models with the wrong
+causal interpretation. \citep{jarvis_2003} Composite construction adds further
+normative choices: normalisation, weighting and aggregation determine which
+disadvantages can compensate for others and can materially alter rankings.
+Equal weights are not the absence of judgement; they are one particular
+judgement. \citep{greco_2019}
+
+For that reason, fit cannot choose the construct on its own. Content validity
+determines what must be represented; measurement theory determines which arrows
+are defensible; sensitivity analysis shows whether conclusions depend on
+weights or substitution assumptions; and external validation tests whether the
+representation travels. A single high-fitting SEM followed by a factor score
+would reproduce, rather than resolve, the problem.
+
+Measurement settled, the question becomes what such a measure could legitimately
+be used for. The economics is where the temptation to overclaim is strongest.
+
+\section{Economic Interpretation: Value, Opportunity Cost and Distribution}
+
+H-Potential is not an economic evaluation outcome. A QALY combines time and
+preference-based health-state value; a budget-impact analysis measures
+affordability; cost-effectiveness compares incremental costs and consequences.
+An H-Potential score has none of these meanings by construction. In particular,
+the latent scale does not support a cost-per-H-Potential-unit threshold.
+
+The economic relevance instead lies in diagnosis and heterogeneity. Suppose an
+intervention $a$ changes the profile from $X_i(0)$ to $X_i(a)$ at cost $C_i(a)$.
+Its profile effect is
+\[
+\Delta X_i(a)=X_i(a)-X_i(0),
+\]
+and a scalar effect $\Delta H_i(a)$ is calculated only under a declared
+aggregator. Economic evaluation must then compare intervention costs and
+established consequences, while asking who gains and which constraint is
+changed. A treatment may raise $P$; accessible transport may raise $S$; removal
+of financial barriers may raise $R$. Equal total effects can therefore imply
+different budgets, responsible agencies and policy mechanisms.
+
+\begin{reading}[Why the profile effect is kept as a vector]
+Three interventions produce the same $\Delta H$ of $+0.05$ for Mrs~A. A knee
+replacement raises $P$. A befriending scheme raises $S$. Waiving her clinic
+co-payment raises $R$. A scalar records all three as identical and hands the
+decision-maker no information at all.
+
+The vector $\Delta X$ records them as $(+0.05,0,0)$, $(0,+0.05,0)$ and
+$(0,0,+0.05)$, and the three go to different budgets. The first is an
+orthopaedic list with an eighteen-month wait. The second is a local-authority
+grant of a few hundred pounds. The third is a line in a finance director's
+spreadsheet and costs almost nothing to change. Equal capability effects,
+utterly unequal in cost, in who is responsible, and in how long they take.
+
+This is the practical reason the framework refuses to collapse the profile.
+Not because a scalar is philosophically impure, but because the scalar deletes
+the only column a commissioner can act on.
+\end{reading}
+
+Opportunity cost remains unavoidable. Funding an intervention displaces other
+health-producing activity. H-Potential cannot make that displaced health
+disappear and must not be used as a moral multiplier attached after a
+cost-effectiveness result. If allocation is considered, the minimum economic
+record includes incremental cost, QALYs or another justified consequence,
+budget impact \citep{sullivan_2014}, displaced activity, uncertainty and the distribution of gains
+and losses.
+
+Distributional cost-effectiveness analysis provides the closest established
+economic bridge. It extends conventional evaluation by estimating how health
+and opportunity costs are distributed across equity-relevant groups and by
+making inequality judgements explicit. \citep{asaria_2016_dcea} H-Potential
+profiles could help describe baseline constraints or intervention mechanisms,
+but should not replace DCEA's health-opportunity-cost accounting. Nor should a
+low score automatically generate priority: doing so could favour interventions
+with little benefit, penalise those whose capability is difficult to measure or
+double-count disadvantage already included in an equity analysis.
+
+Three distinct economic uses must therefore be separated:
+\begin{enumerate}
+ \item \emph{descriptive use}: identify the domain in which capability is
+ constrained;
+ \item \emph{stratified evaluation}: estimate costs and outcomes separately
+ for relevant profile groups;
+ \item \emph{allocative use}: apply explicit social value judgements through
+ a legitimate appraisal process.
+\end{enumerate}
+Only the first is supported by construct validation alone.
+
+The distinction is worth stating bluntly, because the slide from the first use
+to the third is how measures of this kind cause harm. Establishing that Mrs~A's
+constraint sits in the structural domain is a descriptive finding and the
+validation work in this thesis could support it. Concluding that she should
+therefore receive funding ahead of someone else is an allocative judgement, and
+nothing in a factor analysis licenses it. The sections that follow set out what
+would have to be true, and what procedures would have to be in place, before
+the framework could be used at the third level at all.
+
+\subsection{The policy evidence vector and its calculations}
+
+Because the foregoing distinctions are easy to lose once a score enters a
+decision process, the minimum policy object can be written explicitly. Let
+$a$ denote an intervention and let $j$ denote the jurisdiction in which it is
+being considered. The evidence required for appraisal is the vector
+\[
+\mathcal D_j(a)=
+\left(
+\Delta X_j(a),\Delta Q_j(a),\Delta C_j(a),
+\operatorname{BI}_j(a),\operatorname{Dist}_j(a),
+\operatorname{Unc}_j(a),\operatorname{Gov}_j(a)
+\right).
+\]
+This notation is not intended to create a new omnibus score. Its purpose is the
+opposite: it prevents analytically different considerations from disappearing
+inside a single number. The coordinates record, respectively, change in the
+H-Potential domain profile, change in an established health outcome,
+incremental cost, budget impact, distributional consequences, uncertainty and
+governance requirements. This follows the established distinction between
+economic evaluation and affordability analysis and the multidisciplinary logic
+of HTA. \citep{drummond2015,who_hta_2014,who_hta_institutional_2021}
+
+The first coordinate is genuinely multidimensional. With
+\[
+X_j(a)=\bigl(P_j(a),S_j(a),R_j(a)\bigr),
+\]
+where $P$ denotes biomedical and functional capacity, $S$ social and
+environmental enablement, and $R=1-B$ freedom from structural burden, the
+profile change is
+\[
+\Delta X_j(a)=X_j(a)-X_j(0)
+=\bigl(\Delta P_j(a),\Delta S_j(a),\Delta R_j(a)\bigr).
+\]
+Larger coordinates are favourable. The vector should normally be reported in
+this disaggregated form. A scalar $\Delta H_j(a)$ may be added only when the
+aggregation rule, weights and compensation assumptions have been defended; it
+does not follow from subtraction alone.
+
+The economic coordinates use conventional incremental analysis. For a time
+horizon $T$, discount factor $d_t=(1+r)^{-t}$, intervention arm $a$ and
+comparator $0$,
+\[
+\Delta Q_j(a)=\sum_{t=0}^{T}d_t
+  \{Q_{jt}(a)-Q_{jt}(0)\},
+\qquad
+\Delta C_j(a)=\sum_{t=0}^{T}d_t
+  \{C_{jt}(a)-C_{jt}(0)\}.
+\]
+If the jurisdiction uses a monetary value or opportunity-cost threshold
+$\lambda_j$ per unit of the selected health consequence, incremental net
+monetary benefit is \citep{stinnett_mullahy_1998}
+\[
+\operatorname{INMB}_j(a)=
+\lambda_j\Delta Q_j(a)-\Delta C_j(a).
+\]
+For an eligible population of size $N_{jt}$ and a budget-period cost difference
+$\Delta c_{jt}(a)$, a transparent budget-impact calculation is
+\[
+\operatorname{BI}_j(a)=
+\sum_{t=0}^{T_B}N_{jt}\,\Delta c_{jt}(a),
+\]
+with uptake, displacement and implementation costs modelled explicitly where
+relevant. A positive INMB does not imply affordability: an intervention can be
+cost-effective over its analytic horizon while imposing a budget impact that a
+service cannot absorb. Conversely, a small budget impact does not establish
+value.
+
+Distribution cannot be recovered from the population mean. If $g$ indexes
+equity-relevant groups, an appraisal should retain at least
+\[
+\operatorname{Dist}_j(a)=
+\left\{\pi_{gj},\Delta Q_{gj}(a),\Delta C_{gj}(a),
+\Delta X_{gj}(a)\right\}_{g=1}^{G},
+\]
+where $\pi_{gj}$ is the population share of group $g$. Distributional
+cost-effectiveness analysis may then apply an explicitly chosen inequality
+judgement and include the distribution of displaced health; H-Potential does
+not supply that judgement automatically. \citep{asaria_2016_dcea}
+
+A small numerical example clarifies the separation. Suppose an intervention
+changes the mean profile from $(0.45,0.35,0.30)$ to
+$(0.55,0.50,0.40)$, so that
+\[
+\Delta X_j(a)=(0.10,0.15,0.10).
+\]
+Suppose also that $\Delta Q_j(a)=0.08$, $\Delta C_j(a)=1{,}200$ monetary
+units and $\lambda_j=20{,}000$. Then
+\[
+\operatorname{INMB}_j(a)
+=(20{,}000\times0.08)-1{,}200=400.
+\]
+At an initial uptake of 10,000 people and an undiscounted first-year incremental
+cost of 1,200 per person, the first-year budget impact is 12 million monetary
+units. These quantities answer different questions: the profile identifies the
+mechanism of change; INMB addresses value relative to opportunity cost; budget
+impact addresses fiscal exposure. The numbers are deliberately illustrative,
+not estimates from NHATS.
+
+Now consider a second jurisdiction $k$ in which the same profile and health
+effects are expected, but $\lambda_k=10{,}000$ and incremental cost is 1,400.
+Then
+\[
+\operatorname{INMB}_k(a)
+=(10{,}000\times0.08)-1{,}400=-600.
+\]
+The intervention has not ceased to work, yet its economic ranking has changed.
+The contrast is the practical content of the non-transportability proposition
+proved in Appendix~\ref{app:mathematical_foundations}: transport of a clinical
+or capability effect does not entail transport of a policy decision. The
+remaining coordinates of $\mathcal D_j(a)$ require uncertainty analysis and
+deliberative assessment of distribution, legality, accountability and public
+reason. They cannot be calculated away.
+
+If the calculation cannot settle the decision, something else must, and that
+something is a process rather than a formula.
+
+\section{Policy Bearing and Governance}
+
+The policy attraction of H-Potential is that it can reveal why similar clinical
+states lead to different realised opportunities. The corresponding danger is
+that a public institution may turn the score into a rank, threshold or automated
+eligibility rule. A structurally disadvantaged person could then be described
+as having low personal potential and be denied investment precisely because the
+system has constrained them.
+
+The correct policy interpretation is remedial rather than desert-based. A low
+$P$ may indicate clinical or rehabilitative need. A low $S$ may indicate a need
+for support, accessible environments or assistive technology. A low $R$ may
+identify institutional barriers requiring policy correction. The profile points
+to different duties; it does not measure worth, compliance or probable return
+on investment.
+
+The relevant policy problem is global, but it is not context-free. WHO defines
+health technology assessment as a multidisciplinary appraisal of clinical,
+economic, organisational, social, legal and ethical consequences and urges
+Member States to develop methods suited to their national circumstances.
+\citep{who_hta_2014,who_hta_institutional_2021} Its recent account of health
+equity likewise locates avoidable health differences in the distribution of
+power, money, resources and living conditions. \citep{who_sdh_equity_2025}
+These propositions support the architecture of H-Potential, in which health
+capability is jointly biological and relational. They also defeat the idea of a
+single, globally portable decision threshold. A measure can travel as a
+hypothesis before it can travel as a calibrated instrument.
+
+This distinction resolves the apparent tension between a general theory and a
+United States development study. The conceptual claim is not a claim about one
+country: in any society, realised health possibilities may depend on embodied
+capacity, enabling relations and institutional arrangements. The empirical
+claim is much narrower. NHATS permits an initial test among older Medicare
+beneficiaries in the United States. It cannot establish that the same
+indicators, loadings, score distributions or prognostic relations hold for
+younger people, other disease groups or other health systems. Universality must
+therefore be earned through a sequence of transportability tests, not asserted
+from the breadth of the theory. \citep{moons_2019,collins_2024}
+
+Four kinds of transport must be distinguished. \emph{Conceptual transport}
+asks whether the three-domain account makes sense in the receiving setting.
+\emph{Measurement transport} asks whether items have comparable meaning,
+requiring qualitative work, measurement-invariance analysis and examination of
+differential item functioning. \emph{Predictive transport} asks whether risks
+remain calibrated and whether local recalibration or refitting is necessary.
+\emph{Decision transport} asks whether an intervention remains worthwhile once
+local costs, displaced services, budgets, legal duties and public values are
+considered. Success at an earlier level does not entail success at a later one.
+
+Country settings are thus comparative tests rather than rival answers to the
+question of scope. The United States supplies the developmental cohort. South
+Africa is a substantively important future case because a more resource-
+constrained and unequal health system provides a demanding test of the
+framework's systemic domain; its emerging HTA arrangements illustrate an
+appraisal that keeps effectiveness, equity, cost-effectiveness, budget impact
+and societal considerations distinct. \citep{south_africa_hta_2026} Neither
+country defines the theory. Each reveals different conditions under which it
+might fail, require reinterpretation or acquire policy value.
+
+Accordingly, responsible use cannot be reduced to a procedural checklist. It
+requires an evidential chain: participation by affected communities in defining
+the domains; external validation and invariance testing; public disclosure of
+items, weights, thresholds and missing-data rules; reporting of the domain
+profile beside any total; and continuing audit for disparate impact and
+self-reinforcing feedback. Where a decision affects an individual, reasons and
+an effective route of appeal are indispensable. No score should be the sole
+basis for automated denial, rationing or reimbursement. Economic appraisal must
+remain separate enough to expose opportunity cost and budget impact rather than
+hiding them inside the construct.
+
+These safeguards delimit the policy claim. At the present stage H-Potential is
+a research and diagnostic framework. It may inform needs assessment, service
+design, inequality surveillance and hypothesis generation. It is not validated
+as a benefit-package rule, reimbursement threshold, clinical triage score or
+individual entitlement formula.
+
+The review is now complete enough to say precisely what is missing from it.
+
+\section{The Unresolved Space and the Specific Contribution of H-Potential}
+
+The literature does not reveal one missing variable. It reveals a set of
+interfaces that existing traditions handle separately. Clinical measures are
+often strongest when describing disease, impairment or realised function.
+Intrinsic capacity shifts attention towards positive capacity but remains
+contested in its operationalisation. Capability theory explains why opportunity
+cannot be inferred from functioning alone, yet complete opportunity sets are
+difficult to observe. Social-determinants research explains how opportunities
+are structured, but it does not by itself yield an individual health
+measurement model. Frailty and social-vulnerability indices predict risk well,
+but generally organise biological and social disadvantage as accumulated
+vulnerability. QALYs and DALYs support comparison and valuation, but do not
+model the conversion of capacity into functioning.
+
+H-Potential is proposed at these interfaces. Its first gap is
+\emph{conceptual}: it distinguishes available biological capacity, enabling
+conditions, structural constraints, realised function and downstream outcomes
+within one ordered account. Its second gap is \emph{measurement-related}: it
+does not assume that all three domains are reflective manifestations of one
+cause, and it permits a profile or correlated-domain result when a total score
+is indefensible. Its third gap is \emph{functional-form related}: additive,
+interactive, multiplicative and non-compensatory aggregations are treated as
+competing hypotheses rather than hidden design choices. Its fourth gap is
+\emph{evaluative}: the construct is tested against intrinsic capacity, frailty,
+social vulnerability and current health before any claim of added value. Its
+fifth gap is \emph{interpretive}: structural constraint remains visible as
+context rather than being redescribed as an intrinsic personal deficit.
+
+These are proposed contributions, not established achievements. Each has a
+failure condition. The conceptual ordering fails if the domains cannot be
+distinguished. The measurement contribution fails if the indicators lack
+content validity or the structure cannot be replicated. The aggregation
+contribution fails if rankings depend arbitrarily on scaling or weights. The
+incremental contribution fails if established measures contain the same
+information more parsimoniously. The interpretive contribution fails if users
+reduce the output to a decontextualised rank. By stating these conditions, the
+theory becomes elaborated enough to be criticised and precise enough to be
+tested.
+
+The resulting novelty claim is therefore intentionally conditional. The thesis
+does not claim discovery of multidimensional health, social determination,
+capability, latent measurement or prognosis. It asks whether their theoretically
+specified interface can be represented without collapsing capacity into
+function, context into pathology, or prediction into construct validity. That
+is narrower than a universal theory of health, but it is more defensible and
+more useful as a doctoral contribution.
+
+Before proposing anything, it is worth separating what the reviewed evidence
+actually establishes from what it is often taken to establish.
+
+\section{What the Literature Supports, and What It Does Not}
+
+The literature supports several propositions strongly enough to motivate empirical testing. First, health in later life is multidimensional. Second, health state, functional ability, intrinsic capacity, capability and vulnerability are related but non-identical concepts. Third, intrinsic capacity has become an important organising framework for healthy ageing, but its measurement remains heterogeneous. Fourth, social and environmental conditions influence the extent to which biological capacity can be translated into functioning. Fifth, social vulnerability and frailty already capture substantial portions of the biological and contextual risk space. Sixth, multidimensional health metrics can be constructed using latent-variable and item-response methods, but their validity depends on explicit conceptual and measurement assumptions.
+
+The literature does not support several stronger claims. It does not support the assertion that multidimensional health measurement is absent. It does not support treating the proposed algebraic expression as an identified empirical estimator. It does not support assuming that social conditions are interchangeable reflective indicators of a latent biomedical state. It does not support assuming that a general factor exists because the theory contains several domains. Finally, prognostic association does not show that a variable can be acted on: a variable can predict mortality without being an intervention target, and a social burden can be predictive without being a component of a reflective latent trait.
+
+These limitations are not obstacles to the thesis; they define its scientific task. The research question is therefore whether the proposed construct occupies a distinguishable measurement space between intrinsic capacity, frailty, social vulnerability and conventional health status, and whether that distinction carries information about subsequent outcomes.
+
+That leaves the original formula, which needs demoting before it can be
+replaced.
+
+\section{The H-potential Equation as a Heuristic, Not an Estimator}
+
+The original formulation
+\begin{equation}
+H_{\text{potential}}=(L\cdot Q)S-B
+\end{equation}
+was useful because it expressed an intuitive proposition: biological potential is modified by enabling conditions and constrained by structural burden. The literature, however, does not justify the equation as an empirical law.
+
+Multiplication by $S$ assumes that social conditions proportionally scale every unit of biomedical potential. Subtraction of $B$ assumes that systemic burden exists on a common additive scale with the quantity produced by $(L\cdot Q)S$. Neither assumption follows from WHO's framework, capability theory, social-determinants research or frailty science. In particular, capability theory does not imply that a reduction in social opportunity should be numerically equivalent to a unit reduction in biological capacity.
+
+\begin{proposition}[The heuristic is not bounded below by zero]
+\label{prop:lit-heuristic}
+Let $L,Q,S,B\in[0,1]$ and write $h=(LQ)S-B$. Then
+\[
+  h\in[-1,1],
+\]
+and both bounds are attained. In particular $h<0$ whenever $B>(LQ)S$, so $h$
+takes negative values on the interior of its domain. If $L$, $Q$, $S$ and $B$
+are independent and uniform on $[0,1]$, then
+$\Pr(h<0)=1-\mathbb E[LQS]=1-\tfrac18=\tfrac78$. No admissible realisation
+function has this property: every aggregator satisfying the normalisation and
+capacity-boundedness axioms of Appendix~\ref{app:mathematical_foundations}
+returns a value in $[0,P]$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+$(LQ)S$ ranges over $[0,1]$ and $B$ ranges over $[0,1]$ independently, so their
+difference ranges over $[-1,1]$; $h=-1$ at $L=Q=S=0$, $B=1$, and $h=1$ at
+$L=Q=S=1$, $B=0$. The sign condition is immediate. For the probability, $L$,
+$Q$ and $S$ are independent with mean $\tfrac12$, so $\mathbb E[LQS]=\tfrac18$,
+and $\Pr(B>LQS)=\mathbb E[1-LQS]$ because $B$ is uniform and independent of the
+product.
+\end{proof}
+
+\begin{reading}[Why a negative score disqualifies the formula]
+A capability of $-0.41$ does not mean anything. There is no state of a person
+that is less available to them than nothing, and no clinician can act on the
+difference between $-0.41$ and $-0.62$. The subtraction of $B$ therefore fails
+before any question of fit arises, because the quantity it produces is not on a
+scale a capability could live on.
+
+The seven-eighths figure makes the point sharper. Under an even spread of
+inputs the formula is negative most of the time. It is not that the heuristic
+occasionally misbehaves at the edges; the well-behaved region is the corner.
+That is why the equation is kept as a statement of the intuition and the
+empirical model is built from axioms instead.
+\end{reading}
+
+\begin{workedexample}[lit-heuristic]{Mrs A scored by the original formula}
+Mrs~A's profile is $(P,S,R)=(0.55,0.35,0.40)$, so her structural burden is
+$B=1-R=0.60$. Reading her biomedical potential as the product $LQ=0.55$, the
+original heuristic gives
+\[
+  h=(0.55\times0.35)-0.60=0.1925-0.60=-0.4075 .
+\]
+Her burden would have to fall to $B=0.1925$, meaning $R=0.8075$, before the
+heuristic reported a non-negative capability at all. Everything below that is
+recorded as a negative number.
+
+The realisation function on the same profile gives
+$0.55\sqrt{0.35\times0.40}=0.206$, which sits inside $[0,P]=[0,0.55]$ as the
+axioms require, and falls towards zero as the burden rises without ever
+crossing it.
+
+\begin{wecode}[Python]
+from hpv import crf
+
+heuristic = lambda lq, s, b: lq * s - b
+print(f"heuristic {heuristic(0.55, 0.35, 0.60):+.4f}")
+print(f"CRF       {crf.H(0.55, 0.35, 0.40):+.4f}")
+for b in (0.20, 0.40, 0.60, 0.80):
+    print(f"B={b:.2f}  heuristic {heuristic(0.55, 0.35, b):+.4f}  "
+          f"CRF {crf.H(0.55, 0.35, 1 - b):+.4f}")
+\end{wecode}
+
+\weanswer{$h=-0.4075$ for Mrs~A, against a realisation-function value of
+$0.206$. Asserted by
+\texttt{test\_proposition\_lit\_heuristic\_admits\_negative\_values} and
+\texttt{test\_proposition\_lit\_heuristic\_negative\_on\_most\_of\_the\_cube}.}
+\end{workedexample}
+
+The equation should therefore remain as a conceptual heuristic while the empirical model is estimated independently. The thesis should not interpret a standardised SEM factor score as years of healthy life, nor should it convert an arbitrary latent scale into a clinically meaningful unit without external calibration.
+
+Demoting the heuristic leaves a vacancy. The candidates for filling it, and the
+tests that would choose between them, come next.
+
+\section{Candidate Mathematical Representations and Their Tests}
+\label{sec:lit-candidates}
+
+Equation~\ref{eq:hp_general_class} defines a class of admissible models rather
+than selecting one. Four candidates expose the principal aggregation assumptions \citep{arrow_chenery_1961}:
+\begin{align}
+H_{P,i}^{(A)}&=\beta_0+\beta_1BP_i+\beta_2SM_i-\beta_3SB_i+\varepsilon_i,
+\label{eq:hp_additive}\\
+H_{P,i}^{(I)}&=\beta_0+\beta_1BP_i+\beta_2SM_i-\beta_3SB_i
++\beta_4(BP_iSM_i)+\varepsilon_i,
+\label{eq:hp_interaction}\\
+H_{P,i}^{(M)}&=BP_i^{\alpha}SM_i^{\beta}(1-SB_i)^{\gamma},
+\qquad \alpha,\beta,\gamma>0,
+\label{eq:hp_multiplicative}\\
+H_{P,i}^{(C)}&=BP_i\left[\delta SM_i^{\rho}
++(1-\delta)(1-SB_i)^{\rho}\right]^{1/\rho},
+\quad 0<\delta<1.
+\label{eq:hp_ces}
+\end{align}
+The bounded complement $1-SB_i$ makes zero a complete contextual bottleneck.
+All components must be directionally harmonised and scaled before comparison.
+
+The additive model assumes constant marginal contributions and complete
+compensation on a common scale. The interaction model tests whether enablement
+changes the contribution of biological capacity; $\beta_4=0$ is the nested null
+of no complementarity. The multiplicative model imposes positive monotonicity
+and proportional trade-offs. The CES \citep{arrow_chenery_1961} model varies substitutability:
+$\rho\rightarrow1$ approaches a weighted arithmetic mean,
+$\rho\rightarrow0$ the geometric case, and $\rho\rightarrow-\infty$ a
+bottleneck limit. These are empirical and normative alternatives.
+
+\begin{proposition}[Aggregation can reverse a ranking]
+\label{prop:lit-reversal}
+There are profiles that an additive rule and a bottleneck rule order in
+opposite directions. Let $x=(1,1,0.2)$ and $y=(1,0.55,0.55)$. The equal-weight
+arithmetic contextual mean gives $0.60$ for $x$ and $0.55$ for $y$, so $x$ is
+ranked first. The bottleneck rule gives $0.20$ for $x$ and $0.55$ for $y$, so
+$y$ is ranked first. The choice of $\rho$ in \eqref{eq:hp_ces} therefore
+determines the ordering of two people and is not a technical detail. The proof
+is in Appendix~\ref{app:mathematical_foundations}.
+\end{proposition}
+
+\begin{reading}[Who the two profiles are]
+Profile $x$ is someone with excellent support and a system that fails them
+almost completely. Profile $y$ is someone with middling amounts of both. An
+additive rule says the first is better placed, because the support makes up for
+the failure. A bottleneck rule says the second is, because nothing makes up for
+a system score of $0.2$.
+
+Both statements are coherent and they cannot both guide the same service. The
+question of which is right is ethical, and no amount of data settles it. What
+the data can do is show how far the answer moves as $\rho$ moves, which is why
+substitution sensitivity is reported alongside every total in this thesis.
+\end{reading}
+
+\begin{workedexample}[lit-reversal]{The reversal, with the numbers}
+Take $x=(1,1,0.2)$ and $y=(1,0.55,0.55)$, both with full biomedical capacity so
+that the contextual mean is the whole story.
+
+The arithmetic mean of the two context scores is $\tfrac12(1+0.2)=0.60$ for $x$
+and $\tfrac12(0.55+0.55)=0.55$ for $y$. The geometric mean is
+$\sqrt{1\times0.2}=0.447$ for $x$ and $\sqrt{0.55\times0.55}=0.55$ for $y$. The
+bottleneck value is $\min(1,0.2)=0.20$ for $x$ and $0.55$ for $y$.
+
+The additive rule puts $x$ ahead by $0.05$. Every rule with $\rho\le0$ puts $y$
+ahead, by $0.10$ in the geometric case and by $0.35$ at the bottleneck limit.
+The gap between the two verdicts is larger than either margin.
+
+\begin{wecode}[Python]
+from hpv import crf
+
+x, y = (1.0, 1.0, 0.2), (1.0, 0.55, 0.55)
+for name, rho in (("arithmetic", 1.0), ("geometric", 0.0), ("bottleneck", -800.0)):
+    hx, hy = crf.H(*x, rho=rho), crf.H(*y, rho=rho)
+    print(f"{name:>11}: x {hx:.3f}  y {hy:.3f}  winner {'x' if hx > hy else 'y'}")
+\end{wecode}
+
+\weanswer{$x$ scores $0.60$, $0.447$ and $0.20$ as $\rho$ falls from $1$ to the
+bottleneck limit, while $y$ scores $0.55$ throughout: the ranking reverses
+between the first rule and the other two. Asserted by
+\texttt{test\_worked\_example\_lit\_ranking\_reversal}.}
+\end{workedexample}
+
+For the heuristic $(LQ)S-B$,
+\begin{equation}
+\frac{\partial H_P}{\partial L}=QS,
+\qquad
+\frac{\partial^2 H_P}{\partial L\,\partial S}=Q.
+\label{eq:heuristic_derivatives}
+\end{equation}
+The positive cross-partial is a substantive complementarity claim: support
+raises the marginal contribution of biological capacity. Additive barriers also
+require commensurability between $B$ and $(LQ)S$. Failure of either assumption
+rejects that functional form, not automatically the general construct.
+
+The transition from construct to measurement is separate. For a reflective
+domain $\eta_i$, indicator $j$ is represented as \citep{bollen_1989,kline_2015}
+\begin{equation}
+x_{ij}=\nu_j+\lambda_j\eta_i+\epsilon_{ij},
+\label{eq:reflective_measurement_bridge}
+\end{equation}
+whereas a formative composite reverses the direction,
+$\eta_i=\sum_j w_jx_{ij}+\zeta_i$. The code therefore does not force social
+and structural indicators into the reflective model. It compares admissible
+measurement structures without outcomes and only then compares the candidate
+realisations against prespecified comparators and downstream outcomes.
+
+The more defensible conceptual representation is therefore
+\begin{equation}
+H_{\text{potential}}=f(BP,SM,SB),
+\end{equation}
+where $BP$ denotes Biomedical Potential, $SM$ Social Modifiers and $SB$ Systemic Burdens, and $f$ is intentionally left unspecified at the theoretical stage. The empirical analysis is then responsible for determining whether these domains share a common higher-order structure and whether a scalar representation is warranted.
+
+Everything in this chapter now reduces to a short list of statements that could
+turn out to be false.
+
+\section{From Literature to Testable Propositions}
+
+The literature synthesis generates the following propositions.
+
+\begin{enumerate}
+    \item \textbf{Multidimensionality proposition.} The indicators selected for the proposed construct will represent more than one empirically distinguishable domain of health-related capability rather than a single undifferentiated health state.
+    \item \textbf{Capacity proposition.} Biomedical Potential will show substantial convergence with established measures of intrinsic capacity and current functioning while retaining information not reducible to either.
+    \item \textbf{Context proposition.} Social Modifiers and Systemic Burdens will demonstrate associations with health-related functioning that are not fully explained by biomedical capacity alone.
+    \item \textbf{Distinctiveness proposition.} The proposed construct will demonstrate incremental information relative to pre-specified frailty and social-vulnerability comparators; otherwise its justification as a distinct metric will be limited.
+    \item \textbf{General-factor proposition.} A higher-order H-potential factor will be retained only if the data demonstrate sufficient commonality, factor determinacy and substantive coherence. A correlated-domain model remains a valid endpoint if those conditions are not met.
+    \item \textbf{Equity proposition.} The measurement structure will be sufficiently invariant across major demographic and socioeconomic groups to support meaningful comparisons. Where invariance fails, the thesis will report the failure rather than treating observed group differences as direct evidence of unequal health potential.
+    \item \textbf{Prognostic proposition.} If a general H-potential score is empirically defensible, it will provide prognostic information for mortality and/or hospitalisation beyond established health and vulnerability measures. This proposition is secondary to construct validity and will not be used to select the measurement model.
+\end{enumerate}
+
+Each proposition has a corresponding empirical obligation. The first requires exploratory and confirmatory dimensionality analysis; the second requires convergent and discriminant validity testing; the third requires domain-level and sensitivity analyses; the fourth requires nested and incremental prognostic comparisons; the fifth requires competing measurement structures and factor-determinacy assessment; the sixth requires measurement-invariance analysis; and the seventh requires independently specified survival and hospitalisation models with internal validation.
+
+This mapping also establishes a direct link to the computational implementation. The code should not merely calculate a final score. It must preserve the distinction between theory generation, measurement evaluation, score estimation and outcome prediction. Every model-selection decision must therefore be traceable to a stated theoretical proposition or methodological criterion.
+
+Traceability is a property of the code as much as of the argument, which makes
+it a design requirement rather than a promise.
+
+\section{Implications for the Empirical Design and Codebase}
+
+The literature review changes the empirical design in several concrete ways. First, indicator selection must be documented as a theory-to-variable mapping. Each indicator should have a stated construct, domain, expected direction and justification from the literature. Second, candidate measurement models must be fitted before outcome variables are introduced into model selection. Third, the analysis must include explicit tests of alternative structures rather than only the preferred model.
+
+Fourth, the code must interrogate the possibility that different domains have different measurement ontologies. Biomedical indicators may plausibly be reflective manifestations of underlying capacity, whereas social conditions may function as formative contributors, contextual variables or external causes. The analysis should therefore avoid forcing all indicators into one reflective CFA merely because a common SEM framework is available.
+
+Fifth, the analysis must distinguish model fit from substantive validity. A model can fit well and still measure the wrong construct. Conversely, a theoretically coherent construct may show imperfect fit because the observed indicators are necessarily heterogeneous. Fit indices should therefore be interpreted alongside reliability, factor determinacy, construct validity, invariance and comparison with established instruments.
+
+Sixth, the prognostic analysis must remain downstream of measurement. Mortality and hospitalisation should not be used to discover the latent structure. They should test whether the construct developed independently of the outcomes contains useful information. Comparisons with frailty, intrinsic capacity and social vulnerability are therefore not optional sensitivity analyses; they are central tests of the thesis's claim to added value.
+
+Finally, the code should be designed to expose failure. It should be possible for the pipeline to conclude that no defensible general factor exists, that a domain is empirically redundant, that measurement invariance fails, or that prognostic performance adds little beyond established comparators. Such outcomes would not constitute programming failures. They would be scientifically informative findings about the proposed construct.
+
+\section{Conclusion}
+
+The literature reveals a mature field rather than an empty space. QALYs and DALYs address health loss and comparative valuation; health expectancy addresses expected population health over time; quality-of-life instruments describe experienced health; frailty captures accumulated vulnerability; intrinsic capacity describes the physical and mental capacities available to an individual; capability measures address opportunities to achieve valued states; and social-vulnerability measures quantify contextual disadvantage. The challenge is not to replace these traditions but to determine whether a coherent bridge among them is empirically defensible.
+
+The proposed H-potential therefore enters the literature with a deliberately modest claim. Its novelty, if established, will not be that it is the first multidimensional health metric. Nor will it be that it includes social determinants or uses latent-variable methods. The potential contribution is the explicit testing of a health-bounded construct in which biological capacity, enabling social conditions and structural constraints are considered jointly, while measurement validity is kept analytically separate from prognostic performance.
+
+That proposition remains open. If the data show that H-potential is indistinguishable from intrinsic capacity, frailty, social vulnerability or an established health metric, the thesis must conclude that the proposed integration does not warrant a separate construct. If the domains are coherent but a general factor is not, the appropriate result may be a multidomain profile rather than a scalar score. If the score is coherent and incrementally predictive, the contribution becomes stronger. In all cases, the scientific value lies in allowing the empirical evidence to determine which interpretation survives interrogation.

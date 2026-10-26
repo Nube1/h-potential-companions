@@ -1,0 +1,589 @@
+\label{ch:methods}
+
+\begin{ataglance}[How to read this chapter]
+This chapter answers one question in two halves, and the split is the point.
+The first half asks whether the three domains can be \emph{measured}: what the
+data are (\S\ref{sec:design}--\S\ref{sec:operationalisation}), what the
+mathematics permits (\S\ref{sec:roadmap}), which factor structures are
+pre-specified (\S\ref{sec:sem}), and how they are identified, estimated and
+judged (\S\ref{sec:identification}--\S\ref{sec:scoredef}). The second half asks
+whether what was measured \emph{predicts} anything: which outcomes
+(\S\ref{sec:prognostic}), by which survival model (\S\ref{sec:survival}),
+against which existing measures (\S\ref{sec:performance}), and with what
+handling of missing data, resampling and survey design.
+
+Nothing in the second half is allowed to reach back and change the first. An
+indicator is never kept because it predicts death, and the parameters of the
+realisation function are frozen before any outcome is looked at. That
+restriction costs statistical performance and buys the right to call the result
+a construct rather than a risk score.
+
+Three equations carry the chapter: the second-order factor model
+\eqref{eq:secondorder}, the factor score \eqref{eq:factorscore}, and the Cox
+model \eqref{eq:cox}. Each is read in plain words and applied to Mrs~A where it
+appears.
+\end{ataglance}
+
+\noindent This chapter specifies the empirical strategy used to evaluate the theoretical proposition developed in Chapter~\ref{ch:theory}. The central methodological principle is that measurement and prediction are different inferential tasks. The measurement model asks what the construct is and whether the proposed indicators represent it coherently. The prognostic analysis asks whether the resulting construct is associated with subsequent outcomes. Indicators are therefore selected and the measurement structure specified without using future outcome information.
+
+\section{Study Design}
+\label{sec:design}
+
+The study is a retrospective longitudinal secondary analysis of the National Health and Aging Trends Study (NHATS), a nationally representative study of older adults in the United States. NHATS samples Medicare beneficiaries aged 65 years and older and follows participants longitudinally, collecting information on health, functioning, socioeconomic circumstances, care and mortality. The study design includes differential sampling by age and race, and NHATS supplies survey weights and design variables for population-representative inference \citep{nhats_cohort_2019,nhats_methods_2026}.
+
+The analysis has three sequential stages. Stage 1 defines and operationalises the construct from theory and the available NHATS indicators. Stage 2 evaluates competing measurement structures and derives individual domain scores and, only if supported, a higher-order score. Stage 3 evaluates prognostic relevance using outcomes that occur after the measurement point. No indicator is retained, removed or reweighted on the basis of its association with the future outcomes in Stage 3. That restriction is the load-bearing commitment of the design, so it is worth stating precisely enough to be violated.
+
+\begin{assumption}[Outcome-blind construction]
+\label{ass:outcome_blind}
+Let $\mathbf y_i$ denote the measurement indicators observed at or before the
+index date $t_0$, let $\boldsymbol\theta$ denote the measurement parameters,
+and let $T_i$ denote the post-baseline outcome. The construction rule
+$\mathcal A$ that maps data to a fitted measurement model satisfies
+\[
+  \mathcal A\big(\{(\mathbf y_i,T_i)\}_{i=1}^{n}\big)
+  =\mathcal A\big(\{(\mathbf y_i,T_i')\}_{i=1}^{n}\big)
+  \qquad\text{for every relabelling } T'\text{ of the outcomes.}
+\]
+That is, the indicator set, the factor pattern, the estimator and the
+realisation-function parameters $(\alpha,\rho)$ are chosen so that permuting
+the outcome column would leave them unchanged.
+\end{assumption}
+
+\begin{reading}[What Assumption \ref{ass:outcome_blind} forbids, in one line]
+Shuffle the death dates among the participants and refit. If anything about
+the measurement model changes, the assumption has been broken somewhere.
+
+That is not a rhetorical test; it is an executable one, and it is the
+cheapest guard against the circularity that affects composite indices whose
+weights are fitted to the outcomes they later claim to predict. A score built
+that way will predict well and will not be a construct.
+\end{reading}
+
+Stage~1 begins with a question that sounds administrative and is not: exactly who is in the study, and on what day is the clock started.
+
+\section{Cohort and Index Date}
+
+The primary cohort is the NHATS 2015 replenishment cohort and eligible continuing participants observed at the Round~5 index assessment. The index date is the date of the Round~5 assessment from which baseline characteristics are defined and follow-up begins. Exact cohort membership, exclusions and the analytic sample size are reported from the final data-processing run rather than stated in advance as an approximate number.
+
+The inclusion and exclusion criteria are defined before outcome modelling. Participants must have sufficient information to contribute to the pre-specified measurement model and must have ascertainable follow-up for the relevant endpoint. Missing indicator data are not treated as automatic exclusion criteria when the missing-data assumptions permit likelihood-based or imputation-based estimation.
+
+NHATS is a complex probability sample. Analyses intended to describe the target population or estimate population-average associations incorporate the appropriate cohort-specific analytic weights and the survey strata and clustering variables. NHATS documentation emphasises that weights account for differential selection and nonresponse, while design variables are required for valid variance estimation \citep{nhats_cohort_2019,nhats_methods_2026}. Variances are computed by Taylor-series linearisation, or by a replication method where the design calls for one \citep{binder_1983,wolter_2007,lumley_2010}. For longitudinal outcome analyses, the weighting strategy follows the current NHATS guidance for the selected cohort and follow-up structure rather than carrying a single baseline weight forward without justification.
+
+With the cohort and the index date fixed, the three domains can be defined. The order matters: defining them afterwards would allow the data to shape the theory.
+
+\section{Conceptual Operationalisation}
+\label{sec:operationalisation}
+
+The three domains are defined before inspecting their associations with the prognostic endpoints:
+
+\begin{itemize}
+    \item \textbf{Biomedical Potential} represents intrinsic and functional capacity, including physical function, cognition, psychological capacity and the burden of conditions that materially constrain reserve.
+    \item \textbf{Social Modifiers} represents relational and enabling resources, including social participation, support and the resources through which individuals can maintain health-related functioning.
+    \item \textbf{Systemic Burdens} represents material, institutional and environmental constraints, including socioeconomic disadvantage, barriers to care and adverse living conditions.
+\end{itemize}
+
+The precise NHATS variables are documented in a frozen data dictionary before final model fitting. Each variable is accompanied by its source instrument, coding, response scale, missing-value definition, expected direction, theoretical justification and proposed measurement role.
+
+A critical distinction is made between \emph{reflective} and \emph{formative \citep{bollen_lennox_1991,edwards_bagozzi_2000}} measurement. Reflective indicators are treated as observable manifestations of a common latent state: changes in the latent construct are expected to alter the indicators. Formative indicators instead contribute to the construction of a domain and need not be strongly correlated. Biomedical function and cognition may plausibly support a reflective latent capacity model, whereas education, income, housing and access barriers are more naturally interpreted as determinants or components of social and structural conditions. The analysis therefore does not assume that every indicator belongs to the same reflective measurement model. The primary specification and the formative/hybrid sensitivity specification are selected and justified from substantive theory before outcome results are considered.
+
+Defining three domains raises the question the rest of the thesis turns on: under what conditions may three numbers be replaced by one? That is a mathematical question with a mathematical answer, sketched next and proved in the appendices.
+
+\section{Formal Mathematical Roadmap}
+\label{sec:roadmap}
+
+The complete axiomatic development appears in
+Appendix~\ref{app:mathematical_foundations}. The ordering is deliberate:
+measurement scales precede aggregation; the multidomain profile precedes a
+scalar score; axioms precede a functional form; and measurement precedes
+prediction.
+
+For a non-technical reader, the framework asks four separate questions.
+First, what does the person currently have? This is the profile
+$X_i=(P_i,S_i,R_i)$, recording capacity, enablement and freedom from burden.
+Second, should those dimensions be combined? A scalar
+$H_i=H(X_i)$ is permitted only under explicit assumptions about compensation
+and weights. Third, can the intended domains be measured from the available
+indicators? This is the latent-variable problem. Fourth, does the measured
+quantity relate to later outcomes? This is the prognostic problem. No answer is
+allowed to stand in for another.
+
+The main formal results establish that an ordinal score has no intrinsic
+cardinal unit; additive aggregation permits exact compensation; the CES \citep{arrow_chenery_1961} family
+is bounded and monotone under stated conditions; its substitution parameter has
+a precise elasticity interpretation; different admissible aggregators can
+reverse rankings; and latent factors have arbitrary location and scale until
+constraints are imposed. Each result is proved and translated into ordinary
+language in the appendix.
+
+This mathematical structure also narrows the claim. The CES model is a
+sensitivity family inherited from production theory, not a biological law.
+The threshold model is an alternative inherited from axiomatic
+multidimensional deprivation measurement. The reflective and formative models
+derive from different causal interpretations of indicators. The empirical
+analysis decides which representations are compatible with the data; it cannot
+decide the ethical acceptability of compensation without external judgement.
+
+Two ontologies are consequently carried forward. The capacity-ceiling model
+$H^C=P M(S,R)$ requires $H^C\le P$. The relational model $H^R=G(P,S,R)$ permits
+assistive technology, support and institutions to generate effective capability
+not captured by an unaided capacity measure. They are compared on prespecified
+criteria: directional validity, boundary behaviour, rank stability, agreement
+with domain profiles, external constructs and outcome-independent predictive
+checks. Because the models are non-nested and philosophically different, the
+analysis reports comparative evidence without declaring the better-fitting
+ontology true.
+
+For every participant the analysis therefore retains: the three-domain profile;
+the ceiling-model sensitivity score; the relational-model sensitivity score;
+and, if identified, the empirical latent score. Rank correlations, transition
+tables and discordant-profile case summaries show who changes position when the
+ontology or compensation rule changes. Large unexplained rank movement is
+evidence against high-stakes scalar use.
+
+The mathematics says what \emph{may} be done. Whether the NHATS indicators
+actually support three domains is a separate, empirical question, and the
+measurement models below are how it is asked.
+
+\section{Measurement Model}
+\label{sec:sem}
+
+The primary empirical question is whether the observed indicators support three related domains and, subsequently, whether those domains share sufficient common variance to justify a general $H_{\text{potential}}$ construct. Three competing representations are pre-specified.
+
+\subsection{Correlated three-domain model}
+
+The first model estimates Biomedical Potential, Social Modifiers and Systemic Burdens as correlated first-order factors. This model is the least restrictive representation of the theory because it allows the domains to be related without requiring them to be manifestations of a single general factor.
+
+It is also the model that offers no summary score. If a single $H_{\text{potential}}$ is wanted, something stronger has to be assumed.
+
+\subsection{Second-order model}
+
+\begin{definition}[Second-order measurement model]
+\label{def:secondorder}
+A higher-order factor $\zeta$ accounts for the covariance among the first-order
+domains \citep{bollen_1989}:
+\begin{equation}
+    \eta_k = \alpha_k + \gamma_k \zeta + \delta_k,
+    \qquad k\in\{\mathrm{Bio},\mathrm{Soc},\mathrm{Sys}\},
+    \label{eq:secondorder}
+\end{equation}
+with $\operatorname{Var}(\zeta)=1$ imposed to identify the scale and the
+disturbances $\delta_k$ mutually uncorrelated. The implied indicator covariance
+is $\Sigma_Y=\Lambda(\boldsymbol\gamma\boldsymbol\gamma^{\!\top}+\Psi_\delta)
+\Lambda^{\!\top}+\Theta_\varepsilon$, proved as
+Proposition~\ref{prop:secondorder_cov} in
+Appendix~\ref{app:mathematical_foundations}.
+\end{definition}
+
+Here $\eta_k$ denotes a first-order domain, $\gamma_k$ its loading on the higher-order factor, and $\delta_k$ the domain-specific residual. The higher-order factor is the candidate $H_{\text{potential}}$ construct.
+
+\begin{reading}[What equation \eqref{eq:secondorder} says, in words]
+It says: suppose there is one underlying thing, $\zeta$, and the three domains
+are three imperfect windows onto it. Each domain $\eta_k$ is then predicted by
+$\zeta$ with its own strength $\gamma_k$, plus whatever is peculiar to that
+domain and unrelated to the others, $\delta_k$. The $\alpha_k$ is only an
+intercept, fixing where each domain's scale starts.
+
+The clinical parallel is exact. Serum creatinine, cystatin~C and urea are three
+imperfect windows onto glomerular filtration; each tracks it with a different
+strength and each carries its own noise from muscle mass, inflammation or
+protein intake. Writing an eGFR equation is the same move as writing
+\eqref{eq:secondorder}: it asserts that a single unobserved quantity explains
+what the measured ones share. The assertion can be wrong, and it is wrong in
+exactly the way that matters here if a large $\delta_k$ means a domain is
+mostly doing its own work.
+\end{reading}
+
+The size of $\gamma_k$ is what decides whether a single $H_{\text{potential}}$
+number is defensible. For Mrs~A, the question is whether her arthritic knees,
+her isolation and her missed appointments are three readings of one underlying
+deficit or three separate problems that happen to co-occur in the same woman. If
+$\gamma_{\mathrm{Bio}}$, $\gamma_{\mathrm{Soc}}$ and $\gamma_{\mathrm{Sys}}$
+are all near $0.8$, the domains move together and a summary score loses little.
+If $\gamma_{\mathrm{Sys}}$ is $0.3$ while the other two are $0.8$, then the
+structural domain is largely independent, and collapsing it into a single score
+would average away the one thing about Mrs~A that a health system could
+actually change. That is not a statistical inconvenience; it is the difference
+between a measure that directs a minibus to her street and a measure that
+records her as frail.
+
+Because only three first-order factors are proposed, the higher-order structure can be weakly informative or effectively just identified under common identification constraints. A good global fit statistic therefore cannot by itself establish the value of the second-order model. The analysis reports factor loadings, residual structure, factor determinacy \citep{grice_2001} and the substantive meaning of the domains, and compares the second-order model with the correlated-factor alternative.
+
+A second-order factor is not the only way common variance can arise, and the next model separates the two possibilities.
+
+\subsection{General-specific sensitivity model}
+
+Where the indicator structure permits identification, a bifactor or general-specific model is considered as a sensitivity analysis. This tests whether the common variance is genuinely general or whether the apparent higher-order factor is largely an artefact of domain-specific covariance. The bifactor analysis is not adopted merely because it improves numerical fit; its interpretation requires evidence that a general score is sufficiently reliable and interpretable relative to the specific domains.
+
+All three models still have to be estimable before they can be compared, and in a three-factor structure that is not guaranteed.
+
+\section{Identification, Estimation and Model Fit}
+\label{sec:identification}
+
+Identification is assessed explicitly from the model-implied covariance structure and the imposed scale constraints. A minimum number of indicators is not treated as a mechanical guarantee of identification. The final model must also avoid empirical underidentification, negative residual variances, non-positive-definite covariance matrices and standardised loadings outside their admissible range.
+
+Continuous indicators are estimated using robust maximum likelihood where appropriate. Ordinal indicators are analysed using an estimator that respects their categorical response structure, such as WLSMV. The primary estimator is chosen from the final indicator types rather than declared independently of the data structure. Sensitivity analyses examine whether substantive conclusions change under an alternative appropriate estimator.
+
+Model fit is interpreted from a combination of comparative and absolute indices, including CFI, TLI, RMSEA with confidence interval and SRMR. Conventional thresholds are treated as descriptive reference points rather than universal acceptance rules. A model is not declared valid merely because it crosses numerical cut-offs; the pattern of residuals, local fit, factor loadings, theoretical coherence and stability across plausible specifications are considered together \citep{hu_bentler_1999,kline_2015,brown_2015}.
+
+Modification indices are not used as an automated search procedure. Any respecification must have an a priori or substantively defensible explanation and must be reported. This is especially important in a large sample, where small and substantively unimportant departures from the model can generate statistically persuasive modification indices.
+
+A model that fits is not yet a model that measures the intended thing. Fit indices are silent about meaning; validity evidence is not.
+
+\section{Construct Validity and Reliability}
+
+Construct validity is evaluated through convergent, discriminant and known-groups evidence. Convergent validity asks whether indicators and domains expected to be related are empirically related. Discriminant validity asks whether the proposed construct remains distinguishable from frailty, current health status and broader wellbeing. Known-groups comparisons are specified before analysis where appropriate.
+
+Reliability is evaluated at the level appropriate to the measurement model. Internal consistency is not assumed to be meaningful for formative domains, because formative indicators need not covary. For reflective domains, composite reliability and related measures are reported with their assumptions stated. Factor determinacy and score reliability are reported for any higher-order score used at the individual level.
+
+Measurement invariance \citep{meredith_1993,vandenberg_lance_2000} is assessed across pre-specified groups where sample size permits, including sex, race/ethnicity and socioeconomic position. Configural, loading and intercept/threshold invariance are evaluated sequentially. Where full invariance is not supported, partial invariance is considered only where it has substantive justification. A score intended to describe inequity cannot be interpreted confidently if it changes meaning across the populations being compared.
+
+Once the measurement model has survived these checks, it can be used to produce a number for each participant, and the meaning of that number needs stating precisely.
+
+\section{Definition of the Empirical $H_{\text{potential}}$ Score}
+\label{sec:scoredef}
+
+The empirical score is not expressed in years of life unless an independent calibration study establishes such a scale.
+
+\begin{definition}[Empirical $H_{\text{potential}}$ score]
+\label{def:factorscore}
+For individual $i$ with observed indicators $y_i$ and estimated measurement
+parameters $\widehat\theta$, the primary score is the posterior mean of the
+latent variable,
+\begin{equation}
+    \widehat H_i = \mathbb{E}[\zeta_i\mid y_i,\widehat\theta],
+    \label{eq:factorscore}
+\end{equation}
+reported on the scale identified by the measurement model, with its standard
+error. By Theorem~\ref{thm:latent_scale} the location and unit of that scale
+are fixed by the identifying constraints and carry no external meaning.
+\end{definition}
+
+\begin{reading}[What equation \eqref{eq:factorscore} says, in words]
+The symbol $\mathbb{E}[\,\cdot\mid\,\cdot\,]$ is a conditional expectation: the
+average value of the thing on the left, among everyone who looks like the thing
+on the right. So the equation reads: person~$i$'s score is the average latent
+capability of all the people whose answers looked like $y_i$, given what the
+measurement model has learned about how answers relate to capability.
+
+It is not a measurement. It is a best guess, and it comes with an error bar
+that most published composite scores never report.
+\end{reading}
+
+This is the same logic as a Bayesian reading of a diagnostic test, and it has
+the same well-known consequence. A person with an unusual pattern of answers
+gets pulled towards the population average, because the model has little
+information about them and falls back on the base rate. Mrs~A, whose biomedical
+indicators are middling and whose structural indicators are poor, will be
+shrunk towards the mean more than a person whose indicators all point the same
+way. Her point estimate will therefore understate how badly she is placed, and
+the interval around it will be wide. Reporting $\widehat H_i$ without that
+interval would repeat the error the thesis is trying to avoid: presenting an
+estimate as though it were an observation.
+
+Domain scores remain part of the primary result even when a higher-order score is supported. This prevents the scalar score from concealing qualitatively different profiles. The score is interpreted as a relative measure of health-related capability within the calibration population, not as a literal forecast of years of healthy life.
+
+The measurement half of the chapter ends here. Everything that follows asks whether this number, fixed and frozen, carries information about what happens next.
+
+\section{Prognostic Outcomes}
+\label{sec:prognostic}
+
+Two prospective outcomes are evaluated separately: five-year all-cause mortality and first unplanned hospitalisation. They are treated as distinct outcomes rather than combined into a single primary endpoint because they represent different processes. Mortality is terminal, whereas hospitalisation is a healthcare-use event influenced by disease, social context, healthcare access and practice patterns.
+
+For hospitalisation, death before first hospitalisation creates a competing event. The primary association analysis uses a cause-specific hazard model \citep{prentice_1978}, with cumulative-incidence analysis and a subdistribution-hazard sensitivity analysis \citep{fine_gray_1999} used to distinguish etiological association from prediction of observed event probability.
+
+\begin{proposition}[Censoring a competing risk overstates incidence]
+\label{prop:competing}
+Let hospitalisation and death occur with constant cause-specific rates
+$\lambda_1>0$ and $\lambda_2\ge0$. The true cumulative incidence of
+hospitalisation by time $t$ is
+\[
+  F_1(t)=\frac{\lambda_1}{\lambda_1+\lambda_2}
+         \Big(1-e^{-(\lambda_1+\lambda_2)t}\Big),
+\]
+whereas treating death as censoring and reporting one minus the Kaplan--Meier
+estimate gives $\widetilde F_1(t)=1-e^{-\lambda_1 t}$. Then
+$\widetilde F_1(t)\ge F_1(t)$ for all $t$, with equality only when
+$\lambda_2=0$, and the difference is increasing in $\lambda_2$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+$F_1$ integrates the cause-specific hazard against the overall survival
+function, which decays at rate $\lambda_1+\lambda_2$; $\widetilde F_1$ integrates
+it against a survival function that decays at $\lambda_1$ alone. The second
+integrand dominates the first pointwise for $\lambda_2>0$, and the gap is
+monotone in $\lambda_2$ by differentiation.
+\end{proof}
+
+\begin{reading}[Why this bias falls hardest on the people the measure is for]
+The overstatement grows with the competing death rate. It is therefore
+smallest among the fittest participants and largest among the frailest, which
+is precisely the group a measure of constrained capability is built to
+identify.
+
+An analysis that censors death would report that low-capability participants
+are admitted to hospital far more often than they are. The error would look
+like a finding, it would point in the direction the hypothesis predicts, and it
+would be an artefact of the estimator.
+\end{reading}
+
+\begin{workedexample}[competing]{What censoring death does to a five-year figure}
+Take a hospitalisation rate of $\lambda_1=0.12$ per year and follow for five
+years. Censoring death gives $\widetilde F_1=1-e^{-0.6}=0.451$, whatever the
+death rate, because the estimator never sees it.
+
+Now vary the competing rate. In a fit group with $\lambda_2=0.02$ the true
+cumulative incidence is $0.431$, so the naive figure is two points too high. In
+a frail group with $\lambda_2=0.30$ the truth is $0.251$ and the naive figure
+is twenty points too high, nearly double.
+
+\begin{wecode}[Python]
+from hpv.prognostic import cumulative_incidence_competing, km_complement
+
+naive = km_complement(0.12, 5.0)
+for death_rate in (0.02, 0.10, 0.30):
+    true = cumulative_incidence_competing(0.12, death_rate, 5.0)
+    print(f"death rate {death_rate:.2f}: true {true:.3f}  "
+          f"naive {naive:.3f}  overstated by {naive - true:.3f}")
+\end{wecode}
+
+\weanswer{Overstated by $0.020$, $0.087$ and $0.200$ as the competing death
+rate rises. Asserted by
+\texttt{test\_proposition\_competing\_risk\_biases\_kaplan\_meier\_upward} and
+\texttt{test\_worked\_example\_competing\_risk\_numbers}.}
+\end{workedexample}
+
+The analysis does not treat hospitalisation as an unambiguous measure of worsening health. A person with greater access to care may have more observed hospitalisations than an equally ill person who faces barriers to care. This is precisely why hospitalisation is informative for the proposed framework but also why its interpretation requires caution.
+
+Both outcomes are times to an event with censoring, which fixes the class of model used to analyse them.
+
+\section{Survival Modelling}
+\label{sec:survival}
+
+\begin{definition}[Prognostic model]
+\label{def:cox}
+For each outcome the primary model is a Cox proportional-hazards model
+\citep{cox_1972}:
+\begin{equation}
+    h_i(t)=h_0(t)\exp\{\beta_H H_i+\boldsymbol{\gamma}^{\mathsf T}\mathbf{x}_i\},
+    \label{eq:cox}
+\end{equation}
+where $h_i(t)$ is the hazard for individual $i$ at time $t$, $h_0(t)$ an
+unspecified baseline hazard, $H_i$ the standardised $H_{\text{potential}}$
+score of Definition~\ref{def:factorscore}, and $\mathbf{x}_i$ a pre-specified
+vector of comparator or adjustment variables. The hazard ratio
+$\exp(\beta_H)$ for a one-standard-deviation increase is reported with a
+95\% confidence interval.
+\end{definition}
+
+\begin{proposition}[Attenuation by measurement error]
+\label{prop:attenuation}
+Write $\widehat H_i=H_i+u_i$ with $\mathbb E(u_i\mid H_i)=0$ and reliability
+$\rho_H=\operatorname{Var}(H)/\operatorname{Var}(\widehat H)\in(0,1]$. Under
+the classical-error approximation, substituting $\widehat H$ for $H$ in
+\eqref{eq:cox} yields
+\[
+  \beta_{\mathrm{naive}}\approx\rho_H\,\beta_H,
+\]
+so $|\beta_{\mathrm{naive}}|\le|\beta_H|$, with equality only when the score is
+measured without error \citep{prentice_1982}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The classical-error result for a linear predictor gives the multiplicative
+factor $\rho_H$ directly; for the partial likelihood it holds to first order in
+the error variance. The approximation is diagnostic rather than exact for Cox
+regression, and Derivation~\ref{der:uncertainty} in
+Chapter~\ref{ch:conclusions} gives the joint-model alternative that avoids it.
+\end{proof}
+
+\begin{reading}[Why the direction of the bias matters more than its size]
+The inequality runs one way. Measurement error in the predictor pulls the
+estimated coefficient towards no effect and never past it. A construct measured
+with reliability $0.8$ will show a hazard ratio nearer to $1.0$ than the truth,
+by a factor that can be stated in advance.
+
+The consequence for how this thesis should be read is asymmetric. A positive
+finding is evidence for the construct, and the true effect is probably larger
+than reported. A null finding is weaker evidence against the construct than it
+looks, because a real effect of moderate size could be attenuated into
+invisibility by a score with mediocre reliability. Reporting $\rho_H$ alongside
+$\beta_{\mathrm{naive}}$ is therefore not a technical courtesy; without it a
+null result cannot be interpreted at all.
+\end{reading}
+
+\begin{workedexample}[attenuation]{Attenuation, with the numbers}
+Suppose the true coefficient is $\beta_H=-0.40$, so the true hazard ratio is
+$\exp(-0.40)=0.67$: a thirty-three per cent lower instantaneous risk per
+standard deviation of realised capability.
+
+Now suppose the factor score has reliability $\rho_H=0.80$, which is a
+respectable figure for a three-domain construct. Proposition
+\ref{prop:attenuation} gives
+$\beta_{\mathrm{naive}}\approx0.80\times(-0.40)=-0.32$, so the reported hazard
+ratio is $\exp(-0.32)=0.73$.
+
+\begin{wecode}[Python]
+from hpv.prognostic import attenuated_coefficient
+import math
+
+beta_true = -0.40
+for rho in (1.0, 0.9, 0.8, 0.6):
+    b = attenuated_coefficient(beta_true, rho)
+    print(f"reliability {rho:.1f}  beta {b:+.3f}  HR {math.exp(b):.3f}")
+\end{wecode}
+
+\noindent The run gives HRs of $0.670$, $0.698$, $0.726$ and $0.787$ as
+reliability falls from $1.0$ to $0.6$. A construct measured at $\rho_H=0.6$
+reports three-fifths of the effect it has.
+
+\weanswer{A true HR of $0.67$ is reported as $0.73$ at reliability $0.80$.
+Asserted by \texttt{test\_proposition\_attenuation\_by\_measurement\_error}.}
+\end{workedexample}
+
+\begin{reading}[What equation \eqref{eq:cox} says, in words]
+The hazard $h_i(t)$ is the instantaneous risk of the event for person~$i$,
+given that they have survived to time~$t$: the chance of dying this month among
+those still alive at the start of it. The model splits that risk into two
+pieces. The baseline $h_0(t)$ is the shape of risk over time for a reference
+person, and it is left completely unspecified, which is what makes the model
+semi-parametric and hard to break. The exponential term is a fixed multiplier applied
+to that shape, one number per person, that never changes with time.
+
+Everything the model claims is in that word ``fixed''. Exponentiating
+$\beta_H$ gives the hazard ratio: how many times more or less likely the event
+is, per standard deviation of $H_{\text{potential}}$, at every moment of
+follow-up.
+\end{reading}
+
+Suppose the analysis returns $\exp(\beta_H)=0.72$ per standard deviation. Read
+directly, a person one standard deviation above the mean in realised capability
+has roughly a $28$ per cent lower instantaneous risk of death than an otherwise
+identical person at the mean, throughout the five years. Mrs~A sits about one
+standard deviation below the mean, so her multiplier relative to the mean is
+$1/0.72\approx1.39$: about forty per cent more risk, every month, than a woman
+matched to her on everything in $\mathbf{x}_i$.
+
+The phrase ``matched on everything in $\mathbf{x}_i$'' is where the interesting
+question lives. If $\mathbf{x}_i$ already contains a frailty index, then
+$\beta_H$ is only the information that realised capability adds on top of
+frailty, and a hazard ratio near $1.0$ would mean the construct is telling us
+nothing new. That is the incremental-value test of \S\ref{sec:performance}, and
+it is the test the construct is most likely to fail.
+
+The assumption that the multiplier never changes with time is a real
+restriction and it is often violated in exactly this setting. If poor
+structural conditions kill people early and the survivors are a hardier group,
+the effect of $H_{\text{potential}}$ will look strong in year one and weak by
+year five. That is not noise; it is a finding, and forcing a single constant
+ratio across the whole period would hide it.
+
+The proportional-hazards assumption is assessed using graphical and residual-based diagnostics \citep{grambsch_1994}. Where non-proportionality is substantive, time-varying effects or alternative survival specifications are used as sensitivity analyses rather than forcing a single constant hazard ratio.
+
+A hazard ratio distinguishable from one is a low bar. The question that decides whether the construct is worth having is whether it beats the measures a clinician already uses.
+
+\section{Benchmarking and Incremental Value}
+\label{sec:performance}
+
+The proposed construct is compared with pre-specified benchmarks representing distinct traditions of health measurement: frailty, comorbidity, functional status and a health-utility proxy where the data permit a defensible construction. The purpose is not to demonstrate that $H_{\text{potential}}$ wins a competition between scores. Each comparator tests a different claim.
+
+Frailty tests whether the construct adds information beyond physiological vulnerability. A functional-status model tests whether the proposed score is more than a repackaging of ADL/IADL limitation. A comorbidity model tests whether the score captures more than disease count. A utility-based proxy tests its relationship with health-economic valuation.
+
+Discrimination is assessed using time-dependent concordance and, where appropriate, time-dependent AUC \citep{harrell_1996,uno_2011,blanche_2013}. Calibration is assessed using calibration-in-the-large and calibration slope. Decision-curve analysis is used only if a clinically meaningful decision context and threshold range can be justified. Information criteria are reported as descriptive measures of relative model fit rather than as evidence of clinical superiority.
+
+Incremental value is reported with uncertainty intervals and, where relevant, net reclassification or other measures only when their assumptions are satisfied. No arbitrary superiority threshold is treated as a universal criterion. The emphasis is on the magnitude, precision and practical meaning of incremental information.
+
+Every comparison above assumes complete data on everyone. In a cohort of adults over 65 followed for five years, that assumption is false, and the way it fails is not random.
+
+\section{Missing Data and Attrition}
+
+Missing data are described separately for indicators, covariates and outcomes. Multiple imputation by chained equations is used where the assumed missing-data mechanism and variable structure support it \citep{rubin_1987,vanbuuren_2011}. The imputation model includes variables associated with missingness, the measurement indicators and relevant outcome information, while respecting variable type and survey structure where possible.
+
+Complete-case analysis is retained as a sensitivity analysis rather than the default. Attrition is also examined because loss to follow-up among older adults is plausibly related to health status. Inverse-probability-of-censoring weighting and pattern-mixture or selection-model sensitivity analyses are considered where appropriate.
+
+A further source of uncertainty is easy to overlook because it is built into the two-stage design itself.
+
+\section{Internal Validation and Factor-Score Uncertainty}
+
+A factor score is an estimated predictor rather than an observed covariate. Consequently, internal validation must account for uncertainty in both measurement and prediction. The primary bootstrap \citep{efron_tibshirani_1993,steyerberg_2019} procedure refits the measurement model, derives factor scores and refits the prognostic model within each resample. This prevents the validation procedure from treating the estimated score as fixed.
+
+Where feasible, a joint latent-variable survival model or plausible-value approach is used as a sensitivity analysis. The purpose is not to replace the primary two-stage design but to determine whether conclusions depend materially on treating the latent score as known after the measurement stage.
+
+Uncertainty from the sampling design is the remaining piece, and NHATS is not a simple random sample.
+
+\section{Complex Survey Design}
+
+NHATS's sampling weights, strata and clustering variables are incorporated into population-level descriptive and inferential analyses. The analysis distinguishes between two targets: population-representative inference about Medicare beneficiaries aged 65 years and older, and internal validation of the measurement structure within the observed analytic sample. Survey weighting is not used as a substitute for a measurement model, and the choice of estimator is reported explicitly.
+
+Because Round~5 is a replenishment round, cohort-specific weights and the current NHATS guidance for longitudinal outcome analyses are followed. The final analysis code records the exact weight, stratum and cluster variables used for each model \citep{nhats_methods_2026}.
+
+Design-correct population estimates still say nothing about whether the measure behaves the same way for everyone in that population, which for a measure of this kind is the first thing to check.
+
+\section{Equity and Subgroup Evaluation}
+
+A metric designed partly to represent social and structural disadvantage requires more than including social variables in the score. Subgroup analyses therefore evaluate measurement invariance, score distributions, calibration and discrimination across pre-specified demographic and socioeconomic groups. Where sample size permits, selected intersections are examined rather than relying exclusively on single-variable stratification.
+
+The interpretation of subgroup differences is deliberately non-causal. A lower score in a disadvantaged group is evidence of a difference in the measured construct, not evidence that the group possesses intrinsically lower worth or biological value. The score is intended to identify constrained health capability and unmet need, not to assign responsibility for disadvantage.
+
+The analyses so far each rest on a choice that could reasonably have been made differently. The sensitivity analyses put those choices under strain deliberately.
+
+\section{Pre-specified Sensitivity Analyses}
+
+Sensitivity analyses address five possible objections. First, models excluding indicators that overlap closely with the benchmark frailty measure test whether incremental validity is driven by construct duplication. Second, alternative factor structures test whether the higher-order score survives them. Third, formative or hybrid specifications test the consequences of treating social and structural indicators as components rather than reflective manifestations. Fourth, alternative handling of missingness and attrition tests robustness to informative missingness. Fifth, alternative outcome definitions test whether conclusions depend on a particular operational definition of hospitalisation.
+
+The algebraic expression developed in the appendices is treated as a mathematical sensitivity model rather than the empirical definition of $H_{\text{potential}}$. Its parameters are not tuned against mortality or hospitalisation. This preserves the distinction between a normative mathematical representation and an empirically estimated latent construct.
+
+None of this is verifiable by a reader unless the work can be re-run, which is a requirement of the design rather than an appendix to it.
+
+\section{Reporting, Reproducibility and Governance}
+
+Reporting follows relevant guidance for observational studies, measurement research and prediction models, including STROBE, COSMIN, TRIPOD and PROBAST where applicable \citep{vonelm_2007,mokkink_2010,mokkink_2018,collins_2015,moons_2019}. The final submission includes the variable dictionary, analysis scripts, package versions, model specifications, generated outputs and a reproducibility record.
+
+All data transformations are scripted. Tables and figures in the final thesis are generated from analysis outputs rather than manually transcribed. Any result that cannot be reproduced from the archived workflow is not treated as a final result.
+
+No economic or policy claim is inferred from prognostic validity alone. Any
+future policy evaluation reports the H-Potential domain change separately from
+incremental health outcomes, costs, budget impact \citep{sullivan_2014}, displaced health,
+distributional effects and uncertainty. Person-level use requires an
+explanation and appeal mechanism; the score may not be the sole basis for
+automated denial, reimbursement or triage. Policy deployment is outside the
+present validation study.
+
+The same caution applies across borders as across uses. A model estimated on
+older Americans is not a model of ageing, and moving it is a research project
+rather than a calculation.
+
+\section{Transportability and Jurisdictional Recalibration}
+
+The inferential population for the developmental analysis is the population
+represented by the relevant NHATS design: older Medicare beneficiaries in the
+United States who satisfy the study eligibility criteria. The broader theory is
+not geographically restricted, but its empirical parameters are. Application
+to a new country, age group or disease population is therefore treated as a new
+validation problem rather than as routine score calculation.
+
+Transport proceeds in ordered stages. Stakeholder and qualitative work first
+assess whether the domains and indicators retain their meaning. Multi-group
+models then test configural \citep{putnick_bornstein_2016}, metric and, where mean comparisons are intended,
+scalar invariance; differential item functioning is investigated when item-
+level models are used. Prognostic validation evaluates discrimination and
+calibration without assuming that the United States baseline hazard or
+coefficients are portable. Recalibration, model updating or rejection is
+reported transparently. Only after these stages may a local economic evaluation
+combine intervention effects with jurisdiction-specific costs, displaced
+health, budgets and distributive judgements. A failure at any stage limits the
+claim that may be carried to the next.
+
+This is the stage at which Mr~B enters. He is not in NHATS, he is not American
+in any necessary sense, and his disease was not represented in the calibration
+sample; the haemophilia work in Chapter~\ref{ch:translational} is therefore
+presented as the first three stages of this sequence and no further.
+
+\section{Ethics}
+
+The study uses de-identified secondary data and involves no participant contact. Ethical and data-use requirements are observed in accordance with the relevant NHATS data-access conditions and University of the Witwatersrand governance requirements. The final thesis reports the actual ethics reference, approval date and data-use status rather than using generic compliance language.
+
+\section{Concluding Remarks}
+
+The empirical design deliberately separates three questions: whether the proposed domains are measurable, whether they can legitimately be summarised as a higher-order construct, and whether that construct has prognostic value. The distinction is central to the scientific argument. A predictive score is not automatically a valid health construct, and a theoretically attractive construct is not automatically useful for prediction. The analyses that follow are therefore designed to allow the data to support, modify or reject the proposed representation.
+
+\newpage

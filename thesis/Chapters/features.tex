@@ -1,0 +1,1003 @@
+
+\label{ch:results2}
+
+\begin{ataglance}[How to read this chapter]
+The question here is narrow. Chapter~\ref{ch:results1} asks whether the score can be measured. This chapter asks whether the number, once frozen, carries information about what happens to a person next, and whether it carries anything a frailty index, a comorbidity count, a record of what someone can do unaided or a health-utility proxy does not already say.
+
+The sections are an order of tests, and each earns its place only if the one before it passed.
+
+\textbf{Association first.} Until higher capability goes with a lower rate of death and of admission, nothing else is worth measuring. This is the weakest test the construct can face, and failing it ends the argument.
+
+\textbf{Discrimination second.} An association can be real across a population and useless in front of one patient. Discrimination asks whether the score puts the people who go on to have the event above the people who do not. A wide average gap is compatible with heavy overlap between the two groups.
+
+\textbf{Calibration third.} Ranking people correctly says nothing about whether the risk printed beside a name is the risk that person faces. Where a number crosses a threshold and triggers an action, the number has to be right in absolute terms and not merely in order.
+
+\textbf{Only then the comparison.} A measure that passes all three can still be redundant. The comparison against frailty, comorbidity, functional status and a health-utility proxy, and the incremental test that follows it, is the test the construct is most likely to fail. It is placed last because it is only interesting once the construct has been shown to work on its own.
+
+Two further sections guard the results instead of extending them. A combined endpoint checks that the co-primary findings do not depend on how the outcome was cut, and the treatment of missing data and of optimism asks how much of the performance above would survive contact with new patients drawn from the same population.
+
+Mrs~A is used throughout to keep the arithmetic honest. Every worked number below is conditional on a result the analysis has not yet returned, and the placeholders are left empty on purpose.
+\end{ataglance}
+
+\begin{quote}
+\small\itshape
+Note to the reader. The numerical results in this chapter are produced by the analysis of the National Health and Aging Trends Study described in Chapter~\ref{ch:methods}. Tables and figures below are laid out for those results; bracketed placeholders mark values to be inserted once the analysis is complete. Figure and derivation blocks are reserved in place and marked accordingly. This note is removed in the final version.
+\end{quote}
+
+\noindent The preceding chapter established the psychometric properties of the proposed $H_{\text{potential}}$ construct and demonstrated that it can be estimated reliably as a multidimensional latent variable representing an individual's underlying capacity for health. Confirmatory factor analysis supported the theoretical measurement model, evidence of construct validity was obtained through the relationships among the latent domains, and the resulting factor scores provided a quantitative representation of each participant's estimated health potential. These findings addressed the first component of the study by demonstrating that the construct is measurable and internally coherent. However, establishing a valid measurement model represents only one stage in the development of a clinically meaningful health metric. A construct intended to inform healthcare decision-making must also demonstrate that it predicts future outcomes of practical clinical importance.
+
+This chapter therefore shifts from measurement to prediction. Whereas Chapter~\ref{ch:results1} examined whether the proposed latent construct could be estimated consistently from observed indicators, the present chapter evaluates whether those estimates possess prognostic value. Prognostic validity concerns the extent to which variation in the latent score corresponds to subsequent differences in health outcomes. If the theoretical framework underpinning the $H_{\text{potential}}$ is correct, individuals with higher values of the latent construct should exhibit greater resilience, maintain functional independence for longer periods, and experience fewer adverse health events during follow-up. Conversely, lower scores should identify individuals at increased risk of clinical deterioration, unplanned healthcare utilisation and mortality. Demonstrating such relationships is essential if the construct is to progress beyond a theoretical model towards a practical tool capable of supporting risk stratification and personalised clinical management. Using the individual factor scores derived in Chapter~\ref{ch:results1}, this chapter tests, as confirmatory evidence, the association of the $H_{\text{potential}}$ with each of two pre-specified prognostic endpoints, quantifies its discrimination and calibration, compares it against established measures, and assesses its incremental value and clinical utility, following the prognostic plan of Section~\ref{sec:prognostic} and the performance and benchmarking plan of Section~\ref{sec:performance}. Construct validity, reported in Chapter~\ref{ch:results1}, is the study's primary outcome; the analyses here are confirmatory. All prognostic analyses, association, discrimination, calibration, comparison, and clinical utility, are carried out for each co-primary endpoint separately, with multiplicity handled according to the pre-specified inferential plan. This addresses Aim~3.
+
+Within contemporary prognostic research, the evaluation of prediction models extends substantially beyond demonstrating statistical significance. A model may exhibit a highly significant association with an outcome while remaining of limited clinical value if it fails to distinguish accurately between individuals who do and do not experience the event of interest, produces poorly calibrated risk estimates, or provides no improvement over simpler existing approaches. Consequently, international guidance on prognostic model evaluation emphasises that multiple dimensions of model performance must be considered simultaneously, including association, discrimination, calibration, internal validity and clinical usefulness \citep{steyerberg_2019,vancalster_2019,collins_2015}. Together these criteria say more about predictive performance than hypothesis testing alone, and they form the analytical framework adopted throughout this chapter.
+
+The conceptual distinction between explanatory modelling and prognostic modelling is particularly important in the context of this research. Explanatory analyses seek to understand causal mechanisms and quantify the independent contribution of specific variables to observed outcomes. Prognostic analyses, by contrast, seek to estimate the probability that a future event will occur for an individual given their current characteristics, irrespective of whether every predictor has a direct causal interpretation. Although the present study is grounded in a substantive theoretical model of health potential, its immediate objective is prognostic rather than causal. The primary question is therefore not whether each component of the latent construct causes improved health outcomes in isolation, but whether the integrated construct captures clinically meaningful information that predicts future health trajectories more accurately than existing approaches. This distinction underlies the choice of statistical methods and the interpretation of the results presented in the following sections.
+
+The proposed $H_{\text{potential}}$ differs fundamentally from conventional health metrics in that it represents an estimate of latent capacity rather than current disease burden or existing disability. Traditional prognostic indices, such as comorbidity counts or frailty measures, primarily quantify accumulated deficits that are already clinically apparent. Although these measures have demonstrated prognostic utility across numerous populations, they are generally designed to describe deterioration that has already occurred. In contrast, the conceptual framework developed in this thesis proposes that health should be understood as a dynamic latent capacity that exists prior to observable clinical decline. From this perspective, adverse outcomes such as hospitalisation and mortality represent downstream manifestations of declining health potential rather than the construct itself. If this theoretical distinction is valid, the $H_{\text{potential}}$ should provide prognostic information that complements existing measures of disease burden and functional impairment instead of duplicating them.
+
+This distinction has important implications for preventative healthcare. Identifying individuals only after substantial functional decline has occurred necessarily limits the opportunity for intervention. Conversely, a measure that captures latent health capacity before overt deterioration becomes clinically manifest may enable earlier identification of vulnerable individuals and support interventions while greater physiological reserve remains. Such an approach aligns with contemporary models of healthy ageing and preventative medicine, which increasingly emphasise maintaining intrinsic capacity \citep{who_2015_ageing,cesari_2018} rather than simply treating disease after its onset. Consequently, demonstrating the prognostic performance of the $H_{\text{potential}}$ has implications extending beyond statistical model development to broader questions regarding the measurement and management of health across the life course.
+
+To evaluate these propositions, the analyses reported in this chapter employ prospective survival modelling using data from the National Health and Aging Trends Study (NHATS). The NHATS provides a uniquely suitable platform for this evaluation because it combines detailed multidimensional assessments of health status with longitudinal follow-up for clinically important outcomes. Repeated outcome ascertainment, detailed demographic and clinical information and nationally representative sampling together allow the proposed construct to be evaluated within a real-world ageing population rather than under highly selected experimental conditions. The prospective design also ensures that predictor measurements precede outcome occurrence, thereby supporting valid prognostic inference.
+
+The endpoints considered throughout this chapter are two co-primary outcomes, analysed separately: all-cause mortality and first unplanned hospitalisation, each within five years of baseline assessment. The two are analysed separately because death is an absorbing, terminal event while unplanned hospitalisation is a recurrent, non-fatal event, and they are driven by different clinical and social processes. Combining them in one endpoint would obscure these differences, so each is fitted in its own survival model and family-wise error across the two co-primary tests is controlled. A combined time-to-first-event endpoint, mortality or unplanned hospitalisation whichever comes first, is analysed later in the chapter only as a sensitivity check on the co-primary results; it is not a primary endpoint.
+
+Consistent with the statistical analysis plan outlined in Chapter~\ref{ch:methods}, prognostic performance is evaluated across several complementary dimensions. First, the association between the $H_{\text{potential}}$ and each co-primary endpoint is examined using Cox proportional hazards \citep{cox_1972} regression, before and after adjustment for basic demographic characteristics. Second, the discriminative ability of the resulting model is evaluated using Harrell's concordance statistic and Uno's inverse-probability-of-censoring weighted concordance statistic, and its calibration through calibration-in-the-large, the calibration slope and graphical assessment. Third, the performance of the $H_{\text{potential}}$ is compared directly with established measures currently used to characterise health status in ageing populations. Fourth, the incremental value of the construct is evaluated by examining changes in predictive performance when it is added to conventional prognostic models, and its clinical utility through decision-curve analysis. Finally, recognising that prediction models developed within a single dataset are susceptible to optimism arising from overfitting, the stability of the estimated performance is assessed through multiple imputation for missing data and bootstrap internal validation.
+
+Throughout this chapter, effect estimates are presented together with 95\% confidence intervals in accordance with current recommendations for the reporting of prognostic studies. Where appropriate, statistical significance is reported using two-sided hypothesis tests with an $\alpha$ level of 0.05. However, interpretation is based primarily upon the magnitude, precision and clinical relevance of the estimated effects rather than statistical significance alone. The analyses presented here therefore address the third aim of the study by determining whether the $H_{\text{potential}}$ functions as a meaningful predictor of future health outcomes, and form the empirical bridge between the theoretical development of the construct and its subsequent application to disease-specific populations examined in the following chapter.
+
+% =====================================================================
+\section{Outcomes and Follow-up}
+\label{sec:prog-outcomes}
+% =====================================================================
+
+\noindent Every quantity in this chapter is a rate, and a rate needs a denominator of time actually spent at risk. Two decisions fix that denominator: when a person stops contributing time, and whether the reason they stopped is one the model may ignore. Getting either wrong moves every estimate that follows.
+
+\noindent Over five years of follow-up, the two co-primary outcomes are time to all-cause mortality and time to first unplanned hospitalisation, each analysed separately. Table~\ref{tab:events} reports the number of events, person-years of follow-up, and censoring for each endpoint. Figure~\ref{fig:km_overall} shows the cumulative incidence of each co-primary endpoint across the follow-up period.
+
+\begin{table}[htbp]
+\centering
+\caption{Events and follow-up over five years.}
+\label{tab:events}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{7cm} p{4cm}}
+\toprule
+\textbf{Quantity} & \textbf{Value} \\
+\midrule
+All-cause deaths, n (\%) & [\,--\,] \\
+First unplanned hospitalisations, n (\%) & [\,--\,] \\
+Combined endpoint (sensitivity), n (\%) & [\,--\,] \\
+Median follow-up, years (IQR) & [\,--\,] \\
+Total person-years & [\,--\,] \\
+Censored before event, n (\%) & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: Kaplan--Meier \citep{kaplan_meier_1958} / cumulative-incidence curves for each co-primary endpoint over five years, with numbers at risk.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Cumulative incidence of each co-primary endpoint, all-cause mortality and first unplanned hospitalisation, over five years of follow-up.}
+\label{fig:km_overall}
+\end{figure}
+
+A few terms in Table~\ref{tab:events} carry more weight than their brevity suggests. Censoring, a patient who is alive at last contact and whose later fate is unknown, is not a missing outcome. It is a known stretch of event-free time followed by silence, and the models below use the time and throw nothing away. A competing risk, an event that removes the patient from being at risk of the one you care about, is a different animal: for first unplanned hospitalisation, a death at home settles the question, because the admission can no longer occur. Immortal time, a period in which the outcome could not by construction have occurred, is avoided here by starting the clock at the baseline interview for everyone, so that nobody accrues follow-up during an interval in which they were event-free by definition.
+
+\begin{reading}[Death before admission is not censoring]
+Censoring means the fate is unknown: the person was alive and unadmitted when last seen, and might have been admitted the following week. Death before admission is not that. The admission will never happen. Treating the death as censoring instructs the estimator to assume the person who died would have gone on to be admitted at the same rate as those still alive, which is the one thing that cannot be true.
+
+The size of the error is easy to see with constant rates. Take a group in which unplanned admissions occur at $0.15$ per person-year and deaths at $0.10$ per person-year. Over five years the chance of leaving the event-free state at all is $1-\exp\{-(0.15+0.10)\times5\}=1-\exp(-1.25)=0.71$, and admissions account for $0.15/0.25=60$ per cent of those exits, so the cumulative incidence of admission is $0.60\times0.71=0.43$. Treat the deaths as censoring and the Kaplan--Meier complement returns $1-\exp(-0.15\times5)=1-\exp(-0.75)=0.53$, ten percentage points too high.
+
+Now take the group the measure exists to find. Hold the admission rate at $0.15$ and raise the death rate to $0.25$. True cumulative incidence of admission falls to $(0.15/0.40)\times\{1-\exp(-2)\}=0.375\times0.865=0.32$, because so many die first, while the censoring-based figure is unchanged at $0.53$. The overstatement has grown from ten points to twenty-one. The error is worst exactly where the frailest patients are, so a measure built for them would be judged on inflated numbers. This is why the analysis for admission uses a cause-specific hazard \citep{prentice_1978} and reports cumulative incidence, with a subdistribution model \citep{fine_gray_1999} as a check.
+\end{reading}
+
+With the events counted and the clock defined for each endpoint, the weakest test can be run: whether events arrive at a different rate for people with different scores.
+
+% =====================================================================
+\section{Association of the $H_{\text{potential}}$ with the Co-Primary Outcomes}
+\label{sec:assoc}
+% =====================================================================
+
+\noindent A score can be measured well and still carry no news about the future. The test that decides whether the rest of the chapter is worth reporting is whether people with more of the construct have their events later, or not at all, than people with less of it.
+
+\noindent The primary objective of this stage of the analysis was to determine whether the proposed $H_{\text{potential}}$ provides independent prognostic information regarding future adverse health outcomes. Whereas the previous chapter established that the latent construct can be measured reliably, the present analysis examines whether variation in that construct is associated with the subsequent occurrence of clinically meaningful events. Demonstrating such an association is a necessary prerequisite for establishing the prognostic validity of the proposed framework. If the theoretical model is correct, participants with higher levels of health potential should experience a lower risk of mortality or unplanned hospitalisation during follow-up than those with lower scores.
+
+The relationship between the $H_{\text{potential}}$ and each co-primary endpoint was evaluated using Cox proportional-hazards regression, as specified in the statistical analysis plan and in Equation~\eqref{eq:cox}. Mortality and first unplanned hospitalisation are each fitted in a separate model, and family-wise error across the two co-primary tests is controlled. The Cox model was selected because it provides a semi-parametric framework for analysing time-to-event data without requiring specification of the underlying baseline hazard function \citep{cox_1972}. This flexibility makes the model particularly appropriate for longitudinal cohort studies in which participants contribute different lengths of follow-up and where right censoring is present due to loss to follow-up or administrative study completion. Rather than modelling the probability of an event at a fixed point in time, the Cox model estimates the instantaneous hazard of experiencing the event, allowing both the timing and occurrence of adverse outcomes to contribute to the analysis.
+
+Individual participant scores for the $H_{\text{potential}}$ were obtained from the latent measurement model described in Chapter~\ref{ch:results1}. To improve interpretability and facilitate comparison with existing prognostic studies, the latent scores were standardised before entry into the survival models. Consequently, hazard ratios are reported per one standard deviation increase in the $H_{\text{potential}}$. Expressing effects in standard deviation units avoids dependence upon the arbitrary scale of the latent variable and permits direct comparison with effect sizes reported for other prognostic indices. A hazard ratio below one therefore indicates that higher health potential is associated with a reduced instantaneous risk of experiencing the endpoint, whereas a hazard ratio above one would indicate an increased risk.
+
+Two regression models were estimated. The first was an unadjusted model containing only the $H_{\text{potential}}$, quantifying the overall association between the latent construct and subsequent health outcomes. The second model adjusted for age and sex, which were selected a priori because both variables are among the strongest and most consistently replicated predictors of mortality, hospitalisation and functional decline in older adults. Age exerts a pervasive influence on virtually every dimension of health, including physiological reserve, functional capacity, chronic disease burden and mortality risk, and important sex differences exist in survival, multimorbidity, disability trajectories and healthcare utilisation. Demonstrating that the association persists after adjustment would provide evidence that the construct captures additional prognostic information not explained solely by age or biological sex. The regression coefficients estimated by the Cox model were exponentiated to produce hazard ratios together with corresponding 95\% confidence intervals. Table~\ref{tab:hr} presents the estimated hazard ratios for the unadjusted and age- and sex-adjusted models, for each co-primary endpoint.
+
+\begin{table}[htbp]
+\centering
+\caption{Association of the $H_{\text{potential}}$ with each co-primary outcome (hazard ratio per one standard deviation increase in the latent score).}
+\label{tab:hr}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{6cm} p{3.2cm} p{2.2cm}}
+\toprule
+\textbf{Endpoint and model} & \textbf{HR (95\% CI)} & \textbf{$p$} \\
+\midrule
+\multicolumn{3}{l}{\textit{All-cause mortality}} \\
+\quad Unadjusted & [\,--\,] & [\,--\,] \\
+\quad Adjusted for age and sex & [\,--\,] & [\,--\,] \\
+\addlinespace
+\multicolumn{3}{l}{\textit{First unplanned hospitalisation}} \\
+\quad Unadjusted & [\,--\,] & [\,--\,] \\
+\quad Adjusted for age and sex & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The estimand and the partial-likelihood machinery underlying these estimates are set out below for completeness.
+
+\begin{derivation}[Cox partial likelihood for the $H_{\text{potential}}$ hazard ratio]
+\label{der:cox}
+For $Z_i=H_{i,\mathrm{std}}$, let
+$h_i(t)=h_0(t)\exp(\beta Z_i+\boldsymbol\gamma^{\mathsf T}\mathbf c_i)$.
+Ignoring ties for exposition, the partial likelihood is
+\[
+ L_p(\boldsymbol\theta)=\prod_{i:\delta_i=1}
+ \frac{\exp(\boldsymbol\theta^{\mathsf T}\mathbf v_i)}
+ {\sum_{j\in R(t_i)}\exp(\boldsymbol\theta^{\mathsf T}\mathbf v_j)},
+\]
+where $\mathbf v_i=(Z_i,\mathbf c_i^{\mathsf T})^{\mathsf T}$ and right-censored
+participants contribute through risk sets until censoring. Differentiating
+$\log L_p$ gives the observed-minus-risk-set-expected covariate score; the
+negative Hessian is the observed information. Thus $\exp(\widehat\beta)$ is the
+hazard ratio per one-SD higher score. Efron's approximation is used for tied
+event times and robust uncertainty is considered when survey clustering applies.
+\end{derivation}
+
+\begin{definition}[Hazard function and hazard ratio]
+\label{def:prog2:hazard}
+For a survival time $T$ with survivor function $S(t)=\Pr(T>t)$ and density
+$f$, the hazard function is
+\begin{equation}
+  h(t)=\lim_{\Delta\downarrow0}\frac{1}{\Delta}
+       \Pr\{t\le T<t+\Delta\mid T\ge t\}
+      =\frac{f(t)}{S(t)}
+      =-\frac{\mathrm{d}}{\mathrm{d}t}\log S(t),
+  \label{eq:hazard}
+\end{equation}
+the rate at which the event arrives among those it has not yet reached. It
+has units of one over time and is not bounded above by one, so it is not a
+probability. Integrating gives the cumulative hazard
+$H(t)=\int_0^t h(u)\,\mathrm{d}u$ and $S(t)=\exp\{-H(t)\}$.
+
+The hazard ratio between two people is $h_i(t)/h_j(t)$. Under the Cox model
+of Definition~\ref{def:cox} it equals
+$\exp\{\beta_H(H_i-H_j)+\boldsymbol\gamma^{\mathsf T}(\mathbf x_i-\mathbf x_j)\}$,
+which does not depend on $t$; that constancy is the proportional-hazards
+assumption tested in \S\ref{sec:prog-ph}. A hazard ratio is a multiplier on a
+rate. It becomes a difference in risk only once a baseline cumulative hazard
+is supplied, by way of $S(t)=\exp\{-H(t)\}$.
+\end{definition}
+
+Interpretation of the hazard ratio follows conventional principles of survival analysis. A hazard ratio of 1.00 would indicate no association between the $H_{\text{potential}}$ and the outcome. Values below one imply that higher levels of health potential are associated with a lower hazard of experiencing death or hospitalisation during follow-up. For example, an estimated hazard ratio of 0.80 would correspond to an approximately 20\% reduction in the instantaneous risk of the endpoint per standard deviation increase in the latent score. Interpretation focuses primarily on the magnitude of the estimated hazard ratio, the width of the associated confidence interval, and the consistency of findings across the adjusted and unadjusted models. If the hazard ratio changes only minimally following adjustment for age and sex, this would suggest that the $H_{\text{potential}}$ captures information beyond basic demographic risk factors; substantial attenuation towards the null would instead indicate that much of the observed association is explained by demographic differences.
+
+\begin{reading}[What a hazard ratio is, and what it is not]
+A hazard ratio is a multiplier on instantaneous risk. It says how much faster events arrive for one person than another at any given moment, among those still event-free at that moment. It is not a ratio of five-year risks, it is not a probability, and on its own it tells nobody how many people out of a hundred will die.
+
+Turning it into something usable takes one further number: the risk in a reference group. Suppose the analysis returns a hazard ratio of $0.72$ per standard deviation for mortality, and suppose five-year mortality for a woman at the mean of the score is $20$ per cent. Mrs~A sits about one standard deviation below the mean, so her multiplier relative to that woman is $1/0.72\approx1.39$.
+
+The multiplier acts on the cumulative hazard. A five-year survival of $0.80$ is a cumulative hazard of $-\ln(0.80)=0.223$. Multiply by $1.39$ and it becomes $0.310$, so Mrs~A's five-year survival is $\exp(-0.310)=0.73$ and her five-year mortality is about $27$ per cent, against $20$ per cent for the woman at the mean. The hazard ratio of $0.72$ has become an absolute gap of roughly seven percentage points.
+
+That gap is the form a clinician can act on. If something could lift women like Mrs~A by one standard deviation on the score, and if the association were causal, which nothing in this chapter establishes, about $1/0.066\approx15$ of them would have to be lifted to prevent one death within five years. Apply the same hazard ratio to a woman whose five-year mortality at the mean is $5$ per cent and the arithmetic gives $-\ln(0.95)=0.051$, times $1.39$ is $0.071$, a risk of $6.9$ per cent: a gap under two points and a number needed above fifty. The multiplier is identical in both cases. What it is worth depends entirely on the baseline it multiplies, which is why a hazard ratio should never be quoted to a patient without one.
+\end{reading}
+
+\begin{workedexample}[prog2-mrsa]{Mrs~A, from a hazard ratio to an absolute risk}
+The reading box above states the conversion. Here it is with every step shown
+and checked.
+
+Suppose the analysis returns a hazard ratio of $0.72$ per standard deviation
+of the score for five-year mortality, and suppose five-year mortality for a
+woman at the mean of the score is $20$ per cent. Mrs~A sits one standard
+deviation below the mean, so her multiplier relative to that woman is
+$1/0.72=1.389$.
+
+By Definition~\ref{def:prog2:hazard} the multiplier acts on the cumulative
+hazard, not on the risk. A five-year survival of $0.80$ is a cumulative hazard
+of $-\ln(0.80)=0.2231$. Multiplying gives $0.2231\times1.389=0.3099$, so
+Mrs~A's five-year survival is $\exp(-0.3099)=0.7335$ and her five-year
+mortality is $26.6$ per cent. The gap is $6.6$ percentage points, so lifting
+$15$ women like her by one standard deviation would prevent one death in five
+years, if the association were causal, which nothing in this chapter
+establishes.
+
+Run the same multiplier at a $5$ per cent baseline. The cumulative hazard is
+$-\ln(0.95)=0.0513$, which becomes $0.0712$, a risk of $6.9$ per cent. The gap
+is $1.9$ points and the number needed is $53$. The hazard ratio has not
+changed. What it is worth has changed by a factor of three and a half.
+
+\begin{wecode}[Python]
+from hpv.prognostic import hazard_ratio_to_risk, number_needed
+
+multiplier = 1 / 0.72
+for baseline in (0.20, 0.05):
+    hers = hazard_ratio_to_risk(baseline, multiplier)
+    print(f"baseline {baseline:.2f}  Mrs A {hers:.3f}  "
+          f"gap {hers - baseline:.3f}  "
+          f"number needed {number_needed(hers, baseline):.1f}")
+\end{wecode}
+
+\weanswer{$26.6$ per cent against $20$ per cent, a gap of $6.6$ points and one
+death prevented per $15$ women; at a $5$ per cent baseline, $6.9$ per cent, a
+gap of $1.9$ points and one per $53$. Asserted by
+\texttt{test\_worked\_example\_mrs\_a\_absolute\_risk\_from\_a\_hazard\_ratio\_of\_072}.}
+\end{workedexample}
+
+One caution applies to every estimate in Table~\ref{tab:hr}. The predictor is not observed, it is estimated, and it carries the error described in Chapter~\ref{ch:results1}. Error in a predictor produces attenuation bias, known in clinical epidemiology as regression dilution: the fitted hazard ratio is pulled towards $1.00$, so an estimate of $0.72$ would understate the association that would be seen if capability could be read off directly. The direction of the bias is predictable and its size is not, so the estimates here are read as a floor on the association and not as point values.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: direction and strength of the association, whether it is independent of age and sex, and the degree of attenuation after adjustment.]}
+
+A single hazard ratio stands in for the whole of follow-up, and that only makes sense if the multiplier it reports holds from the first month to the sixtieth. Whether it does is a question the data can answer.
+
+\subsection{Proportional-hazards assumption}
+\label{sec:prog-ph}
+
+\noindent The Cox model buys its freedom from any assumption about the shape of risk over time by insisting that the multiplier between two people never changes. That is the one claim in the model the data are allowed to contradict.
+
+The validity of the Cox model depends upon the assumption that hazard ratios remain approximately constant over time. This assumption was evaluated using scaled Schoenfeld residuals, both graphically and through formal statistical testing \citep{grambsch_1994}. Residual plots were inspected for systematic departures from horizontal trends, corresponding significance tests evaluated whether residual variation exhibited a temporal pattern inconsistent with proportional hazards, and log-minus-log survival curves were examined as a complementary visual check. Figure~\ref{fig:schoenfeld} shows the scaled Schoenfeld residuals for the $H_{\text{potential}}$ against follow-up time. Should evidence of non-proportional hazards have been observed, alternative modelling strategies such as time-varying coefficients or stratified Cox models would have been considered; any such deviation from the pre-specified plan would be documented and justified.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: scaled Schoenfeld residuals for the $H_{\text{potential}}$ plotted against follow-up time, with smoothed trend and reference line.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Scaled Schoenfeld residuals used to assess the proportional-hazards assumption for the $H_{\text{potential}}$.}
+\label{fig:schoenfeld}
+\end{figure}
+
+\begin{derivation}[Scaled Schoenfeld residual test of proportional hazards]
+\label{der:schoenfeld}
+At event time $t_i$, the Schoenfeld residual for covariate $k$ is
+$r_{ik}=v_{ik}-\bar v_k(t_i;\widehat{\boldsymbol\theta})$, the observed value
+minus its risk-set weighted expectation. Scaling by the estimated covariance of
+the score yields $r^*_{ik}$. Under proportional hazards,
+$E\{r^*_{ik}\mid t_i\}$ has no systematic time trend. Regressing $r^*_{ik}$ on a
+chosen transformation $g(t_i)$ gives a score test of zero slope; the global test
+combines covariate-specific components. A small $p$-value diagnoses time variation
+but does not select its functional form, which must be modelled and revalidated.
+\end{derivation}
+
+\begin{reading}[If the multiplier changes with time]
+Non-proportional hazards means the effect of the score is one size early in follow-up and another size later. Here that has a concrete reading. Suppose poor structural conditions kill people quickly: the stairs Mrs~A cannot carry shopping up, the two buses to a clinic she has missed three times in eight. The people carrying those conditions who are still alive in year four are the ones the conditions did not kill, and they are hardier on everything the model never measured. The hazard ratio would then sit furthest from one early and closest to one late, drifting from something like $0.60$ in year one towards $0.90$ by year five. A single constant fitted across the whole period lands in between, near $0.75$, understating the separation in the first two years and overstating it in the last two.
+
+Read that way, a significant Schoenfeld test is a result about the construct and not a defect in the analysis. It would say that realised capability is most informative while there is still time to act on it, which is what the framework claims anyway, and it would argue for reporting the effect by period, or with a time-varying coefficient, instead of quoting one number for five years.
+\end{reading}
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: outcome of the proportional-hazards check and any consequences for the modelling strategy.]}
+
+\medskip
+\noindent Whether the multiplier is constant settles how the association should be reported. It says nothing about whether the score can separate one patient from another, which is a different property and the subject of the next section.
+
+% =====================================================================
+\section{Discrimination and Calibration}
+\label{sec:disccal}
+% =====================================================================
+
+\noindent An association holds over a population; a clinic holds one person at a time. A hazard ratio far from one can sit alongside heavy overlap between the people who go on to have the event and the people who do not, and a set of predictions in the right order can still put the wrong absolute number beside a name. The two failures are separate and are tested separately.
+
+\noindent Demonstrating a statistically significant association represents only the first stage in evaluating prognostic performance. A predictor may exhibit a strong independent association with an outcome yet still possess limited clinical usefulness if it cannot accurately distinguish between individuals who will and will not experience the event, or if the risks it predicts differ substantially from those observed. Discrimination concerns ranking: whether individuals who experience an adverse outcome are assigned a higher predicted risk than individuals who remain event-free. Calibration concerns absolute prediction: whether the predicted probability of the outcome corresponds closely to the probability actually observed. A model may discriminate well while consistently overestimating risk, or produce well-calibrated average predictions while failing to separate high-risk and low-risk individuals. Neither characteristic alone is sufficient, and both must be interpreted jointly \citep{steyerberg_2019,vancalster_2019,collins_2015}.
+
+\subsection{Assessment of discrimination}
+\label{sec:prog-disc}
+
+\noindent Ranking is the least a prognostic score can be asked to do: put the people who will have the event above the people who will not. With censored follow-up that ordering cannot be checked for every pair of patients, and how the unusable pairs are handled changes the answer.
+
+Discrimination refers to the ability of a prognostic model to correctly order individuals according to their future risk. A model with perfect discrimination assigns higher predicted risks to every individual who subsequently experiences the event than to every individual who does not, whereas a model with no discriminatory ability performs no better than chance. Because the present study involves right-censored survival data, discrimination cannot be evaluated using conventional binary classification measures that assume outcome status is fully observed for every participant. Survival-specific measures of concordance therefore provide a more appropriate assessment.
+
+The primary measure of discrimination was Harrell's concordance statistic (Harrell's C), which may be interpreted as the probability that, for a randomly selected pair of individuals, the participant predicted to be at greater risk experiences the event before the participant predicted to be at lower risk \citep{harrell_1996}. The statistic compares every permissible pair of participants for whom the ordering of survival times can be determined; a pair is concordant when the participant with the higher predicted risk experiences the event earlier. The concordance statistic ranges between 0.50 and 1.00, where 0.50 indicates performance equivalent to random ranking and values approaching 1.00 indicate increasingly accurate separation. Although no universally accepted thresholds exist, values above approximately 0.70 are commonly interpreted as acceptable discrimination, values above 0.80 as good, and values approaching 0.90 as outstanding, depending upon clinical context \citep{hosmer_2013}.
+
+Although Harrell's statistic has become conventional, it is known to exhibit bias when censoring is substantial or differs systematically across levels of predicted risk. Discrimination was therefore also evaluated using Uno's inverse-probability-of-censoring weighted concordance statistic (Uno's C) \citep{uno_2011}, which weights observations by the inverse probability of remaining uncensored and provides more reliable estimates under moderate to heavy censoring. Reporting both statistics says more than either alone: similar values suggest that censoring exerts little influence on estimated performance, whereas substantial discrepancies would necessitate more cautious interpretation. Table~\ref{tab:discrimination} summarises both concordance measures together with the calibration summaries described below.
+
+\begin{table}[htbp]
+\centering
+\caption{Discrimination and calibration of the $H_{\text{potential}}$ prognostic model, reported for each co-primary endpoint.}
+\label{tab:discrimination}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{7cm} p{4cm}}
+\toprule
+\textbf{Measure} & \textbf{Value (95\% CI)} \\
+\midrule
+Harrell's C \citep{harrell_1996} & [\,--\,] \\
+Uno's C (IPCW) & [\,--\,] \\
+Calibration-in-the-large & [\,--\,] \\
+Calibration slope & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{derivation}[Concordance statistics for censored survival data]
+\label{der:concordance}
+For risk score $\eta$, Harrell's statistic is
+\[
+ \widehat C_H=\frac{\sum_{i\ne j}\mathbb I(T_i<T_j,\delta_i=1)
+ [\mathbb I(\eta_i>\eta_j)+\tfrac12\mathbb I(\eta_i=\eta_j)]}
+ {\sum_{i\ne j}\mathbb I(T_i<T_j,\delta_i=1)}.
+\]
+Only pairs whose earlier observed time is an event are comparable, so censoring
+can change the estimand. Uno's truncated estimator replaces pair contributions
+with inverse-censoring weights based on $\widehat G(T_i-)^{-2}$ and restricts
+evaluation to $T_i\leq\tau$. Under independent censoring and consistent
+$\widehat G$, it targets the probability that the person failing earlier before
+$\tau$ has higher predicted risk. Both statistics require confidence intervals,
+and neither assesses calibration.
+\end{derivation}
+
+\begin{definition}[Harrell's concordance statistic]
+\label{def:prog2:harrellc}
+For a risk score $\eta$, Harrell's C estimates
+\begin{equation}
+  C_H=\Pr(\eta_i>\eta_j\mid T_i<T_j),
+  \label{eq:harrellc}
+\end{equation}
+the chance that of two people the one who fails first was given the higher
+score \citep{harrell_1996}. It is estimated over comparable pairs only: a pair
+counts when the earlier observed time is an event, and is discarded when the
+earlier observed time is a censoring time, because then the order of failure
+is unknown. Ties in $\eta$ contribute one half. The estimator is written out in
+Derivation~\ref{der:concordance}.
+\end{definition}
+
+\begin{definition}[Uno's concordance statistic]
+\label{def:prog2:unoc}
+Fix a horizon $\tau$ within the follow-up. Uno's C estimates
+\begin{equation}
+  C_U(\tau)=\Pr(\eta_i>\eta_j\mid T_i<T_j,\;T_i<\tau),
+  \label{eq:unoc}
+\end{equation}
+using each comparable pair reweighted by $\widehat G(T_i-)^{-2}$, where
+$\widehat G$ is the Kaplan--Meier estimate of the censoring survivor function
+\citep{uno_2011}.
+
+The two estimate different quantities. The set of comparable pairs that
+Harrell's C averages over is itself produced by the censoring pattern of the
+cohort, so $C_H$ is a property of the model together with how long that
+particular study followed people. The weights in $C_U$ restore the pairs that
+censoring removed, and the fixed $\tau$ states the horizon in advance, so
+$C_U(\tau)$ is a property of the model alone under independent censoring.
+Where censoring is light and unrelated to risk the two agree; where it is heavy
+or related to risk, $C_H$ is the one that moves.
+\end{definition}
+
+\begin{reading}[Why two concordance statistics]
+Harrell's C counts only the pairs whose ordering is known. A pair is usable when the person with the earlier observed time had an event; if that person was censored, nobody knows who failed first and the pair is dropped. Dropping pairs would be harmless if the dropped ones resembled the kept ones. They do not. Censoring accumulates with follow-up, so pairs that would have been settled late are lost more often than pairs settled early, and if censoring is heavier among the sick then the pairs surviving into the calculation are a selected set. Harrell's C therefore depends on the censoring pattern of the cohort it was computed in, and the same model can score differently in two cohorts that differ only in how long they were followed. Uno's C \citep{uno_2011} weights each usable pair by the inverse of the estimated probability of still being under observation, giving back the weight of the pairs that were disproportionately lost, and it truncates at a fixed horizon so that the quantity being estimated is stated in advance instead of inherited from the data. Where the two agree, censoring is not distorting the picture. Where they diverge, Uno's is the one to quote, and the gap between them is itself worth reporting.
+\end{reading}
+
+Interpretation of discriminative performance weighs the absolute values against consistency with previous literature, the width of confidence intervals, and comparative performance relative to existing measures examined later in this chapter. Perfect prediction is rarely achievable in complex biological systems, and even well-established prognostic models typically demonstrate concordance values well below unity. A modest but consistent improvement over established tools may be more meaningful than pursuing unrealistically high concordance values that cannot be achieved within heterogeneous ageing populations.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: discriminative performance of the $H_{\text{potential}}$ model and agreement between Harrell's and Uno's statistics.]}
+
+\medskip
+\noindent A concordance statistic says nothing about the size of the risks being ranked. Two models with identical concordance can differ by a factor of two in the probability each prints beside a patient's name, and that difference is what calibration measures.
+
+\subsection{Assessment of calibration}
+\label{sec:prog-calib}
+
+\noindent A ranking suffices when the decision is who to see first and there is a fixed number of slots. It fails as soon as a number crosses a threshold and triggers an action, because then the number itself has to be true.
+
+Calibration evaluates the agreement between predicted probabilities and observed event frequencies. A perfectly calibrated model predicts a 20\% probability of the outcome for groups in which approximately 20\% of individuals actually experience the event, and so forth across the full range of predicted risks. Calibration has assumed increasing importance because many clinical decisions depend upon absolute risk estimates rather than relative rankings. Poor calibration may lead to systematic overtreatment if risks are consistently overestimated or undertreatment if they are consistently underestimated, regardless of discriminative ability. Calibration was evaluated using both numerical summary measures and graphical assessment \citep{vancalster_2019}.
+
+Calibration-in-the-large evaluates whether predicted risks are systematically too high or too low across the population as a whole; a value close to zero indicates that the average predicted risk corresponds closely to the average observed event rate. The calibration slope evaluates whether the spread of predicted risks is appropriate. Ideally the slope equals one; slopes below one typically indicate overfitting, whereby predicted risks are excessively extreme, while slopes greater than one indicate underfitting, whereby predicted risks vary insufficiently across individuals. The calibration slope therefore provides indirect evidence regarding the degree of optimism present within the model and complements the bootstrap validation analyses reported later.
+
+Although numerical summaries provide concise measures, visualisation remains indispensable because different forms of miscalibration may produce similar numerical values. Figure~\ref{fig:calibration_plot} presents the calibration plot for the $H_{\text{potential}}$ prognostic model. Under ideal calibration, observations lie close to the 45-degree reference line; deviations above the line indicate underprediction and deviations below the line indicate overprediction. Inspection of the shape of the curve further identifies whether systematic departures occur primarily among low-risk, intermediate-risk or high-risk individuals.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot showing predicted versus observed five-year risk, with the 45-degree reference line and a smoothed calibration curve.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Calibration of the $H_{\text{potential}}$ prognostic model.}
+\label{fig:calibration_plot}
+\end{figure}
+
+\begin{derivation}[Calibration-in-the-large and the calibration slope]
+\label{der:calibration}
+At horizon $t_0=5$ years, a Cox model gives
+$\widehat p_i(t_0)=1-\widehat S_0(t_0)^{\exp(\widehat\eta_i)}$.
+For external or internally held-out predictions, recalibration models the outcome
+using $a+b\widehat\eta_i$: $a$ is calibration-in-the-large when $b=1$, and $b$
+is the calibration slope after the baseline level is re-estimated. Ideal values
+are $a=0$ and $b=1$ on a compatible link scale. A slope below one indicates
+predictions that are too extreme, commonly from overfitting; a slope above one
+indicates insufficient spread. With censoring, horizon-specific calibration must
+use survival-aware observed risks rather than treating censored status as no event.
+\end{derivation}
+
+\begin{definition}[Calibration-in-the-large and the calibration slope]
+\label{def:prog2:calibration}
+Let $\widehat\eta_i$ be the linear predictor and $\widehat p_i(t_0)$ the
+predicted risk at horizon $t_0$. Refit the outcome on the predictions through
+a recalibration model with intercept $a$ and slope $b$, as in
+Derivation~\ref{der:calibration}. Then
+\begin{enumerate}
+  \item \emph{Calibration-in-the-large} is $a$ estimated with $b$ held at one.
+        It measures whether the average predicted risk matches the average
+        observed risk. Ideal value zero. It says nothing about individuals.
+  \item \emph{The calibration slope} is $b$ estimated freely. It measures
+        whether the spread of predictions is right. Ideal value one; $b<1$
+        means the predictions are too extreme at both ends, which is the
+        signature of overfitting, and $b>1$ means they are too flat.
+\end{enumerate}
+The two are separate failures. A model can have $a=0$ and $b=0.6$, so that it
+is right on average and too confident about everyone, or $b=1$ and $a\ne0$, so
+that the spread is right and the whole scale is shifted. With censored
+follow-up the observed side of both must come from a survival estimate at
+$t_0$, since counting a censored participant as event-free biases $a$ downwards.
+\end{definition}
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: calibration-in-the-large, calibration slope, and any region of the risk spectrum showing systematic miscalibration.]}
+
+\medskip
+\noindent Neither property implies the other, and a model can be sold on whichever one it happens to have. The pairing is worth stating plainly before the comparative analyses lean on both.
+
+\subsection{Relationship between discrimination and calibration}
+\label{sec:prog-disccal}
+
+\noindent The two properties are confused often enough that the confusion has a standard cure: build the two failures by hand and look at what each does to a patient.
+
+Discrimination and calibration represent distinct statistical properties and should not be interpreted as interchangeable. Multiplying every predicted risk by a constant may preserve the ordering of patients almost perfectly, maintaining high discrimination while producing substantial overprediction and poor calibration. Conversely, a model predicting the population-average event rate for every participant would be well calibrated on average but would exhibit almost no discriminative ability. Accordingly, the $H_{\text{potential}}$ is considered to demonstrate strong prognostic performance only if evidence supports both satisfactory discrimination and acceptable calibration.
+
+
+\begin{proposition}[Discrimination and calibration are independent properties]
+\label{prop:prog2:disccal}
+Let $\widehat p_1,\dots,\widehat p_n$ be predicted risks at a fixed horizon and
+let $g:(0,1)\to(0,1)$ be strictly increasing. Then the concordance statistic of
+Definition~\ref{def:prog2:harrellc} satisfies
+\[
+  C\bigl(g(\widehat p_1),\dots,g(\widehat p_n)\bigr)
+  =C\bigl(\widehat p_1,\dots,\widehat p_n\bigr),
+\]
+while the calibration-in-the-large and slope of
+Definition~\ref{def:prog2:calibration} can be made arbitrarily bad by choice of
+$g$. Conversely the constant prediction $\widehat p_i=\bar y$ has
+calibration-in-the-large exactly zero and $C=0.50$. Neither property implies
+the other in either direction.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+$C$ is a function of the predictions only through the sign of
+$\widehat p_i-\widehat p_j$ for each pair, since every term in the sum of
+Derivation~\ref{der:concordance} is an indicator of that sign or a half for a
+tie. A strictly increasing $g$ preserves every such sign and every tie, so it
+leaves each term, and therefore $C$, unchanged. Calibration is not a function
+of the ordering: it compares the level and spread of $\widehat p$ with observed
+risk, and $g$ can move the mean prediction anywhere in $(0,1)$ while fixing the
+order. For the converse, the constant predictor makes every pair a tie, so
+every term is one half and $C=0.50$, while its mean equals the observed rate by
+construction. The reading box below builds both failures with numbers.
+\end{proof}
+
+\begin{reading}[Ranking correctly and being right are different things]
+Take the model's five-year mortality predictions and multiply every one by $1.5$. Nobody has moved in the queue, so concordance is unchanged to the third decimal. Every stated probability is now half again too large: a patient whose true risk is $20$ per cent is told $30$ per cent. The model ranks as well as it ever did and is wrong about everybody.
+
+The opposite failure is as easy to build. Give every patient the cohort's average five-year mortality, say $12$ per cent. Average predicted risk equals the observed rate, so calibration-in-the-large is perfect, and the model cannot tell anybody apart from anybody: concordance is $0.50$.
+
+The clinical version of the same contrast is a test that sorts cases from non-cases against a test whose stated probability can be believed. A triage list needs the first. With ten slots in a geriatric assessment clinic, only the ordering matters, and a model that inflates every risk by half still picks the right ten people. A threshold rule needs the second. If the policy is a home assessment above a five-year risk of $20$ per cent, a model inflating risks by half will send everyone whose true risk exceeds about $13$ per cent, because $0.13\times1.5\approx0.20$. For Mrs~A, whose risk under the illustration above came to about $27$ per cent, the inflation is harmless, since she crosses the line either way. For the patients sitting near the line it decides everything, and they are most of the people the threshold was written for.
+
+Calibration matters most where the number triggers an action, and least where it only sorts a queue.
+\end{reading}
+
+\begin{workedexample}[prog2-monotone]{A transformation that keeps C and destroys calibration}
+Take ten patients whose predicted five-year risks are
+$0.05,0.08,0.12,0.15,0.20,0.25,0.30,0.40,0.55,0.70$, and suppose three of
+them die: the seventh, the ninth and the tenth. Mean predicted risk is $0.280$
+against an observed rate of $0.300$, so calibration-in-the-large is $+0.020$,
+which is respectable. Concordance over the $3\times7=21$ pairs is $20/21=0.952$.
+
+Now replace every prediction $p$ by $\sqrt p$. The function is strictly
+increasing on $(0,1)$, so nobody changes place and concordance is still
+$0.952$. Mean predicted risk is now $0.495$. Calibration-in-the-large has gone
+from $+0.020$ to $-0.195$: the model still ranks almost perfectly and now tells
+a patient whose risk is $20$ per cent that it is $45$ per cent.
+
+The reverse failure is the flat predictor. Give every patient $0.300$ and
+calibration-in-the-large is exactly zero while concordance is $0.50$, because
+every pair is a tie.
+
+\begin{wecode}[Python]
+import math
+
+p = [0.05, 0.08, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40, 0.55, 0.70]
+y = [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]
+
+def concordance(pred, out):
+    pos = [a for a, b in zip(pred, out) if b == 1]
+    neg = [a for a, b in zip(pred, out) if b == 0]
+    hits = sum(1.0 if a > b else 0.5 if a == b else 0.0
+               for a in pos for b in neg)
+    return hits / (len(pos) * len(neg))
+
+warped = [math.sqrt(x) for x in p]
+rate = sum(y) / len(y)
+for name, pred in (("raw", p), ("sqrt", warped), ("flat", [rate] * 10)):
+    print(f"{name:5s} C {concordance(pred, y):.3f}  "
+          f"CITL {rate - sum(pred) / len(pred):+.3f}")
+\end{wecode}
+
+\weanswer{$C=0.952$ before and after the transformation, while
+calibration-in-the-large moves from $+0.020$ to $-0.195$; the flat predictor
+has $C=0.500$ and calibration-in-the-large $0.000$. Asserted by
+\texttt{test\_worked\_example\_monotone\_transformation\_keeps\_c\_and\_breaks\_calibration}
+and \texttt{test\_proposition\_discrimination\_and\_calibration\_are\_independent}.}
+\end{workedexample}
+
+A model that ranks well and states honest probabilities has met the standard applied to any prognostic tool. What it has not shown is that it is worth computing when simpler measures are already in the notes.
+
+% =====================================================================
+\section{Comparison Against Established Measures and Clinical Utility}
+\label{sec:comparison}
+% =====================================================================
+
+\noindent A clinic already holds a frailty index, a problem list, a record of what the patient can do unaided and, in some settings, a utility score. Any new measure has to earn its place against those. The comparison means nothing unless every model is fitted to the same people over the same window, with the endpoint definitions held fixed.
+
+\noindent The preceding sections established the association between the $H_{\text{potential}}$ and subsequent adverse outcomes and evaluated the predictive performance of the resulting model. These analyses do not, however, establish whether the construct represents a meaningful advance over approaches already available to clinicians. Demonstrating prognostic performance in isolation is insufficient if comparable or superior performance can be achieved using simpler, well-established measures already collected in routine practice. This section therefore compares the $H_{\text{potential}}$ directly with existing approaches and examines whether incorporating the latent construct provides additional prognostic information beyond conventional predictors. The comparison used the same study population, identical follow-up period, and the same endpoint definitions for every model, so that differences reflect the predictive information contained within each measure rather than differences in modelling strategy, and it is carried out for each co-primary endpoint separately. Comparisons are reported primarily as effect estimates and uncertainty intervals. No single numerical cut-off is treated as sufficient evidence of superiority; interpretation considers discrimination, calibration, clinical utility and model complexity together.
+
+\subsection{Selection of comparator measures}
+\label{sec:prog-comparators}
+
+\noindent Choosing comparators after seeing the results would let the construct pick its own opponents. The set below was fixed in advance, and each member of it embodies a different answer to the question of what health is.
+
+The comparator models were selected a priori on the basis of their widespread use within geriatric medicine, health services research and prognostic modelling, each reflecting a distinct theoretical perspective on what constitutes health. The first was a QALY proxy representing health-related quality of life, evaluating whether a construct designed to represent latent health capacity provides information beyond a widely adopted utility-based measure. The second was the frailty index \citep{rockwood_mitnitski_2007,searle_2008}, which conceptualises frailty as the cumulative burden of health deficits accrued through ageing and is consistently associated with mortality, institutionalisation, disability and hospitalisation. The third was the Charlson Comorbidity Index, one of the most widely validated comorbidity measures in clinical epidemiology, included to determine whether the information captured by the $H_{\text{potential}}$ extends beyond accumulated disease burden. Functional status was represented by a model based exclusively on activities of daily living (ADL) and instrumental activities of daily living (IADL). Finally, a baseline model consisting of age and comorbidity variables was included because these characteristics remain among the strongest routinely available predictors and represent the minimum information commonly available to clinicians during routine assessment.
+
+Although all comparator models seek to quantify health, they differ substantially in their underlying assumptions. The QALY proxy emphasises preference-weighted utility, frailty indices describe the accumulation of observable deficits, comorbidity indices quantify diagnosed disease burden, and functional models focus on limitations in everyday activity. The $H_{\text{potential}}$, by contrast, is designed to estimate an individual's latent capacity to maintain health before deterioration becomes fully manifest. Existing measures predominantly describe realised health loss, whereas the $H_{\text{potential}}$ seeks to characterise underlying reserve and resilience; superior prognostic performance would therefore support the hypothesis that latent health capacity captures information not fully reflected by disease burden, disability or health utility alone.
+
+Naming the comparators settles what is being compared. How the comparison is judged, and on which quantities, needs stating with the same care, because a measure that is free to choose its yardstick after the fact will always win.
+
+\subsection{Comparative measures of performance}
+\label{sec:prog-comparative}
+
+\noindent Two models can be separated on concordance, on fit penalised for complexity, or on how they behave at a particular follow-up time, and those three need not agree. Reporting one and suppressing the others invites a favourable choice made after the numbers are in.
+
+Comparative performance was evaluated using several complementary criteria. Discrimination was assessed using Harrell's concordance statistic, allowing direct comparison of each model's ability to rank participants according to future risk, with differences in optimism-corrected concordance evaluated using the procedure of Kang et al.~\citep{kang_2015} to account for dependence arising from evaluation within the same study population. Model fit was assessed using Akaike's Information Criterion \citep{akaike_1974} and the Bayesian Information Criterion \citep{schwarz_1978}, both of which balance goodness-of-fit against model complexity, with lower values indicating a preferable balance. Because latent variable models inevitably require greater complexity than traditional regression models, evaluation using information criteria is particularly important: demonstrating improved fit despite increased complexity would strengthen the argument that the additional modelling effort is justified. Time-dependent receiver operating characteristic analysis was performed as a sensitivity analysis using cumulative dynamic area-under-the-curve methods appropriate for censored survival outcomes \citep{blanche_2013}, evaluating discrimination at specific follow-up times rather than across the whole period. Table~\ref{tab:comparison} summarises the comparative performance of each model, and Figure~\ref{fig:tdauc} shows the time-dependent AUC.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of the $H_{\text{potential}}$ with established prognostic measures.}
+\label{tab:comparison}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.5cm} p{2.4cm} p{2.2cm} p{2.4cm} p{2.2cm}}
+\toprule
+\textbf{Model} & \textbf{Harrell's C} & \textbf{$\Delta$C vs $H$} & \textbf{AIC} & \textbf{BIC} \\
+\midrule
+$H_{\text{potential}}$ & [\,--\,] & -- & [\,--\,] & [\,--\,] \\
+QALY proxy & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+Frailty index & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+Charlson index & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+ADL/IADL-only & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+Age and comorbidity & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: time-dependent (cumulative/dynamic) AUC for the $H_{\text{potential}}$ and comparator models across follow-up time.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Time-dependent area under the curve for the $H_{\text{potential}}$ and comparator models.}
+\label{fig:tdauc}
+\end{figure}
+
+Comparisons between competing models were interpreted according to the pre-specified benchmarking framework outlined in Section~\ref{sec:performance}. The purpose of the comparison is to determine whether the additional conceptual complexity of $H_{\text{potential}}$ is accompanied by measurable incremental information, rather than to declare a winner on the basis of a single performance statistic. Interpretation weighed numerical differences against the consistency of evidence across several performance measures: a model demonstrating modest improvements in discrimination accompanied by superior calibration, lower information criteria and improved clinical utility may provide stronger evidence of overall prognostic value than a model achieving marginally higher concordance alone.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: for each comparator, whether the $H_{\text{potential}}$ is non-inferior or superior under the decision rule, and interpretation.]}
+
+A comparison between standalone models asks which single measure is best. The clinically live question is different: given that the older measures are already recorded, does adding this one change anything.
+
+\subsection{Incremental prognostic value}
+\label{sec:prog-increment}
+
+\noindent Nobody will discard a frailty index to make room for a latent score. The construct will be used, if it is used at all, on top of what is already in the record, so the test that matters is what it adds to a model that already contains the usual predictors.
+
+Strong standalone performance does not necessarily imply that a predictor provides useful additional information when existing clinical variables are already available. Incremental value was therefore evaluated by adding the $H_{\text{potential}}$ to baseline models containing conventional clinical predictors and examining the resulting change in predictive performance. Healthcare providers already possess demographic information, disease history and measures of functional impairment; the relevant question is whether estimating the latent construct meaningfully improves prediction beyond this routinely available information. Changes in concordance, likelihood-based model fit and information criteria were examined after incorporation of the latent score, determining whether the construct captures genuinely new prognostic information rather than reproducing existing clinical variables in a more complex form.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ adds discrimination and improves fit over each baseline model.]}
+
+An improvement in fit still leaves open whether any patient would be managed differently. Answering that requires the harm of acting needlessly and the harm of failing to act to be put on one scale.
+
+\subsection{Clinical utility and decision-curve analysis}
+\label{sec:prog-dca}
+
+\noindent Every statistic so far has been silent about consequences. A model that finds more cases at the price of intervening on many people who would have been fine can be worse than no model, and nothing reported above would detect it.
+
+Statistical measures of predictive performance do not directly determine whether a prognostic model improves clinical decision making. Clinical utility was assessed using decision-curve \citep{vickers_elkin_2006} analysis, which evaluates the consequences of applying prediction models across a range of clinically relevant risk thresholds and explicitly incorporates the relative benefits of correctly identifying individuals who will experience the outcome against the harms of unnecessary intervention among those who will not. The analysis estimates the net benefit of using each model compared with two extreme strategies: treating every individual regardless of predicted risk, and treating no one. The treat-all strategy maximises sensitivity but exposes many low-risk individuals to unnecessary intervention, whereas the treat-none strategy avoids unnecessary treatment but fails to identify individuals who could benefit. A clinically useful model should achieve greater net benefit than both strategies across a range of plausible thresholds. Threshold probability represents the level of predicted risk at which intervention would be initiated, and different interventions imply different thresholds because the balance between benefit and harm varies with treatment burden, cost, adverse effects and patient preferences. Figure~\ref{fig:dca} presents the decision curves for the $H_{\text{potential}}$ and comparator models.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][5cm][c]{0.85\linewidth}{\centering \emph{[Figure placeholder: decision-curve analysis comparing net benefit for the $H_{\text{potential}}$ and comparator models across threshold probabilities, with treat-all and treat-none reference lines.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Decision-curve analysis evaluating the clinical utility of the $H_{\text{potential}}$ compared with established prognostic measures.}
+\label{fig:dca}
+\end{figure}
+
+\begin{derivation}[Net benefit in decision-curve analysis]
+\label{der:netbenefit}
+At threshold $p_t$, classify $D_i=\mathbb I\{\widehat p_i(t_0)\geq p_t\}$ and let
+$w_t=p_t/(1-p_t)$. Then
+\[
+ \mathrm{NB}(p_t)=\frac{\mathrm{TP}(t_0)}{n}-
+ w_t\frac{\mathrm{FP}(t_0)}{n}.
+\]
+At a censored horizon, $\mathrm{TP}$ and $\mathrm{FP}$ are estimated with
+inverse-probability-of-censoring weights (or an equivalent survival estimator),
+not naive binary counts. Treat-none has $\mathrm{NB}=0$. If $\pi(t_0)$ is event
+risk, treat-all has
+$\mathrm{NB}_{all}=\pi(t_0)-\{1-\pi(t_0)\}w_t$.
+Clinical usefulness requires the model curve to exceed both references over a
+pre-specified plausible threshold range.
+\end{derivation}
+
+\begin{definition}[Net benefit and the threshold probability]
+\label{def:prog2:netbenefit}
+Fix a horizon $t_0$ and a threshold probability $p_t$, and treat everyone whose
+predicted risk reaches $p_t$. With $\mathrm{TP}$ true positives and
+$\mathrm{FP}$ false positives among $n$ patients, net benefit is
+\begin{equation}
+  \mathrm{NB}(p_t)=\frac{\mathrm{TP}}{n}-w_t\,\frac{\mathrm{FP}}{n},
+  \qquad w_t=\frac{p_t}{1-p_t},
+  \label{eq:netbenefit}
+\end{equation}
+measured in true cases found per patient assessed \citep{vickers_elkin_2006}.
+
+The threshold is not a statistical quantity. Choosing $p_t$ is a statement that
+the clinician is willing to intervene on $1/w_t$ people who would have been
+fine in order to catch one who would not, so $w_t$ is the exchange rate at
+which false positives are converted into the currency of true positives. Two
+reference strategies are computed on the same scale: treat-none has
+$\mathrm{NB}=0$ by construction, and treat-all has
+$\mathrm{NB}_{\mathrm{all}}=\pi-(1-\pi)w_t$ where $\pi$ is the observed risk at
+$t_0$, which is positive when $p_t<\pi$ and negative when $p_t>\pi$. A model is
+useful at $p_t$ only when its curve is above both.
+\end{definition}
+
+\begin{reading}[What a threshold probability is buying]
+A threshold probability is not a statistical quantity. It is a statement of what the clinician will trade. Setting the threshold at $10$ per cent says: I will act on anyone whose risk is at least one in ten. Equivalently, the odds at that threshold, $0.10/0.90=1/9$, are the exchange rate: one missed case is worth nine unnecessary home assessments. Move the threshold to $33$ per cent and the odds become $1/2$, so only two needless assessments are tolerated per case caught. Net benefit, the trade between finding a case and over-treating, works on the scale of true cases found, and subtracts the false positives after converting them at that rate.
+
+Work one through. Take $1{,}000$ patients of whom $150$ die within five years. At a threshold of $10$ per cent the model flags $300$ of them, including $90$ of the $150$, leaving $210$ flagged who do not die. Net benefit is $90/1000-(1/9)\times(210/1000)=0.090-0.023=0.067$. Treating everyone flags all $1{,}000$, so its net benefit is $0.150-(1/9)\times0.850=0.150-0.094=0.056$. Treating nobody scores zero by construction. The model is worth about $0.011$ more than treating everyone, which reads as eleven extra true cases found per thousand patients at no extra cost in unnecessary assessments, judged at this clinician's exchange rate.
+
+Whether eleven per thousand justifies estimating a latent variable is a judgement the curve cannot make. What the curve does is stop that judgement being made on concordance alone, and it makes the exchange rate visible so a reader who would set a different threshold can find their own answer on the horizontal axis.
+\end{reading}
+
+\begin{workedexample}[prog2-netbenefit]{Net benefit at a threshold above the event rate}
+The reading box works the case where the threshold sits below the event rate.
+The interesting case is the other one, because there treating everybody is
+worse than doing nothing and the arithmetic says so.
+
+Take the same $1{,}000$ patients, of whom $150$ die within five years, so
+$\pi=0.15$. Suppose the intervention is a course of supervised rehabilitation
+and not a home visit, so the clinician sets the threshold at $20$ per cent:
+$w_t=0.20/0.80=0.25$, four unnecessary courses tolerated per death averted.
+
+The model flags $200$ patients, of whom $75$ die. Net benefit is
+$75/1000-0.25\times125/1000=0.0750-0.0313=0.0437$. Treat-all gives
+$0.15-0.85\times0.25=0.150-0.2125=-0.0625$, which is worse than treat-none at
+zero, because at this exchange rate the $850$ needless courses cost more than
+the $150$ deaths caught are worth. The model is above both references, by
+$0.0437$ over treat-none, which reads as about $44$ extra true cases per
+thousand assessed at no net cost in unnecessary rehabilitation.
+
+Treat-all crosses zero exactly at $p_t=\pi$. Below the event rate it is a
+serious competitor and a model has to beat it; above the event rate the model
+only has to beat doing nothing.
+
+\begin{wecode}[Python]
+from hpv.prognostic import net_benefit, net_benefit_treat_all
+
+thr, n, prevalence = 0.20, 1000, 0.15
+model = net_benefit(tp=75, fp=125, n=n, threshold=thr)
+print(f"model      {model:+.4f}")
+print(f"treat-all  {net_benefit_treat_all(prevalence, thr):+.4f}")
+print(f"treat-none {0.0:+.4f}")
+print(f"treat-all at p_t = prevalence: "
+      f"{net_benefit_treat_all(prevalence, prevalence):+.4f}")
+\end{wecode}
+
+\weanswer{Model $0.0437$, treat-all $-0.0625$, treat-none $0$. Asserted by
+\texttt{test\_worked\_example\_net\_benefit\_at\_a\_twenty\_per\_cent\_threshold}.}
+\end{workedexample}
+
+Interpretation of the decision curves focuses on the range of threshold probabilities over which each model provides the greatest net benefit. If the curve associated with the $H_{\text{potential}}$ lies consistently above those of competing models across clinically relevant thresholds, this indicates that use of the latent construct results in superior clinical decision making; overlapping curves would suggest comparable clinical utility despite possible differences in statistical performance. Decision-curve analysis is particularly valuable because improvements in traditional metrics do not necessarily translate into improved clinical outcomes: small gains in discrimination may have little practical importance if they occur outside clinically relevant thresholds, whereas modest statistical improvements may produce substantial clinical benefit when concentrated within the decision range used by healthcare providers.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ shows net benefit over comparators across clinically relevant thresholds.]}
+
+\medskip
+\noindent Net benefit completes the performance measures. What remains is to read them together, since they can point in different directions and a rule for weighing them has to be fixed before the numbers arrive.
+
+\subsection{Interpretation of comparative findings}
+\label{sec:prog-interp}
+
+\noindent Discrimination, information criteria, incremental fit and net benefit can disagree, and a construct that looks better on one will look worse on another. Without a stated rule for reading them together, the reading will follow whichever measure flatters the construct.
+
+The comparative analyses provide the most demanding test of the proposed framework. Demonstrating statistically significant associations, satisfactory discrimination and acceptable calibration establishes that the $H_{\text{potential}}$ functions as a valid prognostic measure; demonstrating superiority or meaningful complementarity relative to established approaches determines whether the construct contributes new scientific and clinical knowledge. Interpretation therefore considers the totality of evidence rather than any single metric. Improvements in discrimination, favourable information criteria, evidence of incremental value and greater net clinical benefit collectively support the proposition that latent health capacity represents a distinct and clinically meaningful dimension of health. Conversely, if performance proves comparable to existing measures, the findings remain informative by clarifying the relationship between latent health potential and established conceptualisations of health status.
+
+The comparative analyses answer the question the thesis was built to ask. Two things could still undo the answer: the way the endpoints were split, and the fact that every number so far was produced and scored in one dataset. The remaining sections test both.
+
+% =====================================================================
+\section{Sensitivity Analysis: Combined Endpoint}
+\label{sec:sensitivity_combined}
+% =====================================================================
+
+\noindent Analysing the two endpoints separately was a pre-specified decision, and a reader is entitled to ask whether the findings depend on it. Pooling the events into a single first-event endpoint is the cheapest way to check.
+
+\noindent The two co-primary endpoints were analysed separately because death and unplanned hospitalisation are driven by different clinical and social processes. As a sensitivity check on those results, a combined time-to-first-event endpoint was also analysed, defined as the first occurrence of all-cause mortality or unplanned hospitalisation within five years of baseline assessment. A combined endpoint increases statistical power by pooling events, but it can obscure differences in predictive performance when its components reflect distinct processes; it is therefore reported here only to test whether the co-primary findings are stable, not as a primary result.
+
+The combined-endpoint analysis followed the same statistical framework used for the co-primary endpoints, to keep the methods consistent: Cox proportional-hazards regression estimated the association between the standardised $H_{\text{potential}}$ score and time to first event in both unadjusted and age- and sex-adjusted models, discrimination was assessed using Harrell's and Uno's concordance statistics, and calibration through calibration-in-the-large, the calibration slope and graphical assessment. Figure~\ref{fig:calibration_secondary} shows the calibration plot for the combined endpoint.
+
+Interpretation emphasises consistency with the co-primary results rather than identical numerical performance. Because the combined endpoint pools two processes, its hazard ratio and discrimination need not match either co-primary estimate exactly; the question is whether the direction and general magnitude of the association remain stable. A consistent inverse association would strengthen confidence that the $H_{\text{potential}}$ is a general indicator of future health status rather than a predictor tied to a single endpoint. Table~\ref{tab:secondary} summarises the findings for the combined endpoint.
+
+\begin{table}[htbp]
+\centering
+\caption{Performance of the $H_{\text{potential}}$ for the combined endpoint (sensitivity analysis).}
+\label{tab:secondary}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{7cm} p{4cm}}
+\toprule
+\textbf{Measure} & \textbf{Value (95\% CI)} \\
+\midrule
+Hazard ratio (adjusted) & [\,--\,] \\
+Harrell's C & [\,--\,] \\
+Uno's C (IPCW) & [\,--\,] \\
+Calibration slope & [\,--\,] \\
+Calibration-in-the-large & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot for the combined endpoint, predicted versus observed five-year risk.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Calibration of the $H_{\text{potential}}$ model for the combined endpoint (sensitivity analysis).}
+\label{fig:calibration_secondary}
+\end{figure}
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: association, discrimination and calibration for the combined endpoint, and any difference from the co-primary results.]}
+
+\medskip
+\noindent Consistency across endpoint definitions shows the results are not an artefact of how the outcome was cut. It says nothing about the two threats common to all of them: participants whose data are incomplete, and performance measured in the sample that produced the model.
+
+% =====================================================================
+\section{Missing Data and Internal Validation}
+\label{sec:internal_validation_results}
+% =====================================================================
+
+\noindent Older adults miss items and drop out of cohorts, and they do so for reasons tied to the health being measured. Every estimate above assumes the people who contributed to it stand in for the people who did not, and that the model would perform on new patients as it performs on the ones that built it. Both assumptions are testable, and both are tested here.
+
+\noindent Missing data are an unavoidable feature of large longitudinal cohort studies, particularly those involving older adults. Ignoring missing data through complete-case analysis can substantially reduce statistical power and may introduce bias if the probability of missingness is related to measured participant characteristics. The present study addressed missing baseline indicators and covariates using multiple imputation by chained equations, with estimates combined by Rubin's rules \citep{rubin_1987,vanbuuren_2011}. Multiple imputation replaces each missing value with a set of plausible values drawn from predictive models constructed using the observed data, generating several independent completed datasets that each reflect uncertainty regarding the missing observations. The chained equations approach was selected because it accommodates variables measured on different scales, including continuous, binary, ordinal and categorical data, and permits each variable with missing observations to be modelled according to its own conditional distribution, making it well suited to the multidimensional NHATS indicators spanning physiological, functional, psychosocial and demographic domains. The imputation model included all variables incorporated within the prognostic analyses together with the outcome indicator and cumulative baseline hazard, and auxiliary variables associated with either missingness or the substantive variables were included where appropriate to improve the plausibility of the missing-at-random assumption.
+
+Following imputation, parameter estimates from each completed dataset were combined using Rubin's rules, which calculate pooled regression coefficients, standard errors and confidence intervals by incorporating both within-imputation and between-imputation variability, so that the final uncertainty estimates appropriately reflect the additional uncertainty introduced by missing data.
+
+\begin{reading}[Why complete cases are the sensitivity analysis]
+Dropping everyone with a missing item is a decision, and a strong one. It assumes the people with complete records are a fair sample of the cohort. In an ageing cohort they are not. Participants who skip the physical measures, refuse the cognitive battery or leave the income question blank are on average older and in worse health than those who answer everything, and they are the participants the construct exists to describe. A complete-case analysis of the NHATS therefore reports how the score performs among people well enough to finish the interview. That is worth knowing, which is why it is kept as a sensitivity analysis, and it is not the estimate the thesis is after.
+
+Multiple imputation makes the opposite decision explicit. Each missing value is filled several times over from a model built on what the person did answer, so their observed information is kept instead of the whole record being discarded, and the spread across the completed datasets carries the extra uncertainty into the standard errors through Rubin's rules \citep{rubin_1987}.
+
+The assumption it buys with is missing at random, and the name is misleading. It does not say the missingness is random. It says that once you condition on everything in the imputation model, what is missing carries no further information about the value it hides. Applied to older adults lost to follow-up, that is a claim with real content: it says a participant who withdrew after the second wave is exchangeable with one who stayed, among those who looked alike at that wave on age, function, cognition, income and every auxiliary variable in the model. If people leave because of a decline the recorded variables never caught, the assumption fails in the direction that flatters the score, since the missing outcomes would be concentrated among those whose capability was falling fastest. Including auxiliary variables associated with dropout is the practical defence \citep{vanbuuren_2011}; it weakens the assumption without making it testable.
+\end{reading}
+
+\begin{derivation}[Pooling under Rubin's rules]
+\label{der:rubin}
+For $m$ imputations with estimate $\widehat Q_l$ and variance $U_l$, define
+\[
+ \bar Q=m^{-1}\sum_l\widehat Q_l,\quad
+ \bar U=m^{-1}\sum_l U_l,\quad
+ B=(m-1)^{-1}\sum_l(\widehat Q_l-\bar Q)^2,
+\]
+and $T=\bar U+(1+m^{-1})B$. Inference uses
+$(\bar Q-Q)/\sqrt T$ with a $t$ reference distribution and Rubin/Barnard--Rubin
+degrees of freedom as appropriate. Rubin's rules apply directly to approximately
+normal estimands; bounded or nonlinear performance measures may require a
+suitable transformation or pooling their estimating components.
+\end{derivation}
+
+While multiple imputation addresses bias arising from incomplete observations, it does not evaluate the extent to which predictive performance may have been optimistically estimated through development and evaluation of the model within the same dataset. Apparent performance measured in the development sample is generally expected to exceed performance that would be achieved in new patients, because statistical models inevitably capture some sample-specific variation that fails to generalise. To quantify this optimism, internal validation was performed using bootstrap resampling, which repeatedly samples participants with replacement from the original cohort, refits the complete modelling process within each bootstrap sample, and evaluates predictive performance both within the bootstrap sample and within the original data \citep{steyerberg_2019}. Importantly, the bootstrap procedure replicated the entire analytical pipeline rather than only the final survival model: within each replicate, latent variable estimation, confirmation of the measurement model, derivation of factor scores and subsequent Cox regression were repeated, recognising that uncertainty arises throughout the modelling process rather than solely during estimation of the regression coefficients. Optimism-corrected performance measures were obtained by subtracting the estimated optimism from the apparent performance observed within the original dataset, providing a more conservative and more realistic indication of the accuracy likely to be achieved when the model is applied to individuals drawn from the same target population. Table~\ref{tab:internal} reports both apparent and optimism-corrected performance.
+
+
+\begin{definition}[Optimism and the bootstrap correction]
+\label{def:prog2:optimism}
+Let $\mathcal F$ be the whole fitting procedure, from data processing through
+imputation, measurement model, factor scoring and prognostic regression, and
+let $M(\mathcal F(D),D')$ be the performance of the model it produces on data
+$D'$. For development data $D$ of size $n$, the apparent performance is
+$M_{\mathrm{app}}=M(\mathcal F(D),D)$ and the optimism is
+\begin{equation}
+  O=\mathbb E\bigl[M(\mathcal F(D),D)-M(\mathcal F(D),D^{\ast})\bigr],
+  \label{eq:optimism}
+\end{equation}
+where $D^{\ast}$ is an independent sample from the same population. The
+bootstrap estimate replaces the unavailable $D^{\ast}$ by resampling: draw
+$D_b$ of size $n$ with replacement from $D$, run $\mathcal F$ on it, and take
+the difference between its performance in $D_b$ and its performance in $D$,
+averaged over $B$ resamples, as in Derivation~\ref{der:optimism}
+\citep{efron_tibshirani_1993,steyerberg_2019}. The corrected figure is
+$M_{\mathrm{app}}-\widehat O$.
+
+What is estimated is narrow. $O$ measures how much of the apparent performance
+comes from having fitted and scored in the same rows. It says nothing about a
+different population, a different health system or a different era.
+\end{definition}
+
+\begin{reading}[The model marking its own homework]
+Apparent performance is the score the model achieves on the data that shaped it. Part of that score is signal and part is the model having memorised the noise in this particular sample, and no amount of staring at the fit will separate them. Optimism is the difference between what the model scores here and what the same fitting procedure would score on fresh patients from the same population. The bootstrap estimates it by simulating the whole business: draw a resample, run the procedure on it, score the resulting model in the resample it came from, then score that same model on the original data. The gap is one estimate of optimism, and averaging over several hundred resamples gives the correction that is subtracted from apparent performance \citep{efron_tibshirani_1993,steyerberg_2019}.
+
+What the correction estimates is narrow and should be stated narrowly. It is not an estimate of how the model would do in another country or another health system. It estimates how much of the apparent performance is an artefact of having fitted and scored in the same rows.
+
+A trap is specific to this thesis. The predictor is not an observed covariate, it is a factor score estimated from a measurement model, and that model was itself fitted to these data. Freezing the scores and bootstrapping only the Cox step would treat them as though they had arrived from outside, and would leave the whole of the measurement-stage overfitting out of the correction. The measurement model has to be refitted inside every resample and fresh scores derived from it, or the reported optimism comes out too small and the corrected performance stays too flattering. The same resampling supplies a related quantity: shrinkage, which is regression to the mean in statistical dress. Coefficients fitted to a sample are too extreme, a calibration slope below one is how that shows up, and the resampling gives the factor by which they should be pulled in.
+\end{reading}
+
+\begin{table}[htbp]
+\centering
+\caption{Apparent and optimism-corrected prognostic performance.}
+\label{tab:internal}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{6cm} p{3cm} p{3cm}}
+\toprule
+\textbf{Measure} & \textbf{Apparent} & \textbf{Optimism-corrected} \\
+\midrule
+Harrell's C & [\,--\,] & [\,--\,] \\
+Uno's C (IPCW) & [\,--\,] & [\,--\,] \\
+Calibration slope & [\,--\,] & [\,--\,] \\
+Calibration-in-the-large & [\,--\,] & [\,--\,] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{derivation}[Bootstrap optimism correction]
+\label{der:optimism}
+Let $M_b^{boot}$ be performance of the complete model fitted and evaluated in
+bootstrap sample $b$, and $M_b^{orig}$ its performance when that fitted pipeline
+is applied to the original sample. Then
+\[
+ \widehat O=B^{-1}\sum_{b=1}^{B}(M_b^{boot}-M_b^{orig}),
+ \qquad M_{corrected}=M_{apparent}-\widehat O.
+\]
+The resampled unit must respect the sampling structure. Every replicate repeats
+data processing, imputation, indicator decisions permitted by the protocol, SEM,
+factor scoring, and prognostic fitting; otherwise measurement-stage optimism is
+missed. For loss measures where smaller is better, signs must be defined
+consistently rather than applying the formula mechanically.
+\end{derivation}
+
+\begin{proposition}[The measurement model must be refitted inside every resample]
+\label{prop:prog2:refit}
+Write the pipeline of Definition~\ref{def:prog2:optimism} as two stages,
+$\mathcal F=\mathcal P\circ\mathcal M$, where $\mathcal M$ fits the measurement
+model of Chapter~\ref{ch:results1} and produces the factor scores and
+$\mathcal P$ fits the prognostic model to them. Let $\widehat O_{\mathrm{full}}$
+be the bootstrap estimate that reruns both stages in every resample, and
+$\widehat O_{\mathrm{part}}$ the estimate that freezes the scores at the values
+$\mathcal M$ produced from the whole of $D$ and resamples $\mathcal P$ alone.
+Then
+\[
+  \mathbb E\bigl[\widehat O_{\mathrm{part}}\bigr]
+  \le\mathbb E\bigl[\widehat O_{\mathrm{full}}\bigr],
+\]
+so the partial procedure understates optimism and the corrected performance it
+reports is too flattering. Equality holds only where the measurement stage
+contributes no optimism of its own, which requires $\mathcal M$ to be fixed in
+advance rather than estimated from $D$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Optimism is additive across the stages to first order: the gap between apparent
+and out-of-sample performance decomposes into a part from fitting
+$\widehat\theta$ in $\mathcal M$ and a part from fitting the regression
+coefficients in $\mathcal P$, and both terms are non-negative in expectation
+because in each case a fitted quantity is scored on the rows that produced it.
+Freezing the scores sets the first term to zero by construction: the same
+$\widehat\theta$ enters $M_b^{\mathrm{boot}}$ and $M_b^{\mathrm{orig}}$ and
+cancels in their difference. The measurement stage is not exempt from
+overfitting merely because it never sees the outcome: loadings, thresholds and
+residual variances are still estimated from these $n$ rows, and
+Proposition~\ref{prop:meas:shrinkage} makes each score a function of all of
+them. Chapter~\ref{ch:results1} keeps the two stages separate to protect the
+construct from the outcome, and that separation is a reason to resample both,
+not a licence to resample one.
+\end{proof}
+
+\begin{reading}[What freezing the scores would hide]
+Freezing the factor scores is tempting because it is cheap and because the
+scores were built without looking at who died, which makes them feel like
+data. They are estimates. Every loading behind them was
+chosen to fit these three and a half thousand people, and a different three and
+a half thousand would have given slightly different loadings and so slightly
+different scores.
+
+The clinical parallel is a laboratory that calibrates an assay on the same
+specimens it then reports, and quotes the reproducibility of the reporting step
+alone. The reported precision would be real and it would be the precision of
+the wrong thing.
+
+The cost of doing it properly is arithmetic. Refitting a second-order model
+several hundred times is slow, and some resamples will fail to converge, which
+has to be recorded rather than quietly dropped, since discarding the awkward
+resamples is itself a way of shrinking the estimated optimism.
+\end{reading}
+
+\begin{workedexample}[prog2-optimism]{The optimism gap on simulated data}
+Take two hundred people and twenty candidate predictors, of which two carry
+real signal and eighteen are noise, with about thirty per cent of people
+experiencing the event. Fit the linear predictor by least squares on all twenty
+and score concordance in the same two hundred rows: the apparent figure is
+about $0.76$.
+
+Now run the bootstrap of Definition~\ref{def:prog2:optimism} two hundred times.
+Each resample refits all twenty coefficients, scores itself, and is then
+scored on the original two hundred. The average gap is about $0.10$, so
+corrected concordance is about $0.66$. A tenth of a concordance statistic has
+been bought by the eighteen noise predictors, and none of it would survive
+contact with new patients.
+
+The ratio of events to candidate predictors is what drives this. Roughly sixty
+events across twenty predictors is three events per predictor, well under the
+usual guidance, and the optimism is correspondingly large. The two-stage design
+of this thesis adds a whole further set of fitted quantities upstream, which is
+what Proposition~\ref{prop:prog2:refit} is about.
+
+\begin{wecode}[Python]
+import numpy as np
+
+def concordance(pred, y):
+    pos, neg = pred[y == 1], pred[y == 0]
+    return float((np.greater.outer(pos, neg)
+                  + 0.5 * np.equal.outer(pos, neg)).mean())
+
+def fit(X, y):
+    return np.linalg.lstsq(np.column_stack([np.ones(len(X)), X]),
+                           y, rcond=None)[0]
+
+def predict(b, X):
+    return np.column_stack([np.ones(len(X)), X]) @ b
+
+rng = np.random.default_rng(6)
+n, p = 200, 20
+X = rng.standard_normal((n, p))
+beta = np.zeros(p); beta[0], beta[1] = 0.8, 0.5
+y = (rng.random(n) < 1 / (1 + np.exp(-(X @ beta - 0.8)))).astype(int)
+
+apparent = concordance(predict(fit(X, y), X), y)
+gaps = []
+for _ in range(200):
+    idx = rng.integers(0, n, n)
+    b = fit(X[idx], y[idx])
+    gaps.append(concordance(predict(b, X[idx]), y[idx])
+                - concordance(predict(b, X), y))
+optimism = float(np.mean(gaps))
+print(f"apparent {apparent:.3f}  optimism {optimism:.3f}  "
+      f"corrected {apparent - optimism:.3f}")
+\end{wecode}
+
+\weanswer{Apparent concordance about $0.76$, optimism about $0.10$, corrected
+about $0.66$. Asserted by
+\texttt{test\_worked\_example\_bootstrap\_optimism\_gap}.}
+\end{workedexample}
+
+The extent of optimism provides valuable insight into model stability. Relatively small reductions in discrimination and calibration following correction suggest that the model captures genuine prognostic relationships likely to generalise to similar populations, whereas larger reductions indicate that apparent performance was inflated by characteristics specific to the development sample. Although bootstrap validation provides one of the strongest forms of internal validation currently available, it is not a substitute for external validation: internal validation evaluates reproducibility within the same underlying population, whereas external validation assesses transportability to different clinical settings, healthcare systems or patient populations. The optimism-corrected performance reported here should therefore be interpreted as an intermediate stage in the development of the proposed framework rather than definitive evidence of universal generalisability.
+
+\medskip
+\noindent\emph{[Placeholder for results narrative: extent of optimism and the stability of performance under internal validation.]}
+
+\medskip
+\noindent What survives correction for missing data and for optimism is the chapter's actual result. The summary sets out what has been tested and what those tests can support.
+
+% =====================================================================
+\section{Summary}
+% =====================================================================
+
+\noindent This chapter evaluated the prognostic performance of the proposed $H_{\text{potential}}$ using prospective longitudinal data from the National Health and Aging Trends Study. Building upon the psychometric findings reported in Chapter~\ref{ch:results1}, the analyses examined whether the latent construct predicts future adverse health outcomes and whether it provides clinically meaningful information beyond established measures of health status. The evaluation proceeded through several complementary stages: the association between the $H_{\text{potential}}$ and each co-primary endpoint, all-cause mortality and first unplanned hospitalisation, was examined using Cox proportional hazards regression; discrimination and calibration were then assessed to determine both the model's ability to distinguish between individuals at different levels of future risk and the agreement between predicted and observed event probabilities; comparative analyses assessed performance relative to widely used measures of health utility, frailty, comorbidity burden and functional status; and decision-curve analysis examined the potential clinical consequences of incorporating the latent construct into routine assessment.
+
+A sensitivity analysis based on the combined endpoint evaluated the consistency of the observed relationships across the two co-primary outcomes. Missing data were addressed using multiple imputation by chained equations \citep{vanbuuren_2011}, and bootstrap internal validation quantified the extent of optimism associated with model development within a single cohort. Taken together, and subject to the results to be inserted above, these procedures determine whether the $H_{\text{potential}}$ functions as a clinically useful prognostic construct rather than solely a psychometrically valid latent variable, and whether it independently predicts five-year all-cause mortality and, separately, first unplanned hospitalisation and adds value over conventional measures, which are the confirmatory study hypotheses.
+
+The following chapter extends this evaluation beyond the general ageing population by applying the conceptual framework to haemophilia. This disease-specific application provides an initial assessment of the external transportability of the proposed construct and explores how the three latent domains may be operationalised using condition-specific clinical indicators. Together, the present and subsequent chapters establish both the general prognostic validity and the potential clinical applicability of the $H_{\text{potential}}$ across diverse healthcare contexts.

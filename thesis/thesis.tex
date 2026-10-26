@@ -1,0 +1,182 @@
+\documentclass{wits} % loads ukzn.cls
+% The class loads legacy bitmap symbol fonts on some TeX installations; disable
+% microtype expansion so the document remains portable.
+\microtypesetup{expansion=false}
+\setlength{\headheight}{15pt}
+% Remove blank pages
+\let\origcleardoublepage\cleardoublepage
+\renewcommand{\cleardoublepage}{\clearpage}
+
+% --- Required packages (only if not loaded in ukzn.cls) ---
+\usepackage{lmodern}   % real Type 1 outlines: without it T1 falls back to bitmap fonts
+\usepackage{amsfonts,amssymb,amsmath,amsthm,latexsym,tabularx}
+\usepackage{bm}             % bold math (\bm) used in the mathematical appendices
+% The V9 \volos macro announced test identifiers for tests that did not
+% exist. It is superseded by \checkedby in hpformat.sty, which names a test
+% in verification/ that runs. The definition is kept only so that any stale
+% use is loud rather than silent.
+\providecommand{\volos}[1]{\textbf{[stale \texttt{\string\volos} pointer: #1]}}
+\usepackage{listings}       % lstlisting environment used in the implementation appendix
+% Algorithm packages removed in V2: no algorithm environments are used, and
+% requiring them prevented compilation on a standard TeX Live installation.
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{makecell,lscape,caption,subcaption,mdframed}
+\usepackage{booktabs,float,pdflscape,varwidth,longtable}
+\usepackage[round,authoryear]{natbib}
+\usepackage{har2nat}   % lets the agsm (Harvard) bibliography style work under natbib
+% agsm writes \harvardurl for the URL field; route it through \url so that
+% underscores and tildes in web addresses do not break the build.
+\usepackage{url}
+\renewcommand{\harvardurl}[1]{\textbf{URL:} \url{#1}}
+% in preamble:
+\usepackage[nonumberlist,acronym,toc]{glossaries}
+\makenoidxglossaries
+% Load glossary entries
+%%%\input{newcommands}  % <- only definitions here
+\glsaddall          % make sure all entries appear
+\usepackage{tikz}          % Main TikZ package
+\usetikzlibrary{arrows}    % For arrow tips
+\usetikzlibrary{shapes}    % For custom shapes
+\usetikzlibrary{positioning} % For easier node positioning
+\usetikzlibrary{calc}      % For calculations
+\usetikzlibrary{decorations.pathreplacing} % For braces, decorations
+\usetikzlibrary{matrix}    % For drawing matrices/grids
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{hpformat}      % reusable chapter format: roadmap + reading boxes + eq tags
+
+
+
+
+% -----------------------------
+% Define custom caption font
+% -----------------------------
+\DeclareCaptionFont{captionfont}{\fontsize{10pt}{12pt}\selectfont}
+
+% -----------------------------
+% Global caption settings for neat multi-line captions
+% -----------------------------
+\captionsetup{
+    font={captionfont,rm},         % 10pt, roman text
+    labelfont={bf,rm},             % Bold label, normal case
+    textfont=rm,                   % Normal roman text, no italics
+    justification=centering,       % Center-align captions
+    singlelinecheck=false,         % Center even single-line captions
+    margin=0pt,                    % No left/right indent
+    width=.85\textwidth,           % Wrap long captions neatly at 85% of text width
+    skip=0.5em,                    % Space between figure/table and caption
+    format=plain                   % Plain format, no hanging indent
+}
+
+\setlength{\parindent}{0pt}
+
+
+%%\input{newcommands} % Loads your custom commands and glossary definitions.
+
+
+% =========================================================
+% Thesis Meta Data
+% =========================================================
+% Add the custom \thesislogo command if your ukzn.cls includes it.
+% If not, this line should be deleted, and the logo must be added manually.
+% Assuming your ukzn.cls is the initial one provided, which DIDN'T have a \thesislogo command,
+% but for completeness, if you use the fixed one from the last turn, include this:
+%\thesislogo{Thesis Template/Figures/Monochrome-01_1.png}
+
+
+%%%%%\title{My Amazing Thesis}
+%%%%%\author{Joe McStudent}
+%%%%%\advisor{Professor Very Important}
+%%%%%\coadvisor{Dr. Co-Supervisor}
+%%%%%\cocoadvisor{Ms. Co-Co-Supervisor}
+%%%%%\submitted{June 2007}
+
+
+
+
+% =========================================================
+% Front Matter Content
+% =========================================================
+\abstractfile{Chapters/abstract.tex}
+\prefacefile{Chapters/preface.tex}
+\declarationplagfile{Chapters/decl_plagiarism.tex}
+\declarationpubfile{Chapters/decl_publication.tex}
+\acknowledgementsfile{Chapters/acknow.tex}
+\dedicationfile{Chapters/dedication.tex}
+
+\listofabbreviationsfile{Chapters/listofacro.tex}
+\listsofsymbolsfile{Chapters/symbols.tex}
+
+
+\begin{document}
+%%\frontmatter
+
+
+%%\mainmatter
+% =========================================================
+% Main Chapters
+% =========================================================
+\chapter{Introduction and Background}
+\input{./Chapters/intro}
+
+\chapter{Theoretical Framework and Literature Review}\label{ch:literature}
+\input{./Chapters/literature}
+
+\chapter{Formalism and Mathematical Specification of the H-Potential Metric}\label{chap:validation}
+\input{./Chapters/formalism}
+
+\chapter{The Axiomatic Capability Realisation Model and Integrated Policy Calculation}\label{chap:crf}
+\input{./Chapters/appendix_E}
+
+\chapter{Results I: Development and Validation of the Measurement Model}
+\input{./Chapters/analysis}
+
+\chapter{Prognostic Performance} \label{chap:dynamical_model}
+\input{./Chapters/features}
+
+\chapter{Translational Application to Hemophilia} \label{chap:application_the_clotting_factor_model}
+\input{./Chapters/validation}
+
+\chapter{Discussion}
+\label{chap:conclusion}
+\input{./Chapters/results}
+
+\chapter{Conclusions}
+\label{chap:implementation}
+\input{./Chapters/implementation}
+
+
+
+
+% =========================================================
+% Appendices
+% =========================================================
+\appendix
+
+\chapter{Mathematical Foundations of the $H_{\text{potential}}$ Measurement and Prediction Framework}
+\input{./Chapters/appendix_A}
+
+\chapter{General Dynamical Extension of the $H_{\text{potential}}$ Framework}
+\input{./Chapters/appendix_B}
+
+\chapter{Disease-Specific Example: Haemophilia}
+\input{./Chapters/appendix_C}
+
+\chapter{Computational Implementation of the Dynamical Framework}
+\input{./Chapters/appendix_D}
+
+\chapter{Verification: the Code That Asserts the Results}
+\input{./Chapters/appendix_F}
+
+
+
+% =========================================================
+% References
+% =========================================================
+\cleardoublepage
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{agsm}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,498 @@
+
+\label{ch:conclusions}
+
+
+\begin{ataglance}[How to read this chapter]
+This chapter closes the argument. It states what the thesis produced, answers
+each aim in turn, marks the boundary of every claim and says what should be
+done next. The order runs from what the work claims to what it cannot claim.
+
+\S\ref{sec:contribution} sets out the contribution, with the axiomatic
+realisation model first, because the other three contributions exist to give it
+something to be tested against. \S\ref{sec:aims} answers the four aims one at a
+time, and marks with placeholders those answers that wait on the analysis in
+Chapters~\ref{ch:results1} and~\ref{ch:results2}. \S\ref{sec:hypotheses} does
+the same for the hypotheses, and does it more briefly, since a hypothesis has
+fewer ways of being half-answered than an aim. \S\ref{sec:scope} is the section
+that costs the thesis most: one cohort, one country, one measurement occasion,
+an estimated predictor, and normative choices that no quantity of data will
+settle. \S\ref{sec:future} says what is worth doing next and what the framework
+must not be used for while it waits. \S\ref{sec:final} states the argument in a
+few paragraphs.
+
+Two technical passages carry plain readings.
+Derivation~\ref{der:bridge} explains why the conceptual formula is not the
+scoring equation, and Derivation~\ref{der:uncertainty} explains how much
+predictive strength is lost by treating an estimated score as though it had
+been measured. Mrs~A and Mr~B appear in both.
+\end{ataglance}
+
+\begin{quote}
+\small\itshape
+Note to the reader. The verdicts on the empirical hypotheses depend on the analysis reported in Chapters~\ref{ch:results1} and~\ref{ch:results2}. Statements below that depend directly upon those results contain placeholders to be completed once the analysis is finalised. This note is removed in the final version.
+\end{quote}
+
+\noindent This thesis set out to develop, validate and evaluate a multidimensional health metric, the $H_{\text{potential}}$, that conceptualises health as future capability rather than solely as current disease status, accumulated impairment or present quality of life. It also examined whether this general framework could be translated coherently into a disease-specific context, using haemophilia as the first application. The work was motivated by a fundamental problem in contemporary health measurement: many established instruments describe important aspects of health, yet few provide an integrated account of the biological, social and structural conditions that shape an individual's capacity to maintain health over time.
+
+The thesis addressed this problem through a sequential programme of conceptual, measurement, prognostic and translational research. It began by developing a theory of health capability, proceeded to operationalise that theory as a latent measurement model, evaluated the resulting construct against future clinical outcomes, and concluded by setting out a structured pathway for adaptation to haemophilia. This sequence was deliberate. It ensured that the construct was defined independently of the outcomes it was later asked to predict and that disease-specific translation occurred only after the general framework had been established.
+
+The central proposition advanced by the thesis is that health should not be understood exclusively as a static state. Current disease burden, disability, symptoms and health-related quality of life all provide valuable information, but they do not necessarily reveal the same thing as an individual's remaining capacity to sustain health, adapt to biological challenge and benefit from available social and healthcare resources. Two individuals may appear similar when assessed through conventional measures of current status while differing substantially in their future health trajectories because their physiological reserve, social support and healthcare environments differ. The $H_{\text{potential}}$ was developed to provide a formal representation of this difference.
+
+The framework therefore treats health as a multidimensional latent capability emerging through the interaction of three domains: Biomedical Potential, Social Modifiers and Systemic Burdens. Biomedical Potential captures the physiological and functional resources available to the individual. Social Modifiers represent the interpersonal, behavioural and material conditions that enable or constrain the use of those resources. Systemic Burdens represent the structural and healthcare-system barriers that shape whether effective support and treatment can be realised. These domains are analytically distinguishable, but they are not independent in practice; their interaction determines the extent to which current capacities can be converted into future health. This concluding chapter draws together the contribution of the thesis, answers each of the research aims, clarifies the scope of the resulting claims and sets out the final significance of the work.
+
+% =====================================================================
+\section{Contribution of the Thesis}
+\label{sec:contribution}
+% =====================================================================
+
+\noindent The central contribution of the thesis is a formal one: the axiomatic Capability Realisation Model and the integrated, equity-sensitive policy calculation built upon it (Chapter~\ref{chap:crf}). Three further connected contributions support and surround it: a conceptual contribution to the theory of health measurement, a methodological contribution to the development and evaluation of multidimensional health metrics, and a translational contribution concerning adaptation from a general population to a disease-specific setting. Their relationship is shown in Figure~\ref{fig:contribution_triangle}.
+
+The formal model is taken first because the three that follow exist to give
+it something to be tested against.
+
+\subsection{The Central Contribution: an Axiomatic Capability Realisation Model}
+
+The formal heart of the thesis is the Capability Realisation Model developed in Chapter~\ref{chap:crf}. Prior multidimensional health measures, including the earlier heuristic $(L\cdot Q)S-B$, assert an aggregation rule. The realisation model instead states the properties a realisation measure must satisfy, chief among them non-compensation, that complete social exclusion or complete structural obstruction cannot be cancelled by biomedical advantage, and derives the admissible family from those axioms. Its primary form, $H(P,S,R)=P\,S^{\alpha}R^{1-\alpha}$ with $R=1-B$, is characterised uniquely by constant contextual elasticities, and from it several results follow as theorems rather than assertions: biomedical--context complementarity, which is the mathematical form of the intersectional claim and which an additive index cannot represent; an exact decomposition of any capability gap into biomedical, social and structural parts without a residual term; a budget-constrained policy gradient that ranks marginal, model-implied gains from biomedical, social and burden-reducing interventions; and an equity-sensitive population functional whose inequality-aversion \citep{atkinson_1970} parameter makes the normative weighting of low-capability groups explicit rather than hidden. Together these turn an individual capability estimate into an integrated, distribution-aware policy calculation. The model is falsifiable: the chapter pre-specifies the head-to-head comparison, against an additive composite and the outcome-independent factor score, that would reject or narrow it, with its parameters frozen without reference to the outcomes. This is the contribution the rest of the thesis is built to test.
+
+\begin{reading}[Non-compensation with actual numbers]
+Set $\alpha=0.5$ and take Mr~B: 58, severe haemophilia~A with a high-titre
+inhibitor, working part-time. Where his treatment is funded his profile is
+about $(0.30,0.70,0.85)$, and
+$H=0.30\times\sqrt{0.70}\times\sqrt{0.85}=0.23$. Move him to a jurisdiction
+that rations bypassing agents and only the third number changes, to $0.20$:
+$H=0.30\times\sqrt{0.70}\times\sqrt{0.20}=0.11$. His biology is identical. His
+realised capability has halved.
+
+An equally weighted additive index records the same move as a fall from $0.62$
+to $0.40$, a loss of about a third. The difference between the two arithmetics
+is the whole argument. The additive form lets the domains trade: it says the
+structural collapse can be bought off if his biomedical score rises far enough.
+The multiplicative form says how far. To return to $0.23$ under rationing, $P$
+would have to climb from $0.30$ to $0.62$, which nothing available to a man
+with an established inhibitor and a destroyed knee will deliver.
+Non-compensation is not a preference about weighting. It is the claim that some
+deficits cannot be purchased from another domain at any price.
+\end{reading}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.85\linewidth}{\centering \emph{[Figure placeholder: the three connected contributions. A conceptual model of health as future capability, a two-stage method that separates measurement from prediction, and a translational route from a disease-independent metric to disease-specific use, drawn as three linked nodes feeding a common research architecture.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{The three connected contributions of the thesis.}
+\label{fig:contribution_triangle}
+\end{figure}
+
+A set of axioms constrains the form a measure may take. It says nothing
+about what the measure is of, and that question was settled first.
+
+\subsection{A Conceptual Model of Health as Future Capability}
+
+The first contribution is the development of a theoretically grounded model of health as future capability. The framework brings together ideas from the capability approach, healthy ageing, frailty science and the social determinants of health. These literatures have often developed in parallel: the capability approach emphasises the real opportunities available to individuals; healthy ageing focuses on the interaction between intrinsic capacity \citep{who_2015_ageing,cesari_2018} and environment; frailty research examines vulnerability and physiological reserve; and the social-determinants literature demonstrates how social position, material conditions and healthcare access shape health outcomes. The present thesis integrates these insights within a common measurement architecture.
+
+This integration matters because conventional measures frequently isolate these dimensions. Frailty indices primarily capture biological and functional deficits. Quality-of-life instruments describe current experience. Comorbidity indices quantify diagnosed disease burden. Economic measures such as QALYs support comparative valuation and resource allocation. Social and structural variables are often included as external covariates after the main health measure has already been defined. The $H_{\text{potential}}$ instead treats biological, social and systemic influences as constitutive elements of a single latent health capability.
+
+The conceptual contribution is therefore not simply the addition of more variables to an existing index. It is a change in the object being measured. The target is the underlying capability from which future health trajectories may emerge. The framework also clarifies that health capability is neither exclusively biological nor reducible to social advantage. Biomedical Potential remains fundamental because physiological and functional reserve constrain what an individual can sustain, yet biological reserve cannot be interpreted apart from the social and systemic conditions through which it is expressed. Conversely, favourable social and healthcare environments cannot fully compensate for every form of severe biological impairment. The model therefore rejects both narrow biomedical reductionism and the assumption that health is entirely socially determined, locating future capability in the interaction among these domains.
+
+Deciding what to measure and showing that it can be measured are separate
+jobs. The thesis was arranged so that the second could fail without taking the
+first down with it.
+
+\subsection{A Method for Separating Measurement from Prediction}
+
+The second contribution is methodological. The thesis operationalises the conceptual framework as a latent construct estimated through structural equation modelling and then evaluates that construct in a separate prognostic model. This two-stage design was chosen to reduce a common form of circularity in composite measure development. Many prognostic indices are constructed by selecting variables and estimating weights according to their observed relationships with the outcome they are intended to predict. Such approaches may be entirely appropriate when the sole objective is prediction; however, they make it difficult to distinguish the measurement of a theoretical construct from the optimisation of a prediction equation, and the resulting score may predict effectively while remaining uncertain in conceptual meaning.
+
+The present thesis separates these tasks. The measurement model is estimated without using the future clinical outcome to define the construct, and its evaluation is based upon factor structure, model fit, reliability and construct validity. Only after the factor scores are derived is the $H_{\text{potential}}$ entered into survival models predicting mortality and unplanned hospitalisation. Prognostic evaluation therefore tests whether an independently defined construct possesses future predictive value. This separation strengthens interpretability: if the construct predicts future outcomes, the result is evidence that the theoretically defined latent capability has prognostic relevance; if it does not, the measurement model does not become meaningless, but rather the result indicates that the construct, as operationalised, may not support the intended prognostic use. Measurement and prediction can therefore succeed or fail independently, allowing more precise scientific conclusions.
+
+The design also provides a reusable methodological template. Researchers developing multidimensional measures in other fields can define the construct first, estimate it through an appropriate measurement model, and evaluate its predictive performance in a distinct analytical stage. A further methodological contribution lies in the breadth of the prognostic evaluation: the thesis does not treat a statistically significant hazard ratio as sufficient evidence of model value, but instead assesses association, discrimination, calibration, comparative model fit, incremental value, decision-analytic utility and optimism-corrected internal performance.
+
+The template was built on one cohort in one country. Whether it transfers
+is a question about a different population, and haemophilia is where the thesis
+asks it.
+
+\subsection{A Translational Route from General to Disease-Specific Use}
+
+The third contribution is the development of a structured route from a disease-independent measure to disease-specific application. Haemophilia was selected as the first translational context because improvements in treatment have transformed it from a condition dominated by early mortality into a lifelong chronic disease in which ageing, musculoskeletal function, multimorbidity, social support, treatment access and healthcare-system stability all influence long-term outcomes.
+
+The haemophilia application preserves the three latent domains while replacing general indicators with disease-relevant measures. Joint health, bleeding phenotype, functional mobility and inhibitor status represent Biomedical Potential. Access to comprehensive care, health literacy, caregiver support and self-management represent Social Modifiers. Treatment availability, supply-chain stability, financial coverage and structural barriers represent Systemic Burdens. This is not presented as a completed haemophilia instrument. No haemophilia data were analysed in the thesis, and no disease-specific factor loadings or prognostic parameters were estimated. The contribution instead lies in the translation method: indicator mapping, expert consultation through a modified Delphi process, re-estimation of the measurement model, assessment of measurement invariance \citep{meredith_1993,vandenberg_lance_2000}, recalibration and external prognostic validation. The domain structure is the element proposed for preservation; the empirical parameters must be re-estimated in the target population.
+
+Each of these contributions is modest taken alone. What they do together is
+the reason for the arrangement.
+
+\subsection{The Combined Contribution}
+
+Taken together, these contributions place a falsifiable formal model at the centre and build the empirical and translational apparatus needed to test it. The axiomatic realisation model specifies, from first principles, how biomedical potential, social enablement and structural freedom combine into realised capability and into the policy calculations that follow. The conceptual model specifies what the construct is intended to mean. The measurement model tests whether that construct can be represented empirically and supplies the outcome-independent inputs and comparator for the realisation model. The prognostic model tests whether the resulting scores relate to future clinical outcomes and carries the head-to-head comparison that can reject or narrow the realisation model. The translational framework tests whether the same architecture can be adapted to a new clinical setting without being rebuilt from first principles. The combined contribution is therefore larger than the production of a single score: it is an axiomatic, distribution-aware model of health capability, and a research architecture for subjecting such a model to empirical and translational scrutiny.
+
+That is what the thesis set out to build. What it undertook to demonstrate was
+written down in advance as four aims, and each can now be answered.
+
+% =====================================================================
+\section{Answering the Research Aims}
+\label{sec:aims}
+% =====================================================================
+
+\noindent The thesis addressed four research aims, each corresponding to a distinct stage in the development of the $H_{\text{potential}}$. In brief:
+
+\begin{enumerate}
+  \item \textbf{Develop the conceptual framework.} Chapter~\ref{ch:theory} set out the three-domain model and the conceptual formula that motivates it, and the bridge from that formula to the latent construct.
+  \item \textbf{Develop and validate the measurement model.} Chapter~\ref{ch:results1} estimated the second-order structural equation model and evaluated its fit, reliability, and construct validity.
+  \item \textbf{Evaluate prognostic performance.} Chapter~\ref{ch:results2} tested the $H_{\text{potential}}$ against five-year mortality and first unplanned hospitalisation and compared it with established measures.
+  \item \textbf{Assess translational relevance to haemophilia.} Chapter~\ref{ch:translational} mapped the domains to haemophilia indicators, set out the Delphi \citep{hasson_2000} step for face validity, and gave a roadmap for external validation.
+\end{enumerate}
+
+\noindent The remainder of this section records the verdict on each aim in turn. The
+first aim is conceptual and can be answered in full here; the three that follow
+depend in part on results reported elsewhere.
+
+\subsection{Aim 1: Develop the Conceptual Framework}
+
+The first aim was to develop a theoretically coherent framework for measuring health as future capability. This aim was addressed in Chapter~\ref{ch:theory}, which established the conceptual basis of the $H_{\text{potential}}$ and defined its three domains. The chapter argued that current disease status alone is insufficient to represent future health capability, and showed that the capability approach \citep{sen_1993,venkatapuram_2011}, healthy-ageing literature, frailty theory and research on social determinants can be integrated without collapsing their distinct insights. Biomedical Potential captures intrinsic physiological and functional resources; Social Modifiers capture the conditions through which those resources are supported or constrained; and Systemic Burdens capture structural barriers that limit the realisation of available health potential.
+
+The conceptual formula introduced in that chapter is a theoretical statement, not a directly observed quantity. Its purpose is to formalise the proposition that future health capability depends jointly upon biomedical, social and systemic conditions, and the transition from that formula to the latent measurement model provided the bridge from theoretical argument to empirical evaluation. That bridge is set out formally below.
+
+\begin{derivation}[From the conceptual formula to the latent measurement model]
+\label{der:bridge}
+The heuristic $H^{(c)}=(LQ)S-B$ asserts the direction and role of the three
+domains; it is not the empirical scoring equation. Let
+$\boldsymbol\eta_i=(\eta_{Bi},\eta_{Si},\eta_{Yi})^{\mathsf T}$ denote Biomedical
+Potential, Social Modifiers, and the reverse-oriented Systemic domain for person
+$i$, so larger values of every component indicate greater capability. Then
+\[
+ \mathbf y_i=\boldsymbol\tau+\boldsymbol\Lambda\boldsymbol\eta_i+
+ \boldsymbol\varepsilon_i,
+ \qquad
+ \boldsymbol\eta_i=\boldsymbol\alpha+\boldsymbol\Gamma\zeta_i+
+ \boldsymbol\delta_i .
+\]
+Fixing $\operatorname{Var}(\zeta)=1$ identifies the scale and gives
+\[
+ \operatorname{Cov}(\mathbf y)=\boldsymbol\Lambda
+ (\boldsymbol\Gamma\boldsymbol\Gamma^{\mathsf T}+\boldsymbol\Psi_\delta)
+ \boldsymbol\Lambda^{\mathsf T}+\boldsymbol\Theta.
+\]
+Theory determines the factor pattern, orientations, and expected signs;
+$\boldsymbol\tau,\boldsymbol\Lambda,\boldsymbol\Gamma,
+\boldsymbol\Theta,$ and $\boldsymbol\Psi_\delta$ are estimable. The predictor is
+$\widehat H_i=E(\zeta_i\mid\mathbf y_i,\widehat{\boldsymbol\theta})$, not
+$H^{(c)}$. Because only three first-order factors inform the higher-order model,
+its global fit may be just identified under common constraints; correlated-factor
+and bifactor \citep{reise_2012} alternatives must therefore be compared before accepting one score.
+\end{derivation}
+
+\begin{reading}[Why the conceptual formula is not the score]
+$H^{(c)}=(LQ)S-B$ was written to say three things: that biology sets a ceiling,
+that social conditions scale it, and that burdens subtract from it. It was
+never meant to be evaluated on a person. If it were, Mrs~A, 78, alone on the
+second floor of a walk-up with knee osteoarthritis and mild cognitive
+impairment, would need $L$ and $Q$ read off an instrument that does not exist,
+and the subtraction of $B$ would let a large enough social score cancel her
+stairs and her two buses outright.
+
+What is computed instead is $\widehat H_i$, the model's best estimate of a
+single unobserved quantity given her answers. Being a conditional expectation
+it carries an error bar, and it is pulled towards the population mean when her
+pattern of answers is unusual. Her profile of roughly $(0.55,0.35,0.40)$ comes
+out of that estimation, not out of the heuristic.
+
+The last sentence of the derivation is a warning about arithmetic. Three
+first-order factors leave a higher-order model with no spare degrees of freedom
+under the usual constraints, so its fit statistics can look perfect while
+saying nothing at all. A correlated-factor model and a bifactor model have to
+be fitted alongside it before anyone accepts one number standing in for three
+domains.
+\end{reading}
+
+Aim~1 was therefore achieved at the conceptual level. The thesis produced a defined, internally coherent and empirically testable theory of health capability. The later empirical results determine how successfully the initial operationalisation represents that theory, but they do not remove the conceptual contribution itself.
+
+A coherent theory is not yet a measurable one. The second aim is where the
+theory was exposed to data.
+
+\subsection{Aim 2: Develop and Validate the Measurement Model}
+
+The second aim was to operationalise the framework as a multidimensional latent construct and evaluate its measurement properties. This measurement validation is the study's primary outcome. Chapter~\ref{ch:results1} addressed this aim through estimation of the proposed second-order structural equation model. The measurement analysis evaluated whether the observed indicators loaded onto the hypothesised first-order domains and whether those domains formed a coherent higher-order $H_{\text{potential}}$ construct, assessing model fit, reliability, convergent validity, discriminant validity and the stability of the estimated factor scores according to the pre-specified analysis plan.
+
+\medskip
+\noindent\emph{[Placeholder: state the final verdict on Aim~2. Report whether the three-domain structure achieved acceptable fit; whether Biomedical Potential, Social Modifiers and Systemic Burdens loaded meaningfully onto the higher-order construct; whether reliability and validity criteria were met; and whether any modifications were required. Distinguish clearly between full, partial and unsupported confirmation of the measurement hypothesis.]}
+
+The answer to Aim~2 should be stated proportionately. If the hypothesised model was supported without major modification, the conclusion is that the $H_{\text{potential}}$ can be represented empirically as a higher-order latent construct in the NHATS population. If support was partial, the conclusion should identify which domains or indicators performed as expected and which require refinement. If the model was not supported, the conclusion should state that the proposed operationalisation did not adequately represent the theoretical construct in this cohort, while distinguishing failure of the measurement model from failure of the broader conceptual theory. This distinction is essential, because structural equation modelling tests a specific operational representation of the construct, not every possible way of measuring future health capability.
+
+Whether the construct can be measured and whether it is worth measuring are
+different questions. The third aim asks the second of them.
+
+\subsection{Aim 3: Evaluate Prognostic Performance}
+
+The third aim was to test, as confirmatory evidence, whether the estimated $H_{\text{potential}}$ predicts clinically important future outcomes and adds value beyond established measures. Chapter~\ref{ch:results2} addressed this aim using five-year follow-up for two co-primary endpoints analysed separately, all-cause mortality and first unplanned hospitalisation, with a combined endpoint kept only as a sensitivity analysis. The prognostic analysis examined the association between the standardised latent score and time to event for each endpoint, first without adjustment and then after adjustment for age and sex; it also evaluated discrimination using Harrell's and Uno's concordance \citep{uno_2011} statistics, calibration through calibration-in-the-large and the calibration slope, comparative performance against established measures, and potential clinical utility through decision-curve analysis.
+
+\medskip
+\noindent\emph{[Placeholder: state the final verdict on Aim~3. Report whether a higher $H_{\text{potential}}$ was associated with lower risk of each co-primary outcome; whether the associations remained after adjustment; whether discrimination and calibration were acceptable; whether optimism correction materially reduced performance; and whether the construct was superior, non-inferior or inferior to the pre-specified comparators.]}
+
+The conclusion should distinguish association from predictive usefulness. A statistically significant hazard ratio would show that the construct is related to future outcomes, but it would not by itself establish strong discrimination, accurate calibration or meaningful clinical utility. Conversely, modest incremental discrimination may still be important if the model is well calibrated and provides greater net benefit \citep{vickers_elkin_2006} across relevant decision thresholds. The answer to Aim~3 should therefore be based upon the complete performance profile rather than a single statistic.
+
+Predicting well in a cohort of older Americans says nothing about
+haemophilia. The fourth aim was set at a lower level of ambition for that
+reason.
+
+\subsection{Aim 4: Assess Translational Relevance to Haemophilia}
+
+The fourth aim was to assess whether the general framework could be translated coherently into haemophilia. Chapter~\ref{ch:translational} addressed this aim conceptually. The chapter showed that the three domains can be mapped onto clinically meaningful haemophilia indicators without redefining the construct. Biomedical Potential can be represented through joint health, bleeding phenotype, functional mobility, inhibitor status and age-related comorbidity. Social Modifiers can be represented through access to comprehensive care, caregiver and peer support, health literacy and self-management. Systemic Burdens can be represented through treatment availability, supply-chain stability, financial coverage and structural barriers to specialist care. The chapter also specified a modified Delphi consultation to establish face and content validity before empirical modelling, followed by a roadmap for cohort assembly, factor-model re-estimation, measurement-invariance testing, recalibration, prognostic evaluation and governance.
+
+Aim~4 was therefore achieved at the level intended by the thesis. The framework was shown to be conceptually applicable to ageing people with haemophilia, and a defensible pathway for future empirical validation was defined. The aim did not seek to establish that the haemophilia adaptation is already psychometrically or prognostically valid; those questions belong to the next phase of the research programme.
+
+The aims describe what the work attempted. The hypotheses state what it
+expected to find, and they are answered more tersely because each admits fewer
+intermediate verdicts.
+
+% =====================================================================
+\section{Status of the Research Hypotheses}
+\label{sec:hypotheses}
+% =====================================================================
+
+\noindent The thesis was guided by hypotheses concerning the measurement structure, prognostic performance and translational relevance of the $H_{\text{potential}}$.
+
+The first empirical hypothesis, the study's primary hypothesis, concerned whether Biomedical Potential, Social Modifiers and Systemic Burdens form a valid multidimensional higher-order construct.
+
+\medskip
+\noindent\emph{[Placeholder: state whether the measurement hypothesis was supported, partially supported or not supported, and identify the decisive evidence.]}
+
+The second empirical hypothesis, the first of the confirmatory hypotheses, concerned whether the $H_{\text{potential}}$ predicts five-year all-cause mortality and, separately, first unplanned hospitalisation.
+
+\medskip
+\noindent\emph{[Placeholder: state whether the prognostic association hypothesis was supported and report the direction, magnitude and precision of the association.]}
+
+The third empirical hypothesis, also confirmatory, concerned whether the construct provides predictive information beyond conventional measures.
+
+\medskip
+\noindent\emph{[Placeholder: state whether the incremental-value hypothesis was supported, partially supported or not supported, drawing on discrimination, calibration, information criteria and decision-curve analysis.]}
+
+The fourth hypothesis concerned whether the general framework is conceptually applicable to haemophilia. This hypothesis was supported at the conceptual and methodological level. The three domains can be mapped to clinically relevant haemophilia indicators, the mapping possesses a clear biological and health-system rationale, and the proposed Delphi and validation pathway provides a structured method for future empirical testing. This conclusion remains one of conceptual applicability, not completed clinical validation.
+
+Verdicts of this kind are worth no more than the conditions attached to them.
+Those conditions are set out next.
+
+% =====================================================================
+\section{Scope of the Conclusions}
+\label{sec:scope}
+% =====================================================================
+
+\noindent The contribution of the thesis should be interpreted within the boundaries of the study design. The $H_{\text{potential}}$ was developed and internally validated in a single cohort of community-dwelling adults aged 65 years and older in the United States, so the empirical findings apply most directly to that population and setting. Bootstrap \citep{efron_tibshirani_1993,steyerberg_2019} validation provides an estimate of optimism and likely performance in similar samples, but it does not establish transportability to different countries, age groups, healthcare systems or disease populations; external validation remains necessary before the measurement and prognostic findings can be generalised more broadly.
+
+The observational design also limits causal interpretation. The $H_{\text{potential}}$ is evaluated as a prognostic construct, and associations between the score and future outcomes do not demonstrate that interventions that alter the score will necessarily alter those outcomes. Establishing causality would require explicit causal designs, stronger assumptions and, ultimately, prospective intervention studies.
+
+The use of estimated factor scores introduces additional uncertainty. Although the full measurement-and-prediction pipeline is repeated within the bootstrap procedure, the prognostic model still relies on an estimated rather than directly observed predictor. Future work may examine joint latent-survival models, Bayesian approaches or other methods that propagate measurement uncertainty more directly, along the lines set out below.
+
+\begin{derivation}[Propagating factor-score uncertainty into the prognostic model]
+\label{der:uncertainty}
+Write $\widehat H_i=H_i+u_i$, with $E(u_i\mid H_i)=0$ and reliability
+$\rho_H=\operatorname{Var}(H)/\operatorname{Var}(\widehat H)$. Under the
+classical-error approximation, treating $\widehat H$ as observed produces
+$\beta_{\mathrm{naive}}\approx\rho_H\beta$ and omits uncertainty from
+estimating the measurement parameters and scores \citep{prentice_1982}. The
+approximation is diagnostic rather than exact for Cox regression. A joint model combines
+\[
+ p(\mathbf y_i\mid H_i,\boldsymbol\theta_m),
+\]
+\[
+ h_i(t\mid H_i,\mathbf z_i)=h_0(t)
+ \exp\{\beta H_i+\boldsymbol\gamma^{\mathsf T}\mathbf z_i\},
+\]
+and integrates the likelihood over $H_i$. The primary two-stage analysis should
+refit imputation, SEM, scoring, and survival modelling inside every bootstrap
+replicate; a joint latent-survival or plausible-values model is the preferred
+sensitivity analysis.
+\end{derivation}
+
+\begin{reading}[What attenuation costs, in numbers]
+Reliability $\rho_H$ is the share of the variance in the estimated score that
+is signal. Say it is $0.80$, which would be respectable for a factor score
+built from a dozen indicators. If the true log hazard ratio per standard
+deviation of $H$ is $-0.40$, a hazard ratio of $0.67$, then treating the
+estimate as though it were the quantity itself returns about $-0.32$, a hazard
+ratio of $0.73$. The association is real, its direction is right, and its
+strength is understated by roughly a fifth.
+
+This cuts two ways. A head-to-head comparison with a directly counted
+competitor, a frailty index built from recorded deficits, is unfair to the
+$H_{\text{potential}}$, since only one of the two scores is attenuated. It also
+means the construct may not be credited with predictive strength it has not
+shown: the honest report is the attenuated figure, with the correction given as
+a sensitivity analysis.
+
+The joint model removes the problem by refusing to separate the two stages. It
+writes the measurement and the survival model as one likelihood and integrates
+over the unknown $H_i$, so uncertainty in Mrs~A's score travels into
+uncertainty about her predicted risk. It costs a great deal more computation
+and it lets errors in the measurement model contaminate the survival estimates,
+which is why it is proposed here as a check on the two-stage analysis and not
+as the analysis itself.
+\end{reading}
+
+The case that matters for the conclusions of this thesis is not the one above,
+where the association survives. It is the one where it does not.
+
+\begin{workedexample}[conc:attenuation]{How a null result should be read at a given reliability}
+Suppose the analysis returns no association: a hazard ratio for the
+$H_{\text{potential}}$ whose confidence interval includes $1$. Suppose also
+that the reported reliability of the factor score is $\rho_H=0.55$, which would
+be poor but not unheard of for a score built from few indicators per domain.
+The question is what that null permits anyone to say.
+
+Work backwards. If the true log hazard ratio per standard deviation is
+$\beta=-0.22$, a hazard ratio of $0.80$, then
+Proposition~\ref{prop:attenuation} gives
+$\beta_{\mathrm{naive}}\approx0.55\times(-0.22)=-0.121$, a reported hazard ratio
+of $0.886$. Take the standard error of the reported coefficient as $0.075$. The
+reported interval is then $0.765$ to $1.026$, which includes $1$: a null. Had
+the same true effect been measured without error, the interval would have run
+$0.693$ to $0.930$ and excluded $1$.
+
+The reliability that would have made the difference can be read off directly.
+The interval clears $1$ when $\rho_H|\beta|>1.96\times0.075=0.147$, that is when
+$\rho_H>0.147/0.22=0.67$. So a null at $\rho_H=0.55$ is consistent with a true
+hazard ratio of $0.80$, while a null at $\rho_H=0.90$ would not be.
+
+\begin{wecode}[Python]
+import math
+from hpv.prognostic import attenuated_coefficient
+
+beta_true, se = -0.22, 0.075
+for rho in (1.00, 0.55):
+    b = attenuated_coefficient(beta_true, rho)
+    lo, hi = math.exp(b - 1.96 * se), math.exp(b + 1.96 * se)
+    print(f"rho {rho:.2f}: HR {math.exp(b):.3f}  95% CI {lo:.3f} to {hi:.3f}")
+
+print(1.96 * se / abs(beta_true))   # reliability needed to clear 1: 0.67
+\end{wecode}
+
+\weanswer{At $\rho_H=0.55$ a true hazard ratio of $0.80$ is reported as $0.886$
+with an interval of $0.765$ to $1.026$, so the null is uninformative about an
+effect of that size. A reliability above about $0.67$ would have been needed to
+rule it out. Asserted by
+\texttt{test\_worked\_example\_conc\_null\_result\_at\_low\_reliability}.}
+\end{workedexample}
+
+\begin{reading}[The rule this fixes for the concluding chapter]
+A null cannot be reported on its own. It has to be reported with the
+reliability of the score and with the effect size the study could have detected
+at that reliability, because those three numbers together are the finding and
+any one of them alone is not.
+
+The asymmetry is worth stating plainly. A positive result is understated by
+attenuation and is therefore safe to believe as a lower bound. A null is
+weakened by it, and the weaker the measurement the less a null means. The
+uncomfortable consequence is that a poorly measured construct is hard to refute,
+which is a reason to report $\rho_H$ prominently rather than a reason to take
+comfort from a null.
+\end{reading}
+
+The available NHATS indicators also constrain the empirical form of the construct. The theoretical framework is broader than any one dataset, and some aspects of social or systemic capability may be represented only imperfectly in the developmental cohort; external studies with richer contextual, biological and health-system information may therefore refine the measurement model without abandoning the underlying theory. Finally, the framework contains unavoidable normative choices. Decisions about which domains belong within health, how disadvantage is coded and how biological, social and systemic dimensions should contribute to a common score cannot be derived from statistical evidence alone. The thesis makes these choices explicit and grounds them in established theory, but they remain open to ethical, philosophical and policy debate. These limitations do not negate the contribution; they define the stage the research has reached. The thesis establishes a theory, an initial operationalisation, an internal empirical test and a route to translation. It does not claim to deliver a universally valid clinical score or a final theory of health.
+
+Naming a limit is the first half of the work. The second is saying what would
+remove it.
+
+% =====================================================================
+\section{Implications for Future Research}
+\label{sec:future}
+
+\subsection{Economic and policy limits}
+
+The framework's policy value lies first in diagnosis, not allocation. Domain
+profiles can distinguish a clinical-capacity deficit from inadequate support or
+an institutional barrier and can therefore help identify which sector bears
+responsibility for a response. A scalar score cannot make that distinction once
+the profile is discarded.
+
+Four questions must remain separate. Need asks who is constrained. Effectiveness
+asks whether an intervention changes a relevant outcome. Cost-effectiveness asks
+whether its gains exceed the health opportunity cost of its resources.
+Affordability asks whether the required expenditure can be accommodated.
+H-Potential principally informs the first and may support heterogeneity analysis
+for the second. It does not answer the latter two.
+
+\begin{reading}[The four questions, asked about Mr~B]
+Need. Under rationing his profile is about $(0.30,0.70,0.20)$. The low third
+number, not the low first, is what the framework flags, and it points at the
+funding of bypassing agents. The body that can act is the payer, not the
+haemophilia centre. This is the diagnostic step, and it is the part the
+$H_{\text{potential}}$ is built to do.
+
+Effectiveness. Would continuous access change his bleed rate, his joint score,
+his admissions? The framework does not answer that. A trial or a carefully
+designed observational study does.
+
+Cost-effectiveness. Prophylaxis for an adult with a high-titre inhibitor is
+expensive, and money spent on it buys health that some other patient in the
+same budget now does not get. Whether the exchange is worth making turns on the
+health opportunity cost in that system, about which his profile says nothing.
+
+Affordability. A favourable ratio can still exceed what a provincial budget
+carries in a given year. That is a question about cash and timing.
+
+Running these four together is how a measure of unmet need turns into a
+rationing rule. Mr~B scores low in part because his health system has failed
+him. A score read without the profile behind it could be taken as evidence that
+he is a poor investment, which inverts the finding exactly.
+\end{reading}
+
+Future economic work should therefore embed profile change within conventional
+and distributional cost-effectiveness analysis rather than define a
+cost-per-H-Potential threshold. It should estimate intervention effects and
+costs by relevant groups, include the distribution of displaced health and
+state openly any inequality-aversion parameter. \citep{asaria_2016_dcea} This is
+consistent with WHO's global account of HTA as a multidisciplinary process, but
+the resulting decision cannot simply be exported from one health system to
+another. \citep{who_hta_2014,who_hta_institutional_2021} Prices, service
+capacity, the marginal productivity of expenditure, fiscal limits, legal
+entitlements and distributive priorities differ by jurisdiction. Even when an
+intervention produces the same domain change, its opportunity cost and policy
+ranking may therefore differ.
+
+The United States is the empirical development setting, not the normative
+centre of the framework. Application elsewhere requires conceptual review,
+local item adaptation, invariance testing, external prognostic validation and
+jurisdiction-specific economic evaluation. South Africa is one valuable future
+test because its distribution of resources and emerging HTA institutions may
+make systemic constraints especially visible; it is an illustration of
+translation, not the geographical boundary of the theory.
+\citep{south_africa_hta_2026}
+
+Policy use also requires governance beyond statistical validation. Public
+specification, domain-level explanation, community participation, periodic
+review, disparate-impact monitoring and a meaningful appeal route are parts of
+the validity of the practice, not administrative additions to it. A low score
+caused by structural constraint is evidence of a potential institutional duty
+to act, never evidence that the person is less deserving of investment.
+
+Governance of that kind is a long-term requirement. The immediate work is
+narrower and empirical.
+% =====================================================================
+
+\noindent The immediate next step is external validation of the measurement and prognostic models in independent cohorts. Such validation should assess the stability of the three-domain structure, the reproducibility of factor loadings, the calibration of predicted risks and the need for population-specific recalibration. Validation across health systems is especially important because Systemic Burdens are expected to vary substantially by institutional and national context. A model developed in the United States may require material adaptation in settings characterised by different financing structures, levels of social protection or access to healthcare; these differences are not merely sources of statistical heterogeneity but are central to the theory being tested.
+
+The proposed haemophilia programme represents the first disease-specific extension. The next phase should conduct the modified Delphi consultation, assemble an appropriate cohort and evaluate whether the translated indicators reproduce the intended domains. Only after satisfactory psychometric estimation should the haemophilia-specific score be tested against bleeding, joint, hospitalisation, quality-of-life and mortality outcomes. Further disease-specific adaptations could examine whether the same architecture remains useful in other chronic conditions, such as sickle cell disease, chronic kidney disease, diabetes, neurodegenerative disorders and multimorbidity, each of which involves distinct biological processes but also strong social and systemic influences.
+
+A longitudinal extension is also required. The present work estimates $H_{\text{potential}}$ at a defined baseline point, but future capability is unlikely to remain static. Repeated measurement could distinguish stable between-person differences from within-person change, identify trajectories of decline or recovery, and evaluate whether changes in the latent construct precede clinical events. The dynamical architectures described in Appendices~\ref{app:dynamical} and~\ref{app:hemo_dynamics} provide possible directions for modelling these processes: ordinary, stochastic and partial differential equations may eventually support representations of health potential that evolve continuously under biological, social and treatment inputs. Those models remain theoretical extensions and should be developed and validated separately from the present measurement-and-prediction programme.
+
+Future research should also address practical interpretability. Latent scores are mathematically useful but may be difficult to communicate to clinicians, patients and policymakers, and work will be needed to establish meaningful reference ranges, identify interpretable risk strata and determine whether domain-specific profiles are more useful than a single overall score in some settings. Ethical and distributive implications require particular attention. Because social disadvantage and systemic barriers contribute to the construct, use of the score in resource allocation could either reveal inequity or inadvertently reproduce it. A low score arising from poor healthcare access should not be interpreted as an intrinsic deficiency of the individual, and any practical use must therefore distinguish between identifying unmet need and penalising those already disadvantaged.
+
+These are tasks the framework sets for others as much as for its author. What
+may be claimed before any of them is done is stated below.
+
+% =====================================================================
+\section{Final Concluding Statement}
+\label{sec:final}
+% =====================================================================
+
+\noindent Subject to completion of the empirical analyses, this thesis offers a theory-grounded and empirically testable framework for measuring health as future capability. Its central contribution is the proposition that future health cannot be represented adequately through current disease status alone; it emerges from the interaction of biological reserve, social resources and the systems through which care is made available.
+
+The $H_{\text{potential}}$ operationalises this proposition as a multidimensional latent construct. By estimating the measurement model before testing prognostic performance, the thesis preserves the distinction between what the construct means and what it predicts. By subsequently translating the domain structure to haemophilia, it shows how a general theory of health capability may be adapted to a specific disease without becoming reducible to that disease. At the present stage, the $H_{\text{potential}}$ remains a research instrument. It has been developed within a single cohort and requires independent external validation, recalibration and prospective evaluation before clinical or policy use can be justified, and the haemophilia application similarly remains a conceptual and methodological roadmap rather than an empirically validated disease-specific tool.
+
+The wider contribution is therefore not a claim that one final metric has solved the problem of health measurement. It is the provision of a disciplined template for approaching that problem, summarised in Figure~\ref{fig:template}: begin with an explicit theory of health; distinguish latent constructs from their observed indicators; separate measurement from prediction; evaluate association, discrimination, calibration and utility; make normative choices visible; and require external validation before implementation.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.85\linewidth}{\centering \emph{[Figure placeholder: the disciplined template as an ordered pipeline. Explicit theory of health $\rightarrow$ latent construct distinguished from indicators $\rightarrow$ measurement separated from prediction $\rightarrow$ evaluation of association, discrimination, calibration and utility $\rightarrow$ normative choices made visible $\rightarrow$ external validation before implementation.]}}}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{A reusable template for building theory-grounded, multidimensional health measures.}
+\label{fig:template}
+\end{figure}
+
+If the empirical hypotheses are supported, the thesis will provide initial evidence that this template can produce a coherent and prognostically useful measure of future health capability. If parts of the empirical model require revision, the same framework will identify where the theory, indicators or estimation strategy must be refined. In either case, the work advances the argument that health measurement should attend to the capabilities, opportunities and constraints that shape what health can become, and not to realised burden alone.

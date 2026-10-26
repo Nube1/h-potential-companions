@@ -1,0 +1,484 @@
+\label{ch:introduction}
+
+\begin{ataglance}[How to read this chapter]
+The argument runs in six steps. Living longer is not the same as living well,
+so health has to be measured as a capacity exercised in circumstances rather
+than as a state recorded at a moment (\S\ref{sec:intro-background}). Several
+research traditions each answer part of that question and none answers all of
+it (\S\ref{sec:intro-traditions}). A capability reading supplies the missing
+bridge between what a body can do and what a life permits
+(\S\ref{sec:intro-bridge}), but turning a bridge into a number raises a
+measurement problem that most composite indices step over
+(\S\ref{sec:intro-measurement}). The response is a small piece of mathematics:
+a realisation function derived from stated axioms rather than assembled by
+convenience (\S\ref{sec:intro-maths}). What follows from that, and what the
+thesis will and will not claim, closes the chapter.
+
+Two people appear throughout the thesis and are introduced in
+\S\ref{sec:intro-cases}. Every equation is applied to at least one of them, so
+that a reader who prefers clinical reasoning to algebra can follow the argument
+through the cases alone.
+\end{ataglance}
+
+\section{Background: from disease to health as a capacity-in-context}
+\label{sec:intro-background}
+
+The starting point for this thesis is a relatively simple observation: living longer is not the same as living in good health. As populations age and survival with chronic disease improves, the clinically and socially important question increasingly concerns what people are able to retain, recover, or realise over the course of later life. This is not a rejection of disease-based measurement. Disease remains a fundamental determinant of health and an essential object of clinical care. The difficulty arises when disease status is treated as if it were a complete description of health.
+
+The World Health Organization's healthy-ageing framework provides an important conceptual shift. It defines healthy ageing in terms of the development and maintenance of functional ability, and locates that ability in the interaction between an individual's intrinsic capacity and the environment in which the individual lives. Intrinsic capacity refers to the physical and mental capacities available to the person, while the environment includes the social, physical, economic and institutional circumstances that can either enable or constrain their expression \citep{who_2015_ageing,beard_intrinsic_2019}. The importance of this formulation is not simply that it adds ``environment'' to a list of health determinants. It changes the object of measurement. What matters is the extent to which a person's capacities can be turned into functioning that means something to them, and that is a different quantity from the capacities themselves.
+
+This distinction creates a problem for conventional measurement. A diagnosis identifies pathology; a functional measure describes what a person can or does do; a quality-of-life instrument captures aspects of experienced health; a frailty index represents accumulated deficits; and a prognostic model estimates the probability of a future event. These quantities are related, sometimes strongly, but their conceptual equivalence cannot be assumed. Treating them as interchangeable risks producing a score whose statistical coherence conceals conceptual ambiguity.
+
+The problem becomes more consequential in chronic conditions in which improvements in treatment alter survival without eliminating the accumulated consequences of disease. Haemophilia is an important example for this thesis. Contemporary treatment has transformed the prognosis of people with haemophilia, while ageing has introduced a more complex clinical landscape in which joint damage, mobility limitations, treatment burden and psychological wellbeing coexist with age-related multimorbidity \citep{srivastava_2020,mauser_2009}. The health that matters to a person ageing with haemophilia is therefore not exhausted by the presence or absence of bleeding episodes. It includes the capacity to move, participate, maintain relationships, obtain appropriate care and pursue valued activities within the circumstances in which that person lives.
+
+The thesis consequently begins from a narrower and more demanding question than the claim that existing health measures are inadequate. The literature already contains sophisticated approaches to multidimensional health. The question is whether a defensible construct can be developed at the intersection of three traditions that have often been operationalised separately: intrinsic or biomedical capacity, the social conditions that enable the exercise of that capacity, and structural conditions that constrain it.
+
+Before turning to those traditions, it helps to have two people in mind against
+whom every later claim can be checked.
+
+\section{Two people this thesis keeps returning to}
+\label{sec:intro-cases}
+
+Abstract argument about health measurement is easy to agree with and hard to
+test. To keep the argument honest, two people are carried through the whole
+thesis. Neither is a real patient; both are composites assembled from the
+distributions in the data sources used here. They are introduced now, applied
+to every equation as it appears, and revisited in the final chapter.
+
+\begin{ataglance}[Mrs~A, the population case]
+Mrs~A is 78, widowed, and lives alone on the second floor of a walk-up flat.
+She has knee osteoarthritis, mild cognitive impairment, hypertension and early
+chronic kidney disease. She dresses and washes herself but no longer carries
+shopping up the stairs. Her income is a state pension. She does not drive; her
+clinic is forty minutes away by two buses, and she has missed three of her last
+eight appointments. Her daughter telephones daily and visits monthly from
+another city.
+
+Mrs~A stands for the population the empirical work actually studies: an older
+adult of the kind sampled by the National Health and Aging Trends Study, whose
+clinical problems are unremarkable and whose circumstances do most of the work.
+She is the case used whenever the question is measurement, prediction or
+population comparison.
+\end{ataglance}
+
+\begin{ataglance}[Mr~B, the translational case]
+Mr~B is 58 and has severe haemophilia~A with a high-titre inhibitor. He has a
+target right ankle and a destroyed left knee from bleeds sustained before
+prophylaxis was available to him, chronic pain, and the metabolic consequences
+of two decades of reduced mobility. He is employed part-time. Whether he
+receives emicizumab or on-demand bypassing agents depends on which country he
+lives in and which formulary applies to him.
+
+Mr~B stands for the translational question: what happens to a construct built
+in one population when it is carried to a disease, a health system and a
+funding regime it was not developed in. He is the case used whenever the
+question is transportability, treatment effect or the price of a decision.
+\end{ataglance}
+
+The two are chosen because they fail in different directions. Mrs~A has modest
+biology and hostile circumstances. Mr~B has severe, well-characterised biology
+and circumstances that swing between generous and punitive depending on
+jurisdiction. A construct that describes only one of them well has not done the
+job this thesis sets out.
+
+\section{The intellectual problem: several valid traditions, no automatic synthesis}
+\label{sec:intro-traditions}
+
+The measurement of health has evolved through several traditions, each answering a different question. Health-economic measures such as quality-adjusted life-years and disability-adjusted life-years were developed to place health gains and losses on a common scale for decision-making and burden estimation \citep{whitehead_2010}. Health-expectancy measures combine survival with states of health or disability \citep{who_hale_2019}. Patient-reported outcome measures capture experienced health and functioning. Frailty approaches quantify vulnerability through accumulated deficits. Intrinsic-capacity research asks about the physical and mental resources available to an individual. Capability approaches, drawing particularly on the work of Sen and subsequent health-capability scholarship, shift attention from achieved states to the substantive opportunities people have to be and do what they have reason to value \citep{sen_1993,venkatapuram_2011}.
+
+None of these traditions should be dismissed because it does not answer the precise question posed here. Their differences are analytically useful. QALYs and DALYs are designed for valuation and comparison, not to explain how people realise health. Frailty is explicitly concerned with vulnerability and loss of reserve rather than the broader social conditions under which capacity can be exercised \citep{rockwood_mitnitski_2007}. Intrinsic capacity deliberately centres the individual's physical and mental capacities, while recognising their interaction with environment \citep{beard_intrinsic_2019}. Capability measures extend beyond health status, but that broader reach creates an important discriminant-validity problem: a health-capability construct must not become an indistinguishable proxy for general wellbeing \citep{icecap_o,icecap_o_construct}.
+
+Empirical precedents make the novelty problem even more important. The ATHLOS programme demonstrated that multidimensional health can be represented using latent-variable and item-response approaches, drawing on domains including physical functioning, mental health and cognition \citep{caballero_athlos_2017,oberhauser_2016}. Social-vulnerability research has likewise shown that social disadvantage can be represented quantitatively and can carry prognostic information beyond conventional clinical measures \citep{andrew_social_vulnerability_2008,social_vulnerability_share_2014}. More recent healthy-ageing work has continued to demonstrate that intrinsic capacity, functional ability and environmental conditions are empirically connected, while also highlighting unresolved questions about how these constructs should be operationalised \citep{who_2015_ageing}.
+
+The implication is important: the contribution of this thesis cannot simply be that it combines ``biological'' and ``social'' variables. The literature already provides conceptual and empirical precedents for doing so. The contribution must instead be demonstrated through the quality of the theoretical bridge and through empirical tests capable of distinguishing the proposed construct from its closest neighbours.
+
+The bridge has to be built before it can be tested, and the next section builds
+it.
+
+\section{From determinants to capability: the proposed bridge}
+\label{sec:intro-bridge}
+
+The central conceptual move of the thesis is to distinguish between a determinant of health and a component of health-related capability. Income, education, housing, transport and access to care can influence health without necessarily being equivalent to health. Conversely, intrinsic capacity may be high while opportunities to exercise that capacity are constrained by an inaccessible environment. The same underlying physical capacity may therefore produce very different lived possibilities in different contexts.
+
+This distinction is consistent with the capability approach, but the thesis does not equate health capability with the broader philosophical concept of human wellbeing. Capability theory is concerned with substantive opportunities, whereas health measurement requires a bounded account of what those opportunities mean in relation to health. The WHO framework offers a practical bridge because it explicitly describes functional ability as emerging from intrinsic capacity, environmental characteristics and their interaction \citep{who_2015_ageing}. The proposed construct builds from this relationship but asks whether it can be made sufficiently explicit and measurable to support individual-level statistical inference.
+
+A second bridge is required with social-determinants and life-course research. Social disadvantage is not simply an additional ``risk factor'' to be placed beside age, multimorbidity or cognition. Education, material resources, housing, social relationships and access to services are embedded in cumulative life-course processes and in institutions that distribute opportunities unequally \citep{who_sdh_2008,marmot_2005}. If these conditions are incorporated into a health-capability measure, the thesis must therefore avoid implying that structural disadvantage is a personal deficit. The proposed interpretation is instead that constrained circumstances can reduce the extent to which existing health capacity can be realised.
+
+A third bridge concerns frailty and reserve. Frailty research provides a powerful demonstration that health can be represented as multidimensional vulnerability rather than as a single diagnosis. At the same time, frailty and capability answer different questions. Frailty asks, in broad terms, how vulnerable a person is to adverse stressors; capability asks what the person is able to realise within a given context. The empirical relationship between these constructs is therefore a testable question, not a definitional identity. A successful H-potential measure should correlate with frailty while retaining information that is not reducible to accumulated deficit burden.
+
+These bridges lead to the proposed construct, $H_{\text{potential}}$. It is defined as health-related capability in later life: the combination of biological and functional capacities available to an individual and the enabling or constraining conditions through which those capacities can be realised. The definition is deliberately relational. It does not treat social disadvantage as a biological property, nor does it treat future mortality as part of the definition of health.
+
+A definition, however, is not yet a measurement. Stating that capability is
+relational leaves open how one would ever put a number on it, and that is where
+most composite health indices quietly go wrong.
+
+\section{The measurement problem}
+\label{sec:intro-measurement}
+
+The proposed construct immediately raises a deeper measurement question. Biomedical and functional indicators such as cognition, mobility and limitations in activities of daily living may plausibly be viewed as manifestations of underlying capacities. Social and structural variables such as income, housing and access to care are conceptually different. They may operate as causes, enabling conditions, constraints, or components of a broader construct. It is therefore not defensible simply to place all indicators into a single reflective factor and assume that the resulting statistical object represents health.
+
+This is not a minor technical issue. Recent reviews of intrinsic-capacity measurement have shown that even within the established WHO framework, studies have alternated between reflective and formative interpretations, often without explicitly stating the measurement model. The choice matters because reflective and formative constructs imply different relationships between the latent concept and its indicators, and consequently different approaches to validity and model evaluation \citep{bollen_lennox_1991,jarvis_2003}.
+
+The thesis therefore treats measurement theory as part of the substantive contribution. Biomedical Potential, Social Modifiers and Systemic Burdens are proposed as theoretically distinguishable domains. Their covariance is an empirical hypothesis. A correlated three-factor model is therefore the starting point, not a second-order factor. A higher-order representation will be considered only if the data demonstrate that a common factor is sufficiently dominant and determinate to justify individual scoring. A bifactor or related general-specific representation may be considered as a sensitivity analysis where identification and sample size permit.
+
+This approach also prevents a second form of circularity. If indicators are selected or weighted because they predict mortality, the resulting score may be an effective risk model while no longer representing the theoretical construct from which it was derived. The measurement model must consequently be developed and evaluated before the outcome analysis is used to judge prognostic utility.
+
+Both the definition and the measurement problem point at the same missing
+piece: a rule for combining the three domains that can be argued about rather
+than merely asserted. The next section supplies it, and shows what goes wrong
+without it.
+
+\section{The central mathematical proposition: from heuristic to an axiomatic realisation model}
+\label{sec:intro-maths}
+
+The original conceptual expression
+\begin{equation}
+    H_{\text{potential}}=(L\cdot Q)S-B
+\end{equation}
+was useful because it made the intended intuition explicit: health potential was conceived as a quantity that could be strengthened or weakened by biological and social conditions. It is not, however, sufficient as an empirical definition.
+
+Read it slowly, because the whole thesis grows out of what is wrong with it.
+$L$ is remaining length of life and $Q$ is the quality of that life, so the
+product $L\cdot Q$ is the familiar quality-adjusted survival of health
+economics: a clinician can read it as ``how many good years does the biology
+allow''. $S$ is a multiplier for social conditions, so a value above one says
+that a person's circumstances let them do more with the same body and a value
+below one says the reverse. $B$ is a burden imposed by the system, subtracted
+at the end.
+
+Apply it to Mrs~A. Suppose her biology allows twelve further years at a quality
+of $0.7$, giving $L\cdot Q=8.4$ good years. Her isolation and the two-bus
+journey to clinic might be scored $S=0.35$, and the burden of an unaffordable
+co-payment $B=1.0$. The formula returns $8.4\times0.35-1.0=1.9$. The number is
+easy to compute and hard to defend. Why does the social multiplier act on the
+whole of $L\cdot Q$ rather than on part of it? Why is $B$ subtracted in the same
+units as good years, when it was measured as a payment? And what stops the
+arithmetic from returning a negative number, which would be a person with less
+than no capability? Nothing in the formula answers these questions, and the
+answers are not arbitrary details: they determine who the measure ranks above
+whom.
+
+The equation assumes that the terms are commensurable, that social conditions scale biomedical potential multiplicatively, and that structural burden can be subtracted on a common metric. These are substantive assumptions, not mathematical necessities. Neither capability theory nor the healthy-ageing literature establishes them. The equation is therefore retained only as a conceptual heuristic, and the empirical estimator of the latent construct is allowed to emerge from the measurement model.
+
+The central formal contribution of the thesis is to replace that heuristic with a principled object. Chapter~\ref{chap:crf} develops an axiomatic Capability Realisation Function (CRF): rather than assert a formula, it states the properties a realisation measure must satisfy, including non-compensation, and derives the admissible family from them. The primary form, \citep{cobb_douglas_1928}
+\begin{equation}
+    H(P,S,R)=P\,S^{\alpha}R^{1-\alpha},\qquad R=1-B,\ 0<\alpha<1,
+    \label{eq:crf_intro}
+\end{equation}
+expresses realised potential $H$ as biomedical potential $P=L\cdot Q$ scaled by a non-compensatory combination of social enablement $S$ and structural freedom $R$.
+
+\begin{reading}[What equation \eqref{eq:crf_intro} says, in words]
+Realised health capability is what the body makes possible, discounted by the
+fraction of that possibility the person's circumstances actually let them
+reach. The discount is the term $S^{\alpha}R^{1-\alpha}$, a weighted geometric
+average of social enablement and freedom from structural burden. It runs
+between $0$ and $1$, so realised capability can never exceed biomedical
+potential: the arithmetic cannot invent health the body does not have. The
+exponent $\alpha$ says how the two kinds of circumstance are weighted against
+each other, and, more importantly, that they are weighted \emph{multiplicatively}
+rather than added.
+
+A geometric average is the formal statement of ``a chain is only as strong as
+its weakest link''. Multiply by zero on either side and the product is zero.
+This is the property an additive index cannot reproduce, and it is the reason
+the form was chosen rather than assumed.
+\end{reading}
+
+The three coordinates are used by every chapter that follows, so they are
+fixed here once.
+
+\begin{definition}[Domain profile]
+\label{def:int:profile}
+A person's domain profile is the triple
+\[
+  \mathbf X=(P,S,R)\in[0,1]^3,
+\]
+in which $P$ is Biomedical Potential, $S$ is Social Modifiers scored as social
+enablement, and $R=1-B$ is structural freedom, the complement of Systemic
+Burdens. Every coordinate is oriented so that $0$ is the worst attainable value
+and $1$ the best. The realisation function \eqref{eq:crf_intro} is then a map
+$H:[0,1]^3\to[0,1]$, and realised capability is bounded by the same interval as
+its inputs.
+
+\end{definition}
+
+\begin{remark}[Two scales for $P$, and the conversion between them]
+\label{rem:int:scales}
+Biomedical potential is reported on two scales in this thesis, and the reader
+should know which is in use before meeting either.
+
+The \emph{unit scale} of Definition~\ref{def:int:profile} puts $P\in[0,1]$,
+normalised within the calibration population. Appendix~\ref{app:mathematical_foundations}
+and the empirical chapters use it, because a latent measurement model returns a
+relative position and not a quantity of anything.
+
+The \emph{natural scale} puts $P=L\cdot Q$ in quality-adjusted life-years, as
+Chapter~\ref{app:crf} does when the realisation function has to meet an
+economic evaluation. Here $H$ inherits the units of $P$ and is read in good
+years.
+
+The two differ by normalisation alone. Because the enablers enter only through
+the bounded multiplier $S^{\alpha}R^{1-\alpha}$, which is invariant to the
+scale of $P$, any statement about the \emph{ratio} of two people's realised
+capability, and the whole of the gap decomposition, is identical on both. Only
+the level changes.
+
+Mrs~A is the worked case for this. On the natural scale, with $P=8.4$ good
+years, she realises $3.1$ of them. On the unit scale, with $P=0.55$, she scores
+$0.206$. These are the same calculation and the same woman;
+$0.206$ is not a number of years and $3.1$ is not a position in a
+distribution. Where a figure for her appears later without its scale named,
+$0.206$ is the unit-scale value.
+
+Carrying two scales is a cost, not a feature. It is paid because the
+measurement model cannot deliver years without an external calibration study
+that has not been done, while an economic evaluation cannot use a position in a
+distribution. \S\ref{sec:intro-maths} returns to why the thesis refuses to
+manufacture the missing calibration.
+\end{remark}
+
+The choice matters clinically, and the two running cases show why. Take Mrs~A
+first, with biomedical potential $P=8.4$ good years as above. Score her social
+enablement at $S=0.35$ (she lives alone, her daughter is three hours away, she
+has withdrawn from the church group she used to attend) and her structural
+freedom at $R=0.40$ (no car, two buses, missed appointments, a co-payment she
+notices). With $\alpha=0.5$ the multiplier is
+$\sqrt{0.35\times0.40}=0.37$, and her realised capability is
+$8.4\times0.37=3.1$ good years. An additive index that averaged her
+circumstances would give $(0.35+0.40)/2=0.375$ and $3.2$ good years. The two
+agree, which is exactly the uninformative case: her circumstances are equally
+poor on both sides, so no rule for trading them can matter.
+
+Now change one thing. Suppose transport is solved: a community minibus takes
+her to clinic, so $R$ rises from $0.40$ to $0.90$, while her isolation is
+untouched at $S=0.35$. The geometric form gives
+$\sqrt{0.35\times0.90}=0.56$ and realised capability $4.7$ good years; the
+additive form gives $0.625$ and $5.3$. The gap has opened, and it opens further
+as one term approaches zero. Suppose instead that Mrs~A's daughter dies and she
+is left with no informal support at all, $S=0.05$, while the minibus keeps
+$R=0.90$. The geometric form returns $\sqrt{0.05\times0.90}=0.21$, so $1.8$
+good years. The additive form returns $0.475$, so $4.0$ good years, and would
+record her as more than twice as well off as she is. The additive index has
+allowed excellent transport to compensate for having nobody. That substitution
+is precisely what the non-compensation axiom forbids, and it is why the
+functional form is derived rather than picked.
+
+\begin{workedexample}[int:mrsa]{Mrs~A under the geometric rule and the additive rule}
+Take $P=8.4$ good years and $\alpha=0.5$, and compare three states of Mrs~A's
+circumstances. The question is how far the two rules disagree, and where.
+
+As she is, $S=0.35$ and $R=0.40$. The geometric multiplier is
+$\sqrt{0.35\times0.40}=0.374$ and the additive one is $(0.35+0.40)/2=0.375$, so
+the two rules return $3.14$ and $3.15$ good years. Neither rule is doing any
+work here, because there is nothing to trade.
+
+Give her the community minibus, $R=0.90$. The multipliers separate to $0.561$
+and $0.625$, which is $4.71$ good years against $5.25$. Now take the support
+away instead, $S=0.05$ with the minibus kept at $R=0.90$. The geometric
+multiplier falls to $0.212$ and the additive one only to $0.475$: $1.78$ good
+years against $3.99$. The additive rule records her as $2.24$ times as well off
+as the geometric rule does, having let transport stand in for having nobody.
+
+\begin{wecode}[Python]
+from hpv.crf import contextual_mean, H
+
+P = 8.4
+for s, r in ((0.35, 0.40), (0.35, 0.90), (0.05, 0.90)):
+    geo = contextual_mean(s, r, rho=0.0)   # the CRF, a geometric mean
+    add = contextual_mean(s, r, rho=1.0)   # the additive comparator
+    print(f"S={s:.2f} R={r:.2f}: CRF {P * geo:.2f} yr   "
+          f"additive {P * add:.2f} yr   overstatement {add / geo:.2f}x")
+
+print(H(0.55, 0.35, 0.40))   # the same profile on the unit scale: 0.2058
+\end{wecode}
+
+\weanswer{$3.14$, $4.71$ and $1.78$ good years under the CRF, against $3.15$,
+$5.25$ and $3.99$ under the additive rule. At $S=0.05$ the additive rule
+overstates Mrs~A by a factor of $2.24$. Asserted by
+\texttt{test\_worked\_example\_intro\_mrs\_a\_geometric\_versus\_additive}.}
+\end{workedexample}
+
+Mr~B shows the same structure from the other end. His biomedical potential is
+poor and well characterised: an inhibitor, a destroyed knee, chronic pain.
+Suppose $P=4.0$. In a system that funds emicizumab and staffs a haemophilia
+comprehensive-care centre, his structural freedom is high, $R=0.85$, and stable
+employment and a partner give $S=0.70$; his realised capability is
+$4.0\sqrt{0.70\times0.85}=3.1$, close to the ceiling his biology allows. Move
+him to a jurisdiction where bypassing agents are rationed and the nearest centre
+is in another province, $R=0.20$, and the same body yields
+$4.0\sqrt{0.70\times0.20}=1.5$. Nothing about Mr~B has changed. The formula
+attributes the entire difference to the system, which is the claim the thesis
+is making and which \S\ref{sec:intro-maths} must therefore be able to defend
+rather than assert. This single object does the work the heuristic could not: it proves the biomedical--context complementarity that is the mathematical form of the intersectional \citep{crenshaw_1991,bowleg_2008} claim, decomposes any capability gap exactly into biomedical, social and structural parts, and, through an equity-sensitive population functional and a budget-constrained policy gradient, turns individual capability into an integrated, distribution-aware policy calculation. It is also falsifiable: the chapter pre-specifies the head-to-head tests that would reject or narrow it. The construct's meaning and the CRF's parameters are fixed without reference to the outcomes, so the empirical chapters test the model rather than fit it.
+
+\begin{workedexample}[int:mrb]{Mr~B funded and Mr~B rationed, one coordinate apart}
+On the unit scale Mr~B's profile is $(0.30,0.70,0.85)$ where his treatment is
+funded and $(0.30,0.70,0.20)$ where it is rationed. His biology and his
+household are identical in the two; only $R$ moves.
+
+The CRF returns $H=0.231$ funded and $H=0.112$ rationed, a ratio of $2.06$. In
+the good-years units used above, with $P=4.0$, the same two multipliers give
+$3.09$ years and $1.50$ years. The exact gap decomposition of
+Chapter~\ref{chap:crf} splits the log ratio
+$\log(0.231/0.112)=0.723$ into three parts. The biomedical part is
+$\log(0.30/0.30)=0$ and the social part is $0.5\log(0.70/0.70)=0$. The
+structural part, $0.5\log(0.85/0.20)=0.723$, is the whole of it.
+
+\begin{wecode}[Python]
+from hpv.crf import H, gap_decomposition
+
+funded, rationed = (0.30, 0.70, 0.85), (0.30, 0.70, 0.20)
+print(H(*funded), H(*rationed), H(*funded) / H(*rationed))
+
+bio, soc, structural, total = gap_decomposition(funded, rationed)
+print(f"biomedical {bio:.3f}  social {soc:.3f}  "
+      f"structural {structural:.3f}  total {total:.3f}")
+\end{wecode}
+
+\weanswer{$H=0.231$ funded and $0.112$ rationed, a ratio of $2.06$. The
+decomposition puts $0.723$ of a total of $0.723$ on the health system and
+nothing on Mr~B. Asserted by
+\texttt{test\_worked\_example\_intro\_mr\_b\_funded\_versus\_rationed}.}
+\end{workedexample}
+
+This distinction also resolves a potentially serious interpretive problem. A standardised latent factor is not automatically measured in years of healthy life. Unless an external calibration study establishes a mapping between the factor and a time-based health-expectancy scale, $H_{\text{potential}}$ must be reported as a latent score with an explicitly defined direction and uncertainty. The thesis will not infer a ``number of healthy years'' from an arbitrary standardisation.
+
+With the formal object in place, the gap the thesis fills can be stated
+precisely rather than gestured at.
+
+\section{Research gap and contribution}
+
+The research gap is therefore not the absence of multidimensional health measurement. It is the absence of sufficiently interrogated evidence that a bounded health-capability construct integrating intrinsic capacity with enabling and constraining context can be distinguished empirically from the constructs that surround it.
+
+This gap has four parts. First, the conceptual boundaries between intrinsic capacity, functioning, capability, frailty and social vulnerability \citep{andrew_social_vulnerability_2008} require explicit specification. Second, the measurement model must distinguish variables that plausibly manifest an underlying construct from variables that may instead form or condition it. Third, the proposed construct must demonstrate discriminant and incremental validity against strong comparators. A statistically significant association is not enough. Fourth, if the measure is intended to be equity-sensitive, its meaning and performance must be examined across relevant social groups rather than assuming measurement equivalence.
+
+The central contribution of the thesis is the axiomatic Capability Realisation Model and the integrated policy calculation built upon it (Chapter~\ref{chap:crf}). This is what distinguishes the work from prior multidimensional health measurement: not another weighted index, but a realisation function derived from stated axioms, in which non-compensation, biomedical--context complementarity, an exact capability-gap decomposition, and an equity-sensitive, budget-constrained policy gradient are theorems rather than assertions. The measurement and prognostic work that follows is the empirical test of this model: the outcome-independent latent score provides the domain inputs and the comparator against which the realisation model is judged head-to-head, and the haemophilia chapter shows how the same model travels to a specific disease. The gap the thesis fills is thus the absence of a falsifiable, distribution-aware formal model that turns the intuition of health-as-capability-in-context into individual capability estimates and the policy calculations that follow from them.
+
+The empirical contribution is therefore conditional. If the analyses show that the proposed domains have coherent measurement properties, retain distinguishable substantive meanings, and provide information beyond established measures, and if the realisation model meets its pre-specified head-to-head criteria, then the thesis will have demonstrated a useful bridge between previously separated literatures. If the data do not support those claims, the appropriate conclusion will be that the proposed synthesis is not empirically justified in the present population and that the theoretical framework requires revision. That possibility is not a failure of the research design; it is a necessary feature of an interrogable scientific hypothesis.
+
+The aim and objectives below convert that gap into work that can actually be
+carried out.
+
+\section{Aim and objectives}
+
+The overarching aim is to develop an axiomatic model of health-related capability in later life, the Capability Realisation Model, together with the integrated, equity-sensitive policy calculation built upon it, and to evaluate that model empirically using nationally representative longitudinal data from the National Health and Aging Trends Study (NHATS \citep{kasper_2021}).
+
+The specific objectives are to:
+\begin{enumerate}
+    \item develop a theoretically grounded account of health-related capability by connecting healthy ageing, intrinsic capacity, capability theory, frailty, and social-determinants and life-course research;
+    \item derive, from stated axioms, a Capability Realisation Function that specifies how biomedical potential, social enablement and structural freedom combine into realised capability, and build on it an exact capability-gap decomposition, a budget-constrained policy gradient, and an equity-sensitive population functional;
+    \item specify and compare competing measurement models for Biomedical Potential, Social Modifiers and Systemic Burdens;
+    \item assess construct validity, reliability, factor determinacy and measurement invariance before prognostic modelling;
+    \item evaluate the prospective relationship of the resulting domain scores and, only where justified, a higher-order score with five-year all-cause mortality and first unplanned hospitalisation;
+    \item determine whether the proposed construct adds information beyond pre-specified measures of frailty, health status and social vulnerability, and test the Capability Realisation Model head-to-head against an additive composite and the outcome-independent factor score on calibration, discrimination and net benefit \citep{vickers_elkin_2006}, with its parameters frozen without reference to the outcomes; and
+    \item examine the translational relevance of the framework to ageing with haemophilia, while clearly distinguishing conceptual transferability from disease-specific validation.
+\end{enumerate}
+
+\section{Research questions and hypotheses}
+
+The primary research question is:
+\begin{quote}
+Can a theoretically specified construct of health-related capability, integrating intrinsic and functional capacity with enabling and constraining social context, be measured reliably and validly in later life without collapsing into an existing measure of health status, frailty, social vulnerability or general wellbeing?
+\end{quote}
+
+The secondary questions are whether the proposed domains form a coherent but distinguishable structure; whether a higher-order representation is empirically warranted; whether the resulting measure demonstrates incremental prognostic information for mortality and hospitalisation; whether its measurement properties are stable across major demographic and socioeconomic groups; and whether domain-level profiles provide information that is lost when the construct is represented by a single score.
+
+The hypotheses are intentionally stated at the level that the literature and design can support:
+\begin{itemize}
+    \item \textbf{H1:} Indicators specified within each theoretical domain will demonstrate adequate within-domain measurement coherence, while the domains will remain empirically distinguishable.
+    \item \textbf{H2:} A general health-capability factor will be supported only if a higher-order or general-specific model demonstrates sufficient fit, factor determinacy and substantive interpretability relative to the correlated-domain alternative.
+    \item \textbf{H3:} The proposed construct will demonstrate incremental prognostic information beyond pre-specified conventional health and frailty measures, assessed using effect estimates, discrimination, calibration and appropriate measures of reclassification or decision utility where justified.
+    \item \textbf{H4:} The measurement model will demonstrate adequate invariance across major demographic and socioeconomic groups; where full invariance is not supported, the nature and consequences of non-invariance will be explicitly reported rather than assumed away.
+    \item \textbf{H5:} Domain-level profiles will contain clinically or substantively relevant information that is not fully represented by a single higher-order score.
+    \item \textbf{H6:} The non-compensatory Capability Realisation Model will separate profiles that an additive composite cannot, and will meet its pre-specified head-to-head criteria, showing no worse calibration or prediction error than the additive and factor-score alternatives and either improved net benefit or clearer detection of structural bottlenecks, with $\alpha$, $\rho$ and the normalisation bounds frozen without reference to the outcomes.
+\end{itemize}
+
+\section{Why NHATS provides a useful test of the proposition}
+
+NHATS is appropriate for this research because it was designed to characterise functioning in later life and follows a nationally representative sample of older adults over time. Its combination of self-reported functioning, performance-related measures, health conditions, social circumstances and longitudinal outcomes provides an unusually suitable setting in which to test whether biological capacity and context can be represented jointly.
+
+The use of NHATS also imposes methodological obligations. The sample is not a simple random sample: inference must account for the survey's sampling structure, weights, clustering and strata, and longitudinal analyses require appropriate attention to cohort construction and weighting. The thesis will therefore treat survey design as part of the estimand and inferential framework rather than as a technical correction applied at the end of the analysis. This is particularly important because the purpose of the study is not merely to obtain a good-fitting model in the observed sample, but to make defensible statements about the population represented by NHATS.
+
+NHATS supplies the test bed for Mrs~A. Mr~B has no comparable cohort, which is
+why the haemophilia work is presented as a proposed translation rather than a
+completed validation, and why the two are kept apart in the chapter ordering
+set out next.
+
+\section{A reader's glossary: the same idea in two languages}
+\label{sec:intro-glossary}
+
+This thesis is written for three readerships that do not share a vocabulary.
+Clinicians, health economists and statisticians each have a name for most of
+the ideas used here, and the names are different. Table~\ref{tab:bilingual}
+pairs them, so that a term met later in an unfamiliar form can be looked up
+rather than guessed at. Each pairing is introduced again in the text at the
+point where it first matters; the table is for reference, not instruction.
+
+The pairings are not exact synonyms. They are close enough that a reader who
+understands one side will not be lost on the other, which is all a glossary can
+honestly do.
+
+\begin{table}[htbp]
+\centering
+\caption{Quantitative terms and their clinical counterparts, as used in this thesis.}
+\label{tab:bilingual}
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{3.3cm} p{3.9cm} p{6.2cm}}
+\toprule
+\textbf{Quantitative term} & \textbf{Clinical counterpart} & \textbf{What both are naming} \\
+\midrule
+Endogeneity & Confounding by indication & The exposure was chosen because of something that also affects the outcome. \\
+\addlinespace
+Attenuation bias & Regression dilution & Measuring the predictor with error pulls its estimated effect towards no effect. \\
+\addlinespace
+Shrinkage & Regression to the mean & An extreme estimate from sparse information is pulled back towards the average. \\
+\addlinespace
+Censoring & Alive at last contact & The person's later fate is unknown, which is information, not a missing value. \\
+\addlinespace
+Competing risk & An event that ends the follow-up & Death removes a person from being at risk of the admission you were counting. \\
+\addlinespace
+Immortal time & A window where the event could not occur & The design guarantees survival over an interval, and the guarantee looks like benefit. \\
+\addlinespace
+Discrimination & Ranking patients correctly by risk & Whether the sicker of any two patients gets the higher score. \\
+\addlinespace
+Calibration & Whether a stated 10 per cent means one in ten & Whether the predicted probabilities are the observed frequencies. \\
+\addlinespace
+Incremental value & Does this change management? & Whether the new measure adds anything to the one already in use. \\
+\addlinespace
+Discriminant validity & Is this troponin measured a second way? & Whether two instruments are the same thing under different names. \\
+\addlinespace
+Reflective indicators & Symptoms of one underlying disease & Tiredness, cold intolerance and dry skin as effects of a low thyroid. \\
+\addlinespace
+Formative indicators & Ingredients of a risk score & Age, blood pressure, lipids and smoking, which need not correlate. \\
+\addlinespace
+Latent variable & A quantity inferred, never measured & Glomerular filtration rate behind creatinine and cystatin~C. \\
+\addlinespace
+Identification & Telling a blocked patient from a choosing one & Whether the data can distinguish the explanations of the same behaviour. \\
+\addlinespace
+Non-compensation & A chain is as strong as its weakest link & Cardiac output cannot rescue a haemoglobin of two. \\
+\addlinespace
+Elasticity of substitution & How far one thing stands in for another & Whether good support can make up for a system that will not treat you. \\
+\addlinespace
+Opportunity cost, $\lambda$ & Patients you never meet & The health lost elsewhere when this budget is spent here. \\
+\addlinespace
+Inequality aversion, $\varepsilon$ & How much a gain to the worst-off counts & The exchange rate between total health and its distribution. \\
+\addlinespace
+Net benefit & Finding a case against over-treating & The trade a clinician makes at a chosen decision threshold. \\
+\addlinespace
+Internal validation & The model marking its own homework & How much of the apparent performance will survive a new sample. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+With the vocabulary settled, the order of the argument can be set out.
+
+\section{The structure of the thesis}
+
+The remainder of the thesis follows the logic of the argument rather than the chronology of the statistical analysis. Chapter~\ref{ch:literature} develops the literature and establishes the conceptual bridges on which the proposed construct depends. Chapter~\ref{chap:validation} formalises the construct and addresses the measurement assumptions underlying its mathematical representation. Chapter~\ref{chap:crf}, the formal heart of the thesis, develops the axiomatic Capability Realisation Model and the integrated policy calculation built upon it. The following chapters are its empirical test: they describe the NHATS data, variable construction and analytical strategy, present the measurement results, and evaluate prognostic performance and comparative validity, including the head-to-head comparison of the realisation model with an additive composite and the outcome-independent factor score. The validation and sensitivity analyses then examine robustness, equity and alternative specifications. The final chapter returns to the literature and asks what the empirical evidence permits the thesis to claim, what it does not permit it to claim, and what further work is required for disease-specific validation in ageing with haemophilia.
+
+\section{Conclusion}
+
+The thesis is built around a proposition rather than a predetermined index: that health-related capability may be understood as the capacity available to an individual together with the conditions through which that capacity can be realised. The literature provides strong foundations for each part of this proposition, but it does not establish that they should be collapsed into a single empirical construct. That is precisely the question the thesis must test.
+
+The scientific contribution will therefore depend less on the novelty of the ingredients than on the strength of the connection between them. The literature review must show why the domains belong in the same conceptual conversation; the measurement analysis must test whether they can be represented coherently; the prognostic analysis must test whether the resulting construct matters prospectively; and the sensitivity and equity analyses must test whether the interpretation survives reasonable alternatives. At every stage, the code should interrogate the claims, not reproduce them. The thesis will be strongest if the data are allowed to narrow, modify or reject the proposed construct where the evidence requires it.

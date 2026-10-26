@@ -1,0 +1,1045 @@
+% Appendix A: formal foundations, revised August 2026
+\label{app:mathematical_foundations}
+
+This appendix states exactly what the H-Potential mathematics does and does not
+establish. It locates the construction in preceding mathematical traditions,
+defines its objects and scales, states axioms before selecting a functional
+form, and separates mathematical consequences from empirical hypotheses. Every
+formal statement is followed by a plain-language interpretation.
+
+\begin{ataglance}[How to read this appendix]
+The appendix is an argument, not a reference list, and it runs in one
+direction. It first borrows: measurement theory, utility representation,
+production functions and multidimensional deprivation each contribute a
+technique, and none contributes a result about health
+(\S\ref{app:a-preceding}). It then fixes what is being measured and when
+(\S\ref{app:a-primitives}). Only then does it state the properties a summary
+score must have (\S\ref{app:a-axioms}), and show that the most common choice,
+adding the domains up, quietly violates one of them
+(\S\ref{app:a-additivity}). The CES family that survives the axioms is
+developed next (\S\ref{app:a-ces}), followed by a rival that denies one of the
+axioms outright (\S\ref{app:a-relational}) and a threshold alternative that
+denies smoothness (\S\ref{app:a-threshold}). The last sections separate the
+construct from its indicators, list the objects that get confused, state the
+conditions under which the whole framework fails, and connect the score to
+money.
+
+A reader who wants the argument without the proofs can read the
+\emph{In plain language} remark after each result; they are written to stand
+alone. A reader who wants to know whether any of this matters at the bedside
+can follow Mrs~A and Mr~B, who are carried through
+\S\ref{app:a-axioms}--\S\ref{app:a-threshold} with numbers attached.
+\end{ataglance}
+
+\section{Preceding Theorems and Mathematical Spaces}
+\label{app:a-preceding}
+
+Measurement theory distinguishes nominal, ordinal, interval and ratio scales
+and restricts the transformations under which a statement remains meaningful.
+\citep{stevens_1946} Utility-representation theory supplies conditions under
+which an ordering can be represented by a real-valued function. Debreu's
+representation result requires completeness, transitivity, continuity and
+suitable topological conditions; it does not establish cardinal differences,
+interpersonal comparability or an additive form. \citep{debreu_1954} Additive
+multi-attribute representations require stronger preferential-independence
+conditions. \citep{keeney_raiffa_1976}
+
+Production-function theory studies how inputs combine. The CES family was
+introduced to represent different degrees of substitutability.
+\citep{arrow_chenery_1961} Grossman's health-capital model treats health as a
+durable stock affecting healthy time and influenced by investment.
+\citep{grossman_1972} These models motivate questions about complementarity and
+substitution; they do not prove that social support and biological capacity are
+literal production inputs.
+
+Axiomatic multidimensional measurement demonstrates that aggregation encodes
+ethical choices. Alkire and Foster use dimension-specific thresholds and a
+cross-dimensional cut-off, providing a transparent non-compensatory alternative
+to a smooth total. \citep{alkire_foster_2011} Latent-variable theory addresses a
+different problem: whether covariance among indicators can be explained by
+unobserved variables. It requires an explicit direction between construct and
+indicators. \citep{bollen_lennox_1991,jarvis_2003}
+
+\begin{remark}[What is inherited]
+The thesis inherits questions and proof techniques from these traditions. It
+does not inherit a theorem stating that H-Potential exists as a unique cardinal
+health quantity. That would require assumptions and evidence not supplied by
+the preceding literature.
+\end{remark}
+
+What the borrowed traditions do supply is discipline about order. Each of them
+begins by saying precisely what is being measured, on what scale, and at what
+moment, before anything is combined. That is where this appendix begins too.
+
+\section{Population, Time and Primitive Quantities}
+\label{app:a-primitives}
+
+\begin{definition}[Population and index time]
+Let $(\Omega,\mathcal F,\mathbb P)$ be a probability space. A person is
+represented by $\omega\in\Omega$ and baseline occurs at $t_0$. Construct
+indicators are measured at or before $t_0$; prognostic outcomes occur after
+$t_0$.
+\end{definition}
+
+\begin{remark}[In plain language]
+People differ, and a participant is treated as one possible draw from the
+target population. The time rule prevents future death or hospitalisation from
+being used to define the baseline construct.
+\end{remark}
+
+\begin{definition}[Domain profile]
+The normalized profile is
+\[
+X(\omega)=(P(\omega),S(\omega),R(\omega))\in\mathcal X=[0,1]^3,
+\]
+where $P$ is biomedical and functional capacity, $S$ social and environmental
+enablement, and $R=1-B$ freedom from structural burden. Larger values are
+favourable. Normalization is part of the protocol, not a claim that raw
+variables possess ratio scales.
+\end{definition}
+
+\begin{remark}[In plain language]
+The profile $(0.8,0.4,0.9)$ records relatively high capacity, limited
+enablement and relatively little burden. It does not yet combine these facts,
+and $0.8$ is not asserted to be literally twice $0.4$.
+\end{remark}
+
+\begin{workedexample}[apa-profiles]{The two running cases as profiles}
+Mrs~A has middling capacity for her age, thin enablement since her husband died
+and her daughter moved, and real structural constraint from transport and cost:
+$X=(0.55,0.35,0.40)$. Mr~B on emicizumab in a well-resourced system has poor
+biology, good support and few barriers: $(0.30,0.70,0.85)$. Rationed to
+on-demand bypassing agents in a system with one distant centre he is
+$(0.30,0.70,0.20)$, with only the third coordinate changed.
+
+Under the geometric rule of \S\ref{app:a-ces} with $\alpha=0.5$, these give
+$0.55\sqrt{0.35\times0.40}=0.206$ for Mrs~A, $0.30\sqrt{0.70\times0.85}=0.231$
+for Mr~B funded and $0.30\sqrt{0.70\times0.20}=0.112$ for Mr~B rationed. Funding
+alone accounts for a factor of two in his score.
+
+\begin{wecode}[Python]
+from hpv.crf import H
+
+cases = {"Mrs A": (0.55, 0.35, 0.40),
+         "Mr B funded": (0.30, 0.70, 0.85),
+         "Mr B rationed": (0.30, 0.70, 0.20)}
+for name, x in cases.items():
+    print(f"{name:<14} profile {x}  H = {H(*x):.3f}")
+print("funded / rationed =", H(0.30, 0.70, 0.85) / H(0.30, 0.70, 0.20))
+\end{wecode}
+
+\weanswer{$0.206$, $0.231$ and $0.112$; the funded-to-rationed ratio is
+$2.06$. Asserted by
+\texttt{test\_running\_cases\_reproduce\_the\_thesis\_numbers}.}
+\end{workedexample}
+
+\begin{reading}[What a profile refuses to do]
+Notice what the profile refuses to do. It does not say whether Mrs~A is worse
+off than Mr~B, because $(0.55,0.35,0.40)$ and $(0.30,0.70,0.85)$ are not
+comparable by dominance: each is better in some coordinate. Producing an answer
+requires an extra assumption, and the rest of the appendix is about which extra
+assumptions are defensible.
+\end{reading}
+
+\begin{definition}[Dominance]
+For $x,y\in\mathcal X$, write $x\succeq_Dy$ if $x_j\ge y_j$ in every
+coordinate, and $x\succ_Dy$ if at least one inequality is strict.
+\end{definition}
+
+\begin{remark}[In plain language]
+Dominance is the weakest comparison: one profile is no worse anywhere and
+better somewhere. Profiles that trade strength in one domain against weakness
+in another cannot be ranked by dominance alone.
+\end{remark}
+
+Dominance settles the easy cases and is silent on every interesting one. Mr~B
+funded dominates Mr~B rationed, and nothing more is needed to say the funding
+helped. Mrs~A against Mr~B is unrankable. Since clinical and budgetary
+decisions are made mostly among unrankable profiles, something stronger than
+dominance is required, and the next section states the minimum price of
+getting it.
+
+\section{Axioms for Any Scalar Score}
+\label{app:a-axioms}
+
+\begin{definition}[Admissible aggregator]
+An aggregator $H:\mathcal X\to[0,1]$ is admissible for the primary sensitivity
+family if it satisfies:
+\begin{enumerate}
+ \item continuity;
+ \item weak monotonicity: $x\succeq_Dy\Rightarrow H(x)\ge H(y)$;
+ \item normalization: $H(1,1,1)=1$ and $H(0,s,r)=0$;
+ \item capacity boundedness: $0\le H(p,s,r)\le p$;
+ \item transparency of weights and substitution assumptions.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[In plain language]
+These are design commitments. The boundary $H(0,s,r)=0$ says that context
+cannot manufacture biomedical capacity from nothing. Readers who reject this
+claim should reject this family or use a less restrictive alternative.
+\end{remark}
+
+\begin{reading}[What each axiom rules out, clinically]
+\textbf{Continuity} says a hair's-breadth change in circumstance cannot flip
+the score. It rules out a measure in which earning one rand above a means-test
+line halves a person's recorded capability.
+
+\textbf{Weak monotonicity} says that making something better cannot make the
+score worse. It rules out the perverse index in which giving Mrs~A a stairlift
+lowers her number because she now reports less difficulty and therefore
+qualifies for less.
+
+\textbf{Normalization} fixes the two ends of the ruler.
+
+\textbf{Capacity boundedness}, $H\le p$, is the contentious one. It says that
+Mr~B, with a destroyed knee and an inhibitor, cannot be scored above the
+ceiling his biology sets, no matter how good his health system is. A
+first-class comprehensive-care centre can bring him close to that ceiling; it
+cannot lift him past a man with intact joints. Readers who think an accessible
+environment is genuinely part of health rather than a support for it will
+reject this axiom, and \S\ref{app:a-relational} is written for them.
+\end{reading}
+
+\begin{proposition}[Dominance preservation]
+Every weakly monotone aggregator preserves dominance.
+\end{proposition}
+\begin{proof}
+If $x\succeq_Dy$, weak monotonicity gives $H(x)\ge H(y)$.
+\end{proof}
+
+\begin{remark}[In plain language]
+Improving at least one favourable domain while worsening none cannot lower the
+score. This does not determine how to rank trade-offs.
+\end{remark}
+
+\begin{theorem}[Ordinal representation is not cardinal measurement]
+Suppose $H$ represents an ordering, so
+$x\succeq y\Leftrightarrow H(x)\ge H(y)$. For every strictly increasing
+$g$, $g\circ H$ represents the same ordering. Therefore differences and ratios
+of scores are not identified by the ordering alone.
+\end{theorem}
+\begin{proof}
+Strict monotonicity of $g$ gives
+$H(x)\ge H(y)\Leftrightarrow g(H(x))\ge g(H(y))$. Yet nonlinear $g$
+generally changes differences and ratios.
+\end{proof}
+
+\begin{remark}[In plain language]
+A score of 80 is not proved to represent twice the potential of 40. A
+ten-point change is not automatically equal everywhere on the scale. Years,
+utilities or clinical units require an independent calibration study.
+\end{remark}
+
+Clinicians meet this constantly and mostly handle it correctly. Nobody claims a
+patient with a NYHA class~IV heart failure is twice as breathless as class~II,
+or that the gap between Glasgow Coma Scale 6 and 8 equals the gap between 12
+and 14. The scale orders; it does not measure distance. The error the theorem
+guards against is the one made downstream, when an ordinal score is fed into a
+cost-effectiveness calculation that multiplies and divides it as though it were
+a quantity of something.
+
+If the ordering is all that is identified, then a great deal rides on how the
+domains are combined into that ordering, because different combination rules
+give different orderings. The obvious rule is to add them up, and it is worth
+seeing exactly what that commits one to.
+
+\section{Why Additivity Is a Strong Assumption}
+\label{app:a-additivity}
+
+\begin{definition}[Additive form]
+\[
+H_A(p,s,r)=w_Pu_P(p)+w_Su_S(s)+w_Ru_R(r),\qquad
+w_j\ge0,\quad\sum_jw_j=1.
+\]
+\end{definition}
+
+\begin{proposition}[Compensation]
+If $u_j(x)=x$ and $w_P,w_S>0$, a loss $\Delta p$ can be offset exactly by
+$\Delta s=(w_P/w_S)\Delta p$, whenever the changed profile remains in
+$\mathcal X$.
+\end{proposition}
+\begin{proof}
+The score change is $-w_P\Delta p+w_S\Delta s=0$ after substitution.
+\end{proof}
+
+\begin{remark}[In plain language]
+An additive score allows social enablement to cancel lost capacity exactly.
+That may or may not be ethically and clinically acceptable. Additivity is not
+a neutral default, and its classical representation requires independence
+conditions not guaranteed by fitting a regression. \citep{keeney_raiffa_1976}
+\end{remark}
+
+\begin{workedexample}[apa-additive]{An additive index rewards stranding a patient}
+Take equal weights, $w_P=w_S=w_R=1/3$, and Mr~B rationed: $(0.30,0.70,0.20)$.
+His additive score is $(0.30+0.70+0.20)/3=0.400$.
+
+Now suppose successful immune tolerance induction clears his inhibitor and
+raises his biomedical potential from $0.30$ to $0.60$, while at the same moment
+his health system withdraws funding for specialist follow-up, dropping
+structural freedom from $0.20$ to $0.04$. The additive score becomes
+$(0.60+0.70+0.04)/3=0.447$. It has gone \emph{up}.
+
+The realisation function of \S\ref{app:a-ces} does the opposite, as it must:
+$0.60\sqrt{0.70\times0.04}=0.100$ against $0.30\sqrt{0.70\times0.20}=0.112$, so
+his realised capability falls.
+
+\begin{wecode}[Python]
+from hpv.crf import H, H_additive
+
+w = (1/3, 1/3, 1/3)
+before, after = (0.30, 0.70, 0.20), (0.60, 0.70, 0.04)
+for label, x in (("rationed", before), ("cleared but stranded", after)):
+    print(f"{label:<22} additive {H_additive(*x, w):.4f}   CRF {H(*x):.4f}")
+print("additive change", H_additive(*after, w) - H_additive(*before, w))
+print("CRF change     ", H(*after) - H(*before))
+\end{wecode}
+
+\weanswer{The additive index rises from $0.400$ to $0.447$; the CRF falls from
+$0.112$ to $0.100$. The two rules disagree about the sign of the change, which
+is the sharpest form the disagreement can take. Asserted by
+\texttt{test\_worked\_example\_additive\_perverse}.}
+\end{workedexample}
+
+\begin{reading}[Why the additive rule does this]
+On the additive measure, clearing Mr~B's inhibitor while stranding him without
+a haematologist counts as an improvement. The proposition above is what makes
+this happen: with equal weights, one unit
+of lost structural freedom is exactly cancelled by one unit of gained biology.
+Additivity does not merely permit that trade, it enforces it at a fixed rate
+everywhere on the scale, including at the bottom where the trade is least
+defensible. Any measure intended to detect the effect of health systems on
+people cannot use a rule that lets biology buy the system's failures back.
+\end{reading}
+
+The alternative is a form in which the domains multiply rather than add, so
+that a near-zero in one cannot be bought off by an excess in another.
+
+\section{CES Capability Realisation}
+\label{app:a-ces}
+
+\begin{definition}[CES contextual mean and realised potential]
+For $0<\alpha<1$ and $\rho\le1$, define
+\[
+M_{\rho,\alpha}(s,r)=
+\begin{cases}
+[\alpha s^\rho+(1-\alpha)r^\rho]^{1/\rho},&\rho\ne0,\\
+s^\alpha r^{1-\alpha},&\rho=0,
+\end{cases}
+\qquad
+H_{\rho,\alpha}(p,s,r)=pM_{\rho,\alpha}(s,r),
+\]
+using the continuous extension at zero.
+\end{definition}
+
+\begin{remark}[In plain language]
+Capacity sets the ceiling. The contextual mean describes how much can be
+realised. The weight $\alpha$ controls relative emphasis; $\rho$ controls how
+easily strength in one contextual domain compensates for weakness in another.
+\end{remark}
+
+\begin{reading}[Reading $\rho$ as a clinical question]
+The parameter $\rho$ answers one question: how much can good social support
+make up for a hostile system, and the reverse?
+
+At $\rho=1$ the contextual mean is the ordinary weighted average, and the
+answer is ``completely, at a fixed exchange rate''. At $\rho=0$ it is the
+geometric mean, and the answer is ``a lot in the middle, almost nothing near
+the extremes''. As $\rho\to-\infty$ the mean collapses to $\min(s,r)$ and the
+answer is ``not at all: the weaker of the two is the whole story''.
+
+The physiological analogue is oxygen delivery, which is cardiac output times
+arterial oxygen content. A superb cardiac output cannot rescue a haemoglobin of
+$2$, and a normal haemoglobin cannot rescue a cardiac arrest. The product
+structure encodes the fact that both are necessary. Multidimensional
+deprivation research reaches the same structure from ethics rather than
+physiology, which is some reason to think the form is not merely convenient.
+\end{reading}
+
+\begin{workedexample}[apa-rho]{Three values of $\rho$, two patients}
+Set $\alpha=0.5$ and compute the contextual mean $M_{\rho,\alpha}(s,r)$ at the
+three landmark values of $\rho$.
+
+For Mrs~A, whose enablers are both mediocre at $s=0.35$ and $r=0.40$: the
+arithmetic mean ($\rho=1$) is $0.375$, the geometric mean ($\rho=0$) is $0.374$
+and the bottleneck ($\rho\to-\infty$) is $0.350$. The three answers sit within
+seven per cent of each other, so the choice of $\rho$ barely matters for her.
+
+For Mr~B rationed, whose enablers are badly unbalanced at $s=0.70$ and
+$r=0.20$: arithmetic $0.450$, geometric $0.374$, bottleneck $0.200$. Here the
+choice of $\rho$ changes his contextual mean by a factor of $2.25$, and it
+changes which of the two \emph{contexts} is ranked first.
+
+\begin{wecode}[Python]
+from hpv.crf import contextual_mean
+
+for name, (s, r) in (("Mrs A", (0.35, 0.40)), ("Mr B rationed", (0.70, 0.20))):
+    vals = [contextual_mean(s, r, rho) for rho in (1.0, 0.0, -800.0)]
+    print(f"{name:<14} arithmetic {vals[0]:.3f}  geometric {vals[1]:.3f}  "
+          f"bottleneck {vals[2]:.3f}  spread {max(vals)/min(vals):.2f}")
+\end{wecode}
+
+\weanswer{Mrs~A $0.375$, $0.374$, $0.350$, a spread of $1.07$; Mr~B rationed
+$0.450$, $0.374$, $0.200$, a spread of $2.25$. On the contextual mean the
+arithmetic rule ranks Mr~B's circumstances above Mrs~A's, the bottleneck rule
+ranks hers above his, and the geometric rule calls them equal. On realised
+capability $H$ she leads under all three, because her biomedical potential is
+higher. Asserted by
+\texttt{test\_worked\_example\_rho\_reverses\_the\_ranking} and
+\texttt{test\_substitution\_ordering\_across\_rho}.}
+\end{workedexample}
+
+\noindent The parameter matters exactly where the profile is lopsided, which is
+exactly where health systems fail people.
+
+\begin{proposition}[Admissibility]
+$H_{\rho,\alpha}$ is continuous, weakly increasing, normalized and satisfies
+$0\le H_{\rho,\alpha}(p,s,r)\le p$.
+\end{proposition}
+\begin{proof}
+The weighted power mean is continuous, non-decreasing and bounded between
+$\min(s,r)$ and $\max(s,r)$. Thus it lies in $[0,1]$. Multiplication by
+$p\in[0,1]$ gives the bound and direct substitution gives normalization.
+\end{proof}
+
+\begin{remark}[In plain language]
+The score never exceeds available capacity, and improving a favourable domain
+cannot reduce it. These results follow from the chosen form. They do not prove
+that CES is the true law of healthy ageing.
+\end{remark}
+
+\begin{proposition}[Constant substitution elasticity]
+For interior values, the CES elasticity of substitution between $S$ and $R$ is
+\citep{arrow_chenery_1961}
+\[
+\sigma=\frac{1}{1-\rho}.
+\]
+\end{proposition}
+\begin{proof}
+The ratio of marginal products is proportional to $(s/r)^{\rho-1}$.
+Log-differentiating the input ratio with respect to this marginal-rate ratio
+gives $1/(1-\rho)$.
+\end{proof}
+
+\begin{remark}[In plain language]
+Values of $\rho$ near one allow substantial compensation; $\rho=0$ gives a
+geometric mean \citep{hardy_littlewood_polya_1934}; very negative values make the weaker domain a bottleneck.
+Ethically acceptable compensation cannot be selected by fit alone.
+\end{remark}
+
+\begin{proposition}[Geometric marginal effects]
+For $\rho=0$ and interior values,
+\[
+H=ps^\alpha r^{1-\alpha},\quad
+H_p=H/p,\quad H_s=\alpha H/s,\quad H_r=(1-\alpha)H/r.
+\]
+The corresponding elasticities are $1,\alpha,1-\alpha$.
+\end{proposition}
+\begin{proof}
+Differentiate the monomial and multiply each derivative by its argument divided
+by $H$.
+\end{proof}
+
+\begin{remark}[In plain language]
+The weights have a precise proportional interpretation in the geometric case.
+They are modelling parameters, not natural constants.
+\end{remark}
+
+\begin{proposition}[Capacity--context complementarity]
+For the geometric model,
+\[
+H_{ps}=\alpha s^{\alpha-1}r^{1-\alpha}>0,\qquad
+H_{pr}=(1-\alpha)s^\alpha r^{-\alpha}>0.
+\]
+\end{proposition}
+\begin{proof}
+Differentiate $H_p=s^\alpha r^{1-\alpha}$ with respect to $s$ and $r$.
+\end{proof}
+
+\begin{remark}[In plain language]
+Additional capacity produces more realised benefit in a supportive context,
+and contextual improvement produces more benefit when capacity exists. This is
+the theory's central complementarity claim and must be tested empirically.
+\end{remark}
+
+\begin{reading}[Why the cross-partial is the intersectionality claim]
+A positive $H_{ps}$ means the return on treating the body depends on the
+circumstances the body is treated in. Put the other way round, the same
+clinical intervention buys different amounts of realised capability in
+different people, and the difference is systematic rather than random.
+
+This is testable and it is the claim most likely to be wrong. It predicts, for
+instance, that a knee replacement gives Mrs~A less realised capability than it
+gives an otherwise identical woman with a car and a daughter next door, and
+that the shortfall is larger than either the knee or the daughter would predict
+alone. An additive model predicts the two effects simply add. The empirical
+chapters test the interaction directly, and a null result would narrow the
+theory and not simply fail to support it.
+\end{reading}
+
+\begin{proposition}[Aggregation can reverse rankings]
+There are profiles ranked oppositely by additive and bottleneck rules.
+\end{proposition}
+\begin{proof}
+Let $x=(1,1,0.2)$ and $y=(1,0.55,0.55)$. Equal-weight arithmetic contextual
+means are $0.6$ and $0.55$, ranking $x$ first. Bottleneck values are $0.2$ and
+$0.55$, ranking $y$ first.
+\end{proof}
+
+\begin{remark}[In plain language]
+Whether excellence conceals a severe shortfall is not a technical detail.
+Because rankings can reverse, weight and substitution sensitivity must be
+reported.
+\end{remark}
+
+The counterexample in the proof is not exotic. Profile $x$ is a person with
+strong support and a system that fails them; profile $y$ is a person with
+moderate amounts of both. Which of the two a health service should prioritise
+is a real question that gets a different answer depending on a parameter the
+data cannot settle. Reporting the score without reporting its sensitivity to
+$\rho$ would present an ethical choice as an empirical finding.
+
+Everything so far has assumed the capacity ceiling. The next section takes that
+assumption away and asks what changes.
+
+\section{A Rival Relational Ontology}
+\label{app:a-relational}
+
+The CES ceiling model assumes $H(p,s,r)\le p$. Capability theory, assistive
+technology and relational accounts of disability provide a reason to test a
+different boundary.
+
+\begin{definition}[Normalized relational aggregator]
+For non-negative parameters
+$\boldsymbol\beta=(\beta_P,\beta_S,\beta_R,\beta_{PS},\beta_{PR})$ with
+$K=\beta_P+\beta_S+\beta_R+\beta_{PS}+\beta_{PR}>0$, define
+\[
+H_R(p,s,r)=
+\frac{1-\exp[-(\beta_Pp+\beta_Ss+\beta_Rr+
+\beta_{PS}ps+\beta_{PR}pr)]}{1-\exp(-K)}.
+\]
+\end{definition}
+
+\begin{proposition}[Properties of the relational model]
+$H_R$ is continuous, maps $[0,1]^3$ into $[0,1]$, is weakly increasing in every
+coordinate and satisfies $H_R(1,1,1)=1$. If
+$\beta_Ss+\beta_Rr>0$, then $H_R(0,s,r)>0$, so the capacity-ceiling axiom is
+not satisfied.
+\end{proposition}
+\begin{proof}
+The exponent argument is continuous, non-negative and no larger than $K$.
+Therefore the numerator lies between zero and $1-e^{-K}$. Each partial
+derivative is the positive exponential factor multiplied by a sum of
+non-negative coefficients. Substitution establishes the two boundary claims.
+\end{proof}
+
+\begin{remark}[In plain language]
+The relational model allows assistance, technology and institutions to create
+effective opportunity not captured by an unaided biomedical-capacity measure.
+This is philosophically closer to relational capability, but it also risks
+calling general resources health. The two models embody rival views and must be
+reported as such.
+\end{remark}
+
+\begin{reading}[Where the two ontologies disagree about Mr~B]
+Under the ceiling model, Mr~B's destroyed knee sets a limit that no
+intervention short of a biological one can raise. A wheelchair, a ground-floor
+flat and a supportive employer bring him closer to that limit; they cannot pass
+it.
+
+Under the relational model they can. If the point of a knee is to get a person
+to work, to the shops and to their friends, and a powered wheelchair achieves
+that, then on this account Mr~B's health-related capability is genuinely higher
+and not merely better supported. The disability-rights literature has argued
+this position for forty years and it is not a fringe view.
+
+The two models make different predictions about a specific case: a person with
+$p=0$ on every biomedical indicator. The ceiling model scores them zero by
+construction. The relational model scores them by their circumstances. Neither
+answer is obviously right, and no amount of NHATS data settles it, which is
+what the following proposition states formally.
+\end{reading}
+
+\begin{proposition}[The ontology is not selected by fit alone]
+If the ceiling and relational models are non-nested and encode different
+boundary conditions, superior sample fit of one does not logically prove its
+boundary condition to be philosophically correct.
+\end{proposition}
+\begin{proof}
+Fit compares discrepancies between model-implied and observed distributions
+under the available indicators. A boundary claim concerns the meaning of
+capability under profiles that may be sparsely observed or imperfectly
+measured. Descriptive adequacy on one sample does not entail the truth of that
+normative or ontological premise.
+\end{proof}
+
+\begin{remark}[In plain language]
+Data can show which model describes observed patterns better. They cannot, by
+themselves, decide whether an accessible environment is part of health or a
+separate condition supporting health.
+\end{remark}
+
+\section{A Non-Compensatory Threshold Alternative}
+\label{app:a-threshold}
+
+\begin{definition}[Deprivation count]
+Choose thresholds $z_j\in(0,1)$ and define
+$d_j(x)=\mathbf1\{x_j<z_j\}$ and $c(x)=\sum_jw_jd_j(x)$. A profile is
+classified as constrained when $c(x)\ge k$ for a declared cut-off $k$.
+\end{definition}
+
+\begin{remark}[In plain language]
+This asks whether minimum standards are missed instead of allowing every
+shortfall to be smoothed away. It adapts the logic of multidimensional poverty
+measurement. \citep{alkire_foster_2011} Thresholds require clinical and public
+justification.
+\end{remark}
+
+\begin{workedexample}[apa-deprivation]{Counting deprivations for Mrs~A}
+Set every threshold at $z_j=0.5$ and weight the domains equally at $1/3$.
+Mrs~A's profile $(0.55,0.35,0.40)$ clears the line on biomedical capacity and
+falls below it on the other two, so $d(x)=(0,1,1)$ and $c(x)=2/3$. With a
+cut-off of $k=1/2$ she is classified as constrained; with $k=1$ she is not,
+because she is not deprived everywhere. Mr~B rationed, $(0.30,0.70,0.20)$, is
+deprived in biomedical capacity and structural freedom, so he too scores $2/3$,
+and the count cannot tell the two cases apart.
+
+\begin{wecode}[Python]
+from hpv.crf import deprivation_count
+
+for name, x in (("Mrs A", (0.55, 0.35, 0.40)),
+                ("Mr B rationed", (0.30, 0.70, 0.20)),
+                ("well placed", (0.90, 0.90, 0.90))):
+    c = deprivation_count(x, z=(0.5, 0.5, 0.5))
+    print(f"{name:<14} c(x) = {c:.4f}   constrained at k=1/2: {c >= 0.5}")
+\end{wecode}
+
+\weanswer{$c(x)=2/3$ for Mrs~A and for Mr~B rationed, and $0$ for the
+well-placed profile. Both running cases are constrained at $k=1/2$ and neither
+is at $k=1$. Asserted by \texttt{test\_definition\_deprivation\_count}.}
+\end{workedexample}
+
+\begin{reading}[What counting buys and what it costs]
+The appeal of this rule is that it never trades. Mrs~A's adequate biology does
+not offset her social and structural shortfalls; it simply is not counted
+against them. The cost is that it throws away magnitude. A woman at $0.49$ and
+a woman at $0.05$ are recorded identically, which is unacceptable if the
+question is how much help each needs rather than whether either qualifies.
+
+This is the same trade-off as any diagnostic threshold. An HbA1c of $48$
+mmol/mol makes a diagnosis; it does not distinguish a patient at $48$ from one
+at $110$. Thresholds are for eligibility, continuous scores are for
+titration, and neither substitutes for the other.
+\end{reading}
+
+The three families are now on the table: additive, CES and threshold. All three
+assume the domains can be measured in the first place, and that assumption
+deserves its own treatment.
+
+\section{Measurement: Indicators Are Not the Construct}
+\label{app:a-measurement}
+
+\begin{definition}[Reflective model]
+\[
+Y_{ijk}=\tau_{jk}+\lambda_{jk}\eta_{ki}+\varepsilon_{ijk},\qquad
+\mathbb E(\varepsilon_{ijk}\mid\eta_{ki})=0.
+\]
+The latent domain is modelled as a common cause of its indicators.
+\end{definition}
+
+\begin{definition}[Formative model]
+\[
+\eta_{ki}=\sum_jw_{jk}X_{ijk}+\zeta_{ik}.
+\]
+Indicators are modelled as causes or defining components and need not exhibit
+internal consistency.
+\end{definition}
+
+\begin{remark}[In plain language]
+Reflective indicators behave like effects of an underlying condition;
+formative indicators behave like ingredients. Housing and income need not
+correlate as symptoms of one disease to remain relevant constraints.
+\citep{bollen_lennox_1991,jarvis_2003}
+\end{remark}
+
+\begin{reading}[Reflective and formative, at the bedside]
+Reflective: a patient has hypothyroidism, and the tiredness, cold intolerance,
+constipation and dry skin are four effects of the one underlying state. Treat
+the thyroid and all four move together. Asking whether they correlate is a
+sensible question, and a symptom that did not correlate with the others would
+be evidence it does not belong.
+
+Formative: a patient's cardiovascular risk is built out of age, blood pressure,
+lipids and smoking. These do not correlate because a common cause is driving
+them; they are the ingredients. A smoker with perfect lipids is unremarkable,
+and it would be a mistake to drop smoking from the score because it fails to
+correlate with the others.
+
+Biomedical Potential is closer to the first kind, and Systemic Burdens is
+closer to the second. Running Cronbach's alpha on Mrs~A's housing, income and
+transport indicators and rejecting one for lowering it would be the same error
+as dropping smoking from a cardiovascular risk score.
+\end{reading}
+
+\begin{theorem}[Latent scale indeterminacy]
+\label{thm:latent_scale}
+In $Y=\tau+\lambda\eta+\varepsilon$, define
+$\eta^*=a+b\eta$ with $b>0$. The same observed model results from
+$\lambda^*=\lambda/b$ and $\tau^*=\tau-\lambda a/b$. Thus the latent
+location and scale require identifying constraints.
+\end{theorem}
+\begin{proof}
+Substitute $\eta=(\eta^*-a)/b$ and collect the intercept and loading terms.
+\end{proof}
+
+\begin{remark}[In plain language]
+The zero and unit of a latent score are chosen for estimation. Standardising it
+does not turn it into years or a natural physical quantity.
+\end{remark}
+
+The clinical analogue is the international normalised ratio. The INR is a ratio
+constructed precisely so that results are comparable between laboratories using
+different thromboplastins; without that deliberate calibration step, a
+prothrombin time of $18$ seconds means different things in different
+laboratories. A standardised factor score has had no equivalent calibration
+performed. Reporting Mrs~A as $-1.2$ standard deviations says where she sits in
+the NHATS distribution and nothing else. It does not say she has lost $1.2$ of
+anything.
+
+\begin{proposition}[Second-order implied covariance]
+\label{prop:secondorder_cov}
+If
+\[
+\mathbf Y=\boldsymbol\tau+\Lambda\boldsymbol\eta+\boldsymbol\varepsilon,
+\qquad
+\boldsymbol\eta=\boldsymbol\gamma H+\boldsymbol\delta,
+\]
+$\operatorname{Var}(H)=1$, and the three disturbances are mutually
+uncorrelated, then
+\[
+\Sigma_Y=\Lambda(\boldsymbol\gamma\boldsymbol\gamma^\top+
+\Psi_\delta)\Lambda^\top+\Theta_\varepsilon.
+\]
+\end{proposition}
+\begin{proof}
+Substitute the second equation into the first and add the covariances of the
+mutually uncorrelated terms.
+\end{proof}
+
+\begin{remark}[In plain language]
+This is the correlation pattern implied by a higher-order factor. It does not
+prove such a factor exists. With three first-order domains, the higher-order
+layer supplies limited independent evidence; fit alone is insufficient.
+\end{remark}
+
+\section{Objects That Must Not Be Confused}
+\label{app:a-confusion}
+
+\begin{definition}[Four distinct objects]
+The framework distinguishes:
+\begin{enumerate}
+ \item the vector profile $X_i=(P_i,S_i,R_i)$;
+ \item a chosen normative aggregator $H_{\rho,\alpha}(X_i)$;
+ \item a latent score $\widehat H_i=\mathbb E(H_i\mid\mathbf Y_i,\widehat\theta)$;
+ \item prognostic risk $\Pr(T_i\le t\mid\widehat H_i,\mathbf Z_i)$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Non-equivalence]
+These objects are not numerically interchangeable without calibration.
+\end{proposition}
+\begin{proof}
+They respectively have vector, normalized scalar, arbitrarily identified latent
+and time-indexed probability codomains. Their mathematical types and invariance
+properties differ.
+\end{proof}
+
+\begin{remark}[In plain language]
+What a person has, how domains are combined, what a measurement model estimates
+and what happens later are different questions. A hazard ratio is not the
+definition of H-Potential.
+\end{remark}
+
+\begin{workedexample}[apa-four-objects]{The four objects, for Mrs~A}
+\textbf{(1) The profile.} $X=(0.55,0.35,0.40)$. A description of her
+circumstances and nothing more. It is a vector, and it has no units.
+
+\textbf{(2) The normative aggregate.} $H_{0,0.5}=0.55\sqrt{0.35\times0.40}
+=0.206$. This is what the chosen ethical rule says her profile amounts to.
+Change $\rho$ and the number changes while her profile does not: $0.206$ at
+$\rho=0$, $0.205$ at $\rho=-1$, $0.193$ in the bottleneck limit. The additive
+rule on the same three numbers gives $0.433$, twice as large, because it is a
+different rule and not a better measurement.
+
+\textbf{(3) The latent estimate.} If the measurement model returns
+$\widehat H=-1.2$ with a standard error of $0.4$, that is what it infers from
+her questionnaire answers, on a scale whose zero and unit were chosen for
+estimation. Theorem~\ref{thm:latent_scale} says the scale is not identified by
+the data, so this number cannot be compared with $0.206$ at all.
+
+\textbf{(4) The predicted risk.} If the hazard model of
+Chapter~\ref{ch:results2} returns a five-year mortality probability near
+$0.27$, that is a statement about what happens to people who look like her, on
+a probability scale, indexed by a time horizon.
+
+\begin{wecode}[Python]
+from hpv.crf import H, H_additive
+
+x = (0.55, 0.35, 0.40)
+for rho in (0.0, -1.0, -800.0):
+    print(f"rho {rho:>7.1f}   H = {H(*x, rho):.4f}")
+print("additive rule on the same profile:", round(H_additive(*x), 4))
+\end{wecode}
+
+\weanswer{$0.2058$, $0.2053$ and $0.1925$ as $\rho$ falls, against $0.4333$ for
+the additive rule. Four numbers, one unchanged profile. Asserted by
+\texttt{test\_worked\_example\_four\_distinct\_objects\_for\_mrs\_a}.}
+\end{workedexample}
+
+\begin{reading}[Which pairs get confused]
+Conflating (2) with (3) is the commonest error in composite-index work: a rule
+someone chose gets reported as a measurement someone made. Conflating (3) with
+(4) is the commonest error in prognostic work: a risk score gets reported as a
+description of the person. The framework keeps all four separate for exactly
+this reason.
+\end{reading}
+
+\section{Failure Conditions and Scope of the Contribution}
+\label{app:a-failure}
+
+\begin{definition}[Failure conditions]
+The scalar proposal fails in its present form if domain content cannot be
+justified independently of outcomes; scales cannot be harmonised; measurement
+is unidentified or non-replicable; rankings are unstable over plausible
+weights; invariance is inadequate for intended comparisons; or the scalar adds
+no interpretable information beyond domain profiles and established measures.
+\end{definition}
+
+\begin{remark}[In plain language]
+The mathematics allows the theory to fail. If a total score is indefensible,
+the profile remains a scientifically legitimate result.
+\end{remark}
+
+That is a real possibility and not a rhetorical concession. The most likely
+outcome of the empirical chapters is that the domains are measurable, the
+higher-order factor is weakly identified, and the profile survives while the
+scalar does not. A framework that could not report that outcome would not be
+worth building.
+
+Whether the scalar survives or not, the framework eventually has to meet the
+question every health measure meets: what does it imply about how money should
+be spent? The final section states carefully how little it implies.
+
+\section{Economic Evaluation and Policy Mathematics}
+\label{app:a-economics}
+
+\begin{definition}[Net health benefit]
+For intervention $a$, willingness-to-pay threshold $\lambda>0$, incremental
+health consequence $\Delta Q(a)$ and incremental cost $\Delta C(a)$, define
+\[
+\operatorname{NHB}(a)=\Delta Q(a)-\frac{\Delta C(a)}{\lambda}.
+\]
+When $\Delta Q$ is measured in QALYs \citep{whitehead_2010}, NHB is measured in QALYs. The net-benefit form is due to \citet{stinnett_mullahy_1998}.
+\end{definition}
+
+\begin{remark}[In plain language]
+NHB asks whether the health produced is greater than the health likely displaced
+by spending the same resources elsewhere. H-Potential has no threshold
+$\lambda$ and cannot replace this calculation.
+\end{remark}
+
+\begin{workedexample}[apa-nhb]{Net health benefit for emicizumab}
+Suppose emicizumab prophylaxis gives Mr~B $\Delta Q=1.8$ QALYs over his
+remaining life and costs $\Delta C=\pounds 540{,}000$ more than on-demand
+treatment. At a threshold of $\lambda=\pounds 30{,}000$ per QALY, the health
+displaced elsewhere is $540{,}000/30{,}000=18$ QALYs, so
+$\operatorname{NHB}=1.8-18=-16.2$ QALYs.
+
+The threshold is the only thing that can change the sign. At
+$\lambda=\pounds 300{,}000$ the displaced health is $1.8$ QALYs and the
+calculation is a dead heat; above that it is positive. Nothing clinical differs
+between the two answers.
+
+\begin{wecode}[Python]
+from hpv.economics import net_health_benefit, displaced_health
+
+dQ, dC = 1.8, 540_000.0
+for lam in (30_000.0, 100_000.0, 300_000.0, 400_000.0):
+    print(f"lambda {lam:>9,.0f}  displaced {displaced_health(dC, lam):6.2f} QALYs"
+          f"   NHB {net_health_benefit(dQ, dC, lam):+7.2f} QALYs")
+\end{wecode}
+
+\weanswer{$\operatorname{NHB}=-16.2$ QALYs at
+$\lambda=\pounds 30{,}000$, $-3.6$ at $\pounds 100{,}000$, $0.0$ at
+$\pounds 300{,}000$ and $+0.45$ at $\pounds 400{,}000$. Asserted by
+\texttt{test\_worked\_example\_emicizumab\_for\_mr\_b} and
+\texttt{test\_definition\_net\_health\_benefit}.}
+\end{workedexample}
+
+\begin{reading}[Reading the sign]
+The negative sign does not mean the drug does not
+work. It works: it produces $1.8$ QALYs. It means that funding it from a fixed
+budget removes an estimated $18$ QALYs from people the decision-maker will
+never meet. Those people are invisible in the trial and are the whole content
+of $\lambda$.
+
+Mr~B's H-Potential profile would improve markedly under prophylaxis, and this
+calculation is indifferent to that. A measure of need and a measure of
+opportunity cost answer different questions, and the next proposition states
+formally that neither implies the other.
+\end{reading}
+
+\begin{proposition}[Need does not imply cost-effectiveness]
+A low baseline H-Potential score does not imply
+$\operatorname{NHB}(a)>0$ for any particular intervention $a$.
+\end{proposition}
+\begin{proof}
+For any baseline score, choose an intervention with $\Delta Q(a)=0$ and
+$\Delta C(a)>0$. Then
+$\operatorname{NHB}(a)=-\Delta C(a)/\lambda<0$.
+\end{proof}
+
+\begin{remark}[In plain language]
+A score can identify serious need without proving that a proposed programme is
+effective or a good use of scarce funds. Need, benefit, cost-effectiveness and
+affordability are different policy questions.
+\end{remark}
+
+The proof is almost trivial and the point is not. Health systems routinely
+justify spending by pointing at need, and need is the one thing the
+calculation does not use. Mrs~A's low score is a reason to look for something
+that helps her; it is not evidence that any particular thing does. That said,
+a rule that maximises net health benefit alone will systematically underserve
+people whose disadvantage makes interventions expensive to deliver, which is
+why the calculation is extended next rather than left as it stands.
+
+\begin{definition}[Distribution-sensitive evaluation]
+For groups $g=1,\ldots,G$ with population weights $\pi_g$, post-policy health
+$q_g(a)>0$ and inequality-aversion \citep{atkinson_1970} parameter $\varepsilon\ge0$, define
+\[
+W_\varepsilon(a)=
+\begin{cases}
+\left[\sum_g\pi_gq_g(a)^{1-\varepsilon}\right]^{1/(1-\varepsilon)},
+&\varepsilon\ne1,\\
+\exp\left(\sum_g\pi_g\log q_g(a)\right),&\varepsilon=1.
+\end{cases}
+\]
+\end{definition}
+
+\begin{remark}[In plain language]
+This equally distributed equivalent gives more importance to gains among groups
+with worse health as $\varepsilon$ increases. The parameter is a social value
+judgement, not an estimated biological fact. Distributional cost-effectiveness
+analysis must also include the distribution of opportunity costs.
+\citep{asaria_2016_dcea}
+\end{remark}
+
+\begin{workedexample}[apa-atkinson]{A transfer between two groups, at three values of $\varepsilon$}
+Take two groups of equal size, one with post-policy health $q_1=0.4$ and one
+with $q_2=0.8$. At $\varepsilon=0$ the measure is the plain average, $0.600$: a
+QALY is a QALY whoever gets it. At $\varepsilon=1$ it is the geometric mean,
+$\sqrt{0.4\times0.8}=0.566$. At $\varepsilon=2$ it is the harmonic mean,
+$0.533$.
+
+Now move $0.05$ of health from the better-off group to the worse-off, giving
+$q_1=0.45$ and $q_2=0.75$. The plain average is unchanged at $0.600$, so at
+$\varepsilon=0$ the transfer is worth nothing. At $\varepsilon=1$ the measure
+rises to $0.581$ and at $\varepsilon=2$ to $0.5625$. The gap between $0.600$ and
+$0.533$ is the price the social judgement is willing to pay for equality, stated
+in health rather than hidden in rhetoric.
+
+\begin{wecode}[Python]
+from hpv.crf import equity_ede
+
+before, after = [0.4, 0.8], [0.45, 0.75]
+for eps in (0.0, 1.0, 2.0):
+    b, a = equity_ede(before, eps), equity_ede(after, eps)
+    print(f"eps {eps:.0f}   before {b:.4f}   after {a:.4f}   gain {a - b:+.4f}")
+\end{wecode}
+
+\weanswer{$0.6000\to0.6000$ at $\varepsilon=0$, $0.5657\to0.5809$ at
+$\varepsilon=1$, and $0.5333\to0.5625$ at $\varepsilon=2$. The same transfer is
+worth nothing, a little, or a lot, depending only on a declared value judgement.
+Asserted by
+\texttt{test\_worked\_example\_transfer\_only\_registers\_above\_eps\_zero} and
+\texttt{test\_definition\_equity\_ede\_and\_limits}.}
+\end{workedexample}
+
+\begin{reading}[Why $\varepsilon$ is declared, not estimated]
+The parameter must be declared and varied rather than estimated.
+There is no experiment that reveals how much aggregate health a society should
+give up to reduce inequality in it.
+\end{reading}
+
+\begin{definition}[Jurisdiction-indexed policy evidence vector]
+For policy $a$ in jurisdiction $j$, the minimum decision object is
+\[
+\mathcal D_j(a)=
+(\Delta X_j(a),\Delta Q_j(a),\Delta C_j(a),\operatorname{BI}_j(a),
+\operatorname{Dist}_j(a),\operatorname{Unc}_j(a),\operatorname{Gov}_j(a)),
+\]
+representing profile change, health consequence, cost, budget impact \citep{sullivan_2014},
+distribution, uncertainty and governance requirements under the institutions,
+prices, population and laws of $j$.
+\end{definition}
+
+\begin{remark}[Relation to the eight-coordinate form]
+Chapter~\ref{app:crf} carries the same object with the first coordinate
+disaggregated, writing $(\Delta P_j,\Delta S_j,\Delta R_j)$ in place of
+$\Delta X_j$, which is what makes the decomposition of
+\eqref{eq:crf_gap} readable off the vector. That form
+omits $\operatorname{Unc}_j$ from the printed list, not because uncertainty is
+optional but because it attaches to every other coordinate rather than sitting
+beside them: each of $\Delta Q_j$, $\Delta C_j$ and the rest is reported with
+its interval. The seven-coordinate form here keeps it explicit; the
+eight-coordinate form there distributes it. Neither drops it.
+\end{remark}
+
+\begin{remark}[In plain language]
+No single coordinate settles the decision. H-Potential contributes
+$\Delta X$; it does not absorb safety, effectiveness, costs, affordability,
+equity, ethics or accountability into one number.
+\end{remark}
+
+The vector is deliberately not collapsed. Collapsing it would produce a single
+figure that a committee could rank, and would bury the disagreements that
+committee exists to have. Mr~B's case is decided differently in different
+countries not because they measure $\Delta X$ differently but because they
+weigh the remaining six coordinates differently, and the following proposition
+shows that this is a mathematical fact about the decision problem rather than
+an inconsistency to be tidied away.
+
+\begin{proposition}[A policy decision is not generally transportable]
+Suppose two jurisdictions $j$ and $k$ observe the same H-Potential profile
+change, $\Delta X_j(a)=\Delta X_k(a)$, and the same health consequence,
+$\Delta Q_j(a)=\Delta Q_k(a)$. These equalities are insufficient to imply the
+same policy ranking of $a$.
+\end{proposition}
+
+\begin{proof}
+Let a simplified jurisdictional net-benefit rule be
+$N_j(a)=\lambda_j\Delta Q_j(a)-\Delta C_j(a)$, subject also to a budget
+constraint. Equality of $\Delta X$ and $\Delta Q$ imposes no equality on the
+opportunity-cost parameter $\lambda_j$, incremental cost $\Delta C_j$, or
+budget impact $\operatorname{BI}_j$. Choose admissible values for which
+$N_j(a)>0$ and $N_k(a)<0$. The rankings differ despite equal profile and health
+effects. Distributional weights or legal constraints provide further grounds
+for divergence. Hence transport of effect does not entail transport of
+decision.
+\end{proof}
+
+\begin{remark}[In plain language]
+An intervention can work equally well in two places and still be a sound use of
+resources in only one of them. What must be given up, who bears that loss, what
+the public budget can sustain and which rights the state must honour are local
+facts and judgements. The mathematics therefore forbids a global
+``cost-per-H-Potential'' threshold.
+\end{remark}
+
+The results proved here are conditional properties of stated forms. They do not
+prove that the domains exhaust health capability, that CES is a biological law,
+that any weights are ethically correct, or that a common latent factor exists.
+The contribution is a disciplined bridge: a domain space grounded in
+healthy-ageing and capability theory; axioms for any scalar; explicit
+compensatory and non-compensatory families; proofs of their implications; and a
+measurement architecture able to reject aggregation.
