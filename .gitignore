@@ -13,3 +13,5 @@ data/private/
 .ruff_cache/
 *.fdb_latexmk
 *.fls
+*.egg-info/
+.venv/
