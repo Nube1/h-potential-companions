@@ -14,6 +14,7 @@ never rasterised) and ``[n]`` reference entries under ``## References``.
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -153,6 +154,7 @@ def tex_text(text: str) -> str:
 _NUMERIC = re.compile(r"^-?\d+(\.\d+)?%?$")
 
 TEX_PREAMBLE = r"""\documentclass[11pt,a4paper]{article}
+\pdftrailerid{}
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
@@ -237,7 +239,13 @@ def compile_latex(tex_path: Path) -> Path:
             f"-outdir={tmp}",
             str(tex_path),
         ]
-        proc = subprocess.run(cmd, capture_output=True, text=True)
+        # A fixed timestamp makes rebuilds byte-identical when nothing changed.
+        env = {
+            **os.environ,
+            "SOURCE_DATE_EPOCH": os.environ.get("SOURCE_DATE_EPOCH", "1792972800"),
+            "FORCE_SOURCE_DATE": "1",
+        }
+        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
         log = Path(tmp) / tex_path.with_suffix(".log").name
         if proc.returncode != 0:
             tail = log.read_text(errors="replace")[-3000:] if log.exists() else proc.stdout[-3000:]

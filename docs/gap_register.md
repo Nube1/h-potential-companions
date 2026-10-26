@@ -14,4 +14,4 @@
 | 3 | Existing six manuscripts may overlap | Distinct paper scopes and source limitation recorded | Inspect ZIPs and perform duplication/reuse audit |
 | 3 | Journal readiness | Full drafts, source and PDFs generated | Journal choice, expanded related work and author declarations |
 | 3 | Chapter One violates supervisor direction | Specific relocation map prepared | Rewrite with editable thesis source and Faculty guide |
-| 3 | GitHub publication | In thesis_companions/ on branch research/h-potential-thesis-companions of Nube1/Biomedical-Potential-Calculator- | Review and merge the pull request |
+| 3 | GitHub publication | Standalone repository Nube1/h-potential-companions | None |

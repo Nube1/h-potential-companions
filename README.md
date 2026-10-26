@@ -52,7 +52,7 @@ The code does **not** fit a CFA, implement survey-weighted SEM, fit a survival m
 
 ## Relation to existing GitHub work
 
-This project lives in the `thesis_companions/` folder of `Nube1/Biomedical-Potential-Calculator-`, beside the separate haemophilia PK/PD notebook at the repository root. It does not change that notebook or treat its placeholder parameters as evidence for the thesis. GitHub Actions runs the tests on Python 3.10 to 3.13 and on Windows, then rebuilds the results and the LaTeX PDFs and fails if any committed result changes.
+This is a standalone repository. The separate haemophilia PK/PD notebook in `Nube1/Biomedical-Potential-Calculator-` is not changed, and its placeholder parameters are not treated as evidence for the thesis. GitHub Actions runs the tests on Python 3.10 to 3.13 and on Windows, then rebuilds the results and the LaTeX PDFs and fails if any committed result changes.
 
 ## Thesis and approval status
 
