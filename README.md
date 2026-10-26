@@ -35,13 +35,25 @@ python tools/hp.py all       # data guard, tests, build and bundle
 
 ## NHATS data
 
-The real-world pipeline reads the NHATS public-use files directly. Register with NHATS, download the Round 1 sample-person file, the follow-up sample-person files and the latest tracker file into one folder, then:
+NHATS has no public data API: the files come from nhats.org after you register and accept its data use terms. Download the Round 1 sample-person file, the follow-up sample-person files and the latest tracker file (Stata, SAS, CSV or Parquet; the zip files as downloaded are fine) into one folder. Then plug them in any of three ways:
 
 ```sh
-python tools/hp.py nhats --data-dir PATH/TO/NHATS
+python tools/hp.py nhats --data-dir PATH/TO/NHATS          # one command
 ```
 
-This checks every variable named in `realworld-pipeline/configs/nhats_layout.yaml`, builds the analytic extract, fits the models and draws the figures into `realworld-pipeline/outputs/nhats/`. The layout's variable names follow NHATS naming and were written without the codebook to hand: `nhats-check` lists any that are absent or carry undeclared codes, and the build stops until they are fixed. Data and participant-level outputs stay on your machine; the guard below blocks them from git.
+```python
+from hpotential.api import analyse                           # from Python
+summary = analyse("PATH/TO/NHATS", "outputs/nhats")
+```
+
+```sh
+hpotential serve --port 8765                                 # local HTTP API
+curl -X POST localhost:8765/analyse -d '{"source": "PATH/TO/NHATS", "run": "round1"}'
+```
+
+The HTTP API listens on this computer only, so the data never leave it. It answers `/check`, `/analyse`, `/runs`, `/runs/<run>` and `/runs/<run>/figures/<file>`, and returns aggregate numbers only.
+
+Every route first checks each variable named in `realworld-pipeline/configs/nhats_layout.yaml` and stops if any is missing or carries an undeclared code. Those names follow NHATS naming and were written without the codebook to hand, so expect to correct a few on the first run. Participant-level files carry RESTRICTED in their names; the guard below keeps them out of git.
 
 ## Figures
 

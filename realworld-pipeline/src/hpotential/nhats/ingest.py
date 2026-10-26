@@ -13,6 +13,7 @@ that holds the data; see the repository guard in tools/guard_data.py.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -101,12 +102,25 @@ def _sources(spec: dict) -> list[str]:
 
 
 def find_file(data_dir: Path, stem: str) -> Path | None:
-    """The first file named ``stem`` with a readable extension, any case."""
-    wanted = stem.lower()
-    for path in sorted(Path(data_dir).rglob("*")):
-        if path.suffix.lower() in READERS and path.stem.lower() == wanted:
-            return path
-    return None
+    """The file named ``stem`` with a readable extension, any case.
+
+    NHATS releases add a version tag to file names (``..._SP_File_V3``), so a
+    trailing ``_v<n>`` is accepted; with several versions the highest wins.
+    Stata is preferred over SAS, CSV and Parquet when one release ships more
+    than one format.
+    """
+    pattern = re.compile(re.escape(stem.lower()) + r"(?:_v(\d+))?$")
+    order = {".dta": 0, ".sas7bdat": 1, ".parquet": 2, ".csv": 3}
+    best: tuple[int, int, Path] | None = None
+    for path in Path(data_dir).rglob("*"):
+        if path.suffix.lower() not in READERS:
+            continue
+        m = pattern.match(path.stem.lower())
+        if m:
+            key = (-int(m.group(1) or 0), order[path.suffix.lower()], path)
+            if best is None or key < best:
+                best = key
+    return best[2] if best else None
 
 
 def read_table(path: Path, columns: list[str] | None = None) -> pd.DataFrame:

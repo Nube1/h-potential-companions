@@ -57,6 +57,15 @@ def _parser() -> argparse.ArgumentParser:
     f.add_argument("--figure-dir", default=None)
     f.add_argument("--reps", type=int, default=None, help="bootstrap replicates (config default)")
 
+    a = sub.add_parser("analyse", help="NHATS folder or zip in, results and figures out")
+    a.add_argument("--source", required=True, help="folder of NHATS files, or the downloaded zip")
+    a.add_argument("--output", default="outputs/nhats")
+    a.add_argument("--reps", type=int, default=None)
+
+    v = sub.add_parser("serve", help="local HTTP data API on 127.0.0.1")
+    v.add_argument("--port", type=int, default=8765)
+    v.add_argument("--runs-dir", default="outputs/api")
+
     d = sub.add_parser("demo", help="synthetic NHATS files -> extract -> run -> figures")
     d.add_argument("--config", default=DEFAULT_CONFIG)
     d.add_argument("--layout", default=DEFAULT_LAYOUT)
@@ -126,6 +135,17 @@ def main(argv: list[str] | None = None) -> int:
         from .figures import draw_all
 
         print(draw_all(a.output, load_config(a.config), a.figure_dir, reps=a.reps))
+    elif a.command == "analyse":
+        from .api import analyse
+
+        summary = analyse(a.source, a.output, reps=a.reps)
+        print(
+            json.dumps({"flow": summary["flow"], "figures": len(summary["figures"])}, default=float)
+        )
+    elif a.command == "serve":
+        from .api import serve
+
+        serve(a.port, a.runs_dir)
     elif a.command == "demo":
         from .nhats import Layout, write_synthetic_nhats
 

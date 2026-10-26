@@ -86,15 +86,24 @@ def build(args) -> None:
 
 def nhats(args) -> None:
     py, cwd = python_for("realworld-pipeline", args.here), ROOT / "realworld-pipeline"
-    data_dir = str(Path(args.data_dir).resolve())
-    extract = "data/processed/nhats_analytic.csv"
-    sh([py, "-m", "hpotential.cli", "nhats-check", "--data-dir", data_dir], cwd)
-    sh([py, "-m", "hpotential.cli", "nhats-build", "--data-dir", data_dir, "--output", extract], cwd)
-    sh([py, "-m", "hpotential.cli", "run", "--data", extract, "--output", "outputs/nhats", "--figures"], cwd)
+    source = str(Path(args.data_dir).resolve())
+    sh([py, "-m", "hpotential.cli", "nhats-check", "--data-dir", str(_unpacked(py, cwd, source))], cwd)
+    sh([py, "-m", "hpotential.cli", "analyse", "--source", source, "--output", "outputs/nhats"], cwd)
     print(
         "\nFigures and aggregate tables: realworld-pipeline/outputs/nhats/. "
         "Files marked RESTRICTED hold participant-level rows and must stay on this machine."
     )
+
+
+def _unpacked(py: str, cwd: Path, source: str) -> Path:
+    out = subprocess.run(
+        [py, "-c", f"from hpotential.api import prepare_source; print(prepare_source(r'{source}'))"],
+        cwd=cwd,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return Path(out.stdout.strip())
 
 
 def version() -> str:
