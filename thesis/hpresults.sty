@@ -1,0 +1,34 @@
+% hpresults.sty: results filled from the H-potential pipeline.
+%
+% `hpotential thesis-export` writes generated/ beside thesis.tex. Each macro
+% below uses the generated item when it exists and otherwise prints the
+% placeholder it wraps, so the thesis compiles at every stage.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hpresults}[2026/10/27 Results filled from the H-potential pipeline]
+\RequirePackage{graphicx}
+
+\newif\ifhpsynthetic
+\newcommand{\hpgendir}{generated}
+
+% Table rows: \hprows{key}{placeholder rows}
+\newcommand{\hpsetrows}[2]{\expandafter\def\csname hp@rows@#1\endcsname{#2}}
+\newcommand{\hprows}[2]{%
+  \ifcsname hp@rows@#1\endcsname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi
+  {\csname hp@rows@#1\endcsname}{#2}}
+
+% Single values: \hpval{key}{placeholder}
+\newcommand{\hpsetval}[2]{\expandafter\def\csname hp@val@#1\endcsname{#2}}
+\newcommand{\hpval}[2]{%
+  \ifcsname hp@val@#1\endcsname\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi
+  {\csname hp@val@#1\endcsname}{#2}}
+
+% Figures and paragraphs: \hpfig{key}{placeholder box}, \hptext{key}{placeholder}
+\newcommand{\hpfig}[2]{\IfFileExists{\hpgendir/figures/#1.tex}{\input{\hpgendir/figures/#1.tex}}{#2}}
+\newcommand{\hptext}[2]{\IfFileExists{\hpgendir/text/#1.tex}{\input{\hpgendir/text/#1.tex}}{#2}}
+
+% Marks
+\newcommand{\hpstamp}{\ifhpsynthetic\textbf{[Synthetic demonstration data. These are not results.]}\fi}
+\newcommand{\hpinterpret}{\par\medskip\noindent\emph{[Interpretation: to be written by the candidate.]}\par}
+
+\InputIfFileExists{\hpgendir/values.tex}{}{}
+\endinput

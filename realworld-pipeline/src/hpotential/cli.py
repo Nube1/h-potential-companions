@@ -73,6 +73,16 @@ def _parser() -> argparse.ArgumentParser:
     d.add_argument("--output", default="outputs/demo")
     d.add_argument("--n", type=int, default=2000)
     d.add_argument("--reps", type=int, default=200)
+
+    x = sub.add_parser("thesis-export", help="fill the thesis results chapters from a run")
+    x.add_argument("--run", default="outputs/nhats", help="output folder of a finished run")
+    x.add_argument("--thesis", default="../thesis", help="thesis folder (holds thesis.tex)")
+    x.add_argument("--config", default=DEFAULT_CONFIG)
+    x.add_argument("--reps", type=int, default=200, help="bootstrap replicates")
+    x.add_argument("--no-internal", action="store_true", help="skip the bootstrap refits")
+    x.add_argument(
+        "--allow-synthetic", action="store_true", help="test the wiring on a demo run (stamped)"
+    )
     return p
 
 
@@ -129,6 +139,13 @@ def main(argv: list[str] | None = None) -> int:
 
         for path in write_synthetic_nhats(a.out_dir, Layout.load(a.layout), a.n):
             print(path)
+    elif a.command == "thesis-export":
+        from .thesis_export import export
+
+        report = export(
+            a.run, a.thesis, a.config, a.reps, a.allow_synthetic, internal=not a.no_internal
+        )
+        print(json.dumps(report, indent=2))
     elif a.command == "run":
         _run(load_config(a.config), a.data, a.output, a.figures)
     elif a.command == "figures":
@@ -153,6 +170,10 @@ def main(argv: list[str] | None = None) -> int:
         write_synthetic_nhats(raw, Layout.load(a.layout), a.n)
         extract = _build(raw, a.layout, Path(a.workdir) / "nhats_analytic.csv")
         _run(load_config(a.config), extract, a.output, True, a.reps)
+        # Mark the output so nothing downstream mistakes it for evidence.
+        (Path(a.output) / "SYNTHETIC").write_text(
+            "Made-up NHATS-shaped data from `hpotential demo`. Not results.\n", encoding="utf-8"
+        )
     return 0
 
 

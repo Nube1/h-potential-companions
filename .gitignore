@@ -38,3 +38,8 @@ thesis/*.glg
 thesis/*.gls
 thesis/*.bbl
 thesis/Chapters/*.aux
+
+# Results written by `hpotential thesis-export`. Aggregate only, but commit them
+# deliberately (git add -f) once a real NHATS run has been checked.
+thesis/generated/
+thesis/thesis.pdf

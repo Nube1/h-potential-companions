@@ -63,19 +63,21 @@ Throughout this chapter, effect estimates are presented together with 95\% confi
 \toprule
 \textbf{Quantity} & \textbf{Value} \\
 \midrule
+\hprows{events}{%
 All-cause deaths, n (\%) & [\,--\,] \\
 First unplanned hospitalisations, n (\%) & [\,--\,] \\
 Combined endpoint (sensitivity), n (\%) & [\,--\,] \\
 Median follow-up, years (IQR) & [\,--\,] \\
 Total person-years & [\,--\,] \\
 Censored before event, n (\%) & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: Kaplan--Meier \citep{kaplan_meier_1958} / cumulative-incidence curves for each co-primary endpoint over five years, with numbers at risk.]}}}
+\hpfig{km_overall}{\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: Kaplan--Meier \citep{kaplan_meier_1958} / cumulative-incidence curves for each co-primary endpoint over five years, with numbers at risk.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Cumulative incidence of each co-primary endpoint, all-cause mortality and first unplanned hospitalisation, over five years of follow-up.}
 \label{fig:km_overall}
@@ -118,6 +120,7 @@ Two regression models were estimated. The first was an unadjusted model containi
 \toprule
 \textbf{Endpoint and model} & \textbf{HR (95\% CI)} & \textbf{$p$} \\
 \midrule
+\hprows{hr}{%
 \multicolumn{3}{l}{\textit{All-cause mortality}} \\
 \quad Unadjusted & [\,--\,] & [\,--\,] \\
 \quad Adjusted for age and sex & [\,--\,] & [\,--\,] \\
@@ -125,6 +128,7 @@ Two regression models were estimated. The first was an unadjusted model containi
 \multicolumn{3}{l}{\textit{First unplanned hospitalisation}} \\
 \quad Unadjusted & [\,--\,] & [\,--\,] \\
 \quad Adjusted for age and sex & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -230,7 +234,7 @@ gap of $1.9$ points and one per $53$. Asserted by
 One caution applies to every estimate in Table~\ref{tab:hr}. The predictor is not observed, it is estimated, and it carries the error described in Chapter~\ref{ch:results1}. Error in a predictor produces attenuation bias, known in clinical epidemiology as regression dilution: the fitted hazard ratio is pulled towards $1.00$, so an estimate of $0.72$ would understate the association that would be seen if capability could be read off directly. The direction of the bias is predictable and its size is not, so the estimates here are read as a floor on the association and not as point values.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: direction and strength of the association, whether it is independent of age and sex, and the degree of attenuation after adjustment.]}
+\hptext{assoc}{\noindent\emph{[Placeholder for results narrative: direction and strength of the association, whether it is independent of age and sex, and the degree of attenuation after adjustment.]}}
 
 A single hazard ratio stands in for the whole of follow-up, and that only makes sense if the multiplier it reports holds from the first month to the sixtieth. Whether it does is a question the data can answer.
 
@@ -243,7 +247,7 @@ The validity of the Cox model depends upon the assumption that hazard ratios rem
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: scaled Schoenfeld residuals for the $H_{\text{potential}}$ plotted against follow-up time, with smoothed trend and reference line.]}}}
+\hpfig{schoenfeld}{\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: scaled Schoenfeld residuals for the $H_{\text{potential}}$ plotted against follow-up time, with smoothed trend and reference line.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Scaled Schoenfeld residuals used to assess the proportional-hazards assumption for the $H_{\text{potential}}$.}
 \label{fig:schoenfeld}
@@ -268,7 +272,7 @@ Read that way, a significant Schoenfeld test is a result about the construct and
 \end{reading}
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: outcome of the proportional-hazards check and any consequences for the modelling strategy.]}
+\hptext{ph}{\noindent\emph{[Placeholder for results narrative: outcome of the proportional-hazards check and any consequences for the modelling strategy.]}}
 
 \medskip
 \noindent Whether the multiplier is constant settles how the association should be reported. It says nothing about whether the score can separate one patient from another, which is a different property and the subject of the next section.
@@ -299,14 +303,16 @@ Although Harrell's statistic has become conventional, it is known to exhibit bia
 \label{tab:discrimination}
 \footnotesize
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{7cm} p{4cm}}
+\begin{tabular}{p{5.6cm} p{3.6cm} p{3.6cm}}
 \toprule
-\textbf{Measure} & \textbf{Value (95\% CI)} \\
+\textbf{Measure} & \textbf{Mortality (95\% CI)} & \textbf{Hospitalisation (95\% CI)} \\
 \midrule
-Harrell's C \citep{harrell_1996} & [\,--\,] \\
-Uno's C (IPCW) & [\,--\,] \\
-Calibration-in-the-large & [\,--\,] \\
-Calibration slope & [\,--\,] \\
+\hprows{discrimination}{%
+Harrell's C \citep{harrell_1996} & [\,--\,] & [\,--\,] \\
+Uno's C (IPCW) & [\,--\,] & [\,--\,] \\
+Calibration-in-the-large & [\,--\,] & [\,--\,] \\
+Calibration slope & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -371,7 +377,7 @@ Harrell's C counts only the pairs whose ordering is known. A pair is usable when
 Interpretation of discriminative performance weighs the absolute values against consistency with previous literature, the width of confidence intervals, and comparative performance relative to existing measures examined later in this chapter. Perfect prediction is rarely achievable in complex biological systems, and even well-established prognostic models typically demonstrate concordance values well below unity. A modest but consistent improvement over established tools may be more meaningful than pursuing unrealistically high concordance values that cannot be achieved within heterogeneous ageing populations.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: discriminative performance of the $H_{\text{potential}}$ model and agreement between Harrell's and Uno's statistics.]}
+\hptext{discrimination}{\noindent\emph{[Placeholder for results narrative: discriminative performance of the $H_{\text{potential}}$ model and agreement between Harrell's and Uno's statistics.]}}
 
 \medskip
 \noindent A concordance statistic says nothing about the size of the risks being ranked. Two models with identical concordance can differ by a factor of two in the probability each prints beside a patient's name, and that difference is what calibration measures.
@@ -389,7 +395,7 @@ Although numerical summaries provide concise measures, visualisation remains ind
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot showing predicted versus observed five-year risk, with the 45-degree reference line and a smoothed calibration curve.]}}}
+\hpfig{calibration_plot}{\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot showing predicted versus observed five-year risk, with the 45-degree reference line and a smoothed calibration curve.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Calibration of the $H_{\text{potential}}$ prognostic model.}
 \label{fig:calibration_plot}
@@ -431,7 +437,7 @@ $t_0$, since counting a censored participant as event-free biases $a$ downwards.
 \end{definition}
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: calibration-in-the-large, calibration slope, and any region of the risk spectrum showing systematic miscalibration.]}
+\hptext{calibration}{\noindent\emph{[Placeholder for results narrative: calibration-in-the-large, calibration slope, and any region of the risk spectrum showing systematic miscalibration.]}}
 
 \medskip
 \noindent Neither property implies the other, and a model can be sold on whichever one it happens to have. The pairing is worth stating plainly before the comparative analyses lean on both.
@@ -562,23 +568,25 @@ Comparative performance was evaluated using several complementary criteria. Disc
 \label{tab:comparison}
 \footnotesize
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{4.5cm} p{2.4cm} p{2.2cm} p{2.4cm} p{2.2cm}}
+\begin{tabular}{p{4.6cm} p{1.7cm} p{3.6cm} p{1.6cm} p{1.6cm}}
 \toprule
 \textbf{Model} & \textbf{Harrell's C} & \textbf{$\Delta$C vs $H$} & \textbf{AIC} & \textbf{BIC} \\
 \midrule
+\hprows{comparison}{%
 $H_{\text{potential}}$ & [\,--\,] & -- & [\,--\,] & [\,--\,] \\
 QALY proxy & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
 Frailty index & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
 Charlson index & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
 ADL/IADL-only & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
 Age and comorbidity & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: time-dependent (cumulative/dynamic) AUC for the $H_{\text{potential}}$ and comparator models across follow-up time.]}}}
+\hpfig{tdauc}{\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: time-dependent (cumulative/dynamic) AUC for the $H_{\text{potential}}$ and comparator models across follow-up time.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Time-dependent area under the curve for the $H_{\text{potential}}$ and comparator models.}
 \label{fig:tdauc}
@@ -587,7 +595,7 @@ Age and comorbidity & [\,--\,] & [\,--\,] & [\,--\,] & [\,--\,] \\
 Comparisons between competing models were interpreted according to the pre-specified benchmarking framework outlined in Section~\ref{sec:performance}. The purpose of the comparison is to determine whether the additional conceptual complexity of $H_{\text{potential}}$ is accompanied by measurable incremental information, rather than to declare a winner on the basis of a single performance statistic. Interpretation weighed numerical differences against the consistency of evidence across several performance measures: a model demonstrating modest improvements in discrimination accompanied by superior calibration, lower information criteria and improved clinical utility may provide stronger evidence of overall prognostic value than a model achieving marginally higher concordance alone.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: for each comparator, whether the $H_{\text{potential}}$ is non-inferior or superior under the decision rule, and interpretation.]}
+\hptext{comparison}{\noindent\emph{[Placeholder for results narrative: for each comparator, whether the $H_{\text{potential}}$ is non-inferior or superior under the decision rule, and interpretation.]}}
 
 A comparison between standalone models asks which single measure is best. The clinically live question is different: given that the older measures are already recorded, does adding this one change anything.
 
@@ -599,7 +607,7 @@ A comparison between standalone models asks which single measure is best. The cl
 Strong standalone performance does not necessarily imply that a predictor provides useful additional information when existing clinical variables are already available. Incremental value was therefore evaluated by adding the $H_{\text{potential}}$ to baseline models containing conventional clinical predictors and examining the resulting change in predictive performance. Healthcare providers already possess demographic information, disease history and measures of functional impairment; the relevant question is whether estimating the latent construct meaningfully improves prediction beyond this routinely available information. Changes in concordance, likelihood-based model fit and information criteria were examined after incorporation of the latent score, determining whether the construct captures genuinely new prognostic information rather than reproducing existing clinical variables in a more complex form.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ adds discrimination and improves fit over each baseline model.]}
+\hptext{increment}{\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ adds discrimination and improves fit over each baseline model.]}}
 
 An improvement in fit still leaves open whether any patient would be managed differently. Answering that requires the harm of acting needlessly and the harm of failing to act to be put on one scale.
 
@@ -612,7 +620,7 @@ Statistical measures of predictive performance do not directly determine whether
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][5cm][c]{0.85\linewidth}{\centering \emph{[Figure placeholder: decision-curve analysis comparing net benefit for the $H_{\text{potential}}$ and comparator models across threshold probabilities, with treat-all and treat-none reference lines.]}}}
+\hpfig{dca}{\fbox{\parbox[c][5cm][c]{0.85\linewidth}{\centering \emph{[Figure placeholder: decision-curve analysis comparing net benefit for the $H_{\text{potential}}$ and comparator models across threshold probabilities, with treat-all and treat-none reference lines.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Decision-curve analysis evaluating the clinical utility of the $H_{\text{potential}}$ compared with established prognostic measures.}
 \label{fig:dca}
@@ -707,7 +715,7 @@ print(f"treat-all at p_t = prevalence: "
 Interpretation of the decision curves focuses on the range of threshold probabilities over which each model provides the greatest net benefit. If the curve associated with the $H_{\text{potential}}$ lies consistently above those of competing models across clinically relevant thresholds, this indicates that use of the latent construct results in superior clinical decision making; overlapping curves would suggest comparable clinical utility despite possible differences in statistical performance. Decision-curve analysis is particularly valuable because improvements in traditional metrics do not necessarily translate into improved clinical outcomes: small gains in discrimination may have little practical importance if they occur outside clinically relevant thresholds, whereas modest statistical improvements may produce substantial clinical benefit when concentrated within the decision range used by healthcare providers.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ shows net benefit over comparators across clinically relevant thresholds.]}
+\hptext{net_benefit}{\noindent\emph{[Placeholder for results narrative: whether the $H_{\text{potential}}$ shows net benefit over comparators across clinically relevant thresholds.]}}
 
 \medskip
 \noindent Net benefit completes the performance measures. What remains is to read them together, since they can point in different directions and a rule for weighing them has to be fixed before the numbers arrive.
@@ -744,25 +752,27 @@ Interpretation emphasises consistency with the co-primary results rather than id
 \toprule
 \textbf{Measure} & \textbf{Value (95\% CI)} \\
 \midrule
+\hprows{secondary}{%
 Hazard ratio (adjusted) & [\,--\,] \\
 Harrell's C & [\,--\,] \\
 Uno's C (IPCW) & [\,--\,] \\
 Calibration slope & [\,--\,] \\
 Calibration-in-the-large & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
-\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot for the combined endpoint, predicted versus observed five-year risk.]}}}
+\hpfig{calibration_secondary}{\fbox{\parbox[c][5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: calibration plot for the combined endpoint, predicted versus observed five-year risk.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Calibration of the $H_{\text{potential}}$ model for the combined endpoint (sensitivity analysis).}
 \label{fig:calibration_secondary}
 \end{figure}
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: association, discrimination and calibration for the combined endpoint, and any difference from the co-primary results.]}
+\hptext{combined}{\noindent\emph{[Placeholder for results narrative: association, discrimination and calibration for the combined endpoint, and any difference from the co-primary results.]}}
 
 \medskip
 \noindent Consistency across endpoint definitions shows the results are not an artefact of how the outcome was cut. It says nothing about the two threats common to all of them: participants whose data are incomplete, and performance measured in the sample that produced the model.
@@ -846,10 +856,12 @@ A trap is specific to this thesis. The predictor is not an observed covariate, i
 \toprule
 \textbf{Measure} & \textbf{Apparent} & \textbf{Optimism-corrected} \\
 \midrule
+\hprows{internal}{%
 Harrell's C & [\,--\,] & [\,--\,] \\
 Uno's C (IPCW) & [\,--\,] & [\,--\,] \\
 Calibration slope & [\,--\,] & [\,--\,] \\
 Calibration-in-the-large & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -987,7 +999,7 @@ about $0.66$. Asserted by
 The extent of optimism provides valuable insight into model stability. Relatively small reductions in discrimination and calibration following correction suggest that the model captures genuine prognostic relationships likely to generalise to similar populations, whereas larger reductions indicate that apparent performance was inflated by characteristics specific to the development sample. Although bootstrap validation provides one of the strongest forms of internal validation currently available, it is not a substitute for external validation: internal validation evaluates reproducibility within the same underlying population, whereas external validation assesses transportability to different clinical settings, healthcare systems or patient populations. The optimism-corrected performance reported here should therefore be interpreted as an intermediate stage in the development of the proposed framework rather than definitive evidence of universal generalisability.
 
 \medskip
-\noindent\emph{[Placeholder for results narrative: extent of optimism and the stability of performance under internal validation.]}
+\hptext{optimism}{\noindent\emph{[Placeholder for results narrative: extent of optimism and the stability of performance under internal validation.]}}
 
 \medskip
 \noindent What survives correction for missing data and for optimism is the chapter's actual result. The summary sets out what has been tested and what those tests can support.

@@ -51,7 +51,7 @@ The observed characteristics are not treated as outcomes in their own right. Eac
 
 \begin{table}[h]
 \centering
-\caption{Baseline characteristics of the analytic sample ($N \approx 3\,500$).}
+\caption{Baseline characteristics of the analytic sample (\hpval{N}{$N \approx 3\,500$}).}
 \label{tab:sample}
 \footnotesize
 \renewcommand{\arraystretch}{1.2}
@@ -59,6 +59,7 @@ The observed characteristics are not treated as outcomes in their own right. Eac
 \toprule
 \textbf{Characteristic} & \textbf{Value} \\
 \midrule
+\hprows{sample}{%
 Age, years, mean (SD) & [\,--\,] \\
 Female, n (\%) & [\,--\,] \\
 Multimorbidity, count of conditions, median (IQR) & [\,--\,] \\
@@ -70,6 +71,7 @@ Low social participation, n (\%) & [\,--\,] \\
 Dual Medicare/Medicaid eligibility, n (\%) & [\,--\,] \\
 Less than high-school education, n (\%) & [\,--\,] \\
 Reported care delayed for cost or transport, n (\%) & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -542,14 +544,14 @@ The distribution of these scores describes latent health potential across the st
 
 \begin{figure}[h]
 \centering
-\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: distribution of estimated $H_{\text{potential}}$ factor scores across the analytic sample.]}}}
+\hpfig{score_dist}{\fbox{\parbox[c][4.5cm][c]{0.8\linewidth}{\centering \emph{[Figure placeholder: distribution of estimated $H_{\text{potential}}$ factor scores across the analytic sample.]}}}}
 \captionsetup{justification=justified, width=\linewidth}
 \caption{Distribution of estimated $H_{\text{potential}}$ scores in the analytic sample.}
 \label{fig:score_dist}
 \end{figure}
 
 \medskip
-\noindent\emph{[Placeholder: descriptive statistics of the score, the shape of its distribution, and any feature that bears on its use as a predictor.]}
+\hptext{score_dist}{\noindent\emph{[Placeholder: descriptive statistics of the score, the shape of its distribution, and any feature that bears on its use as a predictor.]}}
 
 These factor scores are the principal explanatory variable in the prognostic analyses of Chapter~\ref{ch:results2}, where their association with mortality and hospitalisation is formally evaluated.
 

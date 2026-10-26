@@ -5,6 +5,7 @@
     python tools/hp.py test             # every test suite
     python tools/hp.py build            # results, papers and every figure
     python tools/hp.py nhats --data-dir PATH   # real NHATS files -> extract -> run -> figures
+    python tools/hp.py thesis [--run outputs/nhats]  # fill results chapters, build thesis.pdf
     python tools/hp.py dist             # collect papers and figures into dist/ for a release
     python tools/hp.py all              # test, build, dist
 
@@ -93,6 +94,31 @@ def nhats(args) -> None:
         "\nFigures and aggregate tables: realworld-pipeline/outputs/nhats/. "
         "Files marked RESTRICTED hold participant-level rows and must stay on this machine."
     )
+
+
+def thesis(args) -> None:
+    """Fill the results chapters from a pipeline run (if one exists), then build the PDF."""
+    cwd = ROOT / "realworld-pipeline"
+    run = cwd / args.run
+    if (run / "run_audit.json").exists():
+        cmd = [
+            python_for("realworld-pipeline", args.here),
+            "-m",
+            "hpotential.cli",
+            "thesis-export",
+            "--run",
+            args.run,
+            "--thesis",
+            str(ROOT / "thesis"),
+            "--reps",
+            str(args.reps),
+        ]
+        if args.allow_synthetic:
+            cmd.append("--allow-synthetic")
+        sh(cmd, cwd, {"MPLBACKEND": "Agg"})
+    else:
+        print(f"No run at {run}; the thesis builds with its placeholders.")
+    sh(["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error", "thesis.tex"], ROOT / "thesis")
 
 
 def _unpacked(py: str, cwd: Path, source: str) -> Path:
@@ -190,6 +216,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("nhats")
     s.add_argument("--data-dir", required=True)
     s.set_defaults(fn=nhats)
+    s = sub.add_parser("thesis")
+    s.add_argument("--run", default="outputs/nhats", help="run folder inside realworld-pipeline/")
+    s.add_argument("--reps", type=int, default=200)
+    s.add_argument("--allow-synthetic", action="store_true", help="demo run, stamped synthetic")
+    s.set_defaults(fn=thesis)
     s = sub.add_parser("dist")
     s.add_argument("--tag", default=None)
     s.set_defaults(fn=dist)
