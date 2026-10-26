@@ -1,0 +1,11 @@
+\begin{tikzpicture}[x=1.25cm, y=1.0cm]
+\draw[hparrow] (0,0) -- node[below=2pt, font=\small] {from biomedical only to social and systemic breadth} (9.6,0);
+\draw[hparrow] (0,0) -- node[above=2pt, sloped, font=\small] {from current status to future capability} (0,6.2);
+\foreach \x/\y/\t/\s in {1.4/1.2/Disease-specific scores/hpbox,
+                         4.0/1.6/Quality-of-life instruments/hpbox,
+                         2.2/3.6/Frailty indices/hpbox,
+                         5.3/3.0/QALY and DALY/hpbox,
+                         7.6/5.0/$H_{\text{potential}}$/hpkey}
+  \node[\s, minimum height=0.8cm, text width=2.3cm] at (\x,\y) {\t};
+\node[hpnote, anchor=north east] at (9.6,-0.75) {Positions are conceptual, not estimated};
+\end{tikzpicture}

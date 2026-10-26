@@ -1,0 +1,12 @@
+\begin{tikzpicture}[node distance=5mm]
+\node[hpbox, text width=2.75cm] (a1) {\textbf{Aim 1}\\Theory\\[1pt]\footnotesize Chapter~\ref{ch:theory}};
+\node[hpbox, text width=2.75cm, right=of a1] (a2) {\textbf{Aim 2}\\Measurement model\\[1pt]\footnotesize Chapter~\ref{ch:results1}};
+\node[hpbox, text width=2.75cm, right=9mm of a2] (a3) {\textbf{Aim 3}\\Prognostic evaluation\\[1pt]\footnotesize Chapter~\ref{ch:results2}};
+\node[hpbox, text width=2.75cm, right=of a3] (a4) {\textbf{Aim 4}\\Translational mapping\\[1pt]\footnotesize Chapter~\ref{ch:translational}};
+\draw[hparrow] (a1) -- (a2);
+\draw[hparrow] (a2) -- (a3);
+\draw[hparrow] (a3) -- (a4);
+\coordinate (mid) at ($(a2.east)!0.5!(a3.west)$);
+\draw[hpdash] ($(mid)+(0,1.25)$) -- ($(mid)+(0,-1.25)$);
+\node[hpnote, text width=6.2cm, below=1.35cm of mid] {Measurement is fixed here, before any outcome is used};
+\end{tikzpicture}

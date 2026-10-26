@@ -50,11 +50,11 @@
 \contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~6.7\else \numberline {6.7}\MakeUppercase derivation\fi \thmtformatoptarg {Bootstrap optimism correction}}{128}{derivation.6.7}%
 \contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~6.2\else \numberline {6.2}\MakeUppercase proposition\fi \thmtformatoptarg {The measurement model must be refitted inside every resample}}{129}{proposition.6.2}%
 \addvspace {10\p@ }
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.1\else \numberline {7.1}\MakeUppercase derivation\fi \thmtformatoptarg {Construct invariance under indicator substitution}}{139}{derivation.7.1}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.1\else \numberline {7.1}\MakeUppercase derivation\fi \thmtformatoptarg {Construct invariance under indicator substitution}}{138}{derivation.7.1}%
 \contentsline {assumption}{\ifthmt@listswap \MakeUppercase assumption~7.1\else \numberline {7.1}\MakeUppercase assumption\fi \thmtformatoptarg {What indicator substitution requires}}{139}{assumption.7.1}%
 \contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.2\else \numberline {7.2}\MakeUppercase derivation\fi \thmtformatoptarg {Measurement invariance across populations}}{145}{derivation.7.2}%
 \contentsline {proposition}{\ifthmt@listswap \MakeUppercase proposition~7.1\else \numberline {7.1}\MakeUppercase proposition\fi \thmtformatoptarg {A raw difference of cohort means is uninterpretable without scalar invariance}}{145}{proposition.7.1}%
-\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.3\else \numberline {7.3}\MakeUppercase derivation\fi \thmtformatoptarg {Delphi consensus and stability criteria}}{148}{derivation.7.3}%
+\contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.3\else \numberline {7.3}\MakeUppercase derivation\fi \thmtformatoptarg {Delphi consensus and stability criteria}}{149}{derivation.7.3}%
 \contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~7.4\else \numberline {7.4}\MakeUppercase derivation\fi \thmtformatoptarg {Recalibration of the translated score}}{155}{derivation.7.4}%
 \addvspace {10\p@ }
 \contentsline {derivation}{\ifthmt@listswap \MakeUppercase derivation~8.1\else \numberline {8.1}\MakeUppercase derivation\fi \thmtformatoptarg {Why the two-stage design avoids outcome-driven circularity}}{168}{derivation.8.1}%

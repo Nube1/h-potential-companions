@@ -1,0 +1,14 @@
+\begin{tikzpicture}[node distance=6mm and 6mm]
+\tikzset{hpstep/.style={hpbox, text width=4.1cm, minimum height=1.45cm}}
+\node[hpstep] (s1) {\textbf{1}\ Explicit theory of health};
+\node[hpstep, right=of s1] (s2) {\textbf{2}\ Latent construct distinguished from its indicators};
+\node[hpstep, right=of s2] (s3) {\textbf{3}\ Measurement separated from prediction};
+\node[hpstep, below=of s3] (s4) {\textbf{4}\ Evaluation: association, discrimination, calibration, utility};
+\node[hpstep, left=of s4] (s5) {\textbf{5}\ Normative choices made visible};
+\node[hpstep, left=of s5] (s6) {\textbf{6}\ External validation before implementation};
+\draw[hparrow] (s1) -- (s2);
+\draw[hparrow] (s2) -- (s3);
+\draw[hparrow] (s3) -- (s4);
+\draw[hparrow] (s4) -- (s5);
+\draw[hparrow] (s5) -- (s6);
+\end{tikzpicture}

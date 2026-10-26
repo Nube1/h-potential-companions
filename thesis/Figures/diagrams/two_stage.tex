@@ -1,0 +1,9 @@
+\begin{tikzpicture}[node distance=10mm]
+\node[hpbox, text width=5.6cm, minimum height=2.6cm] (s1) {\textbf{Stage 1: general ageing cohort}\\[2pt] Develop and validate the disease-independent construct in NHATS\\[2pt]\footnotesize Chapters~\ref{ch:methods}--\ref{ch:results2}};
+\node[hpbox, text width=5.6cm, minimum height=2.6cm, right=of s1] (s2) {\textbf{Stage 2: haemophilia cohort}\\[2pt] Substitute disease-specific indicators, re-estimate and recalibrate\\[2pt]\footnotesize Chapter~\ref{ch:translational}};
+\draw[hparrow] (s1) -- (s2);
+\node[hpkey, minimum height=0.9cm, text width=12.4cm, below=7mm of $(s1.south)!0.5!(s2.south)$, anchor=north]
+  (fixed) {Latent domains held fixed: Biomedical Potential, Social Modifiers, Systemic Burdens};
+\draw[hpdash] (s1.south) -- (s1.south |- fixed.north);
+\draw[hpdash] (s2.south) -- (s2.south |- fixed.north);
+\end{tikzpicture}

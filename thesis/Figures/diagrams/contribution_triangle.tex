@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+\node[hpkey, text width=3.6cm] (core) at (0,0) {Common research architecture};
+\node[hpbox, text width=3.9cm] (c1) at (90:3.0) {Conceptual model of health as future capability};
+\node[hpbox, text width=3.9cm] (c2) at (210:3.6) {Two-stage method that separates measurement from prediction};
+\node[hpbox, text width=3.9cm] (c3) at (330:3.6) {Translational route from a disease-independent metric to disease-specific use};
+\foreach \c in {c1,c2,c3} \draw[hparrow] (\c) -- (core);
+\draw[hpdash] (c1) -- (c2) -- (c3) -- (c1);
+\end{tikzpicture}
