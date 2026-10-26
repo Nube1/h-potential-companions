@@ -155,6 +155,6 @@ paper1_validation.run(variant)
 
 | module | contents |
 | --- | --- |
-| `plotting` | `apply_style`, `save_figure`, `series_color`, `SERIES`, `INK`, `GRID` |
+| `plotting` | `apply_style`, `save_figure`, `print_safe`, `series_color`, `SERIES`, `LINESTYLES`, `HATCHES`, `FILLS`, `INK`, `GRID` |
 | `numerical` | `convergence_order`, `pairwise_orders`, `richardson`, `safe_cholesky` |
 | `stats` | `credible_interval`, `binned_conditional_mean`, `bootstrap_ci`, `relative_bias`, `summarise` |
