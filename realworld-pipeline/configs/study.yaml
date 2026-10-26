@@ -29,7 +29,8 @@ outcomes:
   horizons_days: [1825]
   endpoints:
     mortality: {time: mortality_time, event: mortality_event}
-    hospitalisation: {time: hospital_time, event: hospital_event}
+    hospitalisation: {time: hospital_time, event: hospital_event, competing: hospital_competing}
+    combined: {time: combined_time, event: combined_event, role: secondary}
 validation:
   test_fraction: 0.30
   bootstrap_replicates: 500

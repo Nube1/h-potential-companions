@@ -78,10 +78,11 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     results, equity = [], []
     predictions = pd.DataFrame({cfg.raw["data"]["id"]: test[cfg.raw["data"]["id"]].to_numpy()})
     for endpoint, spec in cfg.raw["outcomes"]["endpoints"].items():
+        competing = spec.get("competing")
         for horizon in cfg.horizons:
             for name, cols in predictors.items():
                 risk, _ = fit_predict_cox(
-                    train, test, spec["time"], spec["event"], cols, horizon, weight
+                    train, test, spec["time"], spec["event"], cols, horizon, weight, competing
                 )
                 predictions[f"risk__{endpoint}__{name}__{horizon:g}"] = risk
                 m = metrics(
@@ -90,12 +91,19 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
                     risk,
                     horizon,
                     val["decision_thresholds"],
+                    test[competing] if competing else None,
                 )
                 m.update(endpoint=endpoint, horizon_days=horizon, model=name)
                 results.append(m)
                 frame = test.assign(risk=risk)
                 eq = equity_metrics(
-                    frame, val["equity_groups"], spec["time"], spec["event"], "risk", horizon
+                    frame,
+                    val["equity_groups"],
+                    spec["time"],
+                    spec["event"],
+                    "risk",
+                    horizon,
+                    competing,
                 )
                 eq["endpoint"], eq["horizon_days"], eq["model"] = endpoint, horizon, name
                 equity.append(eq)

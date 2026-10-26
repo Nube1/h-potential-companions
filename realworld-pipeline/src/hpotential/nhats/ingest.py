@@ -401,8 +401,21 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
         t = t.where(~censor_at_death, out["mortality_time"])
         e = e.where(~censor_at_death, 0.0)
         out["hospital_time"], out["hospital_event"] = t, e
+        # Death before a first stay is a competing event, not ordinary censoring.
+        out["hospital_competing"] = censor_at_death.astype(float).where(e.notna())
     else:
         out["hospital_time"], out["hospital_event"] = np.nan, np.nan
+        out["hospital_competing"] = np.nan
+    # Secondary combined endpoint: death or first overnight stay, whichever first.
+    out["combined_time"] = out[["mortality_time", "hospital_time"]].min(axis=1)
+    out["combined_event"] = (
+        (
+            (out["mortality_event"] == 1) & (out["mortality_time"] <= out["combined_time"])
+            | (out["hospital_event"] == 1)
+        )
+        .astype(float)
+        .where(out["mortality_time"].notna())
+    )
 
     keep = out["survey_weight"].gt(0)
     flow["positive_weight"] = int(keep.sum())

@@ -10,7 +10,7 @@ from sklearn.metrics import roc_auc_score
 from ..evaluation import horizon_status
 from . import style
 from .context import RunContext
-from .stats import bootstrap, n_at_risk, survival_at, weighted_km
+from .stats import bootstrap, cif_at, n_at_risk, survival_at, weighted_cif, weighted_km
 
 GROUP = "Biostatistics"
 MODEL_LABELS = {
@@ -149,16 +149,27 @@ def survival_by_h(ctx: RunContext, index: style.FigureIndex) -> None:
         summary = {}
         rows = []
         for i, (g, sub) in enumerate(frame.groupby("group", observed=True)):
-            km = weighted_km(sub[spec["time"]], sub[spec["event"]], sub[ctx.weight])
-            y = 1 - km["survival"] if endpoint != "mortality" else km["survival"]
-            ax.step(_years(km["time"]), y, where="post", label=str(g), **style.series(i))
-            s_h = survival_at(km, ctx.horizon)
-            summary[str(g)] = round(1 - s_h if endpoint != "mortality" else s_h, 4)
+            if spec.get("competing"):
+                cf = weighted_cif(
+                    sub[spec["time"]], sub[spec["event"]], sub[spec["competing"]], sub[ctx.weight]
+                )
+                xs, y, at_h = cf["time"], cf["cif"], cif_at(cf, ctx.horizon)
+            else:
+                km = weighted_km(sub[spec["time"]], sub[spec["event"]], sub[ctx.weight])
+                xs = km["time"]
+                y = km["survival"] if endpoint == "mortality" else 1 - km["survival"]
+                s_h = survival_at(km, ctx.horizon)
+                at_h = s_h if endpoint == "mortality" else 1 - s_h
+            ax.step(_years(xs), y, where="post", label=str(g), **style.series(i))
+            summary[str(g)] = round(at_h, 4)
             counts = n_at_risk(_years(sub[spec["time"]]), ticks)
             rows.append([f"{c:,}" if c >= style.MIN_CELL else f"<{style.MIN_CELL}" for c in counts])
         ax.set_ylabel("Survival" if endpoint == "mortality" else "Cumulative incidence")
         ax.legend(loc="lower left" if endpoint == "mortality" else "upper left")
-        ax.set_title(f"{endpoint.capitalize()} by thirds of H (weighted Kaplan-Meier)")
+        method = (
+            "Aalen-Johansen, death competing" if spec.get("competing") else "weighted Kaplan-Meier"
+        )
+        ax.set_title(f"{endpoint.capitalize()} by thirds of H ({method})")
         tab.axis("off")
         table = tab.table(
             cellText=rows,
@@ -179,14 +190,27 @@ def survival_by_h(ctx: RunContext, index: style.FigureIndex) -> None:
             name,
             GROUP,
             f"{'Survival' if endpoint == 'mortality' else 'Cumulative incidence of first ' + endpoint} "
-            "by thirds of the capability score, survey-weighted Kaplan-Meier estimates, with "
-            "unweighted numbers at risk. Event times are interval midpoints between annual rounds.",
+            "by thirds of the capability score, survey-weighted "
+            + (
+                "Aalen-Johansen estimates with death before a first stay as a competing event"
+                if spec.get("competing")
+                else "Kaplan-Meier estimates"
+            )
+            + ", with unweighted numbers at risk. Event times are interval midpoints between "
+            "annual rounds.",
             summary,
         )
 
 
-def _observed_risk(time, event, weight, horizon) -> float:
+def _observed_risk(time, event, weight, horizon, competing=None) -> float:
+    """Observed risk by the horizon: 1 - KM, or the cumulative incidence with a competing event."""
+    if competing is not None:
+        return cif_at(weighted_cif(time, event, competing, weight), horizon)
     return 1 - survival_at(weighted_km(time, event, weight), horizon)
+
+
+def _comp(frame, spec):
+    return frame[spec["competing"]] if spec.get("competing") else None
 
 
 def calibration(ctx: RunContext, index: style.FigureIndex) -> None:
@@ -206,7 +230,11 @@ def calibration(ctx: RunContext, index: style.FigureIndex) -> None:
                 pred.append(sub[ctx.risk_column(endpoint, model)].mean())
                 obs.append(
                     _observed_risk(
-                        sub[spec["time"]], sub[spec["event"]], sub[ctx.weight], ctx.horizon
+                        sub[spec["time"]],
+                        sub[spec["event"]],
+                        sub[ctx.weight],
+                        ctx.horizon,
+                        _comp(sub, spec),
                     )
                 )
             ax.plot(
@@ -224,21 +252,24 @@ def calibration(ctx: RunContext, index: style.FigureIndex) -> None:
             }
         ax.plot([0, top], [0, top], color="#9a9a9a", lw=0.7, linestyle=":")
         ax.set_xlabel(f"Predicted {_hlabel(ctx)}-year risk")
-        ax.set_ylabel("Observed (Kaplan-Meier)")
+        ax.set_ylabel(
+            "Observed (Aalen-Johansen)" if spec.get("competing") else "Observed (Kaplan-Meier)"
+        )
         ax.set_title(endpoint.capitalize())
         ax.legend(loc="upper left")
     index.save(
         fig,
         "bio_06_calibration",
         GROUP,
-        "Calibration in the hold-out split: mean predicted risk against Kaplan-Meier observed risk "
+        "Calibration in the hold-out split: mean predicted risk against observed risk (Kaplan-Meier, "
+        "or Aalen-Johansen where death competes) "
         "within tenths of predicted risk, for the age-and-sex model and the model adding H. "
         "The dotted line is perfect calibration.",
         numbers,
     )
 
 
-def _net_benefit(test, risk, time, event, weight, horizon, thresholds):
+def _net_benefit(test, risk, time, event, weight, horizon, thresholds, competing=None):
     out = []
     for t in thresholds:
         pos = risk >= t
@@ -247,7 +278,11 @@ def _net_benefit(test, risk, time, event, weight, horizon, thresholds):
             out.append(np.nan)
             continue
         r_pos = _observed_risk(
-            test.loc[pos, time], test.loc[pos, event], test.loc[pos, weight], horizon
+            test.loc[pos, time],
+            test.loc[pos, event],
+            test.loc[pos, weight],
+            horizon,
+            test.loc[pos, competing] if competing else None,
         )
         out.append(share * (r_pos - (1 - r_pos) * t / (1 - t)))
     return np.array(out)
@@ -262,7 +297,11 @@ def decision_curves(ctx: RunContext, index: style.FigureIndex) -> None:
     for ax, endpoint in zip(axes[0], endpoints):
         spec = ctx.endpoints[endpoint]
         prevalence = _observed_risk(
-            test[spec["time"]], test[spec["event"]], test[ctx.weight], ctx.horizon
+            test[spec["time"]],
+            test[spec["event"]],
+            test[ctx.weight],
+            ctx.horizon,
+            _comp(test, spec),
         )
         treat_all = prevalence - (1 - prevalence) * thresholds / (1 - thresholds)
         ax.plot(
@@ -274,7 +313,14 @@ def decision_curves(ctx: RunContext, index: style.FigureIndex) -> None:
             if col not in test:
                 continue
             nb = _net_benefit(
-                test, test[col], spec["time"], spec["event"], ctx.weight, ctx.horizon, thresholds
+                test,
+                test[col],
+                spec["time"],
+                spec["event"],
+                ctx.weight,
+                ctx.horizon,
+                thresholds,
+                spec.get("competing"),
             )
             ax.plot(thresholds, nb, label=MODEL_LABELS[model], **style.series(i))
             numbers[f"{endpoint}/{model}"] = np.round(nb, 4).tolist()
@@ -297,7 +343,8 @@ def decision_curves(ctx: RunContext, index: style.FigureIndex) -> None:
 
 def _auc(test, risk_col, spec, horizon, idx):
     sub = test.iloc[idx]
-    known, y = horizon_status(sub[spec["time"]], sub[spec["event"]], horizon)
+    comp = sub[spec["competing"]] if spec.get("competing") else None
+    known, y = horizon_status(sub[spec["time"]], sub[spec["event"]], horizon, comp)
     return roc_auc_score(y[known], sub[risk_col].to_numpy()[known])
 
 
@@ -358,7 +405,9 @@ def subgroups(ctx: RunContext, index: style.FigureIndex, reps: int = 200) -> Non
     rows = []
     for g in groups:
         for level, sub in test.groupby(g, dropna=True):
-            known, yv = horizon_status(sub[spec["time"]], sub[spec["event"]], ctx.horizon)
+            known, yv = horizon_status(
+                sub[spec["time"]], sub[spec["event"]], ctx.horizon, _comp(sub, spec)
+            )
             if (
                 known.sum() < style.MIN_CELL
                 or yv[known].sum() < style.MIN_CELL
@@ -411,6 +460,114 @@ def subgroups(ctx: RunContext, index: style.FigureIndex, reps: int = 200) -> Non
     )
 
 
+def _primary(ctx: RunContext) -> dict:
+    return {k: v for k, v in ctx.endpoints.items() if v.get("role") != "secondary"}
+
+
+def proportional_hazards(ctx: RunContext, index: style.FigureIndex) -> None:
+    """Scaled Schoenfeld residuals for H against time, one panel per primary endpoint."""
+    from lifelines import CoxPHFitter
+    from lifelines.statistics import proportional_hazard_test
+
+    endpoints = _primary(ctx)
+    fig, axes = plt.subplots(1, len(endpoints), figsize=(3.4 * len(endpoints), 3.0), squeeze=False)
+    numbers = {}
+    covs = [c for c in ctx.data.columns if c in ("age",)]
+    for ax, (endpoint, spec) in zip(axes[0], endpoints.items()):
+        cols = [spec["time"], spec["event"], "geometric_crf", *covs]
+        frame = ctx.data[cols].dropna()
+        frame = frame[frame[spec["time"]] > 0]
+        cph = CoxPHFitter(penalizer=0.01).fit(
+            frame, duration_col=spec["time"], event_col=spec["event"]
+        )
+        res = cph.compute_residuals(frame, "scaled_schoenfeld")
+        times = frame.loc[res.index, spec["time"]].to_numpy() / 365.25
+        beta = float(cph.params_["geometric_crf"])
+        r = res["geometric_crf"].to_numpy() + beta  # beta(t) scale, as in cox.zph
+        ax.scatter(times, r, s=4, color="#9a9a9a", alpha=0.5, linewidths=0, label="Residuals")
+        order = np.argsort(times)
+        bins = np.array_split(order, max(4, min(12, len(order) // 25)))
+        ax.plot(
+            [times[b].mean() for b in bins],
+            [r[b].mean() for b in bins],
+            marker="s",
+            ms=3,
+            label="Binned mean",
+            **style.series(1),
+        )
+        ax.axhline(beta, **style.series(0), lw=0.8, label="Fitted log HR")
+        test = proportional_hazard_test(cph, frame, time_transform="rank")
+        p_h = float(test.summary.loc["geometric_crf", "p"])
+        numbers[endpoint] = {
+            "log_hr": round(float(cph.params_["geometric_crf"]), 4),
+            "ph_test_p": round(p_h, 4),
+        }
+        ax.set_title(f"{endpoint.capitalize()}: PH test p = {p_h:.2f}")
+        ax.set_xlabel("Years since baseline")
+        lo, hi = np.percentile(r, [2, 98])
+        ax.set_ylim(lo, hi)
+    axes[0][0].set_ylabel(r"$\hat\beta(t)$ for H (scaled Schoenfeld)")
+    handles, labels = axes[0][0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 0.0))
+    index.save(
+        fig,
+        "bio_10_schoenfeld",
+        GROUP,
+        "Scaled Schoenfeld residuals plus the coefficient, giving beta(t) for H, against follow-up time from a Cox model with age, one "
+        "panel per primary endpoint, with binned means and the fitted log hazard ratio. A flat "
+        "trend supports proportional hazards; the panel title gives the rank-time test. Cause-"
+        "specific for hospitalisation.",
+        numbers,
+    )
+
+
+def time_auc(ctx: RunContext, index: style.FigureIndex) -> None:
+    """Cumulative/dynamic AUC at each year of follow-up in the hold-out split."""
+    test = ctx.test().reset_index(drop=True)
+    endpoints = _primary(ctx)
+    years = np.arange(1, int(round(ctx.horizon / 365.25)) + 1)
+    fig, axes = plt.subplots(
+        1, len(endpoints), figsize=(3.4 * len(endpoints), 3.0), sharey=True, squeeze=False
+    )
+    numbers = {}
+    for ax, (endpoint, spec) in zip(axes[0], endpoints.items()):
+        for i, model in enumerate(
+            [m for m in MODEL_LABELS if ctx.risk_column(endpoint, m) in test]
+        ):
+            col = ctx.risk_column(endpoint, model)
+            vals = []
+            for yr in years:
+                try:
+                    vals.append(_auc(test, col, spec, yr * 365.25, np.arange(len(test))))
+                except ValueError:
+                    vals.append(np.nan)
+            ax.plot(
+                years,
+                vals,
+                marker=style.MARKERS[i],
+                ms=3,
+                label=MODEL_LABELS[model],
+                **style.series(i),
+            )
+            numbers[f"{endpoint}/{model}"] = np.round(vals, 4).tolist()
+        ax.axhline(0.5, color="#9a9a9a", lw=0.6, ls=":")
+        ax.set_title(endpoint.capitalize())
+        ax.set_xlabel("Years since baseline")
+        ax.set_xticks(years)
+    axes[0][0].set_ylabel("Cumulative/dynamic AUC")
+    handles, labels = axes[0][0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 0.0))
+    index.save(
+        fig,
+        "bio_11_time_auc",
+        GROUP,
+        "Time-dependent discrimination in the hold-out split: cumulative cases by each year "
+        "against people still event-free, for every model. People with the competing event first "
+        "count as non-cases for hospitalisation. Risks come from the five-year models.",
+        numbers,
+    )
+
+
 ALL = [
     cohort_flow,
     missingness,
@@ -420,4 +577,6 @@ ALL = [
     decision_curves,
     discrimination,
     subgroups,
+    proportional_hazards,
+    time_auc,
 ]

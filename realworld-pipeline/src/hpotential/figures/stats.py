@@ -99,3 +99,34 @@ def bootstrap(stat, n: int, reps: int, seed: int) -> np.ndarray:
         except ValueError:
             continue
     return np.asarray(out, float)
+
+
+def weighted_cif(time, event, competing, weight=None) -> pd.DataFrame:
+    """Weighted Aalen-Johansen cumulative incidence of ``event`` with a competing event.
+
+    Returns columns time and cif. A person with the competing event leaves the
+    risk set and can no longer have the event of interest, unlike censoring.
+    """
+    t = np.asarray(time, float)
+    e = np.asarray(event, float)
+    c = np.asarray(competing, float)
+    w = np.ones_like(t) if weight is None else np.asarray(weight, float)
+    ok = ~(np.isnan(t) | np.isnan(e) | np.isnan(c) | np.isnan(w))
+    t, e, c, w = t[ok], e[ok], c[ok], w[ok]
+    times = np.unique(t[(e == 1) | (c == 1)])
+    surv, cif, rows = 1.0, 0.0, [(0.0, 0.0)]
+    for u in times:
+        n_w = w[t >= u].sum()
+        if n_w <= 0:
+            continue
+        d1 = w[(t == u) & (e == 1)].sum()
+        d2 = w[(t == u) & (c == 1)].sum()
+        cif += surv * d1 / n_w
+        surv *= 1 - (d1 + d2) / n_w
+        rows.append((u, cif))
+    return pd.DataFrame(rows, columns=["time", "cif"])
+
+
+def cif_at(frame: pd.DataFrame, horizon: float) -> float:
+    s = frame.loc[frame["time"] <= horizon, "cif"]
+    return float(s.iloc[-1]) if len(s) else 0.0

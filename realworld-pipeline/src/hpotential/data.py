@@ -39,6 +39,8 @@ def required_columns(cfg) -> set[str]:
         columns |= set(spec["indicators"])
     for spec in r["outcomes"]["endpoints"].values():
         columns |= {spec["time"], spec["event"]}
+        if spec.get("competing"):
+            columns.add(spec["competing"])
     columns |= set(r["validation"].get("equity_groups", []))
     columns |= set(r["validation"].get("comparators", []))
     return columns
@@ -107,12 +109,25 @@ def synthetic_dataset(cfg, n=750, seed=20260905):
     potential = z[:, 0] + 0.45 * z[:, 1] + 0.45 * z[:, 2] - 0.025 * (df.age - 65)
     for name in cfg.raw["validation"].get("comparators", []):
         df[name] = -potential + rng.normal(0, 1, n)
+    censor_t = rng.uniform(800, 2400, n)
+    death_t = rng.exponential(1 / np.exp(-4.8 - 0.35 * potential))
+    hosp_t = rng.exponential(1 / np.exp(-4.55 - 0.35 * potential))
+    times = {
+        "mortality": (death_t, None),
+        "hospitalisation": (hosp_t, death_t),  # death first is a competing event
+    }
     for endpoint, spec in cfg.raw["outcomes"]["endpoints"].items():
-        rate = np.exp(-4.8 - 0.35 * potential + (0.25 if endpoint == "hospitalisation" else 0))
-        event_t = rng.exponential(1 / rate)
-        censor_t = rng.uniform(800, 2400, n)
-        df[spec["time"]] = np.minimum(event_t, censor_t).round(1)
-        df[spec["event"]] = (event_t <= censor_t).astype(int)
+        if endpoint in times:
+            event_t, competing_t = times[endpoint]
+        else:  # combined: whichever comes first
+            event_t, competing_t = np.minimum(death_t, hosp_t), None
+        stop = censor_t if competing_t is None else np.minimum(censor_t, competing_t)
+        df[spec["time"]] = np.minimum(event_t, stop).round(1)
+        df[spec["event"]] = (event_t <= stop).astype(int)
+        if spec.get("competing"):
+            df[spec["competing"]] = ((competing_t < event_t) & (competing_t <= censor_t)).astype(
+                int
+            )
     for domain in cfg.indicators.values():
         for col in domain["indicators"]:
             df.loc[rng.random(n) < 0.04, col] = np.nan

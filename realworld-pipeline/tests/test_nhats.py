@@ -27,9 +27,9 @@ def nhats_dir(tmp_path_factory, layout):
 
 
 def test_layout_names_follow_rounds(layout):
-    assert layout.name("hc{r}health") == "hc1health"
+    assert layout.name("hc{r}health") == "hc5health"
     assert layout.name("r{k}status", 4) == "r4status"
-    assert "w1anfinwgt0" in layout.baseline_variables()
+    assert "w5anfinwgt0" in layout.baseline_variables()
 
 
 def test_check_passes_on_complete_files(nhats_dir, layout):
@@ -39,13 +39,13 @@ def test_check_passes_on_complete_files(nhats_dir, layout):
 
 
 def test_check_names_missing_variables(tmp_path, layout, nhats_dir):
-    sp = pd.read_stata(nhats_dir / "NHATS_Round_1_SP_File.dta").drop(columns=["hc1health"])
+    sp = pd.read_stata(nhats_dir / "NHATS_Round_5_SP_File.dta").drop(columns=["hc5health"])
     for f in nhats_dir.iterdir():
         (tmp_path / f.name).write_bytes(f.read_bytes())
-    sp.to_stata(tmp_path / "NHATS_Round_1_SP_File.dta", write_index=False, version=118)
+    sp.to_stata(tmp_path / "NHATS_Round_5_SP_File.dta", write_index=False, version=118)
     report = check(tmp_path, layout)
     assert not report.ok
-    assert "hc1health" in report.missing_variables["sp"]
+    assert "hc5health" in report.missing_variables["sp"]
     with pytest.raises(ValueError, match="layout check failed"):
         build(tmp_path, layout)
 
@@ -65,14 +65,14 @@ def test_build_meets_the_data_contract(nhats_dir, layout):
 
 
 def test_special_codes_become_missing(layout):
-    frame = pd.DataFrame({"hc1health": [1, 5, -8, -1]})
+    frame = pd.DataFrame({"hc5health": [1, 5, -8, -1]})
     out = score_item(frame, layout, {"kind": "reverse", "source": "hc{r}health", "range": [1, 5]})
     assert out.tolist()[:2] == [5.0, 1.0]
     assert out.iloc[2:].isna().all()
 
 
 def test_counts_need_half_the_items(layout):
-    frame = pd.DataFrame({"a1": [1, 1, -8], "b1": [2, -7, -8], "c1": [1, -7, -9]})
+    frame = pd.DataFrame({"a5": [1, 1, -8], "b5": [2, -7, -8], "c5": [1, -7, -9]})
     spec = {"kind": "count_present", "sources": ["a{r}", "b{r}", "c{r}"], "present": [1]}
     out = score_item(frame, layout, spec)
     assert out.iloc[0] == 2.0
@@ -81,8 +81,8 @@ def test_counts_need_half_the_items(layout):
 
 
 def test_outcome_times_use_interval_midpoints(layout):
-    known = pd.DataFrame({2: [True, True, True], 3: [True, True, False]})
-    event = pd.DataFrame({2: [False, True, False], 3: [True, False, False]})
+    known = pd.DataFrame({6: [True, True, True], 7: [True, True, False]})
+    event = pd.DataFrame({6: [False, True, False], 7: [True, False, False]})
     t, e = _outcome_times(known, event, layout)
     d = layout.days_per_round
     assert t.tolist() == [1.5 * d, 0.5 * d, 1.0 * d]

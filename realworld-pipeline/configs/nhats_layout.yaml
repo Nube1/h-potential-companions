@@ -3,8 +3,7 @@
 # Variable names follow the NHATS public-use naming pattern: a topic prefix,
 # the round number, then the item (hc1health = health conditions, round 1).
 # "{r}" is replaced by the baseline round and "{k}" by each follow-up round,
-# so one layout serves Round 1 and the Round 5 or Round 12 replenishment
-# cohorts.
+# so one layout serves any baseline round (the thesis uses Round 5).
 #
 # CHECK EVERY NAME AND CODE AGAINST THE NHATS CODEBOOK FOR YOUR RELEASE.
 # They were written from the NHATS naming conventions without the codebook to
@@ -13,8 +12,10 @@
 # build refuses to run while any are missing.
 
 release:
-  baseline_round: 1
-  follow_up_rounds: [2, 3, 4, 5, 6]   # five annual follow-ups -> five-year horizon
+  # The thesis protocol indexes at Round 5 (2015 replenishment cohort and
+  # continuing participants) with five annual follow-ups, Rounds 6-10.
+  baseline_round: 5
+  follow_up_rounds: [6, 7, 8, 9, 10]  # five annual follow-ups -> five-year horizon
   days_per_round: 365.25               # NHATS interviews roughly a year apart
 
 files:                                  # file names inside --data-dir; .dta, .sas7bdat, .csv or .parquet
