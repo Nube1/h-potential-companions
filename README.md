@@ -63,3 +63,7 @@ All examples are synthetic. No patient or NHATS individual data are included. Th
 ## Submission status
 
 These are complete research drafts for supervisory review. Empirical validation, full literature/novelty coverage, author-approved affiliations/co-authors, declarations and journal-specific formatting remain before submission. No journal acceptance, ethics approval or thesis readiness is asserted. The source and code are provided together so reviewers can assess exactly what the reported evidence supports.
+
+## Archive
+
+The archive/ folder holds copies of every earlier H-potential file: thesis versions, the five-paper series, protocol submissions, decks, the poster and earlier code. See archive/README.md for the index. It is a record; the maintained code is the hpotential package above.
