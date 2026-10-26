@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+data/raw/
+data/processed/
+data/*.csv
+data/*.parquet
+!data/sample/
+outputs/*
+!outputs/.gitkeep
+*participant_scores*
+.env
+

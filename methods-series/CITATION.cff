@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "hpotential: reproducible code for the H-potential health-capability methods series"
+abstract: >-
+  Code behind six manuscripts on health capability: a second-order measurement
+  model and the structural ceiling on its factor-score determinacy, a two-stage
+  prognostic pipeline, a modified Delphi consensus rule and its error rates, a
+  continuous-time state model with verified solvers, a costed access-versus-
+  efficacy rule, and an early health technology assessment with value of
+  information. All data are synthetic.
+type: software
+version: 1.1.0
+date-released: "2026-08-15"
+license: MIT
+repository-code: "https://github.com/Nube1/h-potential-companions"
+authors:
+  - name: "H-potential methods series authors"
+keywords:
+  - psychometrics
+  - factor score determinacy
+  - item response theory
+  - Delphi
+  - differential item functioning
+  - health technology assessment
+  - value of information

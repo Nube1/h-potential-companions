@@ -1,0 +1,48 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# notebooks
+.ipynb_checkpoints/
+notebooks/*.nbconvert.ipynb
+
+# generated outputs
+out/
+figs/
+outputs/
+derived/
+secure/
+validation_report.json
+*.png
+!docs/**/*.png
+
+# latex
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp

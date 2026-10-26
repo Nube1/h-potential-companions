@@ -1,0 +1,91 @@
+{
+ "lambda": 30000.0,
+ "population": 1800,
+ "horizon_years": 10,
+ "discount": 0.03,
+ "draws": 100000,
+ "disclaimer": "All inputs synthetic; illustrates workflow only.",
+ "scenarios": {
+  "optimistic": {
+   "mean_incremental_qaly": 1.134912073175632,
+   "mean_incremental_bmp": 1.4926815519151784,
+   "mean_incremental_cost": -65658.12372248736,
+   "mean_INB": 99705.4859177563,
+   "P_cost_effective_QALY": 0.78314,
+   "P_cost_effective_BMP": 0.80651,
+   "P_decision_disagreement": 0.02345,
+   "per_person_EVPI": 16413.490257968035,
+   "population_EVPI": 25957928.37504757,
+   "EVPPI": {
+    "L0": 19.00045575039985,
+    "q_gain": 24.22455165872816,
+    "waning": 741.4798807888437,
+    "access": -0.5897924189339392,
+    "price": 7253.18135311229,
+    "proph": 2551.4842513491894
+   },
+   "EVPPI_share_of_EVPI": {
+    "L0": 0.0011576121502357463,
+    "q_gain": 0.0014758927734439783,
+    "waning": 0.0451750279273409,
+    "access": 0.0,
+    "price": 0.44190365602411624,
+    "proph": 0.15545043809987671
+   }
+  },
+  "central": {
+   "mean_incremental_qaly": 0.6248550896148521,
+   "mean_incremental_bmp": 1.1756578476862787,
+   "mean_incremental_cost": 44027.967994174825,
+   "mean_INB": -25282.315305729255,
+   "P_cost_effective_QALY": 0.40967,
+   "P_cost_effective_BMP": 0.46875,
+   "P_decision_disagreement": 0.05912,
+   "per_person_EVPI": 34873.6389911749,
+   "population_EVPI": 55152646.3221755,
+   "EVPPI": {
+    "L0": 0.0,
+    "q_gain": 7962.9502408432445,
+    "waning": 14471.075812860927,
+    "access": 0.0,
+    "price": 19653.170611086698,
+    "proph": 13224.285190660063
+   },
+   "EVPPI_share_of_EVPI": {
+    "L0": 0.0,
+    "q_gain": 0.22833723325685465,
+    "waning": 0.41495743580195255,
+    "access": 0.0,
+    "price": 0.5635537666734497,
+    "proph": 0.3792057718440737
+   }
+  },
+  "limited": {
+   "mean_incremental_qaly": 0.26183046741201094,
+   "mean_incremental_bmp": 0.7569560965763728,
+   "mean_incremental_cost": 127148.86500979638,
+   "mean_INB": -119293.95098743608,
+   "P_cost_effective_QALY": 0.10804,
+   "P_cost_effective_BMP": 0.14376,
+   "P_decision_disagreement": 0.03572,
+   "per_person_EVPI": 5523.045846187099,
+   "population_EVPI": 8734694.829323724,
+   "EVPPI": {
+    "L0": 0.0,
+    "q_gain": 0.0,
+    "waning": 215.14235275078596,
+    "access": 0.0,
+    "price": 622.8974005463177,
+    "proph": 36.55747975744648
+   },
+   "EVPPI_share_of_EVPI": {
+    "L0": 0.0,
+    "q_gain": 0.0,
+    "waning": 0.038953569958017284,
+    "access": 0.0,
+    "price": 0.11278150098579072,
+    "proph": 0.006619079539722519
+   }
+  }
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "model": "second-order CFA, 12 indicators, 3 domains, marker scaling",
+ "criterion": "local identification iff rank(d sigma / d theta') = dim(theta)",
+ "planned_designs": [
+  {
+   "label": "standardised loading 0.55",
+   "loading": 0.55,
+   "n_free": 27,
+   "n_moments": 78,
+   "rank": 27,
+   "identified": true,
+   "smallest_singular_value": 0.36826256844297606,
+   "condition_number": 11.153484092785844
+  },
+  {
+   "label": "standardised loading 0.62",
+   "loading": 0.62,
+   "n_free": 27,
+   "n_moments": 78,
+   "rank": 27,
+   "identified": true,
+   "smallest_singular_value": 0.40823189721424874,
+   "condition_number": 11.270253838095885
+  },
+  {
+   "label": "standardised loading 0.75",
+   "loading": 0.75,
+   "n_free": 27,
+   "n_moments": 78,
+   "rank": 27,
+   "identified": true,
+   "smallest_singular_value": 0.4738706992440372,
+   "condition_number": 11.952261545457313
+  },
+  {
+   "label": "standardised loading 0.9",
+   "loading": 0.9,
+   "n_free": 27,
+   "n_moments": 78,
+   "rank": 27,
+   "identified": true,
+   "smallest_singular_value": 0.5361191983135033,
+   "condition_number": 13.290053290742843
+  }
+ ],
+ "controls": [
+  {
+   "label": "control (a): 2 indicators per domain, 3 domains",
+   "loading": 0.75,
+   "n_free": 15,
+   "n_moments": 21,
+   "rank": 15,
+   "identified": true,
+   "smallest_singular_value": 0.2808253940505345,
+   "condition_number": 12.614124136414635
+  },
+  {
+   "label": "control (b): second-order factor over 2 domains",
+   "loading": 0.75,
+   "n_free": 18,
+   "n_moments": 36,
+   "rank": 17,
+   "identified": false,
+   "smallest_singular_value": 4.241081706181438e-11,
+   "condition_number": 122549068647.82451
+  }
+ ]
+}

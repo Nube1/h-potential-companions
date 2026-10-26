@@ -1,0 +1,3 @@
+participant_id,visit_date,site,age_years,life,quality,support,efficacy,access,deprivation,comorbidity,psychosocial,systemic_burden,survey_weight
+P001,2026-01-15,site_a,52,24,0.82,0.70,0.85,0.65,1.20,0.40,0.30,2.10,1.0
+P002,2026-01-16,site_b,67,16,0.69,0.55,0.80,0.40,1.80,0.80,0.60,3.50,1.0

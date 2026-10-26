@@ -1,0 +1,11 @@
+field,dtype,required,allowed_values,description
+item_id,string,True,,Stable unique identifier for the item
+domain,string,True,Biomedical Potential|Social Modifiers|Systemic Burdens,Top-level H-potential domain
+life_stage,string,True,paediatric|transition|adult|ageing,Population the wording targets
+stem,string,True,,Question as put to the respondent
+n_categories,integer,True,>=2,Number of ordered response options
+direction,integer,True,-1|1,+1 if higher response means greater capability
+respondent,string,True,self|proxy|clinician|record,Who answers the item
+recall_period,string,True,,Recall window stated in the item
+subfacet,string,False,Functional Capacity|Autonomy and Agency|Structural Support,"Haemophilia sub-facet, may be blank"
+source,string,False,,"Origin: instrument name, interview, or new"

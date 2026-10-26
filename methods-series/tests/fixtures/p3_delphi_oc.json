@@ -1,0 +1,221 @@
+{
+ "rule": {
+  "scale": "1-9",
+  "median_min": 7.0,
+  "iqr_max": 1.5,
+  "i_cvi_min": 0.78
+ },
+ "generative_model": "x = clip(round(N(mu, sigma)), 1, 9)",
+ "n_sim": 20000,
+ "operating_characteristics": {
+  "12": {
+   "false_drop_at_pi_0_90": 0.38075,
+   "false_keep_at_pi_0_65": 0.1423,
+   "binding_when_dropped": {
+    "median_fails": 0.0013131976362442547,
+    "iqr_fails": 0.8613263296126067,
+    "cvi_fails": 0.3000656598818122
+   },
+   "indecisive_band": [
+    0.6172741630434783,
+    0.9655596739130435
+   ],
+   "band_width": 0.348
+  },
+  "20": {
+   "false_drop_at_pi_0_90": 0.48805,
+   "false_keep_at_pi_0_65": 0.11445,
+   "binding_when_dropped": {
+    "median_fails": 0.0,
+    "iqr_fails": 0.9734658334187071,
+    "cvi_fails": 0.0892326605880545
+   },
+   "indecisive_band": [
+    0.6402338148524924,
+    0.9641787987679672
+   ],
+   "band_width": 0.324
+  },
+  "30": {
+   "false_drop_at_pi_0_90": 0.6921,
+   "false_keep_at_pi_0_65": 0.05655,
+   "binding_when_dropped": {
+    "median_fails": 0.0,
+    "iqr_fails": 0.9915474642392718,
+    "cvi_fails": 0.039372922988007514
+   },
+   "indecisive_band": [
+    0.6764766226912928,
+    0.9654024527186762
+   ],
+   "band_width": 0.289
+  },
+  "45": {
+   "false_drop_at_pi_0_90": 0.76185,
+   "false_keep_at_pi_0_65": 0.0217,
+   "binding_when_dropped": {
+    "median_fails": 0.0,
+    "iqr_fails": 0.9971122924460195,
+    "cvi_fails": 0.015751132112620594
+   },
+   "indecisive_band": [
+    0.7026759401159047,
+    0.9601019011627907
+   ],
+   "band_width": 0.257
+  },
+  "60": {
+   "false_drop_at_pi_0_90": 0.80965,
+   "false_keep_at_pi_0_65": 0.01875,
+   "binding_when_dropped": {
+    "median_fails": 0.0,
+    "iqr_fails": 0.9995059593651577,
+    "cvi_fails": 0.0016673871425924782
+   },
+   "indecisive_band": [
+    0.6993585859977949,
+    0.9563536681005956
+   ],
+   "band_width": 0.257
+  }
+ },
+ "reference_items": {
+  "mu_for_pi_0_90": 8.036298245614034,
+  "mu_for_pi_0_65": 6.962400252824524,
+  "sigma": 1.2
+ },
+ "iqr_threshold_diagnostic": {
+  "sigmas": [
+   0.5,
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1.0,
+   1.1,
+   1.2,
+   1.3,
+   1.4,
+   1.5,
+   1.6,
+   1.7,
+   1.8,
+   1.9,
+   2.0,
+   2.1,
+   2.2,
+   2.3,
+   2.4
+  ],
+  "panel_size": 30,
+  "false_drop_rate_by_threshold": {
+   "1.0": [
+    0.023,
+    0.0263,
+    0.0262,
+    0.0423,
+    0.1479,
+    0.3949,
+    0.6191,
+    0.7067,
+    0.6949,
+    0.6464,
+    0.5645,
+    0.504,
+    0.4501,
+    0.4026,
+    0.3676,
+    0.3617,
+    0.4224,
+    0.4769,
+    0.5235,
+    0.5638
+   ],
+   "1.5": [
+    0.0231,
+    0.0256,
+    0.0231,
+    0.0392,
+    0.1556,
+    0.38,
+    0.6033,
+    0.6942,
+    0.6912,
+    0.6351,
+    0.5797,
+    0.5124,
+    0.463,
+    0.4177,
+    0.3477,
+    0.3667,
+    0.4283,
+    0.471,
+    0.5167,
+    0.5703
+   ],
+   "2.0": [
+    0.0242,
+    0.0257,
+    0.0251,
+    0.0253,
+    0.0262,
+    0.024,
+    0.0268,
+    0.0231,
+    0.0246,
+    0.0239,
+    0.0258,
+    0.0258,
+    0.0244,
+    0.0274,
+    0.0284,
+    0.0328,
+    0.0543,
+    0.0769,
+    0.1135,
+    0.1469
+   ],
+   "2.5": [
+    0.0244,
+    0.0254,
+    0.0283,
+    0.0242,
+    0.0244,
+    0.0222,
+    0.0268,
+    0.0246,
+    0.0261,
+    0.027,
+    0.0233,
+    0.0255,
+    0.0251,
+    0.024,
+    0.0264,
+    0.0333,
+    0.055,
+    0.083,
+    0.1105,
+    0.1512
+   ]
+  },
+  "note": "False-drop rate for an item with pi=0.90 at panel size 30, as panel disagreement sigma grows, under four candidate IQR thresholds."
+ },
+ "patient_endorsed_item": {
+  "patient_mu": 8.3,
+  "note": "Probability that an item the patients rate highly survives the pooled rule as clinician endorsement falls.",
+  "results": {
+   "6:24": {
+    "P_retained_at_clinician_pi_0_50": 0.00855683646112601,
+    "clinician_pi_needed_for_P_0_80": 0.9618118905472637
+   },
+   "12:18": {
+    "P_retained_at_clinician_pi_0_50": 0.048898647842513424,
+    "clinician_pi_needed_for_P_0_80": 0.9689894344163659
+   },
+   "15:15": {
+    "P_retained_at_clinician_pi_0_50": 0.0861286216730038,
+    "clinician_pi_needed_for_P_0_80": 0.9759622311827957
+   }
+  }
+ }
+}

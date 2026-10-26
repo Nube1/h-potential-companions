@@ -1,0 +1,41 @@
+study:
+  name: H-Potential NHATS development and internal validation
+  seed: 20260905
+  status: preregistration-template
+data:
+  cohort: NHATS approved de-identified analytic extract
+  id: participant_id
+  weight: survey_weight
+  design: [psu, stratum]
+  covariates: [age, sex]
+  max_column_missing: 0.60
+measurement:
+  alpha: 0.50
+  rho_sensitivity: [-1.0, 0.5]
+  domains:
+    biomedical:
+      indicators: [bio_indicator_1, bio_indicator_2, bio_indicator_3]
+      direction: higher_better
+    social:
+      indicators: [social_indicator_1, social_indicator_2, social_indicator_3]
+      direction: higher_better
+    systemic:
+      indicators: [systemic_indicator_1, systemic_indicator_2, systemic_indicator_3]
+      direction: higher_burden
+outcomes:
+  horizons_days: [1825]
+  endpoints:
+    mortality: {time: mortality_time, event: mortality_event}
+    hospitalisation: {time: hospital_time, event: hospital_event}
+validation:
+  test_fraction: 0.30
+  bootstrap_replicates: 500
+  decision_thresholds: [0.05, 0.10, 0.20]
+  equity_groups: [sex, race_group]
+  comparators: [frailty_index, comorbidity_index]
+  rejection:
+    htmt_max: 0.85
+    factor_correlation_max: 0.90
+    determinacy_min: 0.80
+    delta_c_min: 0.0
+

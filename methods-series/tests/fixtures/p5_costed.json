@@ -1,0 +1,30 @@
+{
+ "closed_form_check": {
+  "max_relative_discrepancy": 6.40714461079022e-16,
+  "note": "V = (T/A)(dA/dT)(cT/cA) reproduces (dH/dA dA / cA)/(dH/dT dT / cT) exactly"
+ },
+ "psa": {
+  "high-resource": {
+   "P_uncosted_rule_favours_access": 0.16625,
+   "P_costed_rule_favours_access": 0.518715,
+   "median_structural_term": 0.9142068466008463,
+   "median_feasibility_term": 0.6670923139955942,
+   "median_price_term": 1.7273043628841023,
+   "median_V": 1.0306280451721663,
+   "V_2_5": 0.2908029236411962,
+   "V_97_5": 3.4696881505469035,
+   "P_disagreement": 0.486275
+  },
+  "low-resource": {
+   "P_uncosted_rule_favours_access": 1.0,
+   "P_costed_rule_favours_access": 1.0,
+   "median_structural_term": 2.592110095854364,
+   "median_feasibility_term": 3.126867086754409,
+   "median_price_term": 2.7812167414794646,
+   "median_V": 22.744475549524097,
+   "V_2_5": 4.87683512950669,
+   "V_97_5": 102.48978673713717,
+   "P_disagreement": 0.0
+  }
+ }
+}

@@ -1,0 +1,19 @@
+# Floors, mirroring the dependency table in pyproject.toml.
+# Install the package itself with:  pip install -e ".[full,dev]"
+
+# core
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+matplotlib>=3.7
+
+# [full] extra: needed by the differential-item-functioning and factor-analysis paths
+statsmodels>=0.14
+factor_analyzer>=0.4
+
+# [dev] extra: tests, linting, hooks
+pytest>=7.0
+pytest-cov>=4.0
+ruff>=0.4
+black>=24.1
+pre-commit>=3.5

@@ -1,0 +1,23 @@
+{
+  "name": "hpotential_adult_cohort",
+  "version": "1.0.0",
+  "unique_key": ["participant_id", "visit_date"],
+  "max_row_missing_fraction": 0.35,
+  "allow_extra_columns": false,
+  "columns": [
+    {"name": "participant_id", "kind": "string", "nullable": false, "role": "id", "description": "Study-specific pseudonymous identifier"},
+    {"name": "visit_date", "kind": "date", "nullable": false, "role": "time"},
+    {"name": "site", "kind": "category", "nullable": false, "categories": ["site_a", "site_b"], "role": "group"},
+    {"name": "age_years", "kind": "number", "nullable": false, "minimum": 18, "maximum": 110, "role": "predictor"},
+    {"name": "life", "kind": "number", "nullable": true, "minimum": 0, "maximum": 100, "role": "predictor"},
+    {"name": "quality", "kind": "number", "nullable": true, "minimum": 0, "maximum": 1, "role": "outcome"},
+    {"name": "support", "kind": "number", "nullable": true, "minimum": 0, "maximum": 1, "role": "predictor"},
+    {"name": "efficacy", "kind": "number", "nullable": true, "minimum": 0, "maximum": 1, "role": "predictor"},
+    {"name": "access", "kind": "number", "nullable": true, "minimum": 0, "maximum": 1, "role": "predictor"},
+    {"name": "deprivation", "kind": "number", "nullable": true, "minimum": 0.01, "maximum": 10, "role": "predictor"},
+    {"name": "comorbidity", "kind": "number", "nullable": true, "minimum": 0, "maximum": 10, "role": "predictor"},
+    {"name": "psychosocial", "kind": "number", "nullable": true, "minimum": 0, "maximum": 10, "role": "predictor"},
+    {"name": "systemic_burden", "kind": "number", "nullable": true, "minimum": 0, "maximum": 100, "role": "outcome"},
+    {"name": "survey_weight", "kind": "number", "required": false, "nullable": true, "minimum": 0, "role": "weight"}
+  ]
+}

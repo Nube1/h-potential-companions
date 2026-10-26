@@ -1,0 +1,30 @@
+{
+ "ceiling_rho_D": 0.8778,
+ "c_gamma_Psi": 3.3586,
+ "c_required_for_target": 4.2632,
+ "target": 0.9,
+ "lambda=0.55": {
+  "rho_D_at_m4": 0.77,
+  "rho_D_at_m8": 0.8182,
+  "rho_D_at_m40": 0.8647,
+  "indicators_per_domain_for_target": null
+ },
+ "lambda=0.65": {
+  "rho_D_at_m4": 0.8085,
+  "rho_D_at_m8": 0.8408,
+  "rho_D_at_m40": 0.8699,
+  "indicators_per_domain_for_target": null
+ },
+ "lambda=0.75": {
+  "rho_D_at_m4": 0.8361,
+  "rho_D_at_m8": 0.8561,
+  "rho_D_at_m40": 0.8733,
+  "indicators_per_domain_for_target": null
+ },
+ "lambda=0.85": {
+  "rho_D_at_m4": 0.8563,
+  "rho_D_at_m8": 0.8668,
+  "rho_D_at_m40": 0.8756,
+  "indicators_per_domain_for_target": null
+ }
+}
