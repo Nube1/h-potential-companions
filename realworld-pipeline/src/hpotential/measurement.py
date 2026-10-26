@@ -45,7 +45,14 @@ def fit_measurement(train: pd.DataFrame, cfg):
     return model
 
 
-def transform_measurement(df: pd.DataFrame, model, cfg):
+def transform_measurement(df: pd.DataFrame, model, cfg, floor: float | None = None):
+    """Map each domain onto the unit interval with the frozen bounds.
+
+    ``floor=None`` (or 0) is the preregistered rule: scores are clipped to
+    [EPS, 1 - EPS], so anyone below the 1st training percentile sits at about
+    zero. A positive ``floor`` maps the same bounds onto [floor, 1] instead, so
+    no one is pushed to zero; it is reported as a sensitivity analysis.
+    """
     out = {}
     for name, m in model["domains"].items():
         spec = cfg.indicators[name]
@@ -55,7 +62,11 @@ def transform_measurement(df: pd.DataFrame, model, cfg):
         z = (x - np.array(m["mean"])) / np.array(m["scale"])
         raw = z @ np.array(m["loadings"])
         lo, hi = model["bounds"][name]
-        out[name] = np.clip((raw - lo) / (hi - lo), EPS, 1 - EPS)
+        unit = (raw - lo) / (hi - lo)
+        if floor:
+            out[name] = floor + (1 - floor) * np.clip(unit, 0.0, 1.0)
+        else:
+            out[name] = np.clip(unit, EPS, 1 - EPS)
     return pd.DataFrame(out, index=df.index)
 
 

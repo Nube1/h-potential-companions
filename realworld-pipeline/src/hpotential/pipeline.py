@@ -34,6 +34,8 @@ def _predictor_sets(cov_cols: list[str], cfg) -> dict[str, list[str]]:
         "additive": ["additive", *base],
         "geometric_crf": ["geometric_crf", *base],
     }
+    if cfg.raw["measurement"].get("floor_sensitivity"):
+        sets["geometric_crf_floor"] = ["geometric_crf_floor", *base]
     for c in cfg.raw["validation"].get("comparators", []):
         sets[c] = [c, *base]
     return sets
@@ -57,10 +59,15 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     )
     model = fit_measurement(df.iloc[tr_idx], cfg)  # outcome-blind: training rows, indicators only
     save_frozen_model(model, out / "measurement_model_frozen.json")
+    alpha = cfg.raw["measurement"]["alpha"]
     domains = transform_measurement(df, model, cfg).reset_index(drop=True)
-    scores = candidate_scores(
-        domains, cfg.raw["measurement"]["alpha"], cfg.raw["measurement"]["rho_sensitivity"]
-    )
+    scores = candidate_scores(domains, alpha, cfg.raw["measurement"]["rho_sensitivity"])
+    # Sensitivity: the same frozen bounds mapped onto [floor, 1].
+    floor = float(cfg.raw["measurement"].get("floor_sensitivity", 0) or 0)
+    if floor:
+        floored = transform_measurement(df, model, cfg, floor).reset_index(drop=True)
+        scores["geometric_crf_floor"] = candidate_scores(floored, alpha, [])["geometric_crf"]
+        domains = pd.concat([domains, floored.add_suffix("_floor")], axis=1)
     analysis = pd.concat([df.reset_index(drop=True), domains, scores], axis=1)
     cov = _encoded_covariates(analysis, cfg)
     analysis = pd.concat([analysis, cov.add_prefix("cov_")], axis=1)

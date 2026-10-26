@@ -17,6 +17,7 @@ MODEL_LABELS = {
     "baseline": "Age and sex",
     "additive": "Additive score",
     "geometric_crf": "Geometric CRF (H)",
+    "geometric_crf_floor": "H, fixed floor",
     "frailty_index": "Frailty index",
     "comorbidity_index": "Comorbidity count",
 }
