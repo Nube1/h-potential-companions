@@ -35,6 +35,10 @@ python -m hpotential ede results/example_scores.csv --epsilon 1
 
 Supply P in one common declared unit, S as social enablement, and R as structural freedom (1 minus a justified normalised burden). The command does not infer or clinically calibrate these inputs. Bad input gives a one-line error naming the CSV line, not a traceback.
 
+## Proof figures
+
+`python analysis/proof_figures.py` draws ten figures into `figures/`, one for each mathematical result of the three papers: level sets of the CES family, the ordering and limits in rho, the capacity ceiling, the balance penalty, marginal effects, the exact log-gap decomposition, determinacy and missingness, measurement drift, the EDE against inequality aversion, and the allocation reversal. Each figure carries a numeric check of the result it shows (for example, the finite-difference error of the analytic derivative, or the simulated against the formula bias under drift), and the build stops if a check fails. `figures/FIGURES.md` lists every figure with its statement, caption and check; `figures/figure_index.json` holds the same for the paper text. The papers do not yet cite these figures; each needs a sentence in the text before it goes into a manuscript.
+
 ## Reproducibility
 
 `reproduce.py` writes floats to 12 significant digits. The result files and their SHA-256 hashes in `results/manifest.json` are then identical across NumPy versions and operating systems; this was checked against the original Windows run (NumPy 2.3.5) and Linux runs with NumPy 2.1 and 2.5. The tests regenerate every table and compare it with the committed copy, and check that every number in the three manuscript tables equals the generated value rounded to four decimals.
