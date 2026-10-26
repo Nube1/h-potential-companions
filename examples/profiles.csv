@@ -1,0 +1,4 @@
+id,P,S,R
+synthetic_balanced,1,0.45,0.45
+synthetic_unbalanced,1,0.70,0.20
+synthetic_extreme,1,0.89,0.01

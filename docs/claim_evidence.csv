@@ -1,0 +1,11 @@
+claim,status,evidence,limitation
+CRF boundary and ceiling properties,derived and checked,paper 1 proofs and test_axioms_grid,finite numerical checks supplement proofs
+Stable negative-rho scoring,implemented and checked,test_generalized_mean_and_limits,not arbitrary precision
+Constant contextual mean hides bottlenecks,calculated,results/aggregation.csv,synthetic profiles
+Missing indicators reduce recovery,simulated,results/measurement.csv,known Gaussian model one seed MCAR
+Intercept shift preserves correlation while bias rises,derived and simulated,results/measurement.csv,constant synthetic drift
+EDE changes finite allocation choice,calculated,results/policy.csv and test_allocator_exact,assumed costs and responses
+Clinical validity,not established,no participant analysis,no clinical claim permitted
+General higher-order factor,not established,no empirical CFA,domain profile retained as possible endpoint
+NHATS prognosis,proposed,Paper 2 protocol,no fitted survival model
+Haemophilia dosing,not implemented,README scope,no dosing advice or clinical optimisation

@@ -1,0 +1,133 @@
+# From individual capability to population priorities: equity-sensitive allocation with explicit response and budget assumptions
+
+Ronald Rethabile Malamule Mahomane
+
+Theoretical and computational policy manuscript draft. Synthetic allocation examples; no treatment-effect or cost-effectiveness estimates from patients.
+
+## Abstract
+
+An individual health-capability score does not determine how a population should allocate resources. Population weighting, inequality aversion, intervention responses and budget constraints add distinct assumptions. We combine the H-potential capability-realisation function with a weighted equally distributed equivalent (EDE) and derive the marginal policy objective. The resulting gradient separates a scoring derivative from an intervention-response derivative and a normative population weight. An exact finite-portfolio algorithm evaluates binary interventions without treating a local gradient as a global optimum. In a reproducible two-person construction with baseline scores 0.20 and 0.80, equal-cost interventions can raise the lower score to 0.30 or the higher score to 1.00. The arithmetic objective selects the latter, yielding a mean of 0.60 rather than 0.55. At inequality aversion one, the EDE instead selects the lower-score intervention, with EDE 0.4899 versus 0.4472; the preference remains at aversion two and three. The reversal is a consequence of stated values and responses, not a finding about a health system. We also show why identical clinical gains do not ensure identical jurisdictional choices when costs, budget ceilings or legal constraints differ. The framework makes allocation assumptions auditable while preserving the distinction between capability, QALYs, causal evidence and affordability. Empirical adoption requires identified responses, defensible units and governance review.
+
+Keywords: health equity; capability; resource allocation; inequality aversion; budget constraint; policy transportability.
+
+## 1. Introduction
+
+A model that assigns a score to each person has not yet answered who should receive the next unit of funding. That decision depends on the gain an intervention causes, its cost, the population represented and the ethical objective. Collapsing these steps into a score-based ranking can turn a descriptive model into an apparently authoritative policy recommendation without the evidence that the recommendation needs.
+
+The H-potential thesis [4] offers a useful starting distinction between biomedical capacity, social enablement and structural freedom, motivated by capacity-environment perspectives such as WHO's framework [3]. Its geometric realisation function makes contextual bottlenecks visible. The aggregation uses established tools, including geometric and CES specifications [2]. However, a large derivative with respect to a domain does not imply that a feasible service changes that domain cheaply, safely or causally. Even an identified individual gain does not determine the social value of its distribution.
+
+This paper links individual capability to an explicitly weighted EDE, following the established inequality-sensitive aggregation approach of Atkinson [1]. It derives local priorities, supplies an exact discrete comparator, and uses a small synthetic allocation problem to show where value choices change the decision. The contribution is integration and computational transparency rather than a new social-welfare functional. The purpose is to prevent allocation claims from outrunning the model's evidence.
+
+## 2. Individual capability and population objective
+
+Let X_i=(P_i,S_i,R_i) be a comparable individual profile, with nonnegative capacity and contextual domains in [0,1]. For 0<alpha<1 the primary score is:
+
+```equation
+H_i = P_i S_i^alpha R_i^(1-alpha).                                    (1)
+```
+
+Each H_i has the declared units of P_i, which may be arbitrary capacity units. Without a validated cardinal calibration it is not a QALY. The model imposes a capacity ceiling; services that change effective capacity must express that change through a justified response in P or adopt a different ontology. The score is not identified from observed functioning alone.
+
+Let q_i be nonnegative population weights summing to one. These may represent sampling weights or stated population shares; the ethical priority is supplied separately. For epsilon>=0 define:
+
+```equation
+W_epsilon(H) = [sum_i q_i H_i^(1-epsilon)]^(1/(1-epsilon)), epsilon!=1.
+W_1(H) = exp[sum_i q_i log(H_i)].                                     (2)
+```
+
+At epsilon=0 this is the population-weighted arithmetic mean. At epsilon=1 it is the geometric mean. Larger epsilon places greater priority on lower scores. The parameter is a normative input and should be reported across a predeclared range. It must not be selected because one preferred intervention wins at that value.
+
+For strictly positive H_i differentiation yields:
+
+```equation
+dW/dH_i = q_i (W/H_i)^epsilon.                                        (3)
+```
+
+Thus a one-unit gain to a lower-score person receives a greater marginal social weight when epsilon>0. This is a property of the stipulated objective. It does not create an empirical willingness-to-pay threshold or a legal entitlement. Rescaling a genuinely cardinal capacity unit by a common positive constant rescales W while preserving policy rankings under the same response and cost specification. Arbitrary transformations of individual scores need not preserve those rankings.
+
+## 3. Boundary behaviour and identifiability
+
+Zeros have different implications across aversion values. If 0<=epsilon<1, equation (2) can be evaluated with zero observations; for example W_0.5(0,4)=1 with equal weights. For epsilon>=1, any zero with positive population weight makes the limiting EDE zero. An arbitrary positive floor changes this judgement and may make rankings depend on the floor. The implementation uses the exact limiting value and refuses the interior population-gradient formula at zero.
+
+A floor can be defensible as a documented instrument detection limit, but it is then part of the estimand. Reports should show sensitivity rather than present the floor as numerical housekeeping. The same applies to normalising domain values: a zero generated by sample-minimum scaling should not automatically be treated as a real essential bottleneck that collapses W.
+
+Population comparability is essential. A 0.20 score from one disease-specific instrument and a 0.80 score from an unrelated instrument do not define a valid inequality distribution merely because both use the same numerical range. Establishing a common construct and defensible scale precedes population aggregation. The two-person construction below deliberately assumes a common hypothetical instrument.
+
+## 4. Policy responses and constrained optimisation
+
+Let u be a vector of interventions with cost c(u). Each person's post-intervention profile is X_i(u), supplied by a response model. The objective is to maximise W(H(X(u))) subject to c(u)<=C and any clinical, rights or implementation constraints. On the positive interior, the chain rule gives:
+
+```equation
+dW/du_j = sum_i q_i (W/H_i)^epsilon grad_X(H_i)' dX_i/du_j.             (4)
+```
+
+There are three distinguishable ingredients: the normative weight, the mathematical scoring gradient and the causal response. Only the second follows from the CRF. A trial, natural experiment or otherwise justified causal model is needed for the third. Prediction coefficients from a cross-sectional association cannot simply be substituted for intervention effects.
+
+For an interior optimum of a differentiable continuous problem, first-order conditions require dW/du_j=lambda dc/du_j for funded unconstrained directions, with appropriate inequalities at bounds. Concavity and constraint qualifications determine when such conditions are sufficient. The general problem is not assumed concave. In particular, finite indivisible actions, competing capacity and interactions can invalidate a greedy ranking by marginal gain per cost.
+
+The implementation therefore also evaluates binary action portfolios exactly. For J candidate actions it enumerates 2^J subsets, computes additive specified domain responses, rejects portfolios outside domain bounds or budget, and selects the greatest EDE, with lower cost used for objective ties within numerical tolerance. It does not silently clip a profile above one. The reference implementation caps J at 20 because exhaustive enumeration scales exponentially. It is a transparent small-problem benchmark, not a national allocation optimiser.
+
+## 5. Synthetic allocation experiment
+
+Two hypothetical people have profiles (1,0.20,0.20) and (1,0.80,0.80). With alpha=0.5 their scores are 0.20 and 0.80. Action L increases both contextual domains of the first person by 0.10; action H increases both domains of the second person by 0.20. Each costs one arbitrary budget unit and the total budget is one, so both cannot be chosen. Responses and costs are assumptions selected to expose the allocation trade-off, not estimated treatment effects.
+
+Table 1 is generated from results/policy.csv. Both people have equal population weights. The no-action portfolio is also enumerated and is dominated for these positive responses.
+
+| Aversion epsilon | EDE after L | EDE after H | Selected action |
+|---|---|---|---|
+| 0.0 | 0.5500 | 0.6000 | H |
+| 0.5 | 0.5199 | 0.5236 | H |
+| 1.0 | 0.4899 | 0.4472 | L |
+| 2.0 | 0.4364 | 0.3333 | L |
+| 3.0 | 0.3973 | 0.2774 | L |
+
+At epsilon=0 the larger aggregate gain wins: the second person's 0.20 increase exceeds the first person's 0.10 increase. At epsilon=1 the EDE is the square root of the product. Action L yields sqrt(0.30*0.80)=0.4899; action H yields sqrt(0.20*1.00)=0.4472. This analytic calculation independently reproduces the enumerated choice. The reversal shows a trade-off between total gain and the distribution of gain, not a computational improvement over the arithmetic objective.
+
+The two rows nearest the change are deliberately not used to estimate a universal aversion threshold. That threshold depends on baseline profiles, response sizes, weights and costs. If either action became cheaper, more effective or legally constrained, the comparison could change. Increasing inequality aversion alone cannot repair incorrectly measured scores or unidentified responses.
+
+## 6. Contextual gaps and causal attribution
+
+For two positive profiles measured on a common instrument, the geometric score has an exact log-gap decomposition:
+
+```equation
+log(H_a/H_b) = log(P_a/P_b)+alpha log(S_a/S_b)
+                            +(1-alpha)log(R_a/R_b).                  (5)
+```
+
+The repository's example holds P=0.30 and S=0.70 fixed while R changes from 0.20 to 0.85. The structural component is 0.5 log(0.85/0.20)=0.7235 and the other two components are zero. This accounts for the score difference under the stated transformation. It does not establish that a named financing policy causes the change in R, nor that the resulting numerical difference corresponds to an observed change in health.
+
+For a population, nonlinear aggregation requires individual evaluation. Applying equation (5) to arithmetic mean domains does not generally reproduce differences in arithmetic mean capability or EDE. A policy report should preserve distributions and population weights rather than use a representative person whose averages erase dependence and lower-tail constraints.
+
+## 7. Why decisions do not automatically transport
+
+Suppose two jurisdictions share an identical health gain but have different delivery costs, budget ceilings or admissibility rules. Their decisions need not agree. A constructive example uses a separately established gain of one QALY, not a CRF score relabelled as a QALY. At an illustrative value of 100 currency units per QALY, jurisdiction A incurs cost 80 and has net monetary benefit 20. Jurisdiction B incurs cost 120 and has net monetary benefit -20. The clinical gain is identical and the cost-based decisions differ. This is a counterexample to automatic decision transport, not a claim that decisions can never agree.
+
+Even matching net benefit does not ensure affordability: the number eligible and timing of spending may exceed one jurisdiction's budget. Conversely, a legally required service can remain admissible despite a negative value under one chosen economic objective. Net monetary benefit is one evidence coordinate, not a substitute for the full decision problem.
+
+We therefore retain separate evidence for domain shifts, independently estimated QALY gains where available, incremental costs, time-specific budget impact, subgroup gains and rights constraints. Costs and effects need an explicit horizon, price basis and uncertainty distribution. CRF capability units remain distinct throughout. Uncertainty belongs to each coordinate; it should not be represented by a solitary generic confidence label.
+
+## 8. Discussion and limitations
+
+The EDE makes a distributional judgement visible, and exact enumeration prevents a local gradient from being mistaken for a finite-budget solution. Neither resolves the moral status of the underlying capacity ceiling. Weighting low scores can favour people disadvantaged by context, but it can also have unexpected consequences when poor measurement or irreversible morbidity drives a score. Rights and minimum-service constraints can therefore be essential, independently of the optimisation objective.
+
+The synthetic experiment has two people, two actions, additive known responses and no spillovers. It establishes the stated ranking reversal and tests software; it does not establish an efficient health policy. Real analyses require response uncertainty, correlated effects, interaction between actions, resource congestion, time dynamics and appropriate population weights. Optimising expected EDE also differs from applying EDE to expected scores; uncertainty must be propagated in the order matching the chosen decision criterion.
+
+The current code provides deterministic evaluation, not uncertainty-aware causal estimation. A future analysis should compare policies across response draws using common random numbers and report the frequency of each optimum, expected loss and sensitivity to ethical parameters. Such work must follow approved protocols and appropriate data governance. No patient-level data is required to inspect or run the examples here.
+
+## 9. Conclusion
+
+Individual capability, population equity and feasible policy are linked but distinct objects. The derived gradient separates the normative objective from the scoring function and causal response. A reproducible finite-portfolio example shows how explicit inequality aversion can reverse a choice that maximises the arithmetic mean. The result is a transparent decision framework whose empirical and ethical assumptions can be challenged; it is not a policy recommendation for haemophilia or any other population.
+
+## Declarations and reproducibility
+
+No human participant data, observed intervention effects or real costs were used. No institutional approval or clinical readiness is asserted. Authorship, affiliation, funding and conflicts require confirmation. Run python analysis/reproduce.py to generate the policy and gap tables; the science tests verify weighted EDE derivatives, zero limits and the exact allocation example. This paper's policy argument is separate from the traditional literature review requested for thesis Chapter One.
+
+## References
+
+[1] Atkinson AB. On the measurement of inequality. Journal of Economic Theory. 1970;2(3):244-263. https://doi.org/10.1016/0022-0531(70)90039-6
+
+[2] Arrow KJ, Chenery HB, Minhas BS, Solow RM. Capital-labor substitution and economic efficiency. Review of Economics and Statistics. 1961;43(3):225-250. https://doi.org/10.2307/1927286
+
+[3] World Health Organization. World report on ageing and health. Geneva: WHO; 2015. ISBN 9789241565042. https://www.who.int/publications/i/item/9789241565042
+
+[4] Mahomane RRM. Development and Internal Validation of the H-potential: A Multidimensional Health Metric for Predicting Health Outcomes. H_Potential_Thesis_V12_4, supplied thesis draft, 283 pages. Unpublished.

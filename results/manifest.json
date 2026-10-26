@@ -1,0 +1,18 @@
+{
+  "seed": 20261025,
+  "numpy": "2.3.5",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "n_synthetic": 4000,
+  "clinical_data": false,
+  "command": "python analysis/reproduce.py",
+  "csv_sha256": {
+    "aggregation.csv": "9011665a83f509b6f84e787158c136f7ff31864e18cf643dca1c7abaa45a4b03",
+    "determinacy.csv": "e00ec51ad22582fc253e90677ef86f2c159af72cda9c2926d11f0cc305725b83",
+    "example_scores.csv": "87644b54e3eae1a83958d599a0997e910cf489164c8143e7341258bb241c6ada",
+    "gap.csv": "e4298a18876547e80681b466045a920dcc1e55f542108e618e0876dfb3744f13",
+    "measurement.csv": "a56a42f091a6efc7d96492d51da895b65721d5cef9c9c3b31063188c95d5ef39",
+    "policy.csv": "43393954b4e6e60f838fb80a5f1b6c0d78bbcf17ac97d37a1cd308811c6ad302",
+    "sensitivity.csv": "0d8b80cf0074d26543dbc545c497161d657db9c654837bf3afe7ea036f60c08e"
+  }
+}

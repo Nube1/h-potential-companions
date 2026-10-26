@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hpotential-thesis-companions"
+version = "0.1.0"
+description = "Research code and three companion manuscripts for the H-potential thesis"
+requires-python = ">=3.10"
+dependencies = ["numpy>=2.0,<3"]
+
+[tool.setuptools.packages.find]
+include = ["hpotential*"]
