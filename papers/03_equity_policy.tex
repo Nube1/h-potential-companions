@@ -1,12 +1,16 @@
 \documentclass[11pt,a4paper]{article}
+\pdftrailerid{}
 \usepackage[margin=25mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
 \usepackage{amsmath,amssymb,booktabs,array,microtype,fancyhdr}
 \usepackage[labelsep=none,skip=6pt,font=small]{caption}
-\usepackage{xurl}
+\usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z}
+\makeatother
 \setlength{\parindent}{0pt}
 \setlength{\emergencystretch}{3em}
 \setlength{\parskip}{0.6\baselineskip}
