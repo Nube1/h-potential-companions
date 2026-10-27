@@ -1,0 +1,38 @@
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  ind/.style={draw, fill=white, align=center, font=\scriptsize,
+              minimum width=1.15cm, inner sep=1.5pt, minimum height=1.25cm},
+  dom/.style={draw, ellipse, thick, align=center, font=\small,
+              inner sep=1pt, minimum height=1.15cm, minimum width=2.9cm},
+  cor/.style={{Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}, thick},
+]
+% indicators
+\node[ind] (y0) at (0.00,0) {Multi-\\morbidity};
+\node[ind] (y1) at (1.26,0) {ADL/\\IADL\\limit-\\ation};
+\node[ind] (y2) at (2.52,0) {Cogni-\\tive\\function};
+\node[ind] (y3) at (3.78,0) {Psycho-\\logical\\wellbeing};
+\node[ind] (y4) at (5.04,0) {Social\\partici-\\pation};
+\node[ind] (y5) at (6.30,0) {Support\\network};
+\node[ind] (y6) at (7.56,0) {Commu-\\nication};
+\node[ind] (y7) at (8.82,0) {Eco-\\nomic\\vulner-\\ability};
+\node[ind] (y8) at (10.08,0) {Educa-\\tional\\attain-\\ment};
+\node[ind] (y9) at (11.34,0) {Environ-\\mental\\stress};
+\node[ind] (y10) at (12.60,0) {Health-\\care\\barriers};
+% domains
+\node[dom, fill=black!6]  (bio) at ($(y1)!0.5!(y2)+(0,2.7)$) {Biomedical\\Potential};
+\node[dom, fill=black!16] (soc) at ($(y5)+(0,2.7)$) {Social\\Modifiers};
+\node[dom, fill=black!28] (sys) at ($(y8)!0.5!(y9)+(0,2.7)$) {Systemic\\Burdens};
+\foreach \i in {0,1,2,3} \draw[hparrow] (bio.south) -- (y\i.north);
+\foreach \i in {4,5,6} \draw[hparrow] (soc.south) -- (y\i.north);
+\foreach \i in {7,8,9,10} \draw[hparrow] (sys.south) -- (y\i.north);
+% correlations between domains
+\draw[cor] (bio.east) to[bend left=22] (soc.west);
+\draw[cor] (soc.east) to[bend left=22] (sys.west);
+\draw[cor] (bio.north) to[out=95, in=85, looseness=0.85] (sys.north);
+% general factor, tested
+\node[dom, dashed, fill=white, minimum width=2.6cm] (gen) at ($(soc)+(0,2.35)$) {$H_{\text{potential}}$\\[-1pt]\scriptsize general factor};
+\foreach \d in {bio,soc,sys} \draw[hpdash, -{Stealth[length=2.2mm]}] (gen) -- (\d);
+% annotations
+\node[hpnote, anchor=west] at ($(y0.south west)+(0,-0.35)$) {Observed indicators (rectangles)};
+\node[hpnote, anchor=east] at ($(y10.south east)+(0,-0.35)$) {Dashed: tested, not assumed};
+\end{tikzpicture}}

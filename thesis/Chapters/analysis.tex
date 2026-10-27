@@ -39,6 +39,44 @@ The chapter concludes by deriving individual estimates of $H_{\text{potential}}$
 
 The evidence can end in one of four ways, fixed in advance. If the first-order structure fails, the scores cannot be carried forward as measures of the construct. If it holds but two domains cannot be told apart, the thesis reports fewer domains than it proposed. If three distinct domains are recovered but the higher-order loadings are weak or uneven, the domain profile is carried forward and the single score is not. Only if every test is passed is the scalar carried forward, and even then the domain scores travel with it. Fixing these rules before the results exist means the ending cannot be chosen by which one later predicts best.
 
+Each check in the chapter has a counterpart in the validation of a laboratory assay, and Table~\ref{tab:anal-labparallel} sets the two side by side. The structure is the same in both: a quantity that cannot be read directly is inferred from signals, and the method is accepted only after its fit, precision, specificity and agreement across settings have been examined. The parallel breaks at one point that runs through every row. An assay is validated against reference material of known concentration. No reference standard exists for health capacity, so every check here compares the indicators with one another and never with a known true value. The last column of the table states what follows from that for each check, and so what a passed check does not show.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{2.2cm} p{3.4cm} p{3.6cm} p{4.4cm}}
+\caption{The measurement checks of this chapter and their laboratory counterparts.}\label{tab:anal-labparallel}\\
+\toprule
+\textbf{Check (section)} & \textbf{Question it asks} & \textbf{Laboratory counterpart} & \textbf{Where the parallel breaks down} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Check (section)} & \textbf{Question it asks} & \textbf{Laboratory counterpart} & \textbf{Where the parallel breaks down} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
+Model fit (\S\ref{sec:anal-fit}) & Does the model reproduce the correlations observed among the eleven indicators? & Fit of a calibration model: does the fitted curve describe the standards? & Standards have known values; here the model is judged only against the indicators it was fitted to. Good fit shows the structure is consistent with the data, not that the inferred quantity is the one intended. With three domains the general factor adds nothing that fit can test (Proposition~\ref{prop:meas:justid}). \\
+\addlinespace
+Loadings (\S\ref{sec:anal-loadings}) & How strongly does each indicator track its domain? & How strongly an assay signal tracks the analyte across its range. & An assay is checked against spiked or reference samples; a loading is estimated from agreement with the other indicators of the same domain, so it measures agreement among indicators, not agreement with a true value. \\
+\addlinespace
+Composite reliability, $\omega$ (\S\ref{sec:anal-validity}) & How much of the spread in domain scores reflects real differences between people rather than noise? & Precision: the agreement of repeated measurements, expressed as a coefficient of variation. & Precision is measured by running the same sample again. No participant is measured twice here; $\omega$ is inferred from agreement among different indicators at one interview, and it assumes the indicators share a common cause, which may not hold for Systemic Burdens. \\
+\addlinespace
+Average variance extracted (\S\ref{sec:anal-validity}) & On average, how much of each single indicator is signal from its domain? & The share of a result's variance due to the analyte rather than to analytical error. & It is an average over different indicators, not a property of one method, and has no single laboratory equivalent. A domain can be reliable as a whole while each indicator alone is noisy. \\
+\addlinespace
+Discriminant validity (\S\ref{sec:anal-validity}) & Are the three domains distinct, or two names for one thing? & Analytical specificity: the assay measures this analyte and not a related one (cross-reactivity). & Cross-reactivity is tested by adding the interfering substance. Two domains may correlate highly because the same disadvantage produces both in the population; that is a real association, not interference, and no experiment can separate them. \\
+\addlinespace
+Measurement invariance (\S\ref{sec:anal-checks}) & Do the indicators relate to the domains in the same way across sex and age band? & The same reading for the same concentration across patient groups or laboratories, as in external quality assessment. & Laboratories exchange common material of known value. No common material exists for people in different groups, so invariance is inferred from constraints on the model, and only groups large enough to fit separately can be tested. \\
+\addlinespace
+Estimator comparison (\S\ref{sec:anal-checks}) & Do the conclusions change if the model is fitted by WLSMV rather than maximum likelihood? & Method comparison against a second method on the same samples. & Both estimators use the same data and the same imputations, so they share any fault in either (\S\ref{sec:anal-systems}). Agreement shows the result does not depend on distributional assumptions; it does not show the result is correct. \\
+\bottomrule
+\end{longtable}
+}
+
+\paragraph{What Is New in This Chapter.} Frailty indices, the usual summary measures of health in older age, count observed deficits into a score, and the score is judged mainly by whether it predicts death or admission. A count of that kind assumes its items measure one thing with equal weight and does not test the assumption. This chapter tests a capacity construct that spans biological, social and structural domains as a latent measurement model, before any outcome is seen. Three features of the design are new, and each can be checked from the chapter itself. First, the general factor is treated as a hypothesis to be refuted and not as a modelling convenience: because global fit cannot test it when there are three domains (Proposition~\ref{prop:meas:justid}), the chapter states that the evidence must come from the size, sign and admissibility of three second-order loadings, and it fixes in advance the four endings those loadings can lead to. Second, the social and structural domains are put to the same tests of precision, specificity and invariance as the biomedical domain, so that a weak contextual domain shows up here as a measurement result and not later as a weak predictor. Third, the loadings, scores and mapping bounds are frozen before Chapter~\ref{ch:results2} uses them, and the analysis code checks this directly: shuffling every outcome column leaves the fitted model and every score unchanged (Chapter~\ref{ch:methods}). The chapter also names, in \S\ref{sec:anal-systems}, the faults that would pass its checks and where each would appear downstream, so that a reader can test the claims of the next chapter against them.
+
 \begin{quote}
 \small\itshape
 Note to the reader. The numerical results in this chapter are produced by the analysis of NHATS described in Chapter~\ref{ch:methods}. Tables and figures are laid out for those results, and bracketed placeholders mark values to be inserted once the analysis is complete. This note is removed in the final version.
@@ -56,7 +94,7 @@ Table~\ref{tab:sample} summarises the demographic, clinical, and socioeconomic c
 
 The observed characteristics are not treated as outcomes in their own right. Each is an empirical manifestation of one of the latent domains defined in the theoretical framework, and its distribution provides context for interpreting the measurement properties reported in the remainder of the chapter. Where a characteristic is markedly skewed or sparse in one tail, this is noted, because such features affect both the estimator chosen and the interpretation of the corresponding loading.
 
-Table~\ref{tab:sample} is read for three features, each tied to a later step. A sparse category in a binary or ordinal indicator gives a poorly estimated threshold and polychoric correlation, and so an unstable loading under WLSMV (\S\ref{sec:anal-estimation}). Strong skew in a count such as multimorbidity strains the normality that maximum likelihood assumes and is one reason the two estimators could disagree. A characteristic that almost everyone shares carries little information about the latent variable whatever its loading, and Proposition~\ref{prop:meas:shrinkage} shows what little information does to a score. None of these would make the model wrong; each limits the weight a loading can bear, and the narrative below the table records any that are present.
+Table~\ref{tab:sample} is read for three features, each tied to a later step. A sparse category in a binary or ordinal indicator gives a poorly estimated threshold and polychoric correlation, and so an unstable loading under WLSMV (\S\ref{sec:anal-estimation}). Strong skew in a count such as multimorbidity strains the normality that maximum likelihood assumes and is one reason the two estimators could disagree. A characteristic that almost everyone shares carries little information about the latent variable whatever its loading, and Proposition~\ref{prop:meas:shrinkage} shows what little information does to a score. None of these would make the model wrong; each limits the weight a loading can bear, and the narrative below the table records any that are present. A good table for this purpose shows each characteristic spread across its range with no category nearly empty; a poor one shows a category so rare that the indicator built from it can say little about anyone.
 
 \begin{table}[h]
 \centering
@@ -94,9 +132,22 @@ Who is in the sample decides what the model can be asked. With that settled, the
 \label{sec:anal-estimation}
 The sample section left open whether the data can estimate the model at all. A model that returns impossible values cannot be judged on fit or meaning, so this comes first.
 
+Some terms first. A latent variable is a quantity that cannot be observed directly and is inferred from several observed indicators, in the way an analyte concentration is inferred from an assay signal through a calibration. Here each domain is a latent variable, and each survey measure, such as the count of chronic conditions, is an indicator. Factor analysis estimates how strongly each indicator tracks its latent variable, called its loading, and how much of the indicator is noise, called its residual variance. It is confirmatory when the analyst fixes in advance which indicator belongs to which latent variable, and the data are asked only whether that assignment holds.
+
 The measurement model was estimated by confirmatory factor analysis within the structural equation modelling framework of Chapter~\ref{ch:methods}. Three correlated first-order latent variables were specified, each measured by its own observed indicators, and together they define a single second-order latent factor representing $H_{\text{potential}}$. Fixing the pattern of loadings in advance, rather than letting the data determine which indicators belong to which factor, is what makes this a confirmatory test of the theory rather than an exploratory search.
 
+Figure~\ref{fig:anal-path} draws the model as specified. Each rectangle is an indicator measured in the interview; each oval is a domain that is inferred and not measured. A single-headed arrow runs from a domain to each of its indicators because the model treats the domain as the source of what its indicators share: a fall in biomedical capacity is expected to show in several indicators at once, as a rise in an analyte shows in every assay that detects it. The curved double-headed arrows let the three domains correlate without saying why. The general factor at the top is the theory's account of those correlations, that the domains move together because they share one source. It is drawn dashed because the chapter tests it and does not assume it (\S\ref{sec:anal-secondorder}). The figure carries no estimates; Tables~\ref{tab:loadings} and~\ref{tab:secondorder} hold them.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/analysis_path}
+\caption{Path diagram of the measurement model as specified before fitting. Rectangles are the eleven observed indicators; ovals are the three domains, each inferred from its own indicators (single-headed arrows). Curved double-headed arrows are the correlations between domains in the correlated three-factor model. The dashed oval and dashed arrows mark the general factor, $H_{\text{potential}}$, which the chapter tests as an account of those correlations and does not assume. Domains are told apart by label and by shade. Residual terms are omitted and no estimates are shown.}
+\label{fig:anal-path}
+\end{figure}
+
 Two other routes were rejected. Exploratory factor analysis lets the data decide which indicators belong to which factor; with a theory in hand, that would make the test circular, since good fit would confirm only that the placement had been chosen to fit. A simple sum of standardised indicators imposes equal weights, the tau-equivalence assumption of Definition~\ref{def:meas:omega}, without testing it, and gives each person a value with no error attached. The confirmatory model tests that assumption and returns a standard error for every score.
+
+The choice of estimator turns on how the indicators were recorded. Maximum likelihood treats each indicator as a reading on a continuous scale. Many NHATS indicators are short ordered scales instead, such as a count of up to four activities, and treating the step from one to two as equal to the step from three to four is an assumption the scale does not promise. The alternative, WLSMV, treats each such answer as a coarse reading of an underlying continuous quantity, as a semi-quantitative dipstick result of 1+, 2+ or 3+ is a coarse reading of a concentration. A polychoric correlation is the correlation two such underlying quantities would have.
 
 Maximum likelihood served as the primary estimator, because it is efficient under approximately continuous measurement. The model was fitted with the survey weights to each imputed copy of the development split, with standard errors from the observed information, and estimates were pooled across imputations by Rubin's rules \citep{rubin_1987}. The estimation code is the Python package that accompanies the thesis (Appendix~\ref{app:computation}). Because several indicators are ordinal or categorical, the model was also estimated with the weighted least squares mean- and variance-adjusted (WLSMV) estimator, which treats each ordinal indicator as a coarsened normal variable with thresholds rather than assuming interval measurement \citep{muthen_1984,rhemtulla_2012}. An indicator with at most seven distinct observed values was treated as ordinal. Correlations between pairs of ordinal indicators were polychoric \citep{olsson_1979}, those between an ordinal and a continuous indicator were polyserial \citep{olsson_drasgow_dorans_1982}, and the rest were Pearson correlations, all computed with the survey weights. The asymptotic covariance matrix of these correlations was estimated by bootstrap. The correlated three-factor model was fitted to them by diagonally weighted least squares, with sandwich standard errors and the scaled and shifted test statistic of \citet{asparouhov_muthen_2010}; with three domains the second-order model has the same fit as the correlated model. WLSMV was run on each imputed copy, and its loadings were pooled by Rubin's rules in the same way as the maximum-likelihood estimates. Agreement between the two estimators is not a formality: it provides evidence that the recovered structure reflects stable relationships in the data rather than an artefact of a single set of distributional assumptions. Where the two disagree, the WLSMV solution is given greater weight for the ordinal indicators, and the disagreement is reported.
 
@@ -133,11 +184,13 @@ An admissible solution is one the data can produce, not necessarily one they agr
 
 The adequacy of the measurement structure was judged from several complementary fit indices rather than from any single statistic, because each index is sensitive to a different aspect of misfit. Interpretation rests on the overall pattern of evidence.
 
+Fit asks the question a laboratory asks of a calibration curve: does the fitted model reproduce what was observed? Here what is observed is the table of correlations among the eleven indicators, and the fitted model implies its own version of that table. Each index below summarises the gap between the two in a different way.
+
 The comparative fit index (CFI) and the Tucker--Lewis index (TLI) measure improvement over an independence model in which the indicators are assumed uncorrelated. The root mean square error of approximation (RMSEA) measures residual misfit per degree of freedom, and so penalises unnecessary complexity; it is reported with its 90\% confidence interval, which conveys the precision of the estimate. The standardised root mean square residual (SRMR) is the average standardised difference between the observed and model-implied correlations, and gives a direct sense of how far the model reproduces the data. Together these indices assess whether the covariance structure implied by the theoretical model matches the covariance actually observed. Conventional thresholds are CFI and TLI of at least 0.95, RMSEA of at most 0.06, and SRMR of at most 0.08 \citep{hu_bentler_1999}.
 
 The model chi-square is reported for completeness, but is not used as the primary criterion. In samples of several thousand, the chi-square test is sensitive to trivial departures from the model and will often be significant even when the model reproduces the data well. For this reason the approximate fit indices, which are less dependent on sample size, carry greater weight in the interpretation. Where all indices meet their thresholds, the latent structure is treated as an adequate representation of the observed relationships. Where one index falls short while the others hold, the shortfall is examined and interpreted rather than treated as an automatic rejection of the model.
 
-Table~\ref{tab:fit} sets the two estimators side by side with the conventional thresholds. The columns are not on the same footing: the thresholds come from simulations with continuous indicators and maximum likelihood \citep{hu_bentler_1999}, so a WLSMV value just beyond one is weaker evidence of misfit than the same value under maximum likelihood.
+Table~\ref{tab:fit} sets the two estimators side by side with the conventional thresholds. For a clinical reader, a good result is every index on the right side of its threshold under both estimators, the counterpart of a calibration curve that passes close to every standard. A bad result is a high SRMR under both, the counterpart of standards lying well off the curve; every later table would then be read from a model that does not describe the indicators. The columns are not on the same footing: the thresholds come from simulations with continuous indicators and maximum likelihood \citep{hu_bentler_1999}, so a WLSMV value just beyond one is weaker evidence of misfit than the same value under maximum likelihood.
 
 Some shortfalls have harmless causes. CFI and TLI measure improvement over a model of uncorrelated indicators; when the indicators correlate only weakly, that baseline is already close to the data, and CFI and TLI can fall short of a model that reproduces the data well. A shortfall on those two alone, with RMSEA and SRMR within limits, is read in that light. A high SRMR is more serious, because it measures directly how far the model misses the observed correlations, and the residual correlations are then examined to find where. Misfit in one pair of indicators from the same interview module is local. Misfit gathered between the indicators of two domains means some indicators share variance with the other domain, the cross-loading problem of \S\ref{sec:anal-loadings}, and it passes to the discriminant tests of \S\ref{sec:anal-validity}. Large misfit with no local cause means the first-order structure is not supported, and the scores could not be carried forward as measures of three domains. Whatever the result, these indices test the first-order structure only; Proposition~\ref{prop:meas:justid} shows that they cannot vouch for the higher-order factor.
 
@@ -198,7 +251,7 @@ Biomedical indicators are expected to show consistently strong positive relation
 
 The proportion of variance explained ($R^2$) for each indicator estimates its reliability within the model. Indicators with low explained variance are flagged: they may point to a domain that needs conceptual refinement, or to the need for additional observed measures in a later implementation of the construct. An indicator that loads weakly on its intended factor but appreciably on another is noted as a possible cross-loading, since this bears directly on the discriminant validity examined in the next section.
 
-Table~\ref{tab:loadings} gives each standardised loading with its standard error, the $p$-value for a zero loading, and $R^2$. In a sample of this size almost any non-zero loading is significant, so the $p$-value mainly picks out a loading indistinguishable from zero. The size of the loading and its $R^2$ carry the meaning.
+Table~\ref{tab:loadings} gives each standardised loading with its standard error, the $p$-value for a zero loading, and $R^2$. In a sample of this size almost any non-zero loading is significant, so the $p$-value mainly picks out a loading indistinguishable from zero. The size of the loading and its $R^2$ carry the meaning. Read as a laboratory panel, a good table is one in which every assay tracks its analyte with the expected sign. A bad one contains an assay that mostly measures something else (a low loading) or one that also tracks a second analyte (a cross-loading).
 
 The table supports the theory when every loading has the predicted sign and each domain rests on several substantial indicators rather than one. Each kind of failure calls for a different response. A reversed sign is first a question about coding, since the Systemic Burdens indicators are reverse-coded, and only then a question about the theory. A weak loading is kept and flagged rather than dropped, because dropping an indicator after seeing its loading is a respecification under the rule of \S\ref{sec:anal-estimation}; the indicator-removal check of \S\ref{sec:anal-checks} shows whether the domain depends on it. A cross-loading is carried to the next section as a question about whether two domains are distinct. Social Modifiers needs most care: with three indicators, one weak item is a third of its evidence.
 
@@ -273,6 +326,10 @@ Discriminant validity addresses a different question: whether constructs that ar
 
 One caution applies before any value is read. Internal consistency assumes reflective indicators, which move together because they share a cause in the latent variable. Some indicators of Systemic Burdens may instead be separate causes of the burden: a person can face a barrier to reaching care without being poor, and the reverse. If so, low composite reliability for that domain would not by itself count against it, which is why Chapter~\ref{ch:methods} pre-specifies a formative sensitivity analysis (\S\ref{sec:sensitivity}).
 
+The four definitions that follow give the formulas behind these checks, so that every value in Tables~\ref{tab:reliability} and~\ref{tab:discriminant} can be recomputed from the loadings and correlations. A reader who wants only the meaning can take it from the sentences around each formula and from the two worked examples.
+
+Composite reliability answers the question an assay's precision answers: of the spread in scores, how much reflects real differences between people and how much is noise? It is computed from the loadings alone.
+
 \begin{definition}[Composite reliability]
 \label{def:meas:omega}
 Let a factor carry $k$ standardised indicators with loadings
@@ -291,6 +348,8 @@ and the gap widens with their spread. This is why $\alpha$ is read here as a
 lower bound and $\omega$ as the estimate.
 \end{definition}
 
+A domain with low $\omega$ gives scores that, like the results of an imprecise assay, cannot separate people whose true values are close. Average variance extracted asks a narrower question: on average, how much of each single indicator is signal from its domain rather than noise.
+
 \begin{definition}[Average variance extracted]
 \label{def:meas:ave}
 For the same factor,
@@ -306,6 +365,8 @@ raises $\omega$ and leaves $\mathrm{AVE}$ where it was. A factor can therefore
 be reliable and still be broad.
 \end{definition}
 
+The next two definitions test specificity, whether each domain is distinct from the others. The first compares what a domain shares with its own indicators with what it shares with each other domain; an assay should agree more closely with its own analyte than with any related one.
+
 \begin{definition}[Fornell--Larcker criterion]
 \label{def:meas:fl}
 Let $\varphi_{kl}$ be the estimated correlation between factors $k$ and $l$.
@@ -318,6 +379,8 @@ when
 that is, when the factor shares more variance with its own indicators than
 with any other factor \citep{fornell_1981}.
 \end{definition}
+
+The second works from the observed indicator correlations rather than from the fitted model. It asks whether indicators of two different domains correlate almost as strongly as indicators of the same domain, which is what cross-reaction between two assays would look like.
 
 \begin{definition}[Heterotrait--monotrait ratio]
 \label{def:meas:htmt}
@@ -382,7 +445,7 @@ Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
 
 Table~\ref{tab:reliability} is read row by row. Adequate composite reliability with an AVE above $0.50$ marks a domain that is consistent and focused; with an AVE below $0.50$, consistent but broad, which Worked Example~\ref{ex:meas-omega} shows is no reason to discard it. Low composite reliability is different. Such scores are pulled hard towards the mean (Proposition~\ref{prop:meas:shrinkage}), and any coefficient on them in Chapter~\ref{ch:results2} is weakened by the same factor, which limits how much a null result there can mean.
 
-In Table~\ref{tab:discriminant}, each off-diagonal factor correlation is compared with the two $\sqrt{\mathrm{AVE}}$ values on the diagonal in its row and column, and the bracketed HTMT ratio with $0.85$. If both criteria are met for every pair, the domains are treated as distinct. If HTMT fails for a pair while Fornell--Larcker holds, the more sensitive test has found a problem the other missed \citep{henseler_2015}; the pair is treated as at risk, and the indicator-removal check shows whether one indicator is responsible. If both fail for the same pair, the thesis reports two domains in place of three, refits, and carries the smaller structure forward, as the reading below sets out for the pair most at risk.
+In Table~\ref{tab:discriminant}, each off-diagonal factor correlation is compared with the two $\sqrt{\mathrm{AVE}}$ values on the diagonal in its row and column, and the bracketed HTMT ratio with $0.85$. If both criteria are met for every pair, the domains are treated as distinct. If HTMT fails for a pair while Fornell--Larcker holds, the more sensitive test has found a problem the other missed \citep{henseler_2015}; the pair is treated as at risk, and the indicator-removal check shows whether one indicator is responsible. If both fail for the same pair, the thesis reports two domains in place of three, refits, and carries the smaller structure forward, as the reading below sets out for the pair most at risk. For a clinical reader, a good matrix has each diagonal value above every correlation in its row and column, an assay that reacts most strongly with its own analyte. A bad one has an off-diagonal correlation close to or above the diagonal, an assay that cross-reacts so strongly with a related analyte that the two results cannot be told apart.
 
 \begin{reading}[Discriminant validity, and why it is the test this thesis can fail]
 Discriminant validity asks whether two instruments are measuring the same thing
@@ -489,7 +552,7 @@ Strong and statistically significant second-order loadings indicate that the thr
 
 The second-order loadings are interpreted as associations between the candidate general factor and the domain-level constructs, not as causal effects or policy weights. Their magnitude indicates how strongly each domain participates in the common covariance structure. Table~\ref{tab:secondorder} reports the estimated loadings and their uncertainty. If the higher-order model is not empirically supported, the domain profile is retained rather than forcing the domains into a scalar score.
 
-In Table~\ref{tab:secondorder}, the first column gives each loading $\hat{\gamma}_k$ with its standard error, and the second gives it standardised, the correlation between domain and general factor, which is the column to read for size. The weights $w_k$ in the third follow from the fitted model rather than being set by hand, so a domain measured with more error, or sharing less with the general factor, counts for less. They describe the measurement, not how much each domain ought to matter.
+In Table~\ref{tab:secondorder}, the first column gives each loading $\hat{\gamma}_k$ with its standard error, and the second gives it standardised, the correlation between domain and general factor, which is the column to read for size. The weights $w_k$ in the third follow from the fitted model rather than being set by hand, so a domain measured with more error, or sharing less with the general factor, counts for less. They describe the measurement, not how much each domain ought to matter. A second-order loading is read as a first-order loading is, one level up: how strongly a domain tracks the general factor, as an assay tracks its analyte.
 
 The table supports a single $H_{\text{potential}}$ when all three standardised loadings are substantial, similar in size and signed as Chapter~\ref{ch:theory} predicts. One loading much weaker than the others leads to the profile in place of the scalar, as the second reading below explains. A reversed sign that survives a check of the reverse-coding would mean the scalar mixes two opposed things. A squared loading above one is a Heywood case at the second order (Proposition~\ref{prop:meas:justid}) and sends the analysis back to the discriminant evidence.
 
@@ -517,6 +580,8 @@ Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
 \medskip
 \hptext{secondorder}{\noindent\emph{[Placeholder: whether the second-order structure holds, whether the loading directions match the hypotheses of Chapter~\ref{ch:theory}, and how the domain weights are distributed.]}}
 
+
+The proposition below is formal, and its consequence can be stated without it. With exactly three domains, adding a general factor uses up all the information the three domain correlations provide, so the model with the general factor always fits exactly as well as the model without it. Fit cannot tell the two apart, and the evidence for the general factor has to come from the size, sign and admissibility of its three loadings. The laboratory parallel is a calibration line drawn through two standards: it passes through both whatever the true relation, so its passing is no test of linearity.
 
 \begin{proposition}[The higher-order layer with three domains is just identified]
 \label{prop:meas:justid}
@@ -619,6 +684,8 @@ Figure~\ref{fig:score_dist} is read for its shape, since the scale's mean and un
 Each score carries its standard error, and the determinacy of Definition~\ref{def:meas:determinacy} is reported for the score set \citep{grice_2001}. A determinacy at the usual level licenses using the scores as a stand-in for the factor. A lower value means they must not be entered as though observed, and the bootstrap of Chapter~\ref{ch:methods}, which refits the measurement model in every resample, carries that uncertainty into each prognostic interval. The loadings, scores and bounds are then frozen: no outcome result in Chapter~\ref{ch:results2} can change them.
 
 
+Determinacy asks of the score a question a laboratory asks of a single patient result rather than of the method: how closely does the reported value track the true one? The definition gives it as a correlation between the factor and its score.
+
 \begin{definition}[Factor determinacy]
 \label{def:meas:determinacy}
 For a factor $\zeta$ with $\operatorname{Var}(\zeta)=1$, loading vector
@@ -636,6 +703,8 @@ scores as a stand-in for the factor; below about $0.80$ two score sets built
 from the same fitted model can rank people differently, and the score should
 not be carried into a second analysis as though it were an observation.
 \end{definition}
+
+A low determinacy is comparable to a result whose measurement uncertainty is too wide to place a patient reliably on one side of a decision limit. The next proposition shows a second property of factor scores: each is pulled towards the population average, by an amount that depends on how much the indicators say about the person. The size of that pull sets how far a hazard ratio in Chapter~\ref{ch:results2} is weakened, and the reading box after the proof states the result in clinical terms.
 
 \begin{proposition}[Shrinkage of a factor score]
 \label{prop:meas:shrinkage}
@@ -764,13 +833,15 @@ Each result above rests on one set of choices: an estimator, an indicator set, a
 
 The stability of the measurement model was examined before its scores were carried forward. Four checks are reported, each with its response to failure fixed in advance.
 
-First, the model was re-estimated under the WLSMV estimator, and the loadings and fit compared with the maximum-likelihood solution, so that the recovered structure is not tied to one set of distributional assumptions. The check is passed when the same indicators are strong under both and the domain correlations agree within sampling error; \S\ref{sec:anal-estimation} sets out how disagreement is read.
+First, the model was re-estimated under the WLSMV estimator, and the loadings and fit compared with the maximum-likelihood solution, so that the recovered structure is not tied to one set of distributional assumptions. This is a method comparison: the same material measured by a second method that rests on different assumptions. The check is passed when the same indicators are strong under both and the domain correlations agree within sampling error; \S\ref{sec:anal-estimation} sets out how disagreement is read.
 
 Second, the sensitivity of the solution to the indicator set was examined by re-estimating the model with individual indicators removed in turn, to confirm that no single indicator drives the structure. Each refit is compared with the full model on the remaining loadings, the domain correlations and the second-order loadings. If removing one indicator changes the structure sharply, the domain rests on that indicator and is better described by its name. Social Modifiers is the hardest case: removing one of its three indicators leaves a two-indicator factor, identified only through its correlations with the other domains and fragile even then \citep{bollen_1989,kline_2015}, so more movement is expected there.
 
 Third, where the sample size allows, measurement invariance \citep{meredith_1993,vandenberg_lance_2000} was tested across sex and across age band, by comparing configural, metric, and scalar models. Invariance matters because a score can only be compared across groups if the instrument measures the same construct in the same way in each group; a failure of invariance would qualify any later subgroup comparison and is reported as such. Definition~\ref{def:meas:invariance} sets out the levels, and the level reached decides what can be said later. Without metric invariance, a hazard ratio per unit of score cannot be compared across groups, since the unit differs; with metric but not scalar invariance, slopes can be compared but mean scores cannot. Partial invariance, with some parameters freed, is accepted only where there is a substantive reason for that indicator to behave differently in that group (Chapter~\ref{ch:methods}); freeing parameters until fit improves would produce invariance by construction.
 
 Fourth, because cognition cannot be measured for people whom a proxy reports as unable to be tested, the model was refitted with their cognition set to the lowest possible score in place of the imputed value, and the loadings and biomedical domain scores were compared with the primary solution (Appendix~\ref{app:datachecks}). The two rules bracket the truth. Imputation carries the relation between the AD8 proxy screen and test scores, learned from people who were tested, to people at the severe end of the AD8, and is likely to overstate their cognition; the lowest score is likely to understate it for some. If loadings and biomedical domain scores move little between the rules, the choice does not matter. If they move a great deal, this group's biomedical scores are uncertain over a range the data cannot narrow, and the thesis would report both solutions and treat later results that depend on the group with matching caution. These people are likely to be among those with least capacity, where prediction matters most.
+
+Invariance is the counterpart of checking that an assay gives the same reading for the same concentration in different patient groups or laboratories. The definition below sets out four levels, each requiring more of the model to be the same across groups and each licensing a stronger comparison between them.
 
 \begin{definition}[The four levels of measurement invariance]
 \label{def:meas:invariance}
