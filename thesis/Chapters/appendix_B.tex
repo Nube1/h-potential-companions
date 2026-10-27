@@ -31,6 +31,53 @@ reference case throughout, and Appendix~\ref{app:hemo_dynamics} makes the haemop
 None of this is used in the empirical validation. It is a proposed direction.
 \end{ataglance}
 
+\section*{The Appendix in Plain Terms}
+
+The empirical chapters measure each person once, at baseline
+(Chapter~\ref{ch:methods}). This appendix sets out how the biomedical part of
+the score could be followed over time, and proves that the proposed model
+behaves sensibly. It establishes five things: each starting value gives one
+trajectory, and an error in the starting value fades; the marker settles at one
+steady level, set by inputs divided by removals, as a steady-state drug level is
+dose rate divided by clearance; the model with random variation gives back the
+plain model when the variation is removed; the description of a whole cohort
+neither gains nor loses patients; and the rate of change of the score splits
+into one part per domain. Figure~\ref{fig:B-schematic} shows the model and
+Table~\ref{tab:B-results} lists each result with where it is used.
+
+No empirical finding rests on this appendix. The main chapters cite it as a
+stated direction: Chapter~\ref{ch:systems} (\S\ref{sec:sys-stocks} and
+\S\ref{sec:sys-resilience}) uses the steady state and the speed of return to it
+to show where a measure of resilience would sit, Chapter~\ref{app:crf}
+(\S\ref{sec:E-systems}) and Chapter~\ref{ch:discussion}
+(\S\ref{sec:disc-future}) point to it as the route to a longitudinal model, and
+Appendix~\ref{app:hemo_dynamics} gives it haemophilia names. A reader who
+accepts the one-line statements in Table~\ref{tab:B-results} can skip the
+proofs. Four terms recur. An \emph{ordinary differential equation} gives the
+rate of change of a quantity from its present value, as a one-compartment
+pharmacokinetic model does; a \emph{stochastic} differential equation adds a
+random term. The \emph{Fokker--Planck equation} describes how the histogram of
+a cohort's values changes over time. A function is \emph{Lipschitz} when its
+output cannot change faster than a fixed multiple of the change in its input.
+
+\begin{table}[htbp]\centering
+\footnotesize
+\caption{The numbered results of Appendix~\ref{app:dynamical}, what each says in plain words, and where the thesis uses it.}
+\label{tab:B-results}
+\begin{tabular}{p{3.4cm}p{5.8cm}p{3.9cm}}
+\toprule
+Result & Plain statement & Used in \\
+\midrule
+Existence and uniqueness, Prop.~\ref{prop:B_existence} & Each starting value gives one trajectory; a starting error shrinks by the factor $e^{-Lt}$, faster at a higher inhibitor level. & Ch.~\ref{ch:systems}, \S\ref{sec:sys-resilience}; App.~\ref{app:hemo_dynamics}, \S\ref{sec:C_kinetics} \\
+Deterministic equilibrium, Prop.~\ref{prop:B_equilibrium} & With constant inputs the marker settles at one stable level: inputs divided by removals. & Ch.~\ref{ch:systems}, \S\ref{sec:sys-stocks} and \S\ref{sec:sys-resilience}; App.~\ref{app:hemo_dynamics}, Prop.~\ref{prop:C_stability} \\
+Reduction to the ODE, Prop.~\ref{prop:B_reduction} & Removing the random variation gives back the plain model. & App.~\ref{app:hemo_dynamics}, \S\ref{sec:C_simulation}; App.~\ref{app:verification} \\
+Population consistency, Prop.~\ref{prop:B_consistency} & Where the drift is a straight-line function of the marker, the cohort average follows the plain model, though individual excursions remain. & App.~\ref{app:hemo_dynamics}, \S\ref{sec:C_simulation} \\
+Mass conservation, Prop.~\ref{prop:B_mass} & With closed boundaries the cohort description neither gains nor loses patients. & App.~\ref{app:computation}, \S\ref{sec:D_solvers}; App.~\ref{app:verification} \\
+Differentiability, Prop.~\ref{prop:B_differentiable} & The time-varying score changes smoothly, and its rate of change splits into one term per domain. & Ch.~\ref{app:crf}, \S\ref{sec:E-systems}; Ch.~\ref{ch:systems}, \S\ref{sec:sys-stocks} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Purpose and Scope}
 \label{sec:B_purpose}
 This appendix records a disease-independent dynamical extension of the
@@ -69,6 +116,10 @@ prove things about.
 \section{Definitions}
 \label{sec:B_definitions}
 
+The first definition names the quantities the model follows. In haemophilia
+$X$ is factor activity, $Y$ the inhibitor titre and $T$ the infused dose
+(Appendix~\ref{app:hemo_dynamics}).
+
 \begin{definition}[Deterministic state]
 \label{def:B_state}
 Let $X(t)\in\mathbb{R}_+$ denote the latent disease state of an individual,
@@ -78,6 +129,9 @@ mechanism variables are the inhibitory factor $Y\ge0$, the homeostatic
 (restorative) factor $Z\ge0$, the therapeutic input $T\ge0$, and the natural
 clearance rate $k_{\text{elim}}>0$.
 \end{definition}
+
+The next definition states how the marker changes from moment to moment: what
+is added, less what is removed.
 
 \begin{definition}[Universal deterministic model]
 \label{def:B_ode}
@@ -92,6 +146,9 @@ maximal stabilisation rate $\gamma>0$, and bilinear
 inhibition $\mathbf{g}(Y,X)=k_{\text{inh}}YX$.
 \end{definition}
 
+The model is then given a random term, so that two patients on one regimen can
+follow different paths.
+
 \begin{definition}[Patient state and stochastic model]
 \label{def:B_sde}
 The patient state is the stochastic process $X(t)$ governed by \citep{oksendal_2003}
@@ -103,6 +160,8 @@ where $W_t$ is a standard Wiener process \citep{oksendal_2003} and $\sigma(X,t)\
 perturbation. Patient-specific treatment sensitivity $S_T=f(\{G_i\},\{I_j\},\text{env})$
 modulates the drift, personalising \eqref{eq:B_sde}.
 \end{definition}
+
+The last definition moves from the patient to the cohort.
 
 \begin{definition}[Population state]
 \label{def:B_population}
@@ -116,8 +175,28 @@ before and because the first is the only one for which existence can be settled
 by hand.
 \end{definition}
 
+Figure~\ref{fig:B-schematic} draws these definitions together. Treatment and
+stabilisation add to the marker $X(t)$; the inhibitor and natural clearance
+remove it; random variation spreads it. Following many patients gives the
+cohort density. The bottom row is the step taken in \S\ref{sec:B_timevarying}:
+the marker sets the biomedical term $L(t)$, which joins $Q(t)$, $S(t)$ and
+$B(t)$ in the time-varying score.
+
+\begin{figure}[htbp]\centering
+\input{Figures/diagrams/appendix_B_schematic}
+\caption{The general dynamical model as this appendix defines it. Solid arrows
+add to the disease marker $X(t)$, dashed arrows remove it and the dotted arrow is
+random variation; thin arrows show how one quantity defines or feeds another.
+Dark boxes change over time; light boxes are inputs, held constant or given as
+paths.}
+\label{fig:B-schematic}
+\end{figure}
+
 \section{The Deterministic Backbone}
 \label{sec:B_ode}
+
+The first result asks whether the model gives one answer for each starting
+value, and what becomes of an error in that value.
 
 \begin{proposition}[Existence and uniqueness]
 \label{prop:B_existence}
@@ -130,6 +209,8 @@ whose initial conditions differ by $\delta_0$ satisfy
 $|X_1(t)-X_2(t)|=\delta_0e^{-Lt}$: trajectories contract, and contract faster
 the larger $L$ is.
 \end{proposition}
+The proof uses the fact that only the removal terms depend on $X$, and they do
+so in proportion to $X$.
 \begin{proof}
 Only $-\mathbf{g}(Y,X)-k_{\text{elim}}X=-(k_{\text{inh}}Y+k_{\text{elim}})X$
 depends on $X$ (the saturable $\mathbf{f}$ and $\mathbf{h}$ do not), so the
@@ -208,11 +289,15 @@ Asserted by
 \end{workedexample}
 \checkedby{tests/test_dynamics.py::test_proposition_existence_lipschitz_constant}
 
+The next result finds the level at which the marker settles when the inputs
+are held constant.
+
 \begin{proposition}[Deterministic equilibrium]
 \label{prop:B_equilibrium}
 For constant inputs the ODE has the unique stable fixed point
 $X^\ast=(\mathbf{f}+\mathbf{h})/(k_{\text{inh}}Y+k_{\text{elim}})$.
 \end{proposition}
+The proof sets the rate of change to zero and checks the sign of its slope.
 \begin{proof}
 Setting $dX/dt=0$ gives
 $\mathbf{f}+\mathbf{h}=(k_{\text{inh}}Y+k_{\text{elim}})X^\ast$; the Jacobian
@@ -282,11 +367,16 @@ the randomness that produces them.
 \section{Stochastic Extension}
 \label{sec:B_sde}
 
+The first check on the noisy model is that it gives back the plain model when
+the noise is removed.
+
 \begin{proposition}[Reduction to the ODE]
 \label{prop:B_reduction}
 As $\sigma\to0$ the solution of the SDE \eqref{eq:B_sde} converges to the
 solution of the ODE \eqref{eq:B_ode} with the same initial condition.
 \end{proposition}
+The proof takes averages, so that the random term drops out, then bounds how
+far one path strays from the average.
 \begin{proof}
 With $\sigma\equiv0$ the stochastic integral vanishes and \eqref{eq:B_sde}
 reduces to \eqref{eq:B_ode} pathwise. For $\sigma>0$, take expectations of
@@ -301,12 +391,16 @@ establishing it.
 \end{proof}
 \checkedby{tests/test_dynamics.py::test_proposition_sde_reduces_to_ode_as_noise_vanishes}
 
+The next result states when the average of many noisy paths follows the plain
+model exactly.
+
 \begin{proposition}[Population consistency]
 \label{prop:B_consistency}
 If the drift is affine in $X$ and the noise has zero mean, the expectation
 $\mathbb{E}[X(t)]$ satisfies the deterministic ODE. For the linear model
 $dX=(a-bX)\,dt+\sigma\,dW$, $\ \mathbb{E}[X(t)]=a/b+(x_0-a/b)e^{-bt}$.
 \end{proposition}
+The proof averages both sides of the equation.
 \begin{proof}
 Taking expectations of \eqref{eq:B_sde} and using $\mathbb{E}[dW_t]=0$ gives
 $d\mathbb{E}[X]/dt=\mathbb{E}[\text{drift}]$, which for affine drift equals the
@@ -352,6 +446,9 @@ solving that equation once is cheaper than following everybody.
 \section{Population-Level Extension: the Fokker--Planck Equation}
 \label{sec:B_fp}
 
+The cohort is described by a density: the share of patients near each marker
+value at each time, a histogram drawn as a smooth curve.
+
 \begin{definition}[Probability density, drift, diffusion]
 \label{def:B_fp_terms}
 Let $\rho(x,t)$ be the density of patient states, normalised so
@@ -369,11 +466,15 @@ J=\mu\rho-\tfrac12\frac{\partial}{\partial x}(D\rho).
 \label{eq:B_fp}
 \end{equation}
 
+Any description of a cohort must neither create nor lose patients. The next
+result shows that this holds when no one can leave the range modelled.
+
 \begin{proposition}[Mass conservation]
 \label{prop:B_mass}
 Under reflecting (zero-flux) boundaries $J=0$ at the ends of the domain, total
 probability is conserved: $\tfrac{d}{dt}\int\rho\,dx=0$.
 \end{proposition}
+The proof integrates the equation over the whole range.
 \begin{proof}
 Integrating \eqref{eq:B_fp} over the domain $[x_L,x_R]$,
 $\tfrac{d}{dt}\int_{x_L}^{x_R}\rho\,dx=-[J]_{x_L}^{x_R}=0$ when the boundary
@@ -474,6 +575,9 @@ single moment. Connecting them means letting that score move too.
 \section{A Time-Varying Form of the Conceptual Model}
 \label{sec:B_timevarying}
 
+The last definition lets the score change over time by tying its biomedical
+term to the marker $X(t)$.
+
 \begin{definition}[Time-varying biomedical term]
 \label{def:B_timevarying}
 Let $L(t)=\phi(X(t),\overline X(t),\text{comorbidities},\text{age})$ with $\phi$
@@ -484,12 +588,16 @@ H_{\text{potential}}(t)=L(t)\,Q(t)\,S(t)-B(t).
 \end{equation}
 \end{definition}
 
+The next result says that the score then changes smoothly, and splits its rate
+of change into one part per domain.
+
 \begin{proposition}[Differentiability]
 \label{prop:B_differentiable}
 If $L,Q,S,B$ are differentiable in $t$, then $H_{\text{potential}}(t)$ is
 differentiable, with
 $\dot H = \dot L QS + L\dot Q S + LQ\dot S - \dot B$.
 \end{proposition}
+The proof is the product rule of calculus.
 \begin{proof}
 Products and differences of differentiable functions are differentiable; the
 product rule applied to $LQS$ gives the stated derivative.
@@ -549,3 +657,21 @@ from diffusion, and the product rule for the time-varying score.
 Appendix~\ref{app:verification} prints the result of the run that produced this
 document, and records the sign error in the Fokker--Planck assembly that the
 drift test caught while the conservation test passed.
+
+
+\section*{What Is New in This Appendix}
+
+The parts of this appendix are standard: saturating rate laws of
+Michaelis--Menten and Hill form, existence and uniqueness of solutions
+\citep{coddington_levinson_1955,gronwall_1919}, stochastic differential
+equations \citep{oksendal_2003} and the Fokker--Planck equation
+\citep{risken_1996}. What the appendix adds is their assembly into one
+disease-independent model attached to the H-Potential score: a marker that
+stands behind the biomedical term, a noisy version of it for one patient, a
+cohort version, and a time-varying score whose rate of change separates the
+part due to each domain. It also states in closed form how an inhibitor-type
+removal term lowers the steady state and speeds the fading of a starting error.
+Nothing here is estimated from data, and the appendix makes no claim that the
+model fits any group of patients. Each proposition is asserted by a named test
+in \texttt{verification/tests/test\_dynamics.py}, and
+Appendix~\ref{app:verification} reports the run.

@@ -31,6 +31,70 @@ alone. The two reference profiles of
 \S\ref{app:a-axioms}--\S\ref{app:a-threshold} with numbers attached.
 \end{ataglance}
 
+\section*{The Appendix in Plain Terms}
+
+The main chapters build a score from three domains and test whether it
+predicts death and hospital admission. This appendix does the groundwork that
+a laboratory does before it reports a new assay. It states what is measured, on
+what scale, what the reported number may and may not be taken to mean, and
+which findings would show the method unfit for use. Its results are proofs:
+statements that follow from stated assumptions by logic alone. They use no
+NHATS data, and none of the findings of Chapters~\ref{ch:results1}
+and~\ref{ch:results2} depends on the reader checking them line by line.
+
+Three points carry into the main argument. First, the score orders people but
+has no natural unit. An assay reported in arbitrary units is in the same
+position until it is calibrated against an international standard, and the
+factor score of Chapter~\ref{ch:methods} (Definition~\ref{def:factorscore}) is
+reported on that understanding. Second, the rule that combines the three
+domains is a choice with ethical content. Adding the domains lets a gain in one
+cancel a loss in another; the multiplicative rules of Chapter~\ref{app:crf}
+limit that trade; and two reasonable rules can put the same two people in
+opposite order. For this reason Chapter~\ref{ch:methods} (\S\ref{sec:roadmap})
+requires every scalar result to be reported with its sensitivity to the rule.
+Third, the person's profile, the chosen score, the estimated score and the
+predicted risk are four different quantities, and none of them settles whether
+an intervention is good value, or whether a funding decision made in one health
+system holds in another. Chapter~\ref{ch:theory} (\S\ref{sec:lit-economics})
+and Chapter~\ref{app:crf} (Theorem~\ref{thm:nontransport}) rest on these last
+results.
+
+Table~\ref{tab:A-results} lists each numbered result, states it in one line
+and shows where the main text uses it. A reader who accepts the one-line
+statements can skip the proofs. Three terms recur. A \emph{theorem} or
+\emph{proposition} is a statement proved from the definitions. An
+\emph{axiom} is a requirement adopted by choice and not proved; it plays the
+part of an acceptance criterion fixed before a method validation. A
+\emph{counterexample} is a single case that shows a general claim to be false,
+and one is enough.
+
+\begin{table}[htbp]\centering
+\footnotesize
+\caption{The numbered results of Appendix~\ref{app:mathematical_foundations}, what each says in plain words, and where the main text uses it.}
+\label{tab:A-results}
+\begin{tabular}{p{3.4cm}p{5.8cm}p{3.9cm}}
+\toprule
+Result (section) & Plain statement & Used in \\
+\midrule
+Dominance preservation (\S\ref{app:a-axioms}) & A profile at least as good in every domain is never scored lower. & Ch.~\ref{app:crf}, \S\ref{sec:E-axioms} \\
+Ordinal representation is not cardinal measurement (\S\ref{app:a-axioms}) & A score that orders people does not say how far apart they are; gaps and ratios need separate calibration. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap}; Ch.~\ref{ch:theory}, \S\ref{sec:lit-economics} \\
+Compensation (\S\ref{app:a-additivity}) & Adding the domains lets a gain in one cancel a loss in another, at one fixed rate. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap}; Ch.~\ref{ch:theory}, \S\ref{sec:lit-candidates} \\
+Admissibility (\S\ref{app:a-ces}) & The CES score lies between zero and biomedical capacity and never falls when a domain improves. & Ch.~\ref{ch:theory}, Prop.~\ref{prop:lit-heuristic}; Ch.~\ref{app:crf}, \S\ref{sec:E-family} \\
+Constant substitution elasticity (\S\ref{app:a-ces}) & One parameter, $\rho$, fixes how readily social enablement and structural freedom stand in for each other. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap}; Ch.~\ref{app:crf}, \S\ref{sec:E-family} \\
+Geometric marginal effects (\S\ref{app:a-ces}) & In the geometric case each weight is the percentage change in the score for a one per cent change in that domain. & Ch.~\ref{app:crf}, \S\ref{sec:E-marginal} \\
+Capacity--context complementarity (\S\ref{app:a-ces}) & Treating the body yields more where the context is better, and the reverse: an interaction, not two separate effects. & Ch.~\ref{ch:theory}, Assumption~\ref{ass:lit-interaction}; Ch.~\ref{app:crf}, \S\ref{sec:E-marginal} \\
+Aggregation can reverse rankings (\S\ref{app:a-ces}) & Two admissible rules can put the same two people in opposite order. & Ch.~\ref{ch:theory}, Prop.~\ref{prop:lit-reversal}; Ch.~\ref{ch:methods}, \S\ref{sec:roadmap} \\
+Properties of the relational model (\S\ref{app:a-relational}) & The rival score is well behaved but can be above zero when biomedical capacity is zero. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap}; Ch.~\ref{app:crf}, \S\ref{sec:E-ontologies} \\
+The ontology is not selected by fit alone (\S\ref{app:a-relational}) & Better fit to data does not show which of the two views of health is right. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap}; Ch.~\ref{app:crf}, \S\ref{sec:E-ontologies} \\
+Latent scale indeterminacy, Thm.~\ref{thm:latent_scale} & The zero and unit of an estimated domain score are set by convention. & Ch.~\ref{ch:methods}, Def.~\ref{def:factorscore} \\
+Second-order implied covariance, Prop.~\ref{prop:secondorder_cov} & The pattern of correlations among indicators that one higher-order factor predicts. & Ch.~\ref{ch:methods}, Def.~\ref{def:secondorder}; Ch.~\ref{ch:results1}, \S\ref{sec:anal-secondorder} \\
+Non-equivalence (\S\ref{app:a-confusion}) & Profile, chosen score, estimated score and predicted risk cannot be swapped for one another. & Ch.~\ref{ch:methods}, \S\ref{sec:roadmap} \\
+Need does not imply cost-effectiveness (\S\ref{app:a-economics}) & A low score shows need; it does not show that any intervention is good value. & Ch.~\ref{ch:theory}, \S\ref{sec:lit-economics} \\
+A policy decision is not generally transportable (\S\ref{app:a-economics}) & The same effect in two health systems can justify funding in one and not the other. & Ch.~\ref{ch:theory}, \S\ref{sec:lit-economics}; Ch.~\ref{app:crf}, Thm.~\ref{thm:nontransport}; Ch.~\ref{ch:discussion}, \S\ref{sec:disc-impl-policy} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Preceding Theorems and Mathematical Spaces}
 \label{app:a-preceding}
 
@@ -74,6 +138,9 @@ moment, before anything is combined. That is where this appendix begins too.
 \section{Population, Time and Primitive Quantities}
 \label{app:a-primitives}
 
+The first definition fixes who is measured and when. As in any cohort study,
+the baseline is recorded before any outcome is counted.
+
 \begin{definition}[Population and index time]
 Let $(\Omega,\mathcal F,\mathbb P)$ be a probability space. A person is
 represented by $\omega\in\Omega$ and baseline occurs at $t_0$. Construct
@@ -86,6 +153,11 @@ People differ, and a participant is treated as one possible draw from the
 target population. The time rule prevents future death or hospitalisation from
 being used to define the baseline construct.
 \end{remark}
+
+The next definition sets out the three numbers recorded for each person, each
+rescaled to run from $0$ (least favourable) to $1$ (most favourable), much as
+factor activity is reported as a percentage of pooled normal plasma rather than
+as a raw clotting time.
 
 \begin{definition}[Domain profile]
 The normalized profile is
@@ -140,6 +212,9 @@ requires an extra assumption, and the rest of the appendix is about which extra
 assumptions are defensible.
 \end{reading}
 
+One comparison between profiles needs no assumption at all, and the next
+definition states it.
+
 \begin{definition}[Dominance]
 For $x,y\in\mathcal X$, write $x\succeq_Dy$ if $x_j\ge y_j$ in every
 coordinate, and $x\succ_Dy$ if at least one inequality is strict.
@@ -160,6 +235,10 @@ required, and the next section states the least that it requires.
 
 \section{Axioms for Any Scalar Score}
 \label{app:a-axioms}
+
+This section lists the least that any single summary score must satisfy. The
+requirements are chosen in advance, as a laboratory fixes acceptance criteria
+before it validates a method.
 
 \begin{definition}[Admissible aggregator]
 An aggregator $H:\mathcal X\to[0,1]$ is admissible for the primary sensitivity
@@ -197,9 +276,12 @@ that an accessible environment is part of health, not a support for it, will
 reject this axiom, and \S\ref{app:a-relational} is written for them.
 \end{reading}
 
+The first consequence follows at once from the monotonicity requirement.
+
 \begin{proposition}[Dominance preservation]
 Every weakly monotone aggregator preserves dominance.
 \end{proposition}
+The proof applies that requirement directly.
 \begin{proof}
 If $x\succeq_Dy$, weak monotonicity gives $H(x)\ge H(y)$.
 \end{proof}
@@ -209,12 +291,17 @@ Improving at least one favourable domain while worsening none cannot lower the
 score. This does not determine how to rank trade-offs.
 \end{remark}
 
+The next result limits what any such score can mean. A score that only orders
+people carries no information about the size of the gaps between them.
+
 \begin{theorem}[Ordinal representation is not cardinal measurement]
 Suppose $H$ represents an ordering, so
 $x\succeq y\Leftrightarrow H(x)\ge H(y)$. For every strictly increasing
 $g$, $g\circ H$ represents the same ordering. Therefore differences and ratios
 of scores are not identified by the ordering alone.
 \end{theorem}
+The proof stretches the scale in a way that keeps the order, for example by
+taking a square root, and shows that the gaps change.
 \begin{proof}
 Strict monotonicity of $g$ gives
 $H(x)\ge H(y)\Leftrightarrow g(H(x))\ge g(H(y))$. Yet nonlinear $g$
@@ -243,6 +330,9 @@ seeing exactly what that commits one to.
 \section{Why Additivity Is a Strong Assumption}
 \label{app:a-additivity}
 
+The commonest way to combine domains is a weighted sum. The definition states
+it so that its consequence can be proved.
+
 \begin{definition}[Additive form]
 \[
 H_A(p,s,r)=w_Pu_P(p)+w_Su_S(s)+w_Ru_R(r),\qquad
@@ -250,11 +340,14 @@ w_j\ge0,\quad\sum_jw_j=1.
 \]
 \end{definition}
 
+The next result shows what the weighted sum commits its user to.
+
 \begin{proposition}[Compensation]
 If $u_j(x)=x$ and $w_P,w_S>0$, a loss $\Delta p$ can be offset exactly by
 $\Delta s=(w_P/w_S)\Delta p$, whenever the changed profile remains in
 $\mathcal X$.
 \end{proposition}
+The proof substitutes the stated gain into the score.
 \begin{proof}
 The score change is $-w_P\Delta p+w_S\Delta s=0$ after substitution.
 \end{proof}
@@ -312,6 +405,10 @@ that a near-zero in one cannot be bought off by an excess in another.
 
 \section{CES Capability Realisation}
 \label{app:a-ces}
+
+This definition introduces the family used as the primary sensitivity
+analysis. Biomedical capacity multiplies an average of the two contextual
+domains, and one parameter sets what kind of average is taken.
 
 \begin{definition}[CES contextual mean and realised potential]
 For $0<\alpha<1$ and $\rho\le1$, define
@@ -389,10 +486,15 @@ three, because its biomedical potential is higher. Asserted by
 \noindent The parameter matters where the contextual coordinates are
 unbalanced.
 
+The next proposition checks that this family meets the requirements of
+\S\ref{app:a-axioms}.
+
 \begin{proposition}[Admissibility]
 $H_{\rho,\alpha}$ is continuous, weakly increasing, normalized and satisfies
 $0\le H_{\rho,\alpha}(p,s,r)\le p$.
 \end{proposition}
+The proof uses one fact: any such average lies between the smaller and the
+larger of the two values averaged.
 \begin{proof}
 The weighted power mean is continuous, non-decreasing and bounded between
 $\min(s,r)$ and $\max(s,r)$. Thus it lies in $[0,1]$. Multiplication by
@@ -405,6 +507,9 @@ cannot reduce it. These results follow from the chosen form. They do not prove
 that CES is the true law of healthy ageing.
 \end{remark}
 
+The next result gives $\rho$ an exact meaning. The elasticity of substitution
+measures how readily one input replaces the other.
+
 \begin{proposition}[Constant substitution elasticity]
 For interior values, the CES elasticity of substitution between $S$ and $R$ is
 \citep{arrow_chenery_1961}
@@ -412,6 +517,7 @@ For interior values, the CES elasticity of substitution between $S$ and $R$ is
 \sigma=\frac{1}{1-\rho}.
 \]
 \end{proposition}
+The proof is a standard calculation from production economics.
 \begin{proof}
 The ratio of marginal products is proportional to $(s/r)^{\rho-1}$.
 Log-differentiating the input ratio with respect to this marginal-rate ratio
@@ -424,6 +530,9 @@ geometric mean \citep{hardy_littlewood_polya_1934}; very negative values make th
 Ethically acceptable compensation cannot be selected by fit alone.
 \end{remark}
 
+For the geometric case the effect of a small change in each domain can be
+written down exactly.
+
 \begin{proposition}[Geometric marginal effects]
 For $\rho=0$ and interior values,
 \[
@@ -432,6 +541,7 @@ H_p=H/p,\quad H_s=\alpha H/s,\quad H_r=(1-\alpha)H/r.
 \]
 The corresponding elasticities are $1,\alpha,1-\alpha$.
 \end{proposition}
+The proof is direct differentiation.
 \begin{proof}
 Differentiate the monomial and multiply each derivative by its argument divided
 by $H$.
@@ -442,6 +552,10 @@ The weights have a precise proportional interpretation in the geometric case.
 They are modelling parameters, not natural constants.
 \end{remark}
 
+The next result states the central claim of the theory: the effect of a
+change in capacity depends on the context, and the reverse. In the language of
+a factorial trial, it is an interaction between two factors.
+
 \begin{proposition}[Capacity--context complementarity]
 For the geometric model,
 \[
@@ -449,6 +563,7 @@ H_{ps}=\alpha s^{\alpha-1}r^{1-\alpha}>0,\qquad
 H_{pr}=(1-\alpha)s^\alpha r^{-\alpha}>0.
 \]
 \end{proposition}
+The proof differentiates the previous result once more.
 \begin{proof}
 Differentiate $H_p=s^\alpha r^{1-\alpha}$ with respect to $s$ and $r$.
 \end{proof}
@@ -474,9 +589,13 @@ chapters test the interaction directly, and a null result would narrow the
 theory and not simply fail to support it.
 \end{reading}
 
+The next result shows that the choice among admissible rules matters for
+individual people, not just for averages.
+
 \begin{proposition}[Aggregation can reverse rankings]
 There are profiles ranked oppositely by additive and bottleneck rules.
 \end{proposition}
+The proof needs one pair of profiles on which two rules disagree.
 \begin{proof}
 Let $x=(1,1,0.2)$ and $y=(1,0.55,0.55)$. Equal-weight arithmetic contextual
 means are $0.6$ and $0.55$, ranking $x$ first. Bottleneck values are $0.2$ and
@@ -506,6 +625,10 @@ The CES ceiling model assumes $H(p,s,r)\le p$. Capability theory, assistive
 technology and relational accounts of disability provide a reason to test a
 different boundary.
 
+The definition below gives a score without the capacity ceiling. Each domain,
+and the product of capacity with each contextual domain, raises the score, and
+the exponential form keeps it between $0$ and $1$.
+
 \begin{definition}[Normalized relational aggregator]
 For non-negative parameters
 $\boldsymbol\beta=(\beta_P,\beta_S,\beta_R,\beta_{PS},\beta_{PR})$ with
@@ -517,12 +640,16 @@ H_R(p,s,r)=
 \]
 \end{definition}
 
+The next result shows that this rival meets every requirement except capacity
+boundedness.
+
 \begin{proposition}[Properties of the relational model]
 $H_R$ is continuous, maps $[0,1]^3$ into $[0,1]$, is weakly increasing in every
 coordinate and satisfies $H_R(1,1,1)=1$. If
 $\beta_Ss+\beta_Rr>0$, then $H_R(0,s,r)>0$, so the capacity-ceiling axiom is
 not satisfied.
 \end{proposition}
+The proof checks each property in turn.
 \begin{proof}
 The exponent argument is continuous, non-negative and no larger than $K$.
 Therefore the numerator lies between zero and $1-e^{-K}$. Each partial
@@ -562,6 +689,8 @@ If the ceiling and relational models are non-nested and encode different
 boundary conditions, superior sample fit of one does not logically prove its
 boundary condition to be philosophically correct.
 \end{proposition}
+The argument rests on the difference between describing data and fixing what
+a word means.
 \begin{proof}
 Fit compares discrepancies between model-implied and observed distributions
 under the available indicators. A boundary claim concerns the meaning of
@@ -578,6 +707,10 @@ separate condition supporting health.
 
 \section{A Non-Compensatory Threshold Alternative}
 \label{app:a-threshold}
+
+This section turns to a rule that never trades one domain against another. It
+counts the domains that fall below a declared minimum, as a diagnostic rule
+counts the criteria a patient meets.
 
 \begin{definition}[Deprivation count]
 Choose thresholds $z_j\in(0,1)$ and define
@@ -638,6 +771,11 @@ deserves its own treatment.
 \section{Measurement: Indicators Are Not the Construct}
 \label{app:a-measurement}
 
+This section asks how a domain score is obtained from questionnaire answers.
+In the first of two models, each
+indicator is a signal of one underlying quantity, as several assays of one
+analyte each track its concentration.
+
 \begin{definition}[Reflective model]
 \[
 Y_{ijk}=\tau_{jk}+\lambda_{jk}\eta_{ki}+\varepsilon_{ijk},\qquad
@@ -645,6 +783,9 @@ Y_{ijk}=\tau_{jk}+\lambda_{jk}\eta_{ki}+\varepsilon_{ijk},\qquad
 \]
 The latent domain is modelled as a common cause of its indicators.
 \end{definition}
+
+In the second, the indicators make up the domain, as the components of a risk
+score make up the risk.
 
 \begin{definition}[Formative model]
 \[
@@ -680,6 +821,10 @@ transport indicators of Profile~A and rejecting one for lowering it would be the
 as dropping smoking from a cardiovascular risk score.
 \end{reading}
 
+The next theorem shows that a domain estimated in this way has no natural zero
+or unit. Each must be fixed by convention, as an assay reported in arbitrary
+units needs a declared reference standard before results can be compared.
+
 \begin{theorem}[Latent scale indeterminacy]
 \label{thm:latent_scale}
 In $Y=\tau+\lambda\eta+\varepsilon$, define
@@ -687,6 +832,8 @@ $\eta^*=a+b\eta$ with $b>0$. The same observed model results from
 $\lambda^*=\lambda/b$ and $\tau^*=\tau-\lambda a/b$. Thus the latent
 location and scale require identifying constraints.
 \end{theorem}
+The proof rewrites the model in a shifted and stretched unit and shows that
+nothing observable changes.
 \begin{proof}
 Substitute $\eta=(\eta^*-a)/b$ and collect the intercept and loading terms.
 \end{proof}
@@ -705,6 +852,10 @@ performed. A score of $-1.2$ standard deviations for Profile~A states its positi
 the NHATS distribution and nothing else. It does not state a loss of $1.2$ of
 any quantity.
 
+The next proposition gives the pattern of correlations among indicators that
+the higher-order model predicts; Chapter~\ref{ch:methods} tests the fit of that
+pattern.
+
 \begin{proposition}[Second-order implied covariance]
 \label{prop:secondorder_cov}
 If
@@ -720,6 +871,7 @@ uncorrelated, then
 \Psi_\delta)\Lambda^\top+\Theta_\varepsilon.
 \]
 \end{proposition}
+The proof substitutes one equation into the other.
 \begin{proof}
 Substitute the second equation into the first and add the covariances of the
 mutually uncorrelated terms.
@@ -734,6 +886,9 @@ layer supplies limited independent evidence; fit alone is insufficient.
 \section{Objects That Must Not Be Confused}
 \label{app:a-confusion}
 
+This section separates four quantities that are easily mistaken for one
+another.
+
 \begin{definition}[Four distinct objects]
 The framework distinguishes:
 \begin{enumerate}
@@ -744,9 +899,13 @@ The framework distinguishes:
 \end{enumerate}
 \end{definition}
 
+The next proposition states that they cannot be swapped.
+
 \begin{proposition}[Non-equivalence]
 These objects are not numerically interchangeable without calibration.
 \end{proposition}
+The proof notes that the four take different kinds of value: three numbers, one
+number on a fixed scale, one number on an arbitrary scale, and a probability.
 \begin{proof}
 They respectively have vector, normalized scalar, arbitrarily identified latent
 and time-indexed probability codomains. Their mathematical types and invariance
@@ -806,6 +965,9 @@ this reason.
 \section{Failure Conditions and Scope of the Contribution}
 \label{app:a-failure}
 
+The next definition lists the findings that would show the single score unfit
+for use, as a validation protocol states its rejection criteria before the run.
+
 \begin{definition}[Failure conditions]
 The scalar proposal fails in its present form if domain content cannot be
 justified independently of outcomes; scales cannot be harmonised; measurement
@@ -831,6 +993,10 @@ be spent? The final section states carefully how little it implies.
 
 \section{Economic Evaluation and Policy Mathematics}
 \label{app:a-economics}
+
+This section links the score to decisions about spending. The definition below
+gives the standard health-economic measure of value: health gained, less the
+health the same money would have bought elsewhere.
 
 \begin{definition}[Net health benefit]
 For intervention $a$, willingness-to-pay threshold $\lambda>0$, incremental
@@ -892,6 +1058,8 @@ formally that neither implies the other.
 A low baseline H-Potential score does not imply
 $\operatorname{NHB}(a)>0$ for any particular intervention $a$.
 \end{proposition}
+The proof needs one example: an intervention that costs money and produces no
+health.
 \begin{proof}
 For any baseline score, choose an intervention with $\Delta Q(a)=0$ and
 $\Delta C(a)>0$. Then
@@ -911,6 +1079,9 @@ intervention that helps; it is not evidence that any particular one does. That s
 a rule that maximises net health benefit alone will systematically underserve
 people whose disadvantage makes interventions expensive to deliver, which is
 why the calculation is extended next rather than left as it stands.
+
+The extension weights health gains by how badly off the group receiving them
+is, and one parameter, $\varepsilon$, sets how much.
 
 \begin{definition}[Distribution-sensitive evaluation]
 For groups $g=1,\ldots,G$ with population weights $\pi_g$, post-policy health
@@ -970,6 +1141,9 @@ There is no experiment that reveals how much aggregate health a society should
 give up to reduce inequality in it.
 \end{reading}
 
+The definition below lists the separate pieces of evidence that a funding
+decision needs in one health system. They are kept as a list and not combined.
+
 \begin{definition}[Jurisdiction-indexed policy evidence vector]
 For policy $a$ in jurisdiction $j$, the minimum decision object is
 \[
@@ -1014,6 +1188,8 @@ $\Delta Q_j(a)=\Delta Q_k(a)$. These equalities are insufficient to imply the
 same policy ranking of $a$.
 \end{proposition}
 
+The proof builds two health systems with the same effect and opposite
+decisions.
 \begin{proof}
 Let a simplified jurisdictional net-benefit rule be
 $N_j(a)=\lambda_j\Delta Q_j(a)-\Delta C_j(a)$, subject also to a budget
@@ -1041,3 +1217,26 @@ The contribution is a disciplined bridge: a domain space grounded in
 healthy-ageing and capability theory; axioms for any scalar; explicit
 compensatory and non-compensatory families; proofs of their implications; and a
 measurement architecture able to reject aggregation.
+
+
+\section*{What Is New in This Appendix}
+
+Before this appendix, the separate pieces existed: measurement scales and the
+transformations they permit \citep{stevens_1946}, conditions for representing
+an ordering by a number \citep{debreu_1954}, additive multi-attribute value
+\citep{keeney_raiffa_1976}, the CES family \citep{arrow_chenery_1961}, counting
+of deprivations (\S\ref{app:a-threshold}), reflective and formative indicators
+\citep{bollen_lennox_1991,jarvis_2003}, net health benefit
+\citep{stinnett_mullahy_1998} and inequality-averse summaries
+\citep{atkinson_1970}. None was written for a health-capability score.
+This appendix adds four things.
+It states the requirements for such a score before choosing its form, and names
+the one a reader may reject, the capacity ceiling $H\le p$. It sets a relational
+score beside the ceiling score and proves that fit to data cannot choose between
+them. It separates the profile, the chosen score, the estimated score and the
+predicted risk, and proves that they are not interchangeable. It proves that
+need does not imply value for money and that a funding decision does not carry
+over between health systems. Each claim can be checked in two ways: each proof
+is a few lines of algebra or a single counterexample, and each worked number is
+asserted by a named test in the verification suite whose run
+Appendix~\ref{app:verification} reports.

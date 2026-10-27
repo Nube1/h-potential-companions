@@ -1,0 +1,50 @@
+% Appendix B: schematic of the general dynamical model (greyscale, print-safe)
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  inp/.style={hpbox, text width=2.6cm, minimum height=1.0cm},
+  st/.style={hpkey, text width=3.0cm, minimum height=1.2cm},
+  adds/.style={hparrow},
+  removes/.style={hparrow, dashed},
+  noise/.style={hparrow, densely dotted},
+  feeds/.style={-{Stealth[length=1.8mm]}, thin},
+  lab/.style={font=\footnotesize, inner sep=1.5pt}
+]
+% inputs
+\node[inp] (T) at (0,3.0) {Therapeutic input $T$\\(dose)};
+\node[inp] (Z) at (0,1.2) {Homeostatic factor $Z$};
+\node[inp] (Y) at (0,-0.6) {Inhibitory factor $Y$};
+% individual state
+\node[st] (X) at (5.0,1.2) {Disease marker $X(t)$\\(one patient)};
+\node[hpbox, text width=3.0cm, minimum height=0.9cm] (W) at (5.0,3.5) {Random variation\\$\sigma(X,t)\,dW_t$};
+\node[hpnote, anchor=north] (C) at (6.0,-0.75) {cleared};
+% population
+\node[st] (R) at (10.5,1.2) {Cohort density\\$\rho(x,t)$\\drift $\mu$, diffusion $D$};
+% score row
+\node[st] (L) at (5.0,-3.2) {Biomedical term\\$L(t)=\phi(X,\overline X,\dots)$};
+\node[st] (H) at (10.5,-3.2) {Score\\$H(t)=L\,Q\,S-B$};
+\node[inp, text width=3.0cm] (Q) at (10.5,-5.2) {Given paths\\$Q(t)$, $S(t)$, $B(t)$};
+% flows into and out of X
+\draw[adds] (T.east) -- node[lab, above right, pos=0.45] {$+\,\mathbf f(T)$} ([yshift=3.5mm]X.west);
+\draw[adds] (Z.east) -- node[lab, above, pos=0.5] {$+\,\mathbf h(Z)$} (X.west);
+\draw[removes] (Y.east) -- node[lab, below right, pos=0.45] {$-\,k_{\text{inh}}YX$} ([yshift=-3.5mm]X.west);
+\draw[removes] ([xshift=10mm]X.south) -- node[lab, right] {$-\,k_{\text{elim}}X$} (C.north);
+\draw[noise] (W.south) -- (X.north);
+% to population and score
+\draw[feeds] (X.east) -- node[lab, above] {many patients} (R.west);
+\draw[feeds] (R.south) -- ++(0,-1.75) -| node[lab, pos=0.25, above] {cohort mean $\overline X(t)$} ([xshift=10mm]L.north);
+\draw[feeds] ([xshift=-10mm]X.south) -- node[lab, left] {$X(t)$} ([xshift=-10mm]L.north);
+\draw[feeds] (L.east) -- (H.west);
+\draw[feeds] (Q.north) -- (H.south);
+% legend
+\begin{scope}[shift={(-1.3,-4.4)}]
+  \draw[adds] (0,0) -- (0.9,0); \node[anchor=west, font=\footnotesize] at (1.0,0) {adds to $X$};
+  \draw[removes] (0,-0.45) -- (0.9,-0.45); \node[anchor=west, font=\footnotesize] at (1.0,-0.45) {removes from $X$};
+  \draw[noise] (0,-0.9) -- (0.9,-0.9); \node[anchor=west, font=\footnotesize] at (1.0,-0.9) {random variation};
+  \draw[feeds] (0,-1.35) -- (0.9,-1.35); \node[anchor=west, font=\footnotesize] at (1.0,-1.35) {defines or feeds};
+  \node[hpkey, minimum height=0.3cm, minimum width=0.9cm, inner sep=0pt, anchor=west] at (0,-1.85) {};
+  \node[anchor=west, font=\footnotesize] at (1.0,-1.85) {changes over time};
+  \node[hpbox, minimum height=0.3cm, minimum width=0.9cm, inner sep=0pt, anchor=west] at (0,-2.3) {};
+  \node[anchor=west, font=\footnotesize] at (1.0,-2.3) {input, held or given};
+\end{scope}
+\end{tikzpicture}}
