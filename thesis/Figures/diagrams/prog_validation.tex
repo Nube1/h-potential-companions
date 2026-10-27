@@ -1,0 +1,41 @@
+% Chapter 7 (Prognostic Performance): how prognostic performance is assessed.
+{\hpdiagramsizes
+\begin{tikzpicture}[node distance=5mm and 4mm]
+  \node[hpbox, text width=11.6cm, minimum height=1.0cm] (in)
+    {\textbf{Input}: frozen $H_{\text{potential}}$ scores at the Round~5 baseline
+     and five-year outcomes (death; first overnight hospital stay), each endpoint analysed separately};
+  \node[hpkey, text width=11.6cm, minimum height=1.0cm, below=of in] (cox)
+    {\textbf{Association}: Cox model, hazard ratio per standard deviation of the score,
+     unadjusted and adjusted for age and sex};
+  \draw[hparrow] (in) -- (cox);
+
+  % the four questions asked of the fitted model
+  \node[hpbox, text width=2.55cm, minimum height=2.5cm, below=9mm of cox.south west, anchor=north west, xshift=0.0cm] (disc)
+    {\textbf{Discrimination}\\[2pt]\footnotesize Does it rank people?\\ Harrell's C, Uno's C, time-dependent AUC};
+  \node[hpbox, text width=2.55cm, minimum height=2.5cm, right=of disc] (cal)
+    {\textbf{Calibration}\\[2pt]\footnotesize Are stated risks right?\\ Calibration-in-the-large, slope, plot};
+  \node[hpbox, text width=2.55cm, minimum height=2.5cm, right=of cal] (nb)
+    {\textbf{Net benefit}\\[2pt]\footnotesize Would acting on it help?\\ Decision curve over a stated range of thresholds};
+  \node[hpbox, text width=2.55cm, minimum height=2.5cm, right=of nb] (cmp)
+    {\textbf{Comparison}\\[2pt]\footnotesize Does it add to what is known?\\ Five comparators; added value over baseline models};
+  \foreach \n in {disc, cal, nb, cmp} \draw[hparrow] (cox.south -| \n.north) -- (\n.north);
+
+  % laboratory counterparts
+  \node[hpnote, text width=2.55cm, below=1mm of disc] (ld) {cf.\ area under an ROC curve};
+  \node[hpnote, text width=2.55cm, below=1mm of cal]  (lc) {cf.\ assay checked against known standards};
+  \node[hpnote, text width=2.55cm, below=1mm of nb]   (ln) {cf.\ choice of a cut-off and its false positives};
+  \node[hpnote, text width=2.55cm, below=1mm of cmp]  (lm) {cf.\ new method set beside the methods in use};
+
+  % bootstrap box around the whole fitting and scoring
+  \begin{scope}[on background layer]
+    \node[draw, dashed, thick, rounded corners=3pt, fill=black!2, inner sep=3mm,
+          fit=(in) (cox) (disc) (cmp) (ld) (lm)] (boot) {};
+  \end{scope}
+  \node[hpnote, anchor=north, text width=12.4cm, below=1.5mm of boot.south] (bnote)
+    {Dashed frame: bootstrap internal validation. Each resample reruns imputation, the
+     measurement model, factor scoring and the Cox fit, then scores the result on the
+     original data (cf.\ repeating a validation run on resampled material).};
+  \node[hpkey, text width=11.6cm, minimum height=0.9cm, below=4mm of bnote] (out)
+    {\textbf{Output}: optimism-corrected performance, read against the pass and fail rules stated in each section};
+  \draw[hparrow] (bnote) -- (out);
+\end{tikzpicture}}
