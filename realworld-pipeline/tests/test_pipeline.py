@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -46,6 +47,27 @@ def test_measurement_is_bounded_and_outcome_blind(cfg):
     pooled = m.pooled()
     assert pooled["imputations"] == cfg.raw["measurement"]["imputations"]
     assert 0 < pooled["fit"]["cfi"] <= 1
+
+
+def test_measurement_unchanged_when_outcomes_are_permuted(cfg):
+    """The one-way rule: shuffling every outcome column leaves the measurement
+    model, its scaling bounds and every person's domain scores unchanged."""
+    d = synthetic_dataset(cfg, 120)
+    train = d.iloc[:90].reset_index(drop=True)
+    outcome_cols = [
+        c for spec in cfg.raw["outcomes"]["endpoints"].values() for c in spec.values() if c in train
+    ]
+    shuffled = train.copy()
+    rng = np.random.default_rng(1)
+    for c in outcome_cols:
+        shuffled[c] = rng.permutation(shuffled[c].to_numpy())
+    assert outcome_cols and not shuffled[outcome_cols].equals(train[outcome_cols])
+    a = fit_measurement(train, cfg, se=False)
+    b = fit_measurement(shuffled, cfg, se=False)
+    assert a.bounds == b.bounds
+    pd.testing.assert_frame_equal(
+        transform_measurement(d, a, cfg), transform_measurement(d, b, cfg)
+    )
 
 
 def test_noncompensation():
