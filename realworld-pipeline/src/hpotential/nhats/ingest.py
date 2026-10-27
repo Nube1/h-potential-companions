@@ -79,7 +79,34 @@ class Layout:
                 if not spec.get("optional"):
                     names |= {self.name(s) for s in _sources(spec)}
         names |= {self.name(s) for s in self.raw.get("conditions", {}).values()}
+        sample = self.raw.get("sample")
+        if sample:
+            names.add(self.name(sample["residence"]))
         return sorted(names)
+
+    def preferred_variables(self) -> list[str]:
+        """Variables used in place of a required set when the release has them.
+
+        NHATS publishes 20 income imputations in a separate file; the five in
+        the SP file are used when that file is absent.
+        """
+        names: set[str] = set()
+        for spec in self.raw["indicators"].values():
+            names |= {self.name(s) for s in spec.get("imputations", [])}
+        return sorted(names)
+
+    def fallback_sources(self) -> dict[int, list[str]]:
+        """Templates filled from an earlier round's SP file where baseline is missing.
+
+        NHATS asks some items (education, for one) only at a person's first
+        interview, so continuing sample members have them in the Round 1 file.
+        """
+        out: dict[int, set[str]] = {}
+        for block in ("covariates", "indicators"):
+            for spec in self.raw[block].values():
+                if "fallback_round" in spec:
+                    out.setdefault(int(spec["fallback_round"]), set()).update(_sources(spec))
+        return {k: sorted(v) for k, v in out.items()}
 
     def optional_variables(self) -> dict[str, list[str]]:
         """Source variables of optional comparators, by comparator.
@@ -104,6 +131,8 @@ class Layout:
 
 
 def _sources(spec: dict) -> list[str]:
+    if spec.get("kind") == "neg_log_income":
+        return list(spec["fallback_imputations"]) + [spec["couple"]["source"]]
     if "source" in spec:
         return [spec["source"]]
     if "sources" in spec:
@@ -179,6 +208,7 @@ class CheckReport:
     unexpected_codes: dict[str, list[float]] = field(default_factory=dict)
     rows: dict[str, int] = field(default_factory=dict)
     optional_missing: dict[str, list[str]] = field(default_factory=dict)
+    tracker_status_values: dict[str, dict[str, int]] = field(default_factory=dict)
 
     @property
     def ok(self) -> bool:
@@ -193,6 +223,9 @@ class CheckReport:
             "unexpected_codes": {k: v[:20] for k, v in self.unexpected_codes.items()},
             "rows": self.rows,
             "optional_comparators_missing_variables": self.optional_missing,
+            # Only code 62 (deceased) is confirmed in the NHATS User Guide; review
+            # the other codes here against the tracker codebook before analysis.
+            "tracker_status_values": self.tracker_status_values,
         }
 
 
@@ -277,6 +310,23 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
         report.missing_variables["tracker"] = [
             v for v in layout.tracker_variables(k) if v not in have
         ]
+        status_cols = [v for v in layout.tracker_variables(k)[1:] if v in have]
+        if status_cols:
+            st = read_table(path, status_cols)
+            report.tracker_status_values = {
+                c: {str(int(v)): int(n) for v, n in st[c].value_counts().sort_index().items()}
+                for c in status_cols
+            }
+    for rnd, templates in layout.fallback_sources().items():
+        stem = layout.raw["files"]["sp"].format(r=rnd, k=rnd).lower()
+        path = find_file(data_dir, stem)
+        report.files[f"sp_round_{rnd}_fallback"] = str(path) if path else None
+        if path is None:
+            report.missing_files.append(stem)
+            continue
+        have = available_columns(path)
+        need = [t.format(r=rnd, k=rnd).lower() for t in templates]
+        report.missing_variables[f"sp_round_{rnd}_fallback"] = [v for v in need if v not in have]
     for k in layout.follow_ups:
         stem = layout.raw["files"]["sp"].format(r=k, k=k).lower()
         path = find_file(data_dir, stem)
@@ -290,6 +340,13 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
 
 
 def _declared_codes(spec: dict) -> set[float] | None:
+    codes = _declared_answers(spec)
+    if codes is not None:
+        codes |= {float(x) for x in spec.get("missing_codes", [])}
+    return codes
+
+
+def _declared_answers(spec: dict) -> set[float] | None:
     if "codes" in spec:  # the full set of valid answers, where the layout declares it
         return {float(x) for x in spec["codes"]}
     if "map" in spec:
@@ -319,7 +376,7 @@ def _unexpected_codes(frame: pd.DataFrame, layout: Layout) -> dict[str, list[flo
             if col not in frame:
                 continue
             values = set(pd.to_numeric(frame[col], errors="coerce").dropna().unique())
-            odd = sorted(values - codes - special)
+            odd = sorted(float(v) for v in values - codes - special)
             if odd:
                 out[col] = odd
     return out
@@ -333,9 +390,30 @@ def _clean(series: pd.Series, special: list[float]) -> pd.Series:
     return x.mask(x.isin(special))
 
 
-def _items(frame: pd.DataFrame, layout: Layout, sources: list[str]) -> pd.DataFrame:
-    cols = [layout.name(s) for s in sources]
-    return pd.DataFrame({c: _clean(frame[c], layout.special_missing) for c in cols})
+def _items(
+    frame: pd.DataFrame, layout: Layout, sources: list[str], spec: dict | None = None
+) -> pd.DataFrame:
+    """Source items as floats, special codes missing.
+
+    ``recode`` maps a code to a value before cleaning (NHATS -1 "inapplicable"
+    is sometimes a real answer: no floors to climb in a one-floor home);
+    ``recode_by_source`` does the same for one item. ``missing_codes`` are
+    valid NHATS codes that carry no answer here (don't know, not done).
+    """
+    spec = spec or {}
+    out = {}
+    for s in sources:
+        c = layout.name(s)
+        x = pd.to_numeric(frame[c], errors="coerce").astype(float)
+        rec = {**spec.get("recode", {}), **spec.get("recode_by_source", {}).get(s, {})}
+        if rec:
+            x = x.replace({float(k): float(v) for k, v in rec.items()})
+        x = x.mask(x.isin(layout.special_missing))
+        miss = spec.get("missing_codes")
+        if miss:
+            x = x.mask(x.isin([float(v) for v in miss]))
+        out[c] = x
+    return pd.DataFrame(out)
 
 
 def _prorated(values: pd.DataFrame, how: str) -> pd.Series:
@@ -352,7 +430,9 @@ def _prorated(values: pd.DataFrame, how: str) -> pd.Series:
 def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     """One canonical indicator from its NHATS source items."""
     kind = spec.get("kind", "value")
-    items = _items(frame, layout, _sources(spec))
+    if kind == "neg_log_income":
+        return neg_log_income(frame, layout, spec)
+    items = _items(frame, layout, _sources(spec), spec)
     if kind == "value":
         return items.iloc[:, 0]
     if kind == "reverse":
@@ -388,7 +468,7 @@ def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     if kind == "deficit_fraction":
         flags = []
         for group in spec["groups"]:
-            g = _items(frame, layout, group["sources"])
+            g = _items(frame, layout, group["sources"], group)
             flags.append(
                 g.isin([float(v) for v in group["deficit"]]).astype(float).where(g.notna())
             )
@@ -407,6 +487,29 @@ def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     raise ValueError(f"Unknown indicator kind: {kind}")
 
 
+def neg_log_income(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
+    """Income shortfall: minus the mean log equivalised income over NHATS imputations.
+
+    NHATS total income is for the person, or for the couple when married or
+    living with a partner. Couple income is divided by the square root of two
+    (the square-root equivalence scale) so the two are comparable. The 20
+    interval-regression imputations are used when the release has them, else
+    the five hot-deck imputations in the SP file. Averaging the log over
+    imputations gives one value per person; the between-imputation spread is
+    not carried forward (see the thesis appendix on data checks).
+    """
+    pref = [layout.name(s) for s in spec.get("imputations", [])]
+    cols = pref if pref and all(c in frame for c in pref) else None
+    sources = spec.get("imputations") if cols else spec["fallback_imputations"]
+    x = _items(frame, layout, sources)
+    x = x.where(x >= 0)
+    c = spec["couple"]
+    status = _clean(frame[layout.name(c["source"])], layout.special_missing)
+    scale = np.where(status.isin([float(v) for v in c["codes"]]), np.sqrt(2.0), 1.0)
+    logs = np.log1p(x.div(scale, axis=0))
+    return -logs.mean(axis=1)
+
+
 def eq5d_levels(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.DataFrame:
     """EQ-5D-3L levels (1 to 3) for each dimension from NHATS items.
 
@@ -418,7 +521,7 @@ def eq5d_levels(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.DataFrame
     """
     levels = {}
     for dim, d in spec["dimensions"].items():
-        items = _items(frame, layout, d["sources"])
+        items = _items(frame, layout, d["sources"], d)
         if d.get("sum"):
             value = _prorated(items, "sum")
         else:
@@ -475,6 +578,31 @@ def _outcome_times(
     ).where(~np.isnan(time))
 
 
+def _fill_from_earlier_rounds(sp: pd.DataFrame, data_dir: Path, layout: Layout) -> dict:
+    """Fill baseline items NHATS asks only at a first interview from that round's file.
+
+    Changes ``sp`` in place and returns, per variable, how many values were filled.
+    """
+    pid = layout.name(layout.raw["ids"]["person"])
+    counts = {}
+    for rnd, templates in layout.fallback_sources().items():
+        path = find_file(data_dir, layout.raw["files"]["sp"].format(r=rnd, k=rnd).lower())
+        if path is None:
+            continue
+        cols = [t.format(r=rnd, k=rnd).lower() for t in templates]
+        early = read_table(path, [pid, *cols]).set_index(pid).reindex(sp.index)
+        for t, col in zip(templates, cols, strict=True):
+            now = layout.name(t)
+            if col not in early or now not in sp:
+                continue
+            gap = _clean(sp[now], layout.special_missing).isna()
+            prior = _clean(early[col], layout.special_missing)
+            take = gap & prior.notna()
+            sp.loc[take, now] = prior[take]
+            counts[now] = int(take.sum())
+    return counts
+
+
 def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     """Canonical analytic extract and a disclosure-safe flow summary."""
     data_dir = Path(data_dir)
@@ -486,8 +614,17 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     for _, path in _baseline_files(data_dir, layout):
         have |= available_columns(path)
     optional = {v for names in layout.optional_variables().values() for v in names if v in have}
+    optional |= {v for v in layout.preferred_variables() if v in have}
     sp = read_baseline(data_dir, layout, sorted(set(layout.baseline_variables()) | optional))
     flow = {"sp_file_rows": len(sp)}
+    sample = layout.raw.get("sample")
+    if sample:
+        res = _clean(sp[layout.name(sample["residence"])], layout.special_missing)
+        sp = sp[res.isin([float(v) for v in sample["keep"]])].copy()
+        flow["with_sp_interview"] = len(sp)
+    filled = _fill_from_earlier_rounds(sp, data_dir, layout)
+    if filled:
+        flow["filled_from_earlier_round"] = filled
 
     out = pd.DataFrame(index=sp.index)
     out["participant_id"] = sp.index.astype(str)
@@ -513,8 +650,11 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     for name, src in layout.raw.get("conditions", {}).items():
         x = _clean(sp[layout.name(src)], layout.special_missing)
         out[f"cond_{name}"] = x.isin([1.0, 7.0]).astype(float).where(x.notna())
-    for spec in layout.raw["indicators"].values():
-        if spec.get("kind") == "neg_log":  # keep raw income for the concentration figures
+    for name, spec in layout.raw["indicators"].items():
+        if spec.get("kind") == "neg_log_income":  # equivalised income for the figures
+            out["income"] = np.expm1(-out[name])
+            break
+        if spec.get("kind") == "neg_log":
             out["income"] = _clean(sp[layout.name(spec["source"])], layout.special_missing)
             break
 

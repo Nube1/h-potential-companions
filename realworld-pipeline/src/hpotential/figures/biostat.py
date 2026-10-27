@@ -44,8 +44,10 @@ def _years(days):
 def cohort_flow(ctx: RunContext, index: style.FigureIndex) -> None:
     steps = []
     if ctx.flow:
+        steps += [("Sample persons in SP file", ctx.flow["sp_file_rows"])]
+        if "with_sp_interview" in ctx.flow:  # decedents and facility-only cases out
+            steps += [("Sample person interview", ctx.flow["with_sp_interview"])]
         steps += [
-            ("Sample persons in SP file", ctx.flow["sp_file_rows"]),
             ("Positive analytic weight", ctx.flow["positive_weight"]),
             ("Status known at a follow-up", ctx.flow["with_follow_up"]),
         ]

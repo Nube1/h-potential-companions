@@ -5,11 +5,15 @@
 # "{r}" is replaced by the baseline round and "{k}" by each follow-up round,
 # so one layout serves any baseline round (the thesis uses Round 5).
 #
-# CHECK EVERY NAME AND CODE AGAINST THE NHATS CODEBOOK FOR YOUR RELEASE.
-# They were written from the NHATS naming conventions without the codebook to
-# hand. `hpotential nhats-check` lists every configured variable that is
-# absent from your files and every value outside the declared codes, and the
-# build refuses to run while any are missing.
+# SOURCES CHECKED (27 October 2026). Every name below was looked up in the
+# NHATS Round 5 Crosswalk between Instruments and Codebook (Excel, 02/15/2024),
+# which also gives the file that holds it. Response codes were read from the
+# NHATS Round 5 Data Collection Instrument (02/2024) and, for derived
+# variables, from the NHATS User Guide Rounds 1-14 (08/21/2026). Thesis
+# Appendix "Data checks" lists each check and what remains open.
+# `hpotential nhats-check` lists every configured variable absent from your
+# files and every value outside the declared codes, and the build refuses to
+# run while any are missing.
 
 release:
   # The thesis protocol indexes at Round 5 (2015 replenishment cohort and
@@ -21,15 +25,28 @@ release:
 files:                                  # file names inside --data-dir; .dta, .sas7bdat, .csv or .parquet
   sp: "NHATS_Round_{r}_SP_File"
   tracker: "NHATS_Round_{k}_Tracker_File"   # the latest tracker carries every earlier round's status
-  income: "NHATS_Round_{r}_Income_Imputation_File"  # optional; CHECK the file name in your release
+  # Auxiliary file with 20 income imputations (User Guide sec. II, "Auxiliary
+  # Income Imputation Files"). Optional: the five SP-file imputations are used
+  # without it. The file stem is not given in the documentation read; rename
+  # here to match your download.
+  income: "NHATS_Round_{r}_Income_Imputation_File"
 
 ids:
   person: spid
 
-design:
+design:                                  # all three on the SP file [crosswalk]
   weight: "w{r}anfinwgt0"
   stratum: "w{r}varstrat"
   psu: "w{r}varunit"
+
+# Analytic sample: persons with a Round 5 SP interview. r5dresid 1 community,
+# 2 residential care (SP interview), 4 nursing home (SP interview); 3, 5, 7, 8
+# are facility-questionnaire only and 6 deceased [User Guide III.D]. The User
+# Guide notes that Round 5 decedents (r5dresid = 6) wrongly carry a positive
+# 2015 analytic weight; excluding them here removes that error.
+sample:
+  residence: "r{r}dresid"
+  keep: [1, 2, 4]
 
 # NHATS negative codes are reasons for missingness, not values.
 special_missing: [-1, -2, -3, -4, -5, -6, -7, -8, -9]
@@ -39,18 +56,21 @@ covariates:
     source: "r{r}d2intvrage"            # age category at interview, 1 = 65-69 ... 6 = 90+
     map: {1: 67, 2: 72, 3: 77, 4: 82, 5: 87, 6: 92}   # band midpoints in years
   sex:
-    source: "r{r}dgender"
-    map: {1: male, 2: female}
+    source: "r{r}dgender"               # the crosswalk lists it for the new Round 5 sample only;
+    map: {1: male, 2: female}           # continuing members are filled from Round 1
+    fallback_round: 1
   race_group:
-    source: "rl{r}dracehisp"
-    map: {1: White, 2: Black, 3: Other, 4: Hispanic}
+    source: "rl{r}dracehisp"            # carried forward from Round 1 for continuing sample [User Guide]
+    # 1-4 as labelled; 5 = more than one race, no primary given; 6 = don't know
+    # or refused (left missing) [User Guide, RL derived variables]
+    map: {1: White, 2: Black, 3: Other, 4: Hispanic, 5: Other}
+    missing_codes: [6]
 
 # Each indicator is oriented by `direction` in configs/study.yaml.
 # The eleven indicators are those of Chapter 5 (Table loadings), in the domains
-# of Chapter 3. NAMES marked [crosswalk] were checked against the NHATS Round 5
-# Crosswalk between Instruments and Codebook (02/15/2024). RESPONSE CODES marked
-# [assumed] could not be read from the documentation available here; the
-# nhats-check report lists any observed value outside them.
+# of Chapter 3. [crosswalk] = name and file checked in the Round 5 crosswalk;
+# [instrument] = codes read from the Round 5 instrument; [guide] = codes read
+# from the derived-variable tables of the User Guide.
 indicators:
   # ---- Biomedical Potential (higher = more capacity)
   bio_multimorbidity:
@@ -58,7 +78,10 @@ indicators:
     kind: count_absent
     sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
               "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]  # [crosswalk]
-    present: [1, 7]                      # 1 yes, 7 previously reported [assumed]
+    # 1 yes, 2 no, 7 previously reported [instrument]. Continuing sample members
+    # are asked only about conditions diagnosed since the last interview, so
+    # "ever diagnosed" is 1 or 7.
+    present: [1, 7]
     codes: [1, 2, 7]
   bio_function:
     label: Self-care, mobility and household activities done alone without difficulty, of twelve
@@ -67,58 +90,84 @@ indicators:
               "mo{r}dbedsfdf", "mo{r}dinsdsfdf", "mo{r}doutsfdf",                       # derived mobility [crosswalk]
               "ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf",  # derived household [crosswalk]
               "mc{r}dmedssfdf"]                                                          # derived medications [crosswalk]
-    present: [2, 3, 4, 5]                # difficulty or cannot do alone; 1 = no difficulty [assumed]
-    codes: [1, 2, 3, 4, 5]
+    # Derived "self and difficulty" codes [guide]: 1 did not do by self in the
+    # last month; 2 did by self, no difficulty; 3 did by self with difficulty;
+    # 4 and 5 as 2 and 3 when whether done by self was don't know/refused; 6, 7
+    # difficulty unknown; 8 not done in the last month; 9 (medications only)
+    # takes no medications. A limitation is 1, 3 or 5; 6-8 carry no answer.
+    present: [1, 3, 5]
+    missing_codes: [6, 7, 8]
+    codes: [1, 2, 3, 4, 5, 6, 7, 8, 9]
   bio_cognition:
     label: Immediate and delayed word recall plus clock drawing
     kind: sum
     sources: ["cg{r}dwrdimmrc", "cg{r}dwrddlyrc", "cg{r}dclkdraw"]                     # [crosswalk]
+    # Recall 0-10, clock 0-5 [guide]. -2/-3 (proxy says the person cannot be
+    # asked) are treated as missing and imputed; see the thesis appendix.
   bio_psych:
     label: PHQ-2 and GAD-2 symptom-free score
     kind: reverse_sum
     sources: ["hc{r}depresan1", "hc{r}depresan2", "hc{r}depresan3", "hc{r}depresan4"]  # [crosswalk]
-    range: [1, 4]                        # 1 not at all ... 4 nearly every day [assumed]
+    range: [1, 4]                        # 1 not at all ... 4 nearly every day [instrument]
   # ---- Social Modifiers (higher = more enablement)
   soc_participation:
     label: Valued activities taken part in, of four
     kind: count_present
     sources: ["pa{r}vistfrfam", "pa{r}attrelser", "pa{r}clbmtgrac", "pa{r}outfrenjy"]  # [crosswalk]
-    present: [1]                         # 1 yes [assumed]
+    present: [1]                         # 1 yes, 2 no; "in the last month" [instrument]
     codes: [1, 2]
   soc_network:
     label: Social network size
     kind: value
-    source: "sn{r}dnumsn"                # [crosswalk]
+    source: "sn{r}dnumsn"                # [crosswalk]; not asked of proxy respondents in Round 5 [guide]
   soc_communication:
     label: Communication functions without difficulty, of four
     kind: count_present
     sources: ["ss{r}hearphone", "ss{r}convquiet", "ss{r}seewellst", "ss{r}glrednewp"]   # [crosswalk]
-    present: [1]                         # 1 yes, can do [assumed]
+    present: [1]                         # 1 yes, can do; 2 no [instrument]
     codes: [1, 2]
   # ---- Systemic Burdens (higher = more burden)
   sys_economic:
-    label: Income shortfall, minus log household income
-    kind: neg_log
-    source: "ia{r}totinc"                # NOT in the SP crosswalk: income is in the income file; CHECK NAME
+    label: Income shortfall, minus mean log equivalised income over imputations
+    kind: neg_log_income
+    # 20 interval-regression imputations, income imputation file [crosswalk]
+    imputations: ["ia{r}dtoincimi1", "ia{r}dtoincimi2", "ia{r}dtoincimi3", "ia{r}dtoincimi4",
+                  "ia{r}dtoincimi5", "ia{r}dtoincimi6", "ia{r}dtoincimi7", "ia{r}dtoincimi8",
+                  "ia{r}dtoincimi9", "ia{r}dtoincimi10", "ia{r}dtoincimi11", "ia{r}dtoincimi12",
+                  "ia{r}dtoincimi13", "ia{r}dtoincimi14", "ia{r}dtoincimi15", "ia{r}dtoincimi16",
+                  "ia{r}dtoincimi17", "ia{r}dtoincimi18", "ia{r}dtoincimi19", "ia{r}dtoincimi20"]
+    # five hot-deck imputations, SP file [crosswalk], used when the above are absent
+    fallback_imputations: ["ia{r}toincim1", "ia{r}toincim2", "ia{r}toincim3", "ia{r}toincim4",
+                           "ia{r}toincim5"]
+    # Income is the couple's for those married (1) or living with a partner (2)
+    # [instrument HH1; User Guide III.M]; divided by sqrt(2).
+    couple: {source: "hh{r}dmarstat", codes: [1, 2]}
   sys_education:
     label: Schooling levels not completed, of nine
     kind: reverse
-    source: "el{r}higstschl"             # NOT in the SP crosswalk; CHECK NAME and file
-    range: [1, 9]                        # 1 no schooling ... 9 post-graduate [assumed]
+    source: "el{r}higstschl"             # SP file [crosswalk]
+    range: [1, 9]                        # 1 no schooling ... 9 master's or doctoral [instrument]
+    fallback_round: 1                    # asked at the first interview only [User Guide, EL]
   sys_environment:
     label: Home access barriers, of four
     kind: count_present
     sources: ["ho{r}entrstair", "ho{r}levelsflr", "ho{r}homeamen1", "ho{r}entrnramp"]   # [crosswalk]
-    present_by_source:                   # barrier codes per item [assumed]
-      "ho{r}entrstair": [1]              # stairs at the entrance: yes
-      "ho{r}levelsflr": [2, 3, 4, 5]     # more than one level
-      "ho{r}homeamen1": [2]              # bed, kitchen and bath not on one floor
-      "ho{r}entrnramp": [2]              # no ramp at the entrance
+    present_by_source:                   # barrier codes per item [instrument]
+      "ho{r}entrstair": [1]              # stairs at the entrance: 1 yes
+      "ho{r}levelsflr": [2, 3, 4]        # levels: 1, 2, 3, 4 = four or more
+      "ho{r}homeamen1": [2]              # bed, kitchen and bath on one floor: 2 no
+      "ho{r}entrnramp": [2]              # ramp at the entrance: 2 no
+    codes: [1, 2, 3, 4]
+    # HO5 is skipped for multi-unit buildings and HO8 for one-floor homes; the
+    # skipped answer (-1) is read as "one level" and "same floor" [instrument].
+    recode_by_source:
+      "ho{r}levelsflr": {-1: 1}
+      "ho{r}homeamen1": {-1: 1}
   sys_care_access:
     label: Barriers to regular medical care, of two
     kind: count_present
     sources: ["mc{r}havregdoc", "mc{r}regdoclyr"]                                       # [crosswalk]
-    present: [2]                         # 2 no regular doctor / not seen in last year [assumed]
+    present: [2]                         # 2 no regular doctor / not seen in last year [instrument]
     codes: [1, 2]
 
 # Comparators built from baseline items only, never from outcomes.
@@ -134,8 +183,9 @@ comparators:
       - sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
                   "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]
         deficit: [1, 7]                  # condition reported
-      - sources: ["pc{r}walk6blks", "pc{r}up20stair", "pc{r}car20pds", "pc{r}kneel", "pc{r}bdovrhd"]
-        deficit: [2]                     # 2 = could not do it
+      - sources: ["pc{r}walk6blks", "pc{r}up20stair", "pc{r}car20pnds", "pc{r}geonknees",
+                  "pc{r}bendover", "pc{r}rechovrhd"]                          # [crosswalk]
+        deficit: [2]                     # "able to ...": 2 = no [instrument]
 
   # Charlson-type index (Charlson et al. 1987) over the conditions NHATS asks
   # about: myocardial infarction 1, heart disease (taken as heart failure) 1,
@@ -156,7 +206,7 @@ comparators:
 
   # Functional status only: count of ADL and IADL activities reported as
   # difficult. Names are the derived 'without help' variables [crosswalk];
-  # the difficulty codes are [assumed]. OPTIONAL: if absent from a release the
+  # the codes are from the User Guide [guide]. OPTIONAL: if absent from a release the
   # comparator is skipped and reported, never blocking the build.
   adl_iadl_count:
     kind: count_present
@@ -165,16 +215,16 @@ comparators:
               "mo{r}dbedsfdf", "mo{r}dinsdsfdf", "mo{r}doutsfdf",                    # ADL: bed, inside, outside
               "ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf",  # IADL
               "mc{r}dmedssfdf"]                                                  # IADL: medications
-    present: [2, 3, 4, 5]                # [assumed] 1 no difficulty
+    present: [1, 3, 5]                   # [guide] as bio_function
+    missing_codes: [6, 7, 8]
 
   # Health-utility proxy: NHATS items crosswalked to the five EQ-5D-3L
   # dimensions and valued with an additive tariff. OPTIONAL and VERIFY as above.
   # The tariff below is the UK time trade-off tariff (Dolan 1997, Med Care
-  # 35:1095-108). Checked against two published values: state 33333 gives
-  # -0.594, and state 32333 gives -0.484, the UK minimum that Mozzi et al. 2016
-  # (doi:10.2147/CEOR.S98226) report as -0.48, below 33332 (-0.429) as they
-  # report. The level-2 weights for mobility, usual activities and pain are
-  # not reached by these checks; confirm them against Dolan's table. Cut-points [a, b]: below a is level 1,
+  # 35:1095-108). All eleven coefficients were checked against Table 1 of
+  # Dolan, Gudex, Kind and Williams (1995), "A social tariff for EuroQol",
+  # CHE Discussion Paper 138, University of York, and reproduce its worked
+  # example (state 11223 = 0.255). Cut-points [a, b]: below a is level 1,
   # below b level 2, otherwise level 3.
   qaly_proxy:
     kind: eq5d_crosswalk
@@ -186,11 +236,13 @@ comparators:
         cuts: [1, 2]
       self_care:           # ADL difficulty count
         sources: ["sc{r}deatsfdf", "sc{r}dbathsfdf", "sc{r}dtoilsfdf", "sc{r}ddressfdf"]
-        present: [2, 3, 4, 5]          # [assumed] 1 no difficulty
+        present: [1, 3, 5]             # [guide]
+        missing_codes: [6, 7, 8]
         cuts: [1, 3]
       usual_activities:    # IADL difficulty count
         sources: ["ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf"]
-        present: [2, 3, 4, 5]          # [assumed] 1 no difficulty
+        present: [1, 3, 5]             # [guide]
+        missing_codes: [6, 7, 8]
         cuts: [1, 3]
       pain:                # bothered by pain; pain limits activities
         sources: ["ss{r}painbothr", "ss{r}painlimts"]
@@ -214,9 +266,12 @@ comparators:
 outcomes:
   mortality:
     status: "r{k}status"
-    event_codes: [62]                    # deceased: confirm in the tracker codebook
+    # 62 = deceased, Last Month of Life interview done [User Guide III]. Other
+    # deceased codes (no LML interview) are not listed in the documents read;
+    # nhats-check prints every status value seen so they can be added here.
+    event_codes: [62]
   hospitalisation:
-    sp_item: "hc{k}hosptstay"            # overnight hospital stay since last interview, from follow-up SP files
+    sp_item: "hc{k}hosptstay"            # overnight stay since the last interview (continuing sample) [instrument HC7]
     present: [1]
 
 # Medical groupings for figures (labels only; same items as above).

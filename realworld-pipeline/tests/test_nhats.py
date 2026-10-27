@@ -135,11 +135,79 @@ def test_baseline_variables_found_in_tracker_and_bad_codes_flagged(tmp_path):
     design = [layout.name(v) for v in layout.raw["design"].values()]
     tr = tr.merge(sp[[pid, *design]], on=pid)
     sp = sp.drop(columns=design)
-    sp.loc[0, layout.name("sc{r}deatsfdf")] = 9
+    sp.loc[0, layout.name("sc{r}deatsfdf")] = 12
     sp.to_csv(sp_path, index=False)
     tr.to_csv(tr_path, index=False)
     report = check(tmp_path, layout)
     assert report.ok, report.to_dict()
-    assert report.unexpected_codes[layout.name("sc{r}deatsfdf")] == [9.0]
+    assert report.unexpected_codes[layout.name("sc{r}deatsfdf")] == [12.0]
     frame, _ = build(tmp_path, layout)
     assert frame["survey_weight"].notna().mean() > 0.9
+
+
+# ---- Coding checked against the NHATS documents (thesis appendix on data checks)
+
+
+def test_activity_codes_follow_the_user_guide(layout):
+    """Derived 'self and difficulty' codes: 2 and 4 mean no limitation."""
+    spec = layout.raw["indicators"]["bio_function"]
+    cols = [layout.name(s) for s in spec["sources"]]
+    rows = {
+        "no limitation": [2] * 12,
+        "dk if alone, no difficulty": [4] * 12,
+        "did not do alone": [1] * 12,
+        "difficulty": [3] * 12,
+        "dk if alone, difficulty": [5] * 12,
+        "half unknown": [2] * 6 + [6, 7, 8, 6, 7, 8],
+        "mostly unknown": [2] * 5 + [6] * 7,
+    }
+    frame = pd.DataFrame(rows.values(), columns=cols, index=rows.keys())
+    out = score_item(frame, layout, spec)  # activities done without a limitation
+    assert out["no limitation"] == 12 and out["dk if alone, no difficulty"] == 12
+    assert out["did not do alone"] == 0 and out["difficulty"] == 0
+    assert out["dk if alone, difficulty"] == 0
+    assert out["half unknown"] == 12  # six answered, all without limitation, prorated
+    assert np.isnan(out["mostly unknown"])  # under half answered
+
+
+def test_skipped_home_items_read_as_no_barrier(layout):
+    spec = layout.raw["indicators"]["sys_environment"]
+    cols = [layout.name(s) for s in spec["sources"]]  # stairs, levels, same floor, ramp
+    frame = pd.DataFrame(
+        [[2, -1, -1, 1], [2, 1, -1, 1], [1, 3, 2, 2], [2, -8, -8, -8]], columns=cols
+    )
+    out = score_item(frame, layout, spec)
+    assert out.tolist()[:3] == [0.0, 0.0, 4.0]
+    assert np.isnan(out.iloc[3])  # one of four answered
+
+
+def test_build_uses_round_one_items_income_file_and_sample_rule(tmp_path, layout):
+    write_synthetic_nhats(tmp_path, layout, n=800, seed=3)
+    frame, flow = build(tmp_path, layout)
+    # Decedents and facility-only cases are not in the analytic sample.
+    assert flow["with_sp_interview"] < flow["sp_file_rows"]
+    # Education and gender for the continuing sample come from Round 1.
+    filled = flow["filled_from_earlier_round"]
+    assert filled["el5higstschl"] > 0.4 * flow["with_sp_interview"]
+    assert filled["r5dgender"] > 0
+    assert frame["sys_education"].isna().mean() < 0.1
+    assert frame["sex"].isna().mean() < 0.01
+    # Income comes from the 20 imputations and is equivalised for couples.
+    assert frame["income"].notna().mean() > 0.95
+    report = check(tmp_path, layout)
+    assert report.files.get("income")
+    assert "62" in report.tracker_status_values["r10status"]
+
+
+def test_income_prefers_twenty_imputations_and_equivalises(layout):
+    spec = layout.raw["indicators"]["sys_economic"]
+    frame = pd.DataFrame({layout.name(s): [10_000.0, 10_000.0] for s in spec["imputations"]})
+    for s in spec["fallback_imputations"]:
+        frame[layout.name(s)] = [99.0, 99.0]
+    frame[layout.name(spec["couple"]["source"])] = [1, 5]  # married, widowed
+    out = score_item(frame, layout, spec)
+    assert out.iloc[1] == pytest.approx(-np.log1p(10_000.0))
+    assert out.iloc[0] == pytest.approx(-np.log1p(10_000.0 / np.sqrt(2)))
+    # Without the income file, the five SP-file imputations are used.
+    frame = frame.drop(columns=[layout.name(s) for s in spec["imputations"]])
+    assert score_item(frame, layout, spec).iloc[1] == pytest.approx(-np.log1p(99.0))
