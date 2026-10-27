@@ -110,6 +110,75 @@ comparators:
       - sources: ["pc{r}walk6blks", "pc{r}up20stair", "pc{r}car20pds", "pc{r}kneel", "pc{r}bdovrhd"]
         deficit: [2]                     # 2 = could not do it
 
+  # Charlson-type index (Charlson et al. 1987) over the conditions NHATS asks
+  # about: myocardial infarction 1, heart disease (taken as heart failure) 1,
+  # diabetes 1, chronic lung disease 1, stroke 1, dementia 1, cancer 2.
+  # Hypertension, arthritis and osteoporosis carry no Charlson weight. Age is
+  # in every model as a covariate, so the index is not age-adjusted.
+  charlson_index:
+    kind: charlson
+    present: [1, 7]
+    weights:
+      "hc{r}disescn1": 1
+      "hc{r}disescn2": 1
+      "hc{r}disescn6": 1
+      "hc{r}disescn7": 1
+      "hc{r}disescn8": 1
+      "hc{r}disescn9": 1
+      "hc{r}disescn10": 2
+
+  # Functional status only: count of ADL and IADL activities reported as
+  # difficult. OPTIONAL: if these items are absent from the release the
+  # comparator is skipped and reported, never blocking the build.
+  # VERIFY every name and the difficulty codes against the NHATS codebook.
+  adl_iadl_count:
+    kind: count_present
+    optional: true
+    sources: ["sc{r}eatdif", "sc{r}bathdif", "sc{r}toildif", "sc{r}dresdif",    # ADL: eating, bathing, toileting, dressing
+              "mo{r}beddif", "mo{r}insddif", "mo{r}outdif",                    # ADL: bed, inside, outside
+              "ha{r}laundif", "ha{r}shopdif", "ha{r}mealdif", "ha{r}bankdif",  # IADL
+              "mc{r}medsdif"]                                                  # IADL: medications
+    present: [2, 3, 4]                   # assumed: 1 none, 2 a little, 3 some, 4 a lot
+
+  # Health-utility proxy: NHATS items crosswalked to the five EQ-5D-3L
+  # dimensions and valued with an additive tariff. OPTIONAL and VERIFY as above.
+  # The tariff below is the UK time trade-off tariff (Dolan 1997); CHECK EACH
+  # COEFFICIENT AGAINST THE PUBLISHED TABLE before a real run, or substitute
+  # the value set the thesis adopts. Cut-points [a, b]: below a is level 1,
+  # below b level 2, otherwise level 3.
+  qaly_proxy:
+    kind: eq5d_crosswalk
+    optional: true
+    dimensions:
+      mobility:            # could not walk six blocks / climb 20 stairs
+        sources: ["pc{r}walk6blks", "pc{r}up20stair"]
+        present: [2]
+        cuts: [1, 2]
+      self_care:           # ADL difficulty count
+        sources: ["sc{r}eatdif", "sc{r}bathdif", "sc{r}toildif", "sc{r}dresdif"]
+        present: [2, 3, 4]
+        cuts: [1, 3]
+      usual_activities:    # IADL difficulty count
+        sources: ["ha{r}laundif", "ha{r}shopdif", "ha{r}mealdif", "ha{r}bankdif"]
+        present: [2, 3, 4]
+        cuts: [1, 3]
+      pain:                # bothered by pain; pain limits activities
+        sources: ["ss{r}painbothr", "ss{r}painlmtact"]
+        present: [1]
+        cuts: [1, 2]
+      anxiety_depression:  # PHQ-2 + GAD-2 item sum, each 1 (not at all) to 4
+        sources: ["hc{r}depresan1", "hc{r}depresan2", "hc{r}depresan3", "hc{r}depresan4"]
+        sum: true
+        cuts: [6, 10]
+    tariff:
+      constant: 0.081
+      n3: 0.269
+      mobility: [0.069, 0.314]
+      self_care: [0.104, 0.214]
+      usual_activities: [0.036, 0.094]
+      pain: [0.123, 0.386]
+      anxiety_depression: [0.071, 0.236]
+
 # Outcomes from the tracker files. Event time is the midpoint of the interval
 # between the last round seen alive and the round that first reports the event.
 outcomes:

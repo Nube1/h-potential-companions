@@ -21,6 +21,9 @@ MODEL_LABELS = {
     "factor_score": "Factor score (second order)",
     "frailty_index": "Frailty index",
     "comorbidity_index": "Comorbidity count",
+    "charlson_index": "Charlson-type index",
+    "adl_iadl_count": "ADL/IADL count",
+    "qaly_proxy": "EQ-5D utility proxy",
 }
 DOMAIN_LABELS = {
     "biomedical": "Biomedical (P)",

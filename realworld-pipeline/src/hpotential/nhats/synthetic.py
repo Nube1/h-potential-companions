@@ -82,6 +82,28 @@ def write_synthetic_nhats(
         p = 1 / (1 + np.exp(-(1.0 + 1.1 * bio)))
         sp[name(f"pc{{r}}{item}")] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2))
 
+    # Function and pain, for the ADL/IADL and utility-proxy comparators.
+    for item in (
+        "sc{r}eatdif",
+        "sc{r}bathdif",
+        "sc{r}toildif",
+        "sc{r}dresdif",
+        "mo{r}beddif",
+        "mo{r}insddif",
+        "mo{r}outdif",
+        "ha{r}laundif",
+        "ha{r}shopdif",
+        "ha{r}mealdif",
+        "ha{r}bankdif",
+        "mc{r}medsdif",
+    ):
+        sp[name(item)] = _with_missing(
+            rng, _categorical(rng, -1.1 * bio - 0.3 * soc + rng.normal(0, 0.8, n), [0.9, 1.6, 2.2])
+        )
+    pain = -0.8 * bio + rng.normal(0, 0.9, n)
+    sp[name("ss{r}painbothr")] = _with_missing(rng, np.where(pain > 0.1, 1, 2))
+    sp[name("ss{r}painlmtact")] = _with_missing(rng, np.where(pain > 0.9, 1, 2))
+
     # Outcomes from a latent hazard; capability = biomedical x context.
     potential = bio + 0.4 * soc - 0.4 * sysb
     death_years = rng.exponential(1 / np.exp(-2.9 - 0.55 * potential + 0.25 * (age_band - 3)))

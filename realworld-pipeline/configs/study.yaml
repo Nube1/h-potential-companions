@@ -39,7 +39,9 @@ validation:
   bootstrap_replicates: 500
   decision_thresholds: [0.05, 0.10, 0.20]
   equity_groups: [sex, race_group]
-  comparators: [frailty_index, comorbidity_index]
+  comparators: [frailty_index, comorbidity_index, charlson_index, adl_iadl_count, qaly_proxy]
+  # Each comparator is also fitted with H added, to test incremental value.
+  incremental: true
   rejection:
     htmt_max: 0.85
     factor_correlation_max: 0.90

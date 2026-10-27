@@ -62,7 +62,10 @@ def load_run(output_dir: str | Path, cfg, data_path: str | Path | None = None) -
     return RunContext(
         cfg=cfg,
         out=out,
-        data=raw.merge(scores, on=id_col, how="inner"),
+        # Comparators in the scores file carry the pipeline's imputed values.
+        data=raw.drop(columns=[c for c in scores if c != id_col and c in raw]).merge(
+            scores, on=id_col, how="inner"
+        ),
         predictions=predictions,
         performance=pd.read_csv(out / "model_performance.csv"),
         equity=pd.read_csv(out / "equity_performance.csv"),

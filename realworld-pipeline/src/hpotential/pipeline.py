@@ -28,6 +28,35 @@ def _encoded_covariates(frame: pd.DataFrame, cfg) -> pd.DataFrame:
     return pd.get_dummies(frame[cols], columns=categorical, drop_first=True, dtype=float)
 
 
+def _impute_comparators(df: pd.DataFrame, cfg, train_idx) -> pd.DataFrame:
+    """Fill missing comparator values by chained equations fitted on the development rows.
+
+    The imputation model uses the comparators, the indicators, age and sex, and
+    never an outcome. A comparator with no values at all (skipped at ingest)
+    stays empty and its model is omitted.
+    """
+    from sklearn.experimental import enable_iterative_imputer  # noqa: F401
+    from sklearn.impute import IterativeImputer
+
+    comps = [
+        c
+        for c in cfg.raw["validation"].get("comparators", [])
+        if c in df and df[c].notna().any() and df[c].isna().any()
+    ]
+    if not comps:
+        return df
+    inds = [c for spec in cfg.indicators.values() for c in spec["indicators"]]
+    cols = [*comps, *inds, "age"]
+    Z = df[cols].apply(pd.to_numeric, errors="coerce")
+    Z["female"] = (df["sex"].astype(str).str.lower() == "female").astype(float)
+    imp = IterativeImputer(max_iter=10, random_state=cfg.seed).fit(Z.iloc[train_idx])
+    filled = pd.DataFrame(imp.transform(Z), columns=Z.columns, index=df.index)
+    df = df.copy()
+    for c in comps:
+        df[c] = df[c].fillna(filled[c])
+    return df
+
+
 def _predictor_sets(cov_cols: list[str], cfg) -> dict[str, list[str]]:
     base = [f"cov_{c}" for c in cov_cols]
     sets = {
@@ -40,6 +69,9 @@ def _predictor_sets(cov_cols: list[str], cfg) -> dict[str, list[str]]:
         sets["geometric_crf_floor"] = ["geometric_crf_floor", *base]
     for c in cfg.raw["validation"].get("comparators", []):
         sets[c] = [c, *base]
+        if cfg.raw["validation"].get("incremental"):
+            # Incremental value: the comparator model with H added.
+            sets[f"{c}_plus_h"] = [c, "geometric_crf", *base]
     return sets
 
 
@@ -59,6 +91,7 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     tr_idx, te_idx = train_test_split(
         np.arange(len(df)), test_size=val["test_fraction"], random_state=cfg.seed
     )
+    df = _impute_comparators(df, cfg, tr_idx)
     model = fit_measurement(df.iloc[tr_idx], cfg)  # outcome-blind: training rows, indicators only
     save_frozen_model(model, out / "measurement_model_frozen.json")
     alpha = cfg.raw["measurement"]["alpha"]
@@ -126,7 +159,13 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     pd.concat(equity, ignore_index=True).to_csv(out / "equity_performance.csv", index=False)
     split = np.where(np.isin(np.arange(len(analysis)), te_idx), "test", "train")
     analysis.assign(split=split)[
-        [cfg.raw["data"]["id"], "split", *domains.columns, *scores.columns]
+        [
+            cfg.raw["data"]["id"],
+            "split",
+            *domains.columns,
+            *scores.columns,
+            *[c for c in cfg.raw["validation"].get("comparators", []) if c in analysis],
+        ]
     ].to_csv(out / "participant_scores_RESTRICTED.csv", index=False)
     predictions.to_csv(out / "predictions_RESTRICTED.csv", index=False)
     audit = {

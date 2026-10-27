@@ -47,14 +47,23 @@ COMPARATORS = [
     (r"$H_{\text{potential}}$", "geometric_crf"),
     (r"\quad $H$, fixed floor (sensitivity)", "geometric_crf_floor"),
     (r"\quad Additive score (sensitivity)", "additive"),
-    ("QALY proxy", None),
+    (r"\quad Second-order factor score", "factor_score"),
+    ("QALY proxy (EQ-5D crosswalk)", "qaly_proxy"),
     ("Frailty index", "frailty_index"),
-    ("Charlson index", None),
-    ("ADL/IADL-only", None),
+    ("Charlson-type index", "charlson_index"),
+    ("ADL/IADL-only", "adl_iadl_count"),
     ("Age and comorbidity count", "comorbidity_index"),
     ("Age and sex only", "baseline"),
 ]
 DASH = r"[\,--\,]"
+# Comparators tested for incremental value: each model, then the same model with H.
+INCREMENTAL = [
+    ("Frailty index", "frailty_index"),
+    ("Charlson-type index", "charlson_index"),
+    ("Comorbidity count", "comorbidity_index"),
+    ("ADL/IADL count", "adl_iadl_count"),
+    ("QALY proxy (EQ-5D crosswalk)", "qaly_proxy"),
+]
 
 
 # ------------------------------------------------------------------ formatting
@@ -164,6 +173,17 @@ def _info_criteria(frame, spec, cols) -> tuple[float, float]:
     return -2 * ll + 2 * k, -2 * ll + k * np.log(d)
 
 
+def _loglik(frame, spec, cols) -> float:
+    """Unweighted Cox partial log-likelihood (cause-specific where death competes)."""
+    from lifelines import CoxPHFitter
+
+    use = frame[[spec["time"], spec["event"], *cols]].dropna()
+    use = use[use[spec["time"]] > 0]
+    return float(
+        CoxPHFitter().fit(use, duration_col=spec["time"], event_col=spec["event"]).log_likelihood_
+    )
+
+
 # ---------------------------------------------------------------- the export
 
 
@@ -191,7 +211,11 @@ class Export:
         self.raw = df.reset_index(drop=True)
         idc = self.cfg.raw["data"]["id"]
         scores = pd.read_csv(self.run / "participant_scores_RESTRICTED.csv")
-        self.data = self.raw.merge(scores, on=idc, how="inner", validate="one_to_one")
+        # Comparators in the scores file carry the pipeline's imputed values.
+        dup = [c for c in scores if c != idc and c in self.raw]
+        self.data = self.raw.drop(columns=dup).merge(
+            scores, on=idc, how="inner", validate="one_to_one"
+        )
         preds = pd.read_csv(self.run / "predictions_RESTRICTED.csv")
         self.test = self.data.merge(preds, on=idc, how="inner", validate="one_to_one")
         self.perf = pd.read_csv(self.run / "model_performance.csv")
@@ -371,10 +395,60 @@ class Export:
             if e_i == 0:
                 rows.append(r"\addlinespace")
         self.rows["comparison"] = "\n".join(rows) + "\n" + self._stamp_rows(5)
-        self.filled.append("tab:comparison (rows the pipeline builds)")
-        self.unfilled["tab:comparison QALY proxy, Charlson index, ADL/IADL-only"] = (
-            "these comparators are not built from the NHATS extract yet."
-        )
+        built = [lab for lab, m in COMPARATORS if m and (PRIMARY[0], m) in self.comp]
+        missing = [lab for lab, m in COMPARATORS if m and (PRIMARY[0], m) not in self.comp]
+        self.filled.append(f"tab:comparison ({len(built)} models)")
+        if missing:
+            self.unfilled["tab:comparison"] = (
+                "not in this run (optional comparator skipped at ingest, or model omitted): "
+                + "; ".join(missing)
+            )
+
+    def incremental_table(self) -> None:
+        """Each comparator model against the same model with H added.
+
+        Change in hold-out Harrell's C with a paired bootstrap interval, and a
+        likelihood-ratio test and change in AIC from nested Cox models in the
+        development split.
+        """
+        from scipy.stats import chi2
+
+        train = self.data[self.data["split"] == "train"]
+        rows, self.incr = [], {}
+        for e_i, endpoint in enumerate(PRIMARY):
+            spec = self.endpoints[endpoint]
+            rows.append(rf"\multicolumn{{5}}{{l}}{{\textit{{{NAMES[endpoint].capitalize()}}}}} \\")
+            t = self.test[spec["time"]].to_numpy()
+            ev = self.test[spec["event"]].to_numpy()
+            for label, c in INCREMENTAL:
+                cols = [f"risk__{endpoint}__{m}__{self.horizon:g}" for m in (c, f"{c}_plus_h")]
+                if not all(col in self.test for col in cols) or c not in train:
+                    rows.append(rf"{label} & {DASH} & {DASH} & {DASH} & {DASH} \\")
+                    continue
+                r0, r1 = (self.test[col].to_numpy() for col in cols)
+                dc = harrell_c(t, ev, r1) - harrell_c(t, ev, r0)
+                b = self.boot(
+                    self.test,
+                    lambda f, idx, r0=r0, r1=r1, t=t, ev=ev: (
+                        harrell_c(t[idx], ev[idx], r1[idx]) - harrell_c(t[idx], ev[idx], r0[idx])
+                    ),
+                )
+                lo, hi = _pct(2.5, 97.5, b)
+                base_cols = [c, "age", "female"]
+                lr = 2 * (
+                    _loglik(train, spec, [*base_cols, "geometric_crf"])
+                    - _loglik(train, spec, base_cols)
+                )
+                pval = float(chi2.sf(lr, 1))
+                daic = 2 - lr
+                self.incr[(endpoint, c)] = (dc, lo, hi, lr, pval, daic)
+                rows.append(
+                    rf"{label} & {_ci(dc, lo, hi, 3)} & {lr:.1f} & {_p(pval)} & {daic:.1f} \\"
+                )
+            if e_i == 0:
+                rows.append(r"\addlinespace")
+        self.rows["increment"] = "\n".join(rows) + "\n" + self._stamp_rows(5)
+        self.filled.append("tab:increment")
 
     def secondary_table(self) -> None:
         un, adj = self.hr["combined"]
@@ -628,9 +702,36 @@ class Export:
                 f"\\noindent {stamp}{body}\n\\hpinterpret\n", encoding="utf-8"
             )
             self.filled.append(f"text:{key}")
-        self.unfilled["text:increment"] = (
-            "incremental value needs models that add H to each comparator; not built yet."
-        )
+        if getattr(self, "incr", None):
+            n_sig = sum(1 for v in self.incr.values() if v[4] < 0.05)
+            dcs = [v[0] for v in self.incr.values()]
+            body = (
+                "Table~\\ref{tab:increment} adds $H_{\\text{potential}}$ to each comparator model "
+                "(with age and sex). Across endpoints and comparators the change in hold-out "
+                f"Harrell's C ranged from {min(dcs):.3f} to {max(dcs):.3f}, and the "
+                f"likelihood-ratio test had $p<0.05$ in {n_sig} of {len(self.incr)} comparisons. "
+                "The change in C uses paired bootstrap resamples of the hold-out rows; the "
+                "likelihood-ratio test and the change in AIC come from nested Cox models in the "
+                "development split, so a negative change in AIC favours adding $H$."
+            )
+            table = (
+                "\\begin{table}[htbp]\n\\centering\n"
+                "\\caption{Incremental value of $H_{\\text{potential}}$ added to each comparator model.}\n"
+                "\\label{tab:increment}\n\\footnotesize\n\\renewcommand{\\arraystretch}{1.2}\n"
+                "\\begin{tabular}{p{4.4cm} p{3.6cm} p{1.9cm} p{1.4cm} p{1.4cm}}\n\\toprule\n"
+                "\\textbf{Comparator} & \\textbf{$\\Delta$C (95\\% CI)} & "
+                "\\textbf{LR $\\chi^2$ (1 df)} & \\textbf{$p$} & \\textbf{$\\Delta$AIC} \\\\\n"
+                "\\midrule\n"
+                + self.rows["increment"]
+                + "\\bottomrule\n\\end{tabular}\n\\end{table}\n"
+            )
+            stamp = "\\hpstamp\\ " if self.synthetic else ""
+            (tdir / "increment.tex").write_text(
+                f"\\noindent {stamp}{body}\n\n{table}\\hpinterpret\n", encoding="utf-8"
+            )
+            self.filled.append("text:increment")
+        else:
+            self.unfilled["text:increment"] = "no comparator-plus-H models in this run."
 
     def _ph_numbers(self) -> dict:
         index = self.run / "figures" / "figure_index.json"
@@ -652,6 +753,7 @@ class Export:
         self.hr_table()
         self.discrimination_table()
         self.comparison_table()
+        self.incremental_table()
         self.secondary_table()
         if internal:
             self.internal_table()

@@ -76,9 +76,22 @@ class Layout:
             names.add(self.name(spec["source"]))
         for block in ("indicators", "comparators"):
             for spec in self.raw[block].values():
-                names |= {self.name(s) for s in _sources(spec)}
+                if not spec.get("optional"):
+                    names |= {self.name(s) for s in _sources(spec)}
         names |= {self.name(s) for s in self.raw.get("conditions", {}).values()}
         return sorted(names)
+
+    def optional_variables(self) -> dict[str, list[str]]:
+        """Source variables of optional comparators, by comparator.
+
+        An optional comparator whose variables are absent from the release is
+        skipped and reported; it never blocks the build.
+        """
+        return {
+            name: sorted({self.name(s) for s in _sources(spec)})
+            for name, spec in self.raw["comparators"].items()
+            if spec.get("optional")
+        }
 
     def tracker_variables(self, latest: int) -> list[str]:
         status = self.raw["outcomes"]["mortality"]["status"]
@@ -95,6 +108,10 @@ def _sources(spec: dict) -> list[str]:
         return [spec["source"]]
     if "sources" in spec:
         return list(spec["sources"])
+    if "weights" in spec:  # charlson
+        return list(spec["weights"])
+    if "dimensions" in spec:  # eq5d_crosswalk
+        return [s for d in spec["dimensions"].values() for s in d["sources"]]
     return [s for g in spec.get("groups", []) for s in g["sources"]]
 
 
@@ -161,6 +178,7 @@ class CheckReport:
     missing_variables: dict[str, list[str]] = field(default_factory=dict)
     unexpected_codes: dict[str, list[float]] = field(default_factory=dict)
     rows: dict[str, int] = field(default_factory=dict)
+    optional_missing: dict[str, list[str]] = field(default_factory=dict)
 
     @property
     def ok(self) -> bool:
@@ -174,6 +192,7 @@ class CheckReport:
             "missing_variables": self.missing_variables,
             "unexpected_codes": {k: v[:20] for k, v in self.unexpected_codes.items()},
             "rows": self.rows,
+            "optional_comparators_missing_variables": self.optional_missing,
         }
 
 
@@ -198,6 +217,10 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
         need = layout.baseline_variables()
         have = available_columns(sp)
         report.missing_variables["sp"] = [v for v in need if v not in have]
+        for comp, names in layout.optional_variables().items():
+            gone = [v for v in names if v not in have]
+            if gone:
+                report.optional_missing[comp] = gone
         frame = read_table(sp, [v for v in need if v in have])
         report.rows["sp"] = len(frame)
         report.unexpected_codes.update(_unexpected_codes(frame, layout))
@@ -310,7 +333,61 @@ def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
             )
         all_flags = pd.concat(flags, axis=1)
         return _prorated(all_flags, "mean")
+    if kind == "charlson":
+        # Weighted sum of conditions present (Charlson et al. 1987), prorated
+        # over the weight observed when some items are missing.
+        w = pd.Series({layout.name(s): float(v) for s, v in spec["weights"].items()})
+        yes = items.isin([float(v) for v in spec["present"]]).astype(float).where(items.notna())
+        seen = (yes.notna() * w).sum(axis=1)
+        score = (yes.fillna(0) * w).sum(axis=1) * w.sum() / seen.replace(0, np.nan)
+        return score.where(seen >= MIN_OBSERVED_SHARE * w.sum())
+    if kind == "eq5d_crosswalk":
+        return eq5d_crosswalk(frame, layout, spec)
     raise ValueError(f"Unknown indicator kind: {kind}")
+
+
+def eq5d_levels(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.DataFrame:
+    """EQ-5D-3L levels (1 to 3) for each dimension from NHATS items.
+
+    Each dimension counts its items showing a problem (``present`` codes), or
+    sums the item values when ``sum: true``, prorated over the items answered
+    as for the other indicators, and maps the result to a level by two
+    cut-points: below the first is level 1, below the second level 2,
+    otherwise level 3. A dimension with too few items answered is missing.
+    """
+    levels = {}
+    for dim, d in spec["dimensions"].items():
+        items = _items(frame, layout, d["sources"])
+        if d.get("sum"):
+            value = _prorated(items, "sum")
+        else:
+            yes = items.isin([float(v) for v in d["present"]]).astype(float).where(items.notna())
+            value = _prorated(yes, "sum")
+        a, b = d["cuts"]
+        lvl = np.where(value >= b, 3.0, np.where(value >= a, 2.0, 1.0))
+        levels[dim] = pd.Series(lvl, index=frame.index).where(value.notna())
+    return pd.DataFrame(levels)
+
+
+def eq5d_crosswalk(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
+    """A health-utility proxy: crosswalked EQ-5D-3L levels valued by an additive tariff.
+
+    utility = 1 - constant (any level above 1) - sum of dimension decrements
+              - N3 (any level 3)
+    The tariff is declared in the layout and must be checked against its source.
+    """
+    lv = eq5d_levels(frame, layout, spec)
+    tar = spec["tariff"]
+    dec = pd.Series(0.0, index=lv.index)
+    for dim in lv:
+        l2, l3 = tar[dim]
+        dec += np.where(lv[dim] == 2, l2, 0.0) + np.where(lv[dim] == 3, l3, 0.0)
+    any_problem = (lv > 1).any(axis=1)
+    any_three = (lv == 3).any(axis=1)
+    util = (
+        1 - np.where(any_problem, tar["constant"], 0.0) - dec - np.where(any_three, tar["n3"], 0.0)
+    )
+    return pd.Series(util, index=lv.index).where(lv.notna().all(axis=1))
 
 
 def _outcome_times(
@@ -344,7 +421,11 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     if not report.ok:
         raise ValueError("NHATS layout check failed: " + json.dumps(report.to_dict(), indent=2))
     pid = layout.name(layout.raw["ids"]["person"])
-    sp = read_table(Path(report.files["sp"]), layout.baseline_variables()).set_index(pid)
+    have = available_columns(Path(report.files["sp"]))
+    optional = {v for names in layout.optional_variables().values() for v in names if v in have}
+    sp = read_table(
+        Path(report.files["sp"]), sorted(set(layout.baseline_variables()) | optional)
+    ).set_index(pid)
     flow = {"sp_file_rows": len(sp)}
 
     out = pd.DataFrame(index=sp.index)
@@ -358,8 +439,16 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
         out[name] = x.map({float(k): v for k, v in spec["map"].items()}) if "map" in spec else x
     for name, spec in layout.raw["indicators"].items():
         out[name] = score_item(sp, layout, spec)
+    skipped = {}
     for name, spec in layout.raw["comparators"].items():
+        absent = [layout.name(s) for s in _sources(spec) if layout.name(s) not in sp]
+        if absent:  # only optional comparators can get here; check() guards the rest
+            out[name] = np.nan
+            skipped[name] = absent
+            continue
         out[name] = score_item(sp, layout, spec)
+    if skipped:
+        flow["comparators_skipped"] = {k: f"{len(v)} variables absent" for k, v in skipped.items()}
     for name, src in layout.raw.get("conditions", {}).items():
         x = _clean(sp[layout.name(src)], layout.special_missing)
         out[f"cond_{name}"] = x.isin([1.0, 7.0]).astype(float).where(x.notna())
