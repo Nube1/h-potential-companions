@@ -7,3 +7,13 @@
   hparrow/.style={-{Stealth[length=2.2mm]}, thick},
   hpdash/.style={dashed, thick},
 }
+% Diagrams are laid out at a 10 pt base size (as in their standalone test
+% builds); this group-local switch keeps their text inside the boxes in the
+% 12 pt thesis.
+\newcommand{\hpdiagramsizes}{%
+  \renewcommand\normalsize{\fontsize{10}{12}\selectfont}%
+  \renewcommand\small{\fontsize{9}{11}\selectfont}%
+  \renewcommand\footnotesize{\fontsize{8}{9.5}\selectfont}%
+  \renewcommand\scriptsize{\fontsize{7}{8}\selectfont}%
+  \renewcommand\tiny{\fontsize{5}{6}\selectfont}%
+  \normalsize}
