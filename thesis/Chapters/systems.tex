@@ -115,8 +115,11 @@ Medicaid, the price of care, the design of housing and the law. Each level
 acts on the ones inside it, and in the long run the inner levels act back, as
 when the needs of an ageing population shape the services built for it.
 
-\paragraph{What is endogenous and what is given.} The thesis treats the first
-two levels and part of the third as inside the system. A person's chronic
+\paragraph{What is endogenous and what is given.} A part of a system is
+endogenous when the analysis explains it from other parts of the system, and
+given (or exogenous) when the analysis takes it as fixed from outside. The
+thesis treats the first two levels and part of the third as inside the
+system. A person's chronic
 conditions, function, cognition and mood make up Biomedical Potential. Their
 participation in activities, the size of their network and their means of
 staying in contact make up Social Modifiers. Their income, education, the
@@ -164,7 +167,11 @@ independent. It assumes they are distinct, which is a weaker claim and one
 that the measurement model of Chapter~\ref{ch:methods} tests by asking whether
 a correlated three-domain structure fits better than a single factor.
 
-\paragraph{The interface that couples the components.} The realisation
+\paragraph{The interface that couples the components.} The three domains
+have to be combined into one statement of how much a person can do, and the
+rule that combines them decides whether strength in one domain can make up for
+weakness in another. The expression below is that rule. It is given here only
+to show its shape; Chapter~\ref{chap:crf} derives it. The realisation
 function of Chapter~\ref{chap:crf},
 \[
 H(P,S,R)=P\,S^{\alpha}R^{1-\alpha},\qquad R=1-B,
@@ -250,6 +257,115 @@ loses them through death, moves and withdrawal; savings rise with income and
 fall with spending on care. The three domains share flows, which is the source
 of the feedback set out in Section~\ref{sec:sys-loops}. Spending on care is an
 outflow from savings and an inflow to biomedical capacity at once.
+
+Figure~\ref{fig:sys-stocks} draws the biomedical part of this account in the
+standard notation of system dynamics. Capacity is the stock, drawn as a box.
+Three inflows fill it and two outflows drain it, each drawn as a double-line
+pipe with a valve that sets its rate. Realised health leaves the stock towards
+daily life through a further valve. The other two domains appear as the hands
+on the valves, not as stocks in the drawing: systemic burden narrows the
+treatment valve, because high costs and barriers delay or prevent care, and
+social enablement and structural freedom, $R=1-B$, set how much of the
+capacity reaches daily life. The figure therefore shows in one place the
+distinction the realisation function rests on: $P$ is how much is in the
+stock, while $S$ and $R$ decide how much of it flows out as realised
+capability.
+
+\begin{figure}[htbp]
+\centering
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  stock/.style={draw, very thick, fill=black!18, align=center, font=\small,
+                minimum width=3.0cm, minimum height=2.3cm},
+  pipe/.style={double, double distance=2.4pt, line width=0.7pt,
+               -{Implies[length=2.6mm]}},
+  sink/.style={cloud, cloud puffs=9, draw, fill=white, minimum width=1.2cm,
+               minimum height=0.8cm, font=\scriptsize, align=center},
+  valve/.pic={\draw[fill=black!45] (-0.17,0.21) -- (0.17,-0.21) -- (0.17,0.21)
+              -- (-0.17,-0.21) -- cycle;},
+  info/.style={-{Stealth[length=1.8mm]}, dashed, thin},
+  flab/.style={font=\footnotesize, align=center, fill=white, inner sep=1pt},
+  dom/.style={hpbox, minimum height=0.9cm, text width=2.3cm, font=\footnotesize}
+]
+% the stock
+\node[stock] (K) at (0,0) {Health capacity\\(Biomedical\\Potential, $P$)};
+% inflows from the left
+\node[sink] (c1) at (-5.6,1.7) {};
+\node[sink] (c2) at (-5.6,0) {};
+\node[sink] (c3) at (-5.6,-1.7) {};
+\draw[pipe] (c1.east) -- ($(K.west)+(0,0.7)$);
+\draw[pipe] (c2.east) -- (K.west);
+\draw[pipe] (c3.east) -- ($(K.west)+(0,-0.7)$);
+\coordinate (v1) at ($(c1.east)!0.5!($(K.west)+(0,0.7)$)$);
+\coordinate (v2) at ($(c2.east)!0.5!(K.west)$);
+\coordinate (v3) at ($(c3.east)!0.5!($(K.west)+(0,-0.7)$)$);
+\pic at (v1) {valve}; \pic at (v2) {valve}; \pic at (v3) {valve};
+\node[flab, anchor=east] at ($(v1)+(-0.3,0.45)$) {Treatment};
+\node[flab, above=2.5mm of v2] {Recovery};
+\node[flab, anchor=north] at ($(v3)+(0,-0.35)$) {Rehabilitation};
+% outflows downwards
+\node[sink] (d1) at (-0.8,-3.6) {};
+\node[sink] (d2) at (0.8,-3.6) {};
+\draw[pipe] ($(K.south)+(-0.8,0)$) -- (d1.north);
+\draw[pipe] ($(K.south)+(0.8,0)$) -- (d2.north);
+\coordinate (w1) at ($($(K.south)+(-0.8,0)$)!0.5!(d1.north)$);
+\coordinate (w2) at ($($(K.south)+(0.8,0)$)!0.5!(d2.north)$);
+\pic at (w1) {valve}; \pic at (w2) {valve};
+\node[flab, left=3mm of w1] {Disease};
+\node[flab, right=3mm of w2] {Decline};
+% realised health out to daily life
+\node[hpbox, text width=1.7cm] (L) at (5.6,0) {Daily life:\\activity\\and roles};
+\draw[pipe] (K.east) -- (L.west);
+\coordinate (vh) at ($(K.east)!0.5!(L.west)$);
+\pic at (vh) {valve};
+\node[flab, below=2.5mm of vh] {Realised\\health $H$};
+% domains acting on valves
+\node[dom] (B) at (-1.6,3.3) {Systemic\\burden $B$};
+\node[dom] (S) at (5.0,3.3) {Social\\enablement $S$};
+\draw[info] (B.west) -| ($(v1)+(0,0.25)$);
+\draw[info] (B.east) -| ($(vh)+(-0.08,0.25)$);
+\node[flab, below=1pt] at (1.25,3.3) {via $R=1-B$};
+\draw[info] (S.south) -- ($(vh)+(0.1,0.25)$);
+% key
+\begin{scope}[shift={(-5.2,-4.7)}]
+  \draw[very thick, fill=black!18] (0,-0.2) rectangle (0.5,0.2);
+  \node[hpnote, anchor=west] at (0.6,0) {stock};
+  \draw[pipe] (1.8,0) -- (2.7,0);
+  \node[hpnote, anchor=west] at (2.8,0) {flow};
+  \pic at (4.1,0) {valve};
+  \node[hpnote, anchor=west] at (4.4,0) {valve: sets the rate of a flow};
+  \node[sink, minimum width=0.8cm, minimum height=0.5cm] at (0.25,-0.75) {};
+  \node[hpnote, anchor=west] at (0.75,-0.75) {source or sink outside the boundary};
+  \draw[info] (5.9,-0.75) -- (6.6,-0.75);
+  \node[hpnote, anchor=west] at (6.7,-0.75) {a domain setting a valve};
+\end{scope}
+\end{tikzpicture}}
+\caption[Capacity as a stock with inflows, outflows and valves]{Capacity as a
+stock, drawn from the account in the text and not estimated. The box is the
+stock of biomedical capacity; double-line arrows are flows; the bow-tie valve
+on each flow marks the point at which its rate is set; clouds are sources and
+sinks that lie outside the boundary of Section~\ref{sec:sys-boundary}. Dashed
+single-line arrows show a domain setting a valve: systemic burden $B$ sets the
+treatment inflow and, through structural freedom $R=1-B$, the flow of realised
+health $H$; social enablement $S$ also sets that flow. Disease and decline are
+the flows that deplete the stock. Realised health is the rate at which the
+stock yields activity in daily life; in the static model it does not deplete
+the stock, although Section~\ref{sec:sys-stocks} describes how lost activity
+can draw the stock down over time.}
+\label{fig:sys-stocks}
+\end{figure}
+
+A haematologist works with a stock of this kind every day. The plasma level of
+a clotting factor in a person with haemophilia is a stock: an infusion of
+factor concentrate is an inflow, clearance from the circulation is an outflow,
+and the trough level before the next dose reflects the balance of the two over
+the dosing interval. A single factor assay reads the level of that stock at
+one moment, as a baseline H-potential score reads the level of capacity at
+one interview. The parallel holds for the structure of the account. It breaks
+down in two places. A factor level is measured directly by an assay against a
+reference standard, while capacity is estimated from several indicators that
+each reflect it imperfectly. And the time scale differs: a factor level moves
+over hours and days, while capacity moves over months and years.
 
 \paragraph{Delays.} Between a change in one part of the system and its effect
 on another there is usually a delay, and delays shape what a single
@@ -500,8 +616,12 @@ claim to move that level. It offers a way of measuring progress if someone
 else does.
 
 \paragraph{Why the weakest domain binds.} The realisation function adds a
-second, more formal, answer to the question of where to act. For the primary
-form, the gradients of Chapter~\ref{chap:crf} are
+second, more formal, answer to the question of where to act. The two
+expressions below give the gain in realised capability from a small rise in
+each contextual domain, with everything else held where it is. A planner
+choosing between a programme that raises social enablement and one that
+lowers systemic burden would compare exactly these two quantities. For the
+primary form, the gradients of Chapter~\ref{chap:crf} are
 \[
 \frac{\partial H}{\partial S}=\alpha\,\frac{H}{S},
 \qquad
@@ -701,6 +821,36 @@ stage writes tables and figures into the thesis from the analysis outputs,
 with counts below 11 suppressed. Chapter~\ref{ch:methods} specifies each stage
 in full; the point here is their arrangement.
 
+\paragraph{The stages in laboratory terms.} Several of these stages have a
+direct counterpart in laboratory practice, and stating them may help a reader
+from the laboratory follow the rest of the chapter. A factor model estimates a
+quantity that cannot be observed directly, here each domain, from several
+indicators that each reflect it in part. An analyte concentration is inferred
+from an assay signal through a calibration in the same way, and a factor
+loading, the weight that links an indicator to its domain, says how strongly
+that indicator tracks the domain, as a sensitive assay tracks its analyte.
+Multiple imputation by chained equations fills each missing indicator by
+predicting it from the others, and repeats the fill several times so that the
+uncertainty of the fill is carried into the results; a laboratory has no exact
+counterpart, since it repeats a measurement rather than predicting one. The
+survival stage uses Cox models, familiar from cohort studies, with people lost
+to follow-up treated as censored. Its cause-specific models handle competing
+risks: a death before any admission prevents that admission from being seen,
+as the death of a trial participant prevents the later event of interest from
+being recorded. In the validation stage, discrimination is what the area under
+an ROC curve measures for a diagnostic test, the ability to rank people who
+have the event above people who do not. Calibration is agreement between
+predicted and observed rates, checked across the range of risk as an assay is
+checked against standards of known concentration. Net benefit asks whether
+acting on the score at a chosen threshold of risk does more good than harm,
+which is the question weighed in setting a diagnostic cut-off that trades
+false positives against missed cases. The bootstrap repeats the whole
+validation on resampled data, as a validation run might be repeated on fresh
+material drawn from the same pool, and measurement invariance asks whether the
+score reads the same for the same underlying capacity in different groups, as
+an assay should give the same reading for the same concentration in different
+patient groups or laboratories.
+
 \paragraph{Requirements.} A requirement is a statement of what the system
 must do, written so that it can be checked. The pipeline's requirements come
 from two sources. Some follow from the theory: that outcomes never enter
@@ -787,6 +937,19 @@ If the pipeline fails verification, its validation results describe an object
 other than the one specified, and they cannot be read as evidence about the
 construct.
 
+A laboratory draws the same line when it brings in a new analyser or method.
+It verifies that the analyser reproduces the manufacturer's specification for
+precision, accuracy and linearity in its own hands, and it validates that the
+method is fit for the clinical use intended, for instance that its reference
+range and decision limits suit the patients it will serve. An analyser can
+pass verification and still be unsuitable for a given clinical question. The
+parallel has one limit. A laboratory verifies against a specification that a
+manufacturer established and documented independently. Here the author of the
+pipeline also wrote its specification, so the checks against the NHATS
+documents in Appendix~\ref{app:datachecks}, which come from outside the
+thesis, carry part of the weight that a manufacturer's documentation carries
+in the laboratory.
+
 The thesis keeps the two apart. Verification is carried by two appendices.
 Appendix~\ref{app:verification} records a suite in which each numbered result
 that can be checked by computation is asserted by a test named for it, and the
@@ -826,25 +989,42 @@ how often each failure occurs in pipelines of this kind, and numbers made up to
 fill the columns would give a false impression of precision. It lists them
 instead.
 
+The method will be familiar from laboratory risk management, where quality
+systems apply failure mode and effects analysis to the steps of the testing
+process, from the request and the collection of a sample to the release of a
+report. The pipeline can be read in the same three phases. The build stages,
+which assemble and code the data, play the part of the pre-analytical phase;
+the measurement, scoring and survival stages are the analytical phase; and the
+export stage, which writes the numbers that readers see, is the
+post-analytical phase. The five errors actually found here all sat in the
+first phase, before any model was fitted.
+
 Table~\ref{tab:sys-fmea} sets out ten failure modes. The first five are real.
 Each is an error that was present in the pipeline and was caught by the checks
 of Appendix~\ref{app:datachecks} before any analysis of NHATS data. The last
 five are failure modes at the level of design, which the thesis guards
 against by construction.
 
-\begin{table}[htbp]
-\centering
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{p{3.2cm} p{3.6cm} p{3.4cm} p{3.6cm}}
 \caption{Failure modes of the measuring system. The first five rows are errors
 found in the pipeline and corrected before analysis
 (Appendix~\ref{app:datachecks}); the last five are design-level failure modes
-the thesis guards against.}
-\label{tab:sys-fmea}
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{p{3.2cm} p{3.6cm} p{3.4cm} p{3.6cm}}
+the thesis guards against.}\label{tab:sys-fmea}\\
 \toprule
 \textbf{Failure mode} & \textbf{Effect} & \textbf{How detected} & \textbf{Control} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Failure mode} & \textbf{Effect} & \textbf{How detected} & \textbf{Control} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
 Activity codes read as a scale of rising difficulty & Code~2, no difficulty, counted as a limitation; function indicator and two comparators partly inverted & Codes compared with the User Guide's definitions of derived variables & Codes read as documented; a test asserts that code~2 counts as no limitation \\
 \addlinespace
 Education and gender missing by design for continuing members & A systemic indicator imputed for every continuing member of the cohort & Crosswalk shows these items are asked only at a first interview & Filled from the Round~1 file; a test asserts the fill \\
@@ -865,8 +1045,8 @@ Small counts published & Participants identifiable & Export stage checks every c
 \addlinespace
 Misuse of the score & Care withheld, or a low score read as locating its cause & Not detectable inside the pipeline & Domain profile reported with the score; score not to be the sole basis for denial or triage; explanation and appeal (Section~\ref{sec:sys-control}) \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
+}
 
 \paragraph{What the real failures share.} The five errors in the upper half of
 Table~\ref{tab:sys-fmea} have one feature in common, and it is the reason they
@@ -906,6 +1086,14 @@ independent check of the data layer. The defence against a common cause has
 to sit at the common cause itself, which is why the layout file cites a source
 for every entry and why each correction has its own test.
 
+A laboratory meets the same problem with a calibrator. One faulty calibrator
+affects every result run on it, across every patient and every analyte it
+calibrates, and comparing two results that share it will not show the fault,
+because both carry the same bias. The fault is found only by a check that does
+not share the calibrator, such as control material whose values were assigned
+independently. The layout file is the calibrator of this pipeline, and the
+documentary check against NHATS is the independent material.
+
 There is a reason the layout file is a single point nonetheless. The
 alternative, declaring names and codes in each script that uses them, would
 remove the common cause and replace it with many separate chances to make the
@@ -933,6 +1121,19 @@ governance rule on use catches, or at least forbids, the misuse that no part
 of the pipeline can see. The latent conditions in Reason's sense are the
 errors in the layout that sit unnoticed until data run through them; the five
 caught here were latent conditions of exactly that kind.
+
+Laboratories build their quality systems on the same principle. Internal
+quality control runs control material with every batch and catches drift or
+error within the laboratory's own runs. External quality assessment sends the
+same samples to many laboratories and catches a bias that the laboratory's own
+controls share and so cannot see. Neither layer replaces the other. In the
+pipeline, the regression tests, the pre-build check and the verification suite
+play the part of internal quality control. The nearest counterpart to external
+quality assessment would be an independent group rebuilding the analytic file
+from the NHATS public-use files and comparing results, and the thesis does not
+report such a comparison. The documentary check against NHATS is external in
+its reference, but it was carried out within this study, so it lacks the
+independence of a scheme that compares many laboratories.
 
 \paragraph{Tight coupling.} \citet{perrow_1984} argued that some systems will
 fail however carefully they are run, because their parts are tightly coupled,
@@ -990,6 +1191,77 @@ acting on a population could use the distribution of domain scores to decide
 where to spend a budget and which eligibility rules to set. Above all three
 sit the researchers who maintain the model and decide when it must be
 recalibrated.
+
+Figure~\ref{fig:sys-control} draws this control structure. The population
+and the care system form the controlled process at the bottom. The three
+controllers above it act on the process through the control actions marked on
+the downward arrows, and learn what their actions did through the feedback on
+the upward arrows, which carries the score, the domain profile and observed
+outcomes. The model maintainers sit above the controllers: they set the rules
+for using the score and recalibrate it, and they learn whether the rules hold
+through monitoring of the process, which reaches them only after years. The
+line style of each feedback path marks its delay.
+
+\begin{figure}[htbp]
+\centering
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  ctl/.style={hpbox, text width=2.5cm},
+  act/.style={hparrow},
+  fbk/.style={hparrow},
+  lab/.style={font=\footnotesize, align=flush left, text width=1.95cm, inner sep=1pt}
+]
+% maintainers
+\node[hpbox, text width=5.2cm] (M) at (0,5.0)
+  {Model maintainers\\(researchers who keep and recalibrate the model)};
+% controllers
+\node[ctl] (C1) at (-4.2,2.2) {Clinician\\(one person)};
+\node[ctl] (C2) at (0,2.2) {Programme manager\\(a caseload)};
+\node[ctl] (C3) at (4.2,2.2) {Policy maker\\(a population)};
+\begin{scope}[on background layer]
+\node[draw, dotted, thick, rounded corners=4pt, inner sep=6pt,
+      fit=(C1)(C2)(C3)] (CC) {};
+\end{scope}
+\node[hpnote, anchor=south west] at (CC.north west) {Controllers};
+% controlled process
+\node[hpkey, text width=10.6cm] (P) at (0,-2.5)
+  {Controlled process: the population and the care system\\
+   (domains, needs, services reached, outcomes)};
+% maintainers to controllers
+\draw[act] (M.south) -- node[font=\footnotesize, right, align=left]
+  {rules for use;\\recalibration} (CC.north -| M.south);
+% control actions and feedback for each controller
+\foreach \c/\x/\a/\f/\s in {
+  C1/-4.2/{Referral, review, care plan}/{One person;\\weeks to\\months}/solid,
+  C2/0/{Outreach order, services offered}/{Caseload;\\months}/dashed,
+  C3/4.2/{Budget, eligibility rules}/{Population surveys;\\a year or more}/dashed}{
+  \draw[act] (\x-0.55,1.55) -- (\x-0.55,-1.8);
+  \node[lab, anchor=east] at (\x-0.65,0.7) {\a};
+  \draw[fbk, \s] (\x+0.55,-1.8) -- (\x+0.55,1.55);
+  \node[lab, anchor=west] at (\x+0.65,-0.9) {\f};
+}
+% monitoring feedback to maintainers
+\draw[fbk, dashed] (P.east) -- (6.9,-2.5) |- (M.east);
+\node[font=\footnotesize, align=center, text width=3.6cm, anchor=south]
+  at (4.75,5.0) {monitoring: calibration and drift by subgroup; years};
+% key
+\begin{scope}[shift={(-5.6,-4.1)}]
+  \draw[hparrow] (0,0) -- (0.8,0);
+  \node[hpnote, anchor=west] at (0.9,0) {control action, or feedback within weeks};
+  \draw[hparrow, dashed] (6.4,0) -- (7.2,0);
+  \node[hpnote, anchor=west] at (7.3,0) {feedback with a delay of months or more};
+\end{scope}
+\end{tikzpicture}}
+\caption[The control structure of a score in use]{The control structure of an
+H-potential score in use, drawn in the manner of \citet{leveson_2011} and
+describing possible use outside the present validation. Downward arrows are
+control actions; upward arrows are feedback, which carries the score, the
+domain profile and observed outcomes back to each controller. Solid upward
+arrows mark feedback that returns within weeks; dashed arrows mark feedback
+delayed by months or years. The delays stated are those given in the text and
+are not measured.}
+\label{fig:sys-control}
+\end{figure}
 
 \paragraph{Control actions and feedback.} Each controller receives feedback
 on a different time scale. A clinician sees one person again within weeks or
@@ -1062,6 +1334,15 @@ for automated denial, reimbursement or triage. In Leveson's terms these are
 constraints placed on the controllers, and the monitoring is the feedback that
 tells the maintainers whether the constraints hold.
 
+Laboratory practice offers a close parallel. Validating a method once does not
+end the laboratory's duty to it: quality control continues for as long as the
+method is in use, because reagents, instruments and patient populations
+change. A score in use needs the same continuing check, shown as the
+monitoring path in Figure~\ref{fig:sys-control}. The parallel is weaker in one
+respect. A control sample does not change because the laboratory acted on the
+last result, while a population whose care was changed by a score is no longer
+the population in which the score was validated.
+
 \section{The Limits of Systems Thinking}
 \label{sec:sys-limits}
 
@@ -1120,6 +1401,32 @@ does not use systems thinking as evidence for the construct. Whether the three
 domains exist, whether the indicators measure them and whether the score
 predicts outcomes are questions for the data, and nothing in this chapter
 answers them.
+
+\section*{What Is New in This Chapter}
+
+Systems thinking in health is not new: \citet{peters_2014},
+\citet{diez_roux_2011} and \citet{rutter_2017} apply it to health systems,
+disparities and interventions, and the tools used here, stocks and flows,
+feedback loops, places to intervene, failure mode and effects analysis and
+control structures, come from the sources cited in each section. This chapter
+applies those tools to a measure of individual health capacity and to the
+pipeline that computes it, and adds four things. First, it gives a feedback
+account of the three domains (Figures~\ref{fig:sys-loops}
+and~\ref{fig:sys-stocks}) that supplies a dynamic reason for the
+multiplicative realisation function of Chapter~\ref{chap:crf}; the account is
+a set of hypotheses, and Section~\ref{sec:sys-loops} names the longitudinal
+study that would test it. Second, it states eight requirements of the measuring
+system and sorts each check into verification or validation
+(Table~\ref{tab:sys-requirements}); each verification check is either a
+named test in Appendix~\ref{app:verification} or a recorded item-by-item check
+in Appendix~\ref{app:datachecks}, so a reader can confirm it by running the
+tests or repeating the check. Third, it lists the failure modes of the pipeline
+(Table~\ref{tab:sys-fmea}), five of which are errors actually found and
+corrected before analysis, each now guarded by a test. Fourth, it sets out who
+would act on the score and with what delays (Figure~\ref{fig:sys-control}),
+from which it derives the requirement that any use be monitored after
+deployment; that requirement can be checked in any deployment by asking
+whether calibration is tracked over time and by subgroup.
 
 \section{What This Chapter Settles}
 \label{sec:sys-close}
