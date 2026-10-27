@@ -43,6 +43,7 @@
 \usetikzlibrary{decorations.pathreplacing} % For braces, decorations
 \usetikzlibrary{matrix}    % For drawing matrices/grids
 \usetikzlibrary{arrows.meta} % Stealth arrow tips in the conceptual diagrams
+\usetikzlibrary{fit,backgrounds} % Group boxes in the design diagrams
 \input{Figures/diagrams/styles}  % shared diagram styles
 \usepackage{rotating}
 \usepackage{array}
@@ -120,6 +121,9 @@
 % =========================================================
 % Main Chapters
 % =========================================================
+\chapter*{A Guide for the Reader}\addcontentsline{toc}{chapter}{A Guide for the Reader}
+\input{./Chapters/readers_guide}
+
 \chapter{Introduction and Literature Review}
 \input{./Chapters/intro}
 
