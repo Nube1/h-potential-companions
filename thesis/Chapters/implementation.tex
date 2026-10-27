@@ -7,10 +7,13 @@ This chapter closes the argument. It states what the thesis produced, answers
 each aim in turn, marks the boundary of every claim and says what should be
 done next. The order runs from what the work claims to what it cannot claim.
 
-\S\ref{sec:contribution} sets out the contribution, with the axiomatic
-realisation model first, because the other three contributions exist to give it
-something to be tested against, and ends with the systems-engineering framing
-of the instrument. \S\ref{sec:aims} answers the four aims one at a time, and
+\S\ref{sec:conc-clinical} summarises the thesis in one page without
+mathematics, for clinical and laboratory readers.
+\S\ref{sec:contribution} sets out the five contributions, with the axiomatic
+realisation model first, because the three connected contributions exist to give
+it something to be tested against, and ends with the systems-engineering framing
+of the instrument. Table~\ref{tab:conc-contrib} lists all five, with what each
+adds and what evidence supports it now and later. \S\ref{sec:aims} answers the four aims one at a time, and
 marks with placeholders those answers that wait on the analysis in
 Chapters~\ref{ch:results1} and~\ref{ch:results2}. \S\ref{sec:conc-questions}
 takes the research questions of Chapter~\ref{ch:introduction} one by one and
@@ -47,25 +50,153 @@ chapter (Chapter~\ref{ch:systems}) made unavoidable. A score that is used acts
 on the people it describes. The conclusions must cover how the instrument would
 be used and watched, as well as what it measures and predicts.
 
-This thesis set out to develop, validate and evaluate a multidimensional health metric, the $H_{\text{potential}}$, that conceptualises health as future capability rather than solely as current disease status, accumulated impairment or present quality of life. It also examined whether this general framework could be translated coherently into a disease-specific context, using haemophilia as the first application. The work was motivated by a fundamental problem in contemporary health measurement: many established instruments describe important aspects of health, yet few provide an integrated account of the biological, social and structural conditions that shape an individual's capacity to maintain health over time.
+This thesis set out to develop, validate and evaluate a health measure with several dimensions, the $H_{\text{potential}}$, that treats health as future capability as well as current disease, accumulated impairment or present quality of life. It also asked whether this general framework could be carried into a single disease, using haemophilia as the first application. The work starts from a problem in health measurement: many established instruments describe important aspects of health, yet few give one account of the biological, social and structural conditions that shape a person's capacity to stay healthy over time.
 
-The thesis addressed this problem through a sequential programme of conceptual, measurement, prognostic and translational research. It began by developing a theory of health capability, proceeded to operationalise that theory as a latent measurement model, evaluated the resulting construct against future clinical outcomes, and concluded by setting out a structured pathway for adaptation to haemophilia. This sequence was deliberate. It ensured that the construct was defined independently of the outcomes it was later asked to predict and that disease-specific translation occurred only after the general framework had been established.
+The thesis took the problem in four steps: conceptual, measurement, prognostic and translational. It developed a theory of health capability, expressed that theory as a latent measurement model (a model in which a quantity that cannot be observed directly is estimated from several observed indicators), tested the resulting score against future clinical outcomes, and set out a route for adapting it to haemophilia. The order was deliberate. It kept the construct defined without reference to the outcomes it was later asked to predict, and it kept the disease-specific work until the general framework was in place.
 
-The central proposition advanced by the thesis is that health should not be understood exclusively as a static state. Current disease burden, disability, symptoms and health-related quality of life all provide valuable information, but they do not necessarily reveal the same thing as an individual's remaining capacity to sustain health, adapt to biological challenge and benefit from available social and healthcare resources. Two individuals may appear similar when assessed through conventional measures of current status while differing substantially in their future health trajectories because their physiological reserve, social support and healthcare environments differ. The $H_{\text{potential}}$ was developed to provide a formal representation of this difference.
+The central proposition of the thesis is that health is more than a static state. Current disease burden, disability, symptoms and health-related quality of life all carry useful information, but they need not show a person's remaining capacity to sustain health, adapt to biological challenge and benefit from social and healthcare resources. Two people may look alike on conventional measures of current status and still follow different health courses because their physiological reserve, social support and healthcare settings differ. The $H_{\text{potential}}$ was developed to provide a formal representation of this difference.
 
 The framework therefore treats health as a latent capability arising from three domains: Biomedical Potential, the physiological and functional resources available to the individual; Social Modifiers, the interpersonal, behavioural and material conditions that enable or constrain their use; and Systemic Burdens, the structural and health-system barriers that decide whether support and treatment can be realised. The domains can be told apart in analysis but are not independent in practice; their interaction decides how far current capacities become future health.
+
+% =====================================================================
+\section{Summary for the Clinical Reader}
+\label{sec:conc-clinical}
+% =====================================================================
+
+\noindent This section restates the thesis without mathematics. The rest of the
+chapter gives the detail and the conditions attached to each statement.
+
+\paragraph{What the thesis set out to do.} Laboratory and clinical medicine
+measure disease well. They measure less well how much capacity a person has left
+to stay healthy, which depends on the body and also on support at home and on
+whether the health system supplies care. The thesis proposed one measure of that
+capacity, the $H_{\text{potential}}$, built from three parts: Biomedical
+Potential (physical and functional reserve), Social Modifiers (support,
+behaviour and material conditions) and Systemic Burdens (barriers of access,
+cost and supply of care). It set out to define the measure, to estimate it from
+survey data in NHATS, a national study of older adults in the United States, to
+test whether it predicts death and first overnight hospital stay over five
+years, and to show how it could be adapted to haemophilia.
+
+\paragraph{What it has established.} Three things are in place before any
+result is known. The first is a definition: the three parts, what each contains
+and how they are expected to combine. The second is a rule for combining them,
+derived from stated conditions and not chosen for convenience. Its main property
+is that a severe deficit in one part, such as no access to treatment, cannot be
+made up by strength in another. The third is a test plan fixed in advance. The
+measure is built without reference to death or admission and only then tested
+against them, in the way that an assay is calibrated against reference material
+before it is used on patient samples, and is not tuned to the diagnosis it will
+later be asked to predict. For haemophilia, the thesis sets out which clinical
+indicators would represent each part and how an expert panel and a cohort study
+would check them. Code in Appendix~\ref{app:verification} checks every worked
+calculation in the text.
+
+\paragraph{What remains to be tested.} The analysis of the NHATS data is not
+complete, and this chapter marks every result that waits on it. Four questions
+are open. Do the survey items measure the three parts accurately and precisely,
+the counterparts of assay validity and precision? Does the measure give the same
+reading for the same capacity in different groups of people, as an assay should
+give the same result for the same concentration in different patient groups?
+Does it predict death and admission, and add to established measures such as
+frailty indices? Does the rule that stops one part from making up for another
+predict better than a simple sum? No haemophilia data were analysed, so the
+haemophilia version has not been tested at all.
+
+\paragraph{What it would mean if the tests are passed.} A passed test would make
+the measure fit for research in cohorts like NHATS, not for decisions about
+individual patients. Clinical use would need further steps that a laboratory
+would recognise from introducing a new assay: validation in an independent
+population, recalibration to local event rates, evidence that the measure
+performs equally across patient groups, version control, and continued checks of
+agreement between predicted and observed outcomes (\S\ref{sec:conc-use} and
+\S\ref{sec:conc-systems}). If those steps succeed, the measure would add to
+laboratory and clinical results a profile showing whether a person's limiting
+factor lies in the body, in support or in the health system. In a haemophilia
+service, a low systemic score would point to treatment supply or funding, which
+the payer can change and the treatment centre cannot. The measure would not
+replace factor assays, inhibitor testing, joint assessment or any other clinical
+measurement. It would set them beside the social and system conditions that
+decide what they mean for a person's future health.
 
 % =====================================================================
 \section{Contribution of the Thesis}
 \label{sec:contribution}
 % =====================================================================
 
-\noindent The central contribution of the thesis is a formal one: the axiomatic Capability Realisation Model and the integrated, equity-sensitive policy calculation built upon it (Chapter~\ref{chap:crf}). Three further connected contributions support and surround it: a conceptual contribution to the theory of health measurement, a methodological contribution to the development and evaluation of multidimensional health metrics, and a translational contribution concerning adaptation from a general population to a disease-specific setting. Their relationship is shown in Figure~\ref{fig:contribution_triangle}, which places the conceptual, methodological and translational contributions at the corners and the formal model they serve at the centre. A fifth contribution, the systems-engineering framing of the instrument set out in Chapter~\ref{ch:systems}, lies outside the triangle because it concerns how the whole would be specified, checked and governed in use rather than what any one part claims.
+\noindent The thesis makes five contributions. The central one is formal: the axiomatic Capability Realisation Model and the equity-sensitive policy calculation built on it (Chapter~\ref{chap:crf}). Three connected contributions support it: a conceptual contribution to the theory of health measurement, a methodological contribution to how measures with several dimensions are built and evaluated, and a translational contribution on moving such a measure from a general population to one disease. The fifth, the systems-engineering framing of the instrument set out in Chapter~\ref{ch:systems}, concerns how the whole would be specified, checked and governed in use, and not what any one part claims.
+
+Table~\ref{tab:conc-contrib} is the chapter's statement of what is new. For each
+contribution it gives what the thesis adds to earlier work, the evidence that
+supports the claim now, and the evidence still to come from the NHATS analysis.
+The second column holds only conceptual, formal and design evidence, which the
+thesis can supply without data; every empirical claim sits in the third column,
+and none of it has yet been returned. Figure~\ref{fig:contribution_triangle}
+shows how the same five contributions connect. The three connected contributions
+sit at the corners and feed the formal model at the centre, which they exist to
+test; the engineered-instrument contribution is the dotted frame around the
+whole. The figure and the table therefore count the same five things: the
+figure's ``three connected contributions'' are its corners, and the centre and
+the frame are the other two.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{1.3cm}}
+\caption{The five contributions of the thesis: what is new, the evidence that supports each now, and the evidence still to come.}\label{tab:conc-contrib}\\
+\toprule
+\textbf{Contribution} & \textbf{What is new} & \textbf{Evidence that supports it now} & \textbf{Evidence still to come from NHATS} & \textbf{Chapter} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Contribution} & \textbf{What is new} & \textbf{Evidence that supports it now} & \textbf{Evidence still to come from NHATS} & \textbf{Chapter} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
+Axiomatic Capability Realisation Model (central, formal)
+ & Derives the rule that combines the three domains from stated axioms, chief among them non-compensation, instead of asserting it; yields complementarity, an exact decomposition of a capability gap, a budget-constrained policy gradient and an equity-weighted population measure.
+ & Proofs in Chapter~\ref{chap:crf}; worked examples asserted by the code of Appendix~\ref{app:verification}; parameters frozen before the outcomes are seen.
+ & Head-to-head comparison (H6) with the additive composite and the factor score for each outcome. A loss narrows the claim to a normative proposal.
+ & \ref{chap:crf} \\
+Conceptual model of health as future capability
+ & Treats biological, social and structural conditions as parts of one measured capacity, not as covariates added after the health measure is defined.
+ & Integration of the capability, healthy-ageing, frailty and social-determinants literatures; three domains defined before any data were analysed.
+ & Fit and determinacy of the three-domain model (H1, H2); discriminant validity against health status, frailty, social vulnerability and wellbeing (primary question).
+ & \ref{ch:theory} \\
+Two-stage method separating measurement from prediction
+ & Estimates the construct without the outcomes, then tests it against them in a separate stage; judges prediction on discrimination, calibration, incremental value, net benefit and optimism-corrected performance, not on a hazard ratio alone.
+ & Pre-specified analysis plan; every stage refitted inside each bootstrap replicate; rules in this chapter for reading null and split results.
+ & Reliability; measurement invariance (H4); association and incremental value (H3); domain profiles against the total (H5).
+ & \ref{ch:methods}, \ref{ch:results1}, \ref{ch:results2} \\
+Translational route to haemophilia
+ & A method that keeps the domain structure and re-estimates the parameters: indicator mapping, modified Delphi, re-estimation, invariance testing, recalibration and external validation.
+ & Haemophilia indicator map; Delphi protocol; named tests that could reject the mapping.
+ & None beyond the domain structure to be carried over. The tests need a haemophilia cohort, which the thesis does not hold.
+ & \ref{ch:translational} \\
+Engineered instrument (systems framing)
+ & Treats the score as a built system: requirements traced to tests, a record of failure modes and their effects, and a control structure naming who acts on the score and what feedback reaches them.
+ & Requirement-to-test tracing; failure-mode record; data checks that changed the build (Appendix~\ref{app:datachecks}).
+ & Closure of the requirements that need data, such as calibration reporting and invariance. Monitoring evidence can come only from use.
+ & \ref{ch:systems} \\
+\bottomrule
+\end{longtable}
+}
 
 The formal model is taken first because the three that follow exist to give
 it something to be tested against.
 
 \subsection{The Central Contribution: an Axiomatic Capability Realisation Model}
+
+This subsection is mainly formal. In plain words, it says that the thesis did
+not choose a formula for combining the three domains and then defend it. It
+wrote down the properties any sensible combining rule must have, and showed
+that those properties leave a narrow family of rules. The property that matters
+most clinically is non-compensation: a person with no access to treatment is not
+made well by good physiology alone. A reader who takes that on trust can follow
+the rest of the chapter without the algebra below.
 
 The formal heart of the thesis is the Capability Realisation Model developed in Chapter~\ref{chap:crf}. Prior multidimensional health measures, including the earlier heuristic $(L\cdot Q)S-B$, assert an aggregation rule. The realisation model instead states the properties a realisation measure must satisfy, chief among them non-compensation, that complete social exclusion or complete structural obstruction cannot be cancelled by biomedical advantage, and derives the admissible family from those axioms. Its primary form, $H(P,S,R)=P\,S^{\alpha}R^{1-\alpha}$ with $R=1-B$, is characterised uniquely by constant contextual elasticities, and from it several results follow as theorems rather than assertions: biomedical--context complementarity, which is the mathematical form of the intersectional claim and which an additive index cannot represent; an exact decomposition of any capability gap into biomedical, social and structural parts without a residual term; a budget-constrained policy gradient that ranks marginal, model-implied gains from biomedical, social and burden-reducing interventions; and an equity-sensitive population functional whose inequality-aversion \citep{atkinson_1970} parameter makes the normative weighting of low-capability groups explicit rather than hidden. Together these turn an individual capability estimate into an integrated, distribution-aware policy calculation. The model is falsifiable: the chapter pre-specifies the head-to-head comparison, against an additive composite and the outcome-independent factor score, that would reject or narrow it, with its parameters frozen without reference to the outcomes. This is the contribution the rest of the thesis is built to test.
 
@@ -89,9 +220,9 @@ deficits cannot be purchased from another domain at any price.
 
 \begin{figure}[htbp]
 \centering
-\input{Figures/diagrams/contribution_triangle}
+\input{Figures/diagrams/conclusions_contributions}
 \captionsetup{justification=justified, width=\linewidth}
-\caption{The three connected contributions of the thesis.}
+\caption{How the five contributions connect. The three connected contributions (light boxes at the corners, joined by dashed lines because each depends on the others) feed the central formal model (dark box, heavy border), which they exist to test. The dotted outer frame is the engineered-instrument contribution, which surrounds the whole. Table~\ref{tab:conc-contrib} gives the evidence for each.}
 \label{fig:contribution_triangle}
 \end{figure}
 
@@ -112,11 +243,11 @@ first down with it.
 
 \subsection{A Method for Separating Measurement from Prediction}
 
-The second contribution is methodological. The thesis operationalises the conceptual framework as a latent construct estimated through structural equation modelling and then evaluates that construct in a separate prognostic model. This two-stage design was chosen to reduce a common form of circularity in composite measure development. Many prognostic indices are constructed by selecting variables and estimating weights according to their observed relationships with the outcome they are intended to predict. Such approaches may be entirely appropriate when the sole objective is prediction; however, they make it difficult to distinguish the measurement of a theoretical construct from the optimisation of a prediction equation, and the resulting score may predict effectively while remaining uncertain in conceptual meaning.
+The second contribution is methodological. The thesis expresses the conceptual framework as a latent construct estimated through structural equation modelling and then evaluates that construct in a separate prognostic model. Structural equation modelling estimates each unobserved domain from several observed indicators, much as an analyte concentration is inferred from an assay signal through a calibration curve. Each indicator's factor loading says how strongly it tracks the domain, as one assay may track an analyte more closely than another. The resulting factor score is each person's estimated domain or total value. This two-stage design was chosen to reduce a common form of circularity in composite measure development. Many prognostic indices are constructed by selecting variables and estimating weights according to their observed relationships with the outcome they are intended to predict. Such approaches may be entirely appropriate when the sole objective is prediction; however, they make it difficult to distinguish the measurement of a theoretical construct from the optimisation of a prediction equation, and the resulting score may predict effectively while remaining uncertain in conceptual meaning.
 
 The present thesis separates these tasks. The measurement model is estimated without using the future clinical outcome to define the construct, and its evaluation is based upon factor structure, model fit, reliability and construct validity. Only after the factor scores are derived is the $H_{\text{potential}}$ entered into survival models predicting mortality and hospitalisation. Prognostic evaluation therefore tests whether an independently defined construct possesses future predictive value. This separation strengthens interpretability: if the construct predicts future outcomes, the result is evidence that the theoretically defined latent capability has prognostic relevance; if it does not, the measurement model does not become meaningless, but rather the result indicates that the construct, as operationalised, may not support the intended prognostic use. Measurement and prediction can therefore succeed or fail independently, allowing more precise scientific conclusions.
 
-The design also provides a reusable methodological template. Researchers developing multidimensional measures in other fields can define the construct first, estimate it through an appropriate measurement model, and evaluate its predictive performance in a distinct analytical stage. A further methodological contribution lies in the breadth of the prognostic evaluation: the thesis does not treat a statistically significant hazard ratio as sufficient evidence of model value, but instead assesses association, discrimination, calibration, comparative model fit, incremental value, decision-analytic utility and optimism-corrected internal performance.
+The design also gives a template that others can reuse. Researchers developing measures with several dimensions in other fields can define the construct first, estimate it through a suitable measurement model, and evaluate its predictive performance in a separate stage. The methodological contribution also covers the breadth of the prognostic evaluation. The thesis does not treat a statistically significant hazard ratio as enough evidence that the model is useful. It assesses association, discrimination, calibration, comparative model fit, incremental value, decision-analytic utility and optimism-corrected internal performance. Discrimination is how well the score ranks people who have the event above those who do not, the counterpart of the area under an ROC curve. Calibration is agreement between predicted and observed event rates, as an assay is checked against standards of known value. Optimism correction re-runs the whole analysis on resampled data to estimate how much performance in the development sample overstates performance in new data, much as a validation run is repeated on fresh material.
 
 The template was built on one cohort in one country. Whether it transfers
 is a question about a different population, and haemophilia is where the thesis
@@ -126,7 +257,7 @@ asks it.
 
 The third contribution is the development of a structured route from a disease-independent measure to disease-specific application. Haemophilia was selected as the first translational context because improvements in treatment have transformed it from a condition dominated by early mortality into a lifelong chronic disease in which ageing, musculoskeletal function, multimorbidity, social support, treatment access and healthcare-system stability all influence long-term outcomes.
 
-The haemophilia application preserves the three latent domains while replacing general indicators with disease-relevant measures. Joint health, bleeding phenotype, functional mobility and inhibitor status represent Biomedical Potential. Access to comprehensive care, health literacy, caregiver support and self-management represent Social Modifiers. Treatment availability, supply-chain stability, financial coverage and structural barriers represent Systemic Burdens. This is not presented as a completed haemophilia instrument. No haemophilia data were analysed in the thesis, and no disease-specific factor loadings or prognostic parameters were estimated. The contribution instead lies in the translation method: indicator mapping, expert consultation through a modified Delphi process, re-estimation of the measurement model, assessment of measurement invariance \citep{meredith_1993,vandenberg_lance_2000}, recalibration and external prognostic validation. The domain structure is the element proposed for preservation; the empirical parameters must be re-estimated in the target population.
+The haemophilia application preserves the three latent domains while replacing general indicators with disease-relevant measures. Joint health, bleeding phenotype, functional mobility and inhibitor status represent Biomedical Potential. Access to comprehensive care, health literacy, caregiver support and self-management represent Social Modifiers. Treatment availability, supply-chain stability, financial coverage and structural barriers represent Systemic Burdens. This is not presented as a completed haemophilia instrument. No haemophilia data were analysed in the thesis, and no disease-specific factor loadings or prognostic parameters were estimated. The contribution instead lies in the translation method: indicator mapping, expert consultation through a modified Delphi process, re-estimation of the measurement model, assessment of measurement invariance \citep{meredith_1993,vandenberg_lance_2000}, recalibration and external prognostic validation. Measurement invariance means that the indicators relate to the domain in the same way in different groups, as an assay should give the same reading for the same concentration whatever the patient group or laboratory. The domain structure is the element proposed for preservation; the empirical parameters must be re-estimated in the target population, as a reference range set in one population is re-established before it is used in another.
 
 The three contributions so far describe the instrument at rest: what it means,
 how it is estimated, how it moves to a new population. None says what happens
@@ -207,7 +338,7 @@ depend in part on results reported elsewhere.
 
 The first aim was to develop a theoretically coherent framework for measuring health as future capability. This aim was addressed in Chapter~\ref{ch:theory}, which established the conceptual basis of the $H_{\text{potential}}$ and defined its three domains. The chapter argued that current disease status alone is insufficient to represent future health capability, and showed that the capability approach \citep{sen_1993,venkatapuram_2011}, healthy-ageing literature, frailty theory and research on social determinants can be integrated without collapsing their distinct insights. Biomedical Potential captures intrinsic physiological and functional resources; Social Modifiers capture the conditions through which those resources are supported or constrained; and Systemic Burdens capture structural barriers that limit the realisation of available health potential.
 
-The conceptual formula introduced in that chapter is a theoretical statement, not a directly observed quantity. Its purpose is to formalise the proposition that future health capability depends jointly upon biomedical, social and systemic conditions, and the transition from that formula to the latent measurement model provided the bridge from theoretical argument to empirical evaluation. That bridge is set out formally below.
+The conceptual formula introduced in that chapter is a theoretical statement, not a directly observed quantity. Its purpose is to formalise the proposition that future health capability depends jointly upon biomedical, social and systemic conditions, and the transition from that formula to the latent measurement model provided the bridge from theoretical argument to empirical evaluation. That bridge is set out formally below. In plain words, the derivation separates two things that are easy to confuse: the formula that states the theory, and the equation that produces a score for each person. The second treats each survey answer as a reading that reflects the underlying domain plus error, in the way an assay reading reflects the analyte plus analytical error, and works back from the readings to the most likely value of the domain. The final sentence of the derivation warns that a good fit statistic can be uninformative in this particular design.
 
 \begin{derivation}[From the conceptual formula to the latent measurement model]
 \label{der:bridge}
@@ -259,6 +390,12 @@ under the usual constraints, so its fit statistics can look perfect while
 saying nothing at all. A correlated-factor model and a bifactor model have to
 be fitted alongside it before anyone accepts one number standing in for three
 domains.
+
+The parallel with the laboratory holds up to a point. An assay is calibrated
+against reference material of known concentration; a latent domain has no such
+material, so its scale is fixed by convention (the variance of the general
+factor is set to one) and its meaning rests on the pattern of loadings and on
+the validity checks that follow.
 \end{reading}
 
 Aim~1 was therefore achieved at the conceptual level. The thesis produced a defined, internally coherent and empirically testable theory of health capability. The later empirical results determine how successfully the initial operationalisation represents that theory, but they do not remove the conceptual contribution itself.
@@ -268,7 +405,7 @@ theory was exposed to data.
 
 \subsection{Aim 2: Develop and Validate the Measurement Model}
 
-The second aim was to operationalise the framework as a multidimensional latent construct and evaluate its measurement properties. This measurement validation is the study's primary outcome. Chapter~\ref{ch:results1} addressed this aim through estimation of the proposed second-order structural equation model. The measurement analysis evaluated whether the observed indicators loaded onto the hypothesised first-order domains and whether those domains formed a coherent higher-order $H_{\text{potential}}$ construct, assessing model fit, reliability, convergent validity, discriminant validity and the stability of the estimated factor scores according to the pre-specified analysis plan.
+The second aim was to operationalise the framework as a multidimensional latent construct and evaluate its measurement properties. This measurement validation is the study's primary outcome. Chapter~\ref{ch:results1} addressed this aim through estimation of the proposed second-order structural equation model. The measurement analysis evaluated whether the observed indicators loaded onto the hypothesised first-order domains and whether those domains formed a coherent higher-order $H_{\text{potential}}$ construct, assessing model fit, reliability, convergent validity, discriminant validity and the stability of the estimated factor scores according to the pre-specified analysis plan. Reliability corresponds to assay precision: how much of the variation in the score reflects real differences between people and how much is noise. Convergent validity asks whether indicators meant to measure the same domain agree with one another; discriminant validity asks whether a domain can be told apart from the other domains and from existing measures, as a new assay must measure its own analyte and not a related one.
 
 \medskip
 \noindent\emph{[Placeholder: state the final verdict on Aim~2. Report whether the three-domain structure achieved acceptable fit; whether Biomedical Potential, Social Modifiers and Systemic Burdens loaded meaningfully onto the higher-order construct; whether reliability and validity criteria were met; and whether any modifications were required. Distinguish clearly between full, partial and unsupported confirmation of the measurement hypothesis.]}
@@ -291,7 +428,7 @@ different questions. The third aim asks the second of them.
 
 \subsection{Aim 3: Evaluate Prognostic Performance}
 
-The third aim was to test, as confirmatory evidence, whether the estimated $H_{\text{potential}}$ predicts clinically important future outcomes and adds value beyond established measures. Chapter~\ref{ch:results2} addressed this aim using five-year follow-up for two co-primary endpoints analysed separately, all-cause mortality and first overnight hospital stay, with a combined endpoint kept only as a sensitivity analysis. The prognostic analysis examined the association between the standardised latent score and time to event for each endpoint, first without adjustment and then after adjustment for age and sex; it also evaluated discrimination using Harrell's and Uno's concordance \citep{uno_2011} statistics, calibration through calibration-in-the-large and the calibration slope, comparative performance against established measures, and potential clinical utility through decision-curve analysis.
+The third aim was to test, as confirmatory evidence, whether the estimated $H_{\text{potential}}$ predicts clinically important future outcomes and adds value beyond established measures. Chapter~\ref{ch:results2} addressed this aim using five-year follow-up for two co-primary endpoints analysed separately, all-cause mortality and first overnight hospital stay, with a combined endpoint kept only as a sensitivity analysis. The prognostic analysis examined the association between the standardised latent score and time to event for each endpoint, first without adjustment and then after adjustment for age and sex; it also evaluated discrimination using Harrell's and Uno's concordance \citep{uno_2011} statistics, calibration through calibration-in-the-large and the calibration slope, comparative performance against established measures, and potential clinical utility through decision-curve analysis. The concordance statistics are the time-to-event counterparts of the area under an ROC curve, adjusted for people lost to follow-up (censored) before the five years end. Calibration-in-the-large asks whether the average predicted risk matches the observed rate; the calibration slope asks whether predictions are too extreme or too timid across the range. Decision-curve analysis asks whether acting on the score at a given risk threshold would do more good than harm compared with treating everyone or no one.
 
 \medskip
 \noindent\emph{[Placeholder: state the final verdict on Aim~3. Report whether a higher $H_{\text{potential}}$ was associated with lower risk of each co-primary outcome; whether the associations remained after adjustment; whether discrimination and calibration were acceptable; whether optimism correction materially reduced performance; and whether the construct was superior, non-inferior or inferior to the pre-specified comparators.]}
@@ -373,7 +510,10 @@ which the domains cannot be told apart.
 The second, tied to H2, asked whether a higher-order representation is
 warranted. Fit alone cannot answer this (Derivation~\ref{der:bridge}), so the
 answer rests on factor determinacy and on comparison with the correlated-factor
-and bifactor models. If the general factor is not determinate, the answer is no,
+and bifactor models. Factor determinacy is how closely the estimated scores can
+track the unobserved quantity, which sets a ceiling on how precisely any one
+person can be scored. A bifactor model lets every indicator reflect a general
+factor and its own domain at once, and so tests whether one total is justified. If the general factor is not determinate, the answer is no,
 and domain scores are reported rather than a total alone.
 
 \medskip
@@ -454,6 +594,14 @@ The observational design also limits causal interpretation. The $H_{\text{potent
 
 The use of estimated factor scores introduces additional uncertainty. Although the full measurement-and-prediction pipeline is repeated within the bootstrap procedure, the prognostic model still relies on an estimated rather than directly observed predictor. Future work may examine joint latent-survival models, Bayesian approaches or other methods that propagate measurement uncertainty more directly, along the lines set out below.
 
+The derivation that follows shows one consequence of using an estimated score.
+When a predictor is measured with error, its observed association with an
+outcome is weaker than the true one. Epidemiologists know this as regression
+dilution: a risk factor measured once with an imprecise assay shows a weaker
+link with later events than the same factor measured precisely. The derivation
+states how large the weakening is, in terms of the reliability of the score, and
+names the model that would avoid it.
+
 \begin{derivation}[Propagating factor-score uncertainty into the prognostic model]
 \label{der:uncertainty}
 Write $\widehat H_i=H_i+u_i$, with $E(u_i\mid H_i)=0$ and reliability
@@ -501,7 +649,10 @@ as the analysis itself.
 \end{reading}
 
 The case that matters for the conclusions of this thesis is not the one above,
-where the association survives. It is the one where it does not.
+where the association survives. It is the one where it does not. The worked
+example below shows why a negative result from an imprecise score says little,
+for the same reason that a negative result from an assay with poor precision
+cannot rule out a real difference between groups.
 
 \begin{workedexample}[conc:attenuation]{How a null result should be read at a given reliability}
 Suppose the analysis returns no association: a hazard ratio for the
@@ -713,7 +864,7 @@ Governance of that kind is a long-term requirement. The immediate work is
 narrower and empirical.
 % =====================================================================
 
-\noindent The immediate next step is external validation of the measurement and prognostic models in independent cohorts. Such validation should assess the stability of the three-domain structure, the reproducibility of factor loadings, the calibration of predicted risks and the need for population-specific recalibration. Validation across health systems is especially important because Systemic Burdens are expected to vary substantially by institutional and national context. A model developed in the United States may require material adaptation in settings characterised by different financing structures, levels of social protection or access to healthcare; these differences are not merely sources of statistical heterogeneity but are central to the theory being tested.
+\noindent The immediate next step is external validation of the measurement and prognostic models in independent cohorts. Such validation should assess the stability of the three-domain structure, the reproducibility of factor loadings, the calibration of predicted risks and the need for population-specific recalibration. Validation across health systems is especially important because Systemic Burdens are expected to vary substantially by institutional and national context. A model developed in the United States may require material adaptation in settings characterised by different financing structures, levels of social protection or access to healthcare; the theory under test is about these differences, so they cannot be treated as statistical noise.
 
 The proposed haemophilia programme represents the first disease-specific extension. The next phase should conduct the modified Delphi consultation, assemble an appropriate cohort and evaluate whether the translated indicators reproduce the intended domains. Only after satisfactory psychometric estimation should the haemophilia-specific score be tested against bleeding, joint, hospitalisation, quality-of-life and mortality outcomes. Further disease-specific adaptations could examine whether the same architecture remains useful in other chronic conditions, such as sickle cell disease, chronic kidney disease, diabetes, neurodegenerative disorders and multimorbidity, each of which involves distinct biological processes but also strong social and systemic influences.
 
@@ -854,6 +1005,15 @@ A deployed score would need at least the following monitoring.
   version that produced it, and a rule, stated in advance, for suspending use
   when calibration or invariance fails.
 \end{enumerate}
+
+\noindent Most of these duties have counterparts in laboratory quality
+management. Checking calibration drift corresponds to internal quality control;
+checking measurement drift when an item or form changes corresponds to
+verification after a change of reagent lot or method; external validation in a
+new population corresponds to external quality assessment. The parallel breaks
+down at one point. An assay does not change the analyte it measures, whereas a
+score that people act on can change the burden it records, which is why the
+action-feedback duty has no laboratory counterpart.
 
 \noindent Delay makes this harder than it looks (\S\ref{sec:sys-stocks}). The
 outcomes the score predicts arrive years after it is computed; the endpoints in

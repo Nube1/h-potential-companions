@@ -1,0 +1,13 @@
+{\hpdiagramsizes
+\begin{tikzpicture}
+\node[hpkey, text width=3.7cm] (core) at (0,0) {Axiomatic Capability Realisation Model\\[1pt]{\footnotesize(central, formal)}};
+\node[hpbox, text width=3.9cm] (c1) at (90:3.1) {Conceptual model of health as future capability};
+\node[hpbox, text width=3.9cm] (c2) at (210:3.7) {Two-stage method that separates measurement from prediction};
+\node[hpbox, text width=3.9cm] (c3) at (330:3.7) {Translational route from a disease-independent metric to disease-specific use};
+\foreach \c in {c1,c2,c3} \draw[hparrow] (\c) -- (core);
+\draw[hpdash] (c1) -- (c2) -- (c3) -- (c1);
+\node[hpnote, text width=9cm] (sys) at (0,-3.6) {Outer dotted frame: engineered instrument (requirements traced to tests, failure-mode record, control structure)};
+\begin{scope}[on background layer]
+\node[draw, dotted, very thick, rounded corners=4pt, inner sep=7pt, fit=(c1)(c2)(c3)(sys)] {};
+\end{scope}
+\end{tikzpicture}}
