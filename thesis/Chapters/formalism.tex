@@ -41,9 +41,22 @@ The study is a retrospective longitudinal secondary analysis of the National Hea
 
 The analysis has three sequential stages. Stage 1 defines and operationalises the construct from theory and the available NHATS indicators. Stage 2 evaluates competing measurement structures and derives individual domain scores and, only if supported, a higher-order score. Stage 3 evaluates prognostic relevance using outcomes that occur after the measurement point. No indicator is retained, removed or reweighted on the basis of its association with the future outcomes in Stage 3.
 
+Two terms recur in what follows. A \emph{latent} quantity is one that cannot be read directly and has to be inferred from several observed answers, in the way an analyte concentration is inferred from an assay signal through a calibration curve. An \emph{indicator} is one of those observed answers: a survey item, or a count built from several items, that is expected to move with the latent quantity.
+
+Figure~\ref{fig:methods-pipeline} shows the three stages as the steps the analysis code carries out, in the order it carries them out. The left column builds the analytic file from the NHATS public-use files and checks it; the middle column is the measurement stage; the right column fits the survival models and evaluates them. The heavily shaded steps never receive an outcome. The random split into a development set (70 per cent) and a hold-out set (30 per cent) is shaded with them because it is drawn without reference to any outcome. Every quantity in the middle column is fitted in the development set and then frozen, so the hold-out set plays the part of fresh specimens run on an assay whose calibration has already been fixed.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/methods_pipeline}
+\caption[The analysis pipeline]{The analysis pipeline. Heavy shaded boxes are steps that never see an outcome; the dashed frame marks the measurement stage, whose parameters are frozen before any outcome is analysed. The data check stops the build if any variable or response code is not declared in the layout file.}
+\label{fig:methods-pipeline}
+\end{figure}
+
 The rejected alternative is a single supervised model: regress time to death on every candidate indicator, keep those with large coefficients, and call the linear predictor a capability score. It would predict death better, and its prognostic test would be empty, since its indicators were kept because they predict death. The social and structural indicators would also be dropped wherever a biomedical indicator predicts death more strongly, and the score would drift towards a frailty index under a new name.
 
 The restriction on Stage~3 is therefore the commitment on which the design rests, so it is stated precisely enough that a breach can be detected.
+
+In plain words, the assumption below says that the measurement would have come out the same whatever the outcomes had turned out to be. The laboratory parallel is a reference interval set from a healthy reference population before an assay goes into use: it is not moved afterwards because of which patients did badly. The formal statement expresses the same rule as a property that can be tested, by shuffling the outcomes and checking that nothing in the measurement changes.
 
 \begin{assumption}[Outcome-blind construction]
 \label{ass:outcome_blind}
@@ -82,9 +95,20 @@ The primary cohort is the NHATS 2015 replenishment cohort and eligible continuin
 
 Round~5 is chosen because the 2015 replenishment brought the sample back towards the population NHATS is designed to represent, and because enough later rounds exist to follow people for five years. A single index date also gives Assumption~\ref{ass:outcome_blind} its time order: every indicator is read at or before it and every outcome after it. Indicators drawn from several rounds could postdate an early hospital stay and so partly record the outcome they are meant to predict.
 
+Figure~\ref{fig:methods-timeline} places these rounds on a calendar. NHATS first interviewed its 2011 cohort in Round~1 and has returned to the sample each year since, so Round~5 took place in 2015 and Rounds~6 to~10 in 2016 to 2020. Round~5 is the baseline: the sample was replenished in that round, and every indicator is measured in it except education for continuing members. Round~1 contributes two items, education and gender, for members of the 2011 cohort who were still taking part in 2015, because NHATS asks these only at a person's first interview. Rounds~6 to~10 supply the outcomes: deaths from the case status recorded at each round, and first overnight hospital stays from the question asked at each follow-up interview. Everything to the left of the index date belongs to the measurement stage and everything to the right to the outcome stage. The arrows at the foot of the figure state the one-way rule: frozen scores pass forward to the outcome analysis, and nothing passes back.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/methods_timeline}
+\caption[Study timeline across NHATS rounds]{Study timeline across NHATS rounds. Round~1 (2011) supplies education and gender for continuing members of the 2011 cohort; Round~5 (2015) is the baseline and index date; Rounds~6 to~10 (2016 to 2020) supply deaths and first overnight hospital stays. Outcomes never pass back into the measurement stage.}
+\label{fig:methods-timeline}
+\end{figure}
+
 The inclusion and exclusion criteria are defined before outcome modelling. Participants must have sufficient information to contribute to the pre-specified measurement model and must have ascertainable follow-up for the relevant endpoint. Missing indicator data are not treated as automatic exclusion criteria when the missing-data assumptions permit likelihood-based or imputation-based estimation. Missingness among older adults is related to health, so excluding people with gaps would remove the group a measure of constrained capability most needs to describe.
 
 NHATS is a complex probability sample. Analyses intended to describe the target population or estimate population-average associations incorporate the appropriate cohort-specific analytic weights and the survey strata and clustering variables. NHATS documentation emphasises that weights account for differential selection and nonresponse, while design variables are required for valid variance estimation \citep{nhats_cohort_2019,nhats_methods_2026}. Variances are computed by Taylor-series linearisation, or by a replication method where the design calls for one \citep{binder_1983,wolter_2007,lumley_2010}. For longitudinal outcome analyses, the weighting strategy follows the current NHATS guidance for the selected cohort and follow-up structure rather than carrying a single baseline weight forward without justification.
+
+The clinical reader will know the reasons for weights and design variables from epidemiology, though not always by these names. A survey weight says how many people in the target population each participant stands for. NHATS samples some age and racial groups at higher rates than others, so an unweighted average would describe a population composed differently from the one intended; weighting corrects this, as a prevalence estimate is adjusted when one age group was over-recruited. The strata and clusters matter for a different reason. NHATS samples people in groups drawn from the same areas, and people from one area resemble each other more than people drawn at random, as patients recruited from the same few clinics do. Such a sample carries less information than its head count suggests, and the design variables let the standard errors reflect that.
 With the cohort and the index date fixed, the three domains can be defined. The order matters: defining them afterwards would allow the data to shape the theory.
 
 \section{Conceptual Operationalisation}
@@ -100,7 +124,45 @@ The cohort section settled whose answers are used. It left open which answers co
 
 The precise NHATS variables are documented in a frozen data dictionary before final model fitting. Each variable is accompanied by its source instrument, coding, response scale, missing-value definition, expected direction, theoretical justification and proposed measurement role. Recording the expected direction first means an indicator that loads the wrong way is reported as a failure of theory, not reverse-coded.
 
+Table~\ref{tab:methods-indicators} lists the eleven indicators that result, four for Biomedical Potential, three for Social Modifiers and four for Systemic Burdens, with the NHATS items each is built from, what it records in plain words and its direction. Two points in the table need comment. First, the direction column is part of the specification: the Biomedical and Social indicators are coded so that a higher value means more capacity or more enablement, and the Systemic indicators so that a higher value means more burden. A Systemic indicator is therefore expected to correlate negatively with the other two domains, and a positive correlation would count against the theory. Second, several indicators are counts of items (conditions absent, activities managed, barriers present) rather than single questions. A count gives a wider range of values than any one yes-or-no item and so separates people better, at the cost of treating each item in it as equally important.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{>{\raggedright\arraybackslash}p{1.5cm} >{\raggedright\arraybackslash}p{2.1cm} >{\raggedright\arraybackslash}p{3.5cm} >{\raggedright\arraybackslash}p{4.4cm} >{\raggedright\arraybackslash}p{1.5cm}}
+\caption[The eleven indicators of the three domains]{The eleven indicators of the three domains, as built from NHATS Round~5. Item names follow the NHATS public-use pattern with the round number~5; ``else'' gives the source used when the first is absent. Direction: Capacity, higher means more capacity or enablement; Burden, higher means more burden.}\label{tab:methods-indicators}\\
+\toprule
+\textbf{Domain} & \textbf{Indicator} & \textbf{NHATS source items} & \textbf{What it measures} & \textbf{Direction} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Domain} & \textbf{Indicator} & \textbf{NHATS source items} & \textbf{What it measures} & \textbf{Direction} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
+Biomedical & Conditions absent & hc5disescn1 to 10 & Number of ten listed chronic conditions never reported (heart attack, heart disease, high blood pressure, arthritis, osteoporosis, diabetes, lung disease, stroke, dementia, cancer) & Capacity \\
+ & Daily function & Derived sc5, mo5, ha5 and mc5 items & Number of twelve self-care, mobility, household and medication activities done alone without difficulty & Capacity \\
+ & Cognition & cg5dwrdimmrc, cg5dwrddlyrc, cg5dclkdraw & Immediate and delayed recall of a word list (0 to 10 each) plus a clock-drawing score (0 to 5) & Capacity \\
+ & Psychological & hc5depresan1 to 4 & PHQ-2 and GAD-2 symptom items, reversed so that a higher score means fewer symptoms of depression and anxiety & Capacity \\
+\midrule
+Social & Participation & pa5vistfrfam, pa5attrelser, pa5clbmtgrac, pa5outfrenjy & Number of four activities taken part in during the last month: visiting friends or family, religious services, clubs or group activities, going out for enjoyment & Capacity \\
+ & Network & sn5dnumsn & Size of the person's named social network (0 to 5 people); not asked of proxy respondents & Capacity \\
+ & Communication & ss5hearphone, ss5convquiet, ss5seewellst, ss5glrednewp & Number of four functions managed: hearing on the telephone, hearing a conversation in a quiet room, seeing across the street, reading newspaper print & Capacity \\
+\midrule
+Systemic & Income shortfall & ia5dtoincimi1 to 20, else ia5toincim1 to 5; hh5dmarstat & Minus the mean logarithm of household income over the NHATS imputations, with couple income divided by $\sqrt2$ & Burden \\
+ & Schooling & el5higstschl, else el1higstschl & Number of nine schooling levels not completed & Burden \\
+ & Home access & ho5entrstair, ho5levelsflr, ho5homeamen1, ho5entrnramp & Number of four barriers: stairs at the entrance; more than one level; bed, kitchen and bath not all on one floor; no entrance ramp & Burden \\
+ & Care access & mc5havregdoc, mc5regdoclyr & Number of two barriers: no regular doctor; regular doctor not seen in the last year & Burden \\
+\bottomrule
+\end{longtable}
+}
+
 A critical distinction is made between \emph{reflective} and \emph{formative \citep{bollen_lennox_1991,edwards_bagozzi_2000}} measurement. Reflective indicators are treated as observable manifestations of a common latent state: changes in the latent construct are expected to alter the indicators. Formative indicators instead contribute to the construction of a domain and need not be strongly correlated. Biomedical function and cognition may plausibly support a reflective latent capacity model, whereas education, income, housing and access barriers are more naturally interpreted as determinants or components of social and structural conditions. The analysis therefore does not assume that every indicator belongs to the same reflective measurement model. The primary specification and the formative/hybrid sensitivity specification are selected and justified from substantive theory before outcome results are considered.
+
+A laboratory comparison makes the distinction concrete. Reflective indicators behave like several assays of one analyte: if the analyte concentration rises, every assay that detects it should give a higher reading, and the assays should agree with each other. Formative indicators behave more like the separate inputs to a clinical risk score, such as age, smoking and cholesterol in a cardiovascular score: together they make up the risk, but there is no reason for a smoker to be older or to have higher cholesterol, and low agreement among the inputs is not a fault.
 
 A small argument shows why the choice cannot be left to the data. If walking speed falls, a reflective reading says the underlying capacity has fallen, and grip strength and stair climbing should tend to fall with it. If income falls, a reflective reading of Systemic Burdens would expect housing quality and access to care to move with it. But a fall in income is a cause of burden, not a symptom, and nothing requires the other indicators to move at once. A reflective model would treat their weak correlations as poor measurement and push to drop them, when the theory says they are the domain. Choosing the model before fitting keeps that decision with the theory.
 
@@ -108,6 +170,9 @@ Defining three domains raises the question the rest of the thesis turns on: unde
 
 \section{Formal Mathematical Roadmap}
 \label{sec:roadmap}
+
+This section is the most mathematical in the chapter, and its conclusion can be taken without the algebra. It establishes three things: that the three domain scores carry more information than any single number made from them; that every way of combining them into one number embodies a rule about how far a strength in one domain may make up for a weakness in another; and that such rules can disagree about who is better off. A clinical reader who accepts those three points can move to Section~\ref{sec:sem}.
+
 
 The complete axiomatic development appears in
 Appendix~\ref{app:mathematical_foundations}. The ordering is deliberate:
@@ -135,6 +200,8 @@ a precise elasticity interpretation; different admissible aggregators can
 reverse rankings; and latent factors have arbitrary location and scale until
 constraints are imposed. Each result is proved and translated into ordinary
 language in the appendix.
+
+Two of the terms need a gloss. An \emph{ordinal} score orders people but its differences have no fixed size, as grade~3 on the WHO bleeding scale is worse than grade~2, while the step from grade~2 to grade~3 need not equal the step from grade~1 to grade~2. A CES (constant elasticity of substitution) function is a family of formulas for combining several quantities in which one parameter sets how readily one can stand in for another; at one end of the family the domains compensate fully, as in a sum, and at the other a person is held to their weakest domain.
 
 The ranking result sets a standard for the empirical work: if two admissible
 aggregators place two people in opposite order, that order belongs to the
@@ -175,6 +242,8 @@ measurement models below are how it is asked.
 
 The primary empirical question is whether the observed indicators support three related domains and, subsequently, whether those domains share sufficient common variance to justify a general $H_{\text{potential}}$ construct. Three competing representations are pre-specified, so that the data are not used once to choose a model and again to judge it.
 
+The tool used throughout is factor analysis. A \emph{factor} is a latent quantity inferred from what several indicators have in common, and a \emph{factor loading} says how strongly one indicator tracks the factor, as a calibration slope says how strongly an assay signal tracks the analyte concentration. A factor model states which indicators measure which factor and is then judged by how well it reproduces the correlations actually seen among the indicators.
+
 \subsection{Correlated three-domain model}
 
 The first model estimates Biomedical Potential, Social Modifiers and Systemic Burdens as correlated first-order factors. This model is the least restrictive representation of the theory because it allows the domains to be related without requiring them to be manifestations of a single general factor.
@@ -182,6 +251,9 @@ The first model estimates Biomedical Potential, Social Modifiers and Systemic Bu
 It is also the model that offers no summary score. If a single $H_{\text{potential}}$ is wanted, something stronger has to be assumed.
 
 \subsection{Second-order model}
+
+The second-order model adds one more level. It treats the three domains as themselves three measurements of a single deeper quantity, the candidate $H_{\text{potential}}$. The definition below writes this as one equation per domain. What it will show is the condition for a single summary score: the domains must all track the deeper quantity strongly.
+
 
 \begin{definition}[Second-order measurement model]
 \label{def:secondorder}
@@ -255,13 +327,15 @@ All three models still have to be estimable before they can be compared, and in 
 \section{Identification, Estimation and Model Fit}
 \label{sec:identification}
 
-Identification is assessed explicitly from the model-implied covariance structure and the imposed scale constraints. A minimum number of indicators is not treated as a mechanical guarantee of identification. The final model must also avoid empirical underidentification, negative residual variances, non-positive-definite covariance matrices and standardised loadings outside their admissible range.
+A model is \emph{identified} when the data can, in principle, fix the value of every parameter in it. The laboratory counterpart is a calibration curve with more parameters than there are standards: several curves then pass through the standards equally well, and no amount of care in running them chooses between those curves. Identification is assessed explicitly from the model-implied covariance structure and the imposed scale constraints. A minimum number of indicators is not treated as a mechanical guarantee of identification. The final model must also avoid empirical underidentification, negative residual variances, non-positive-definite covariance matrices and standardised loadings outside their admissible range.
 
 Empirical underidentification most often escapes notice. A model identified on paper can fail in a sample: if one domain's loading on the general factor is near zero, the rest may not fix the others, and estimates swing between resamples. The bootstrap of Section~\ref{sec:intval} would show this as erratic intervals for the loadings, which is why those intervals are reported.
 
 Continuous indicators are estimated using robust maximum likelihood where appropriate. Ordinal indicators are analysed using an estimator that respects their categorical response structure, such as WLSMV. The primary estimator is chosen from the final indicator types rather than declared independently of the data structure. Sensitivity analyses examine whether substantive conclusions change under an alternative appropriate estimator. Treating a short ordinal scale as continuous assumes equal distances between categories, which a survey scale does not promise.
 
 Model fit is interpreted from a combination of comparative and absolute indices, including CFI, TLI, RMSEA with confidence interval and SRMR. Conventional thresholds are treated as descriptive reference points rather than universal acceptance rules. A model is not declared valid merely because it crosses numerical cut-offs; the pattern of residuals, local fit, factor loadings, theoretical coherence and stability across plausible specifications are considered together \citep{hu_bentler_1999,kline_2015,brown_2015}.
+
+These indices summarise how far the correlations the model implies differ from those observed. The comparative fit index (CFI) and Tucker--Lewis index (TLI) compare the model with one in which the indicators are unrelated; the root mean square error of approximation (RMSEA) and the standardised root mean square residual (SRMR) measure the size of the remaining discrepancy. They serve the purpose of acceptance limits in a method validation, read with the pattern of residuals and not as a single pass mark.
 
 Modification indices are not used as an automated search procedure. Any respecification must have an a priori or substantively defensible explanation and must be reported. This is especially important in a large sample, where small and substantively unimportant departures from the model can generate statistically persuasive modification indices.
 A model that fits is not yet a model that measures the intended thing. Fit indices are silent about meaning; validity evidence is not.
@@ -271,11 +345,15 @@ A model that fits is not yet a model that measures the intended thing. Fit indic
 
 Construct validity is evaluated through convergent, discriminant and known-groups evidence. Convergent validity asks whether indicators and domains expected to be related are empirically related. Discriminant validity asks whether the proposed construct remains distinguishable from frailty, current health status and broader wellbeing. Known-groups comparisons are specified before analysis where appropriate.
 
+These terms map onto method evaluation in the laboratory. \emph{Reliability} is the counterpart of assay precision: how far repeated measurement of the same person would give the same score. \emph{Validity} is the counterpart of accuracy: whether the score measures the intended quantity rather than something else. The parallel breaks down at one point. An assay is checked for accuracy against a reference method or a certified standard, and no reference standard for health capability exists. Validity therefore rests on a pattern of agreements and disagreements with other measures, as it does for a new assay evaluated without a gold standard, where agreement with several imperfect comparators and the expected differences between known groups are the evidence available. Known-groups comparisons ask whether groups that theory expects to differ do differ on the score, and in the expected direction.
+
 Discriminant validity against frailty is the hardest test. A high correlation between Biomedical Potential and frailty is expected. The test is failed if $\zeta$ is so close to frailty that the social and structural domains add almost nothing, for then the thesis would have built a frailty measure by a longer route.
 
 Reliability is evaluated at the level appropriate to the measurement model. Internal consistency is not assumed to be meaningful for formative domains, because formative indicators need not covary. For reflective domains, composite reliability and related measures are reported with their assumptions stated. Factor determinacy and score reliability are reported for any higher-order score used at the individual level. Individual-level reliability also governs how far the hazard ratio of Section~\ref{sec:survival} is pulled towards one (Proposition~\ref{prop:attenuation}).
 
 Measurement invariance \citep{meredith_1993,vandenberg_lance_2000} is assessed across sex and across age band (80 years and over against younger) where sample size permits. Race and ethnicity and socioeconomic position enter the subgroup evaluation of score distributions, calibration and discrimination (Section~\ref{sec:equity}), where smaller groups can still be examined. Configural, loading and intercept/threshold invariance are evaluated sequentially. Where full invariance is not supported, partial invariance is considered only where it has substantive justification. A score intended to describe inequity cannot be interpreted confidently if it changes meaning across the populations being compared. An item understood differently in one group would make that group score lower at the same true level.
+
+In laboratory terms, measurement invariance asks whether an assay gives the same reading for the same concentration in different patient groups or in different laboratories. Configural invariance means the same indicators measure the same domains in each group; loading invariance, that each indicator tracks its domain equally strongly, as an assay with the same calibration slope in each laboratory; intercept invariance, that the same true level gives the same expected answer, as an assay with no constant bias between laboratories. Only with intercept invariance can mean scores be compared between groups, just as results from two laboratories can be compared directly only when neither carries a fixed bias.
 
 Once the measurement model has survived these checks, it can be used to produce a number for each participant, and the meaning of that number needs stating precisely.
 
@@ -283,6 +361,8 @@ Once the measurement model has survived these checks, it can be used to produce 
 \label{sec:scoredef}
 
 The empirical score is not expressed in years of life unless an independent calibration study establishes such a scale. The name could suggest natural units, like life expectancy; the score has none.
+
+The definition below says how one number is produced for each person from that person's answers, once the measurement model has been fitted. It is the step at which a concentration is read off a calibration curve from a sample's signal, and like that reading it comes with an uncertainty that the definition requires to be reported.
 
 \begin{definition}[Empirical $H_{\text{potential}}$ score]
 \label{def:factorscore}
@@ -337,7 +417,43 @@ The measurement half cannot say whether the construct relates to anything that h
 
 Two prospective outcomes are evaluated separately: five-year all-cause mortality and first overnight hospital stay. They are treated as distinct outcomes rather than combined into a single primary endpoint because they represent different processes. Mortality is terminal, whereas hospitalisation is a healthcare-use event influenced by disease, social context, healthcare access and practice patterns. Combined, a strong association with one could hide a weak or reversed one with the other.
 
+Table~\ref{tab:methods-outcomes} defines each outcome and each comparator, with its NHATS source and how it is timed or scored. The comparators are the existing measures against which the construct is benchmarked in Section~\ref{sec:performance}; all are built from Round~5 items alone, and none uses an outcome. The comorbidity count and the activity count are built from the same items as two of the Biomedical indicators (conditions absent and daily function), so they overlap with the construct by design; the first sensitivity analysis of Section~\ref{sec:sensitivity} tests whether any added value survives the removal of such overlap.
+
+{\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{3.8cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedright\arraybackslash}p{4.4cm}}
+\caption[Outcomes and comparators]{Outcomes and comparators. Times are measured in months from the Round~5 interview, with a five-year horizon. All comparators are built from Round~5 items only. Comparators marked optional are skipped, and the omission reported, if their items are absent from a release.}\label{tab:methods-outcomes}\\
+\toprule
+\textbf{Name} & \textbf{Definition} & \textbf{Source} & \textbf{How timed or scored} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Name} & \textbf{Definition} & \textbf{Source} & \textbf{How timed or scored} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
+\multicolumn{4}{l}{\textit{Outcomes}} \\
+Death (primary) & Death from any cause & Tracker case status, Rounds~6 to~10, codes 62 and 86 & Dated by the proxy-reported months since the last interview (code 62) or midway between the last month known alive and the month the death was recorded (code 86); censored at the last month known alive \\
+First overnight hospital stay (primary) & First overnight stay reported at a follow-up interview & hc6hosptstay to hc10hosptstay & Midway between the reporting interview and the previous answered one; death in the next interval is a competing event; after missed interviews, censored at the last answer \\
+Death or first stay (secondary) & Whichever comes first & As above & The earlier of the two times \\
+\midrule
+\multicolumn{4}{l}{\textit{Comparators (baseline only)}} \\
+Frailty index & Share of listed deficits present & Ten conditions; six physical capacity items (pc5) & Proportion from 0 to 1: a condition reported, or unable to walk six blocks, climb 20 stairs, carry 20 pounds, kneel, bend over or reach overhead \\
+Comorbidity count & Number of conditions reported & hc5disescn1 to 10 & Count from 0 to 10 \\
+Charlson-type index & Weighted condition count & Seven of the ten conditions & Weight 1 for heart attack, heart disease (taken as heart failure), diabetes, lung disease, stroke and dementia, 2 for cancer; not age-adjusted, since age is in every model \\
+Activity limitation count (optional) & Number of daily activities with a limitation & Derived sc5, mo5, ha5, mc5 items & Count from 0 to 12 \\
+Health-utility proxy (optional) & EQ-5D-3L state built from NHATS items & Mobility, self-care, activity, pain and symptom items & Each dimension placed at one of three levels and valued with the UK time trade-off tariff \\
+\bottomrule
+\end{longtable}
+}
+
 For hospitalisation, death before first hospitalisation creates a competing event. The primary association analysis uses a cause-specific hazard model \citep{prentice_1978}, with cumulative-incidence analysis and a subdistribution-hazard sensitivity analysis \citep{fine_gray_1999} used to distinguish etiological association from prediction of observed event probability. The cause-specific hazard asks how fast stays occur among people alive and not yet admitted, a question about mechanism. The cumulative incidence asks what share will have been admitted by five years given that some die first, a question about risk.
+
+A \emph{competing risk} is an event that prevents the event of interest from being seen. Death is the competing risk for hospital admission: a person who dies cannot later be admitted. The same problem arises in cohort studies of venous thrombosis in people with cancer, where death from the cancer removes people before a thrombosis can occur. The proposition below compares two ways of estimating the share admitted by a given time when death competes. It uses the simplest case, constant rates, to show that treating death as ordinary loss to follow-up always overstates that share, and that the overstatement grows as deaths become more common.
 
 \begin{proposition}[Censoring a competing risk overstates incidence]
 \label{prop:competing}
@@ -415,7 +531,16 @@ The analytic file is built by a scripted pipeline from the NHATS public-use file
 
 The reserved codes are negative integers; read as numbers, a code for ``refused'' would count as an extremely poor value and could move a domain mean or a loading. Refusing to run on an undeclared value means a change in a later NHATS release stops the build instead of passing into the scores. The restriction to people with a Round~5 sample-person interview follows from the index date: without that interview there is no baseline to score.
 
-\paragraph{Timing.} NHATS interviews are about a year apart, and the public files give the month and year of each sample-person interview and of each final case status, but not the date of death, which is restricted. Time is therefore measured in months from the Round~5 interview. A person without the event is censored at the last month at which they were known to be alive: the month of their last interview, or, where the case was reached without an interview, the month its status was set. A status that does not show the person alive, such as ``unable to locate'', does not extend follow-up. Where a month is missing from the files, the analysis falls back to whole rounds. Even with dated events many people share an event month, and every survival quantity is computed in a form that remains exact when several events fall at one time: absolute risk uses the product-limit form of the Breslow estimate, $1-\prod_t\{1-\Delta\hat\Lambda(t)\}$, rather than $1-\exp\{-\hat\Lambda(t)\}$, which understates risk when the steps are large.
+Figure~\ref{fig:methods-flow} sets out the exclusions in the order the build applies them. It starts from every sample person in the Round~5 file, keeps those with a Round~5 sample-person interview (residence codes 1, 2 and~4), then those with a positive analytic weight, then those whose follow-up status is known at Round~6 or later. The people who remain form the analytic cohort, which is split at random into the development and hold-out sets. The counts are left blank because they come from the data-processing run and are reported with the results; the figure fixes the steps, and so the order in which people leave, before any count is seen. Each exclusion is defined by a baseline or administrative field, and none by an outcome value.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/methods_flow}
+\caption[Cohort flow]{Cohort flow, in the order the build applies the exclusions. Residence codes are those of the NHATS Round~5 residence status variable. Counts are placeholders, filled from the data-processing run and reported with the results; counts below 11 are suppressed.}
+\label{fig:methods-flow}
+\end{figure}
+
+\paragraph{Timing.} NHATS interviews are about a year apart, and the public files give the month and year of each sample-person interview and of each final case status, but not the date of death, which is restricted. Time is therefore measured in months from the Round~5 interview. \emph{Censoring} is the survival-analysis term for a person whose follow-up stops before the event is seen, as with a patient lost to follow-up in a cohort study: the person contributes the time observed and no more. A person without the event is censored at the last month at which they were known to be alive: the month of their last interview, or, where the case was reached without an interview, the month its status was set. A status that does not show the person alive, such as ``unable to locate'', does not extend follow-up. Where a month is missing from the files, the analysis falls back to whole rounds. Even with dated events many people share an event month, and every survival quantity is computed in a form that remains exact when several events fall at one time: absolute risk uses the product-limit form of the Breslow estimate, $1-\prod_t\{1-\Delta\hat\Lambda(t)\}$, rather than $1-\exp\{-\hat\Lambda(t)\}$, which understates risk when the steps are large.
 
 Censoring at the last month a person was known alive avoids crediting unobserved event-free months, which would understate every hazard. The product-limit form matters because yearly interviews give large steps in the cumulative hazard. The exponential form treats each step as though spread smoothly over the interval and returns a smaller risk; the product form applies the step as it is. With small steps the two agree; with the coarse timing of NHATS they need not.
 
@@ -429,7 +554,7 @@ People in poor health are both more likely to miss interviews and more likely to
 
 \paragraph{Combined endpoint.} The secondary endpoint is the first of death or a first overnight stay, with the earlier of the two times.
 
-\paragraph{Absolute risk with a competing event.} For hospitalisation, two cause-specific Cox models are fitted, one for a first stay and one for death before a stay. The predicted five-year risk is the cumulative incidence
+\paragraph{Absolute risk with a competing event.} For hospitalisation, two cause-specific Cox models are fitted, one for a first stay and one for death before a stay. In words, the next equation adds up, month by month, the chance of a first stay in that month among people who have so far had neither a stay nor a death. It is the computing form of the cumulative incidence in Proposition~\ref{prop:competing}. The predicted five-year risk is the cumulative incidence
 \begin{equation}
 \hat F_1(\tau\mid x)=\sum_{t\le\tau}\hat S(t-\mid x)\,\Delta\hat\Lambda_1(t\mid x),\qquad
 \hat S(t\mid x)=\prod_{u\le t}\bigl\{1-\Delta\hat\Lambda_1(u\mid x)-\Delta\hat\Lambda_2(u\mid x)\bigr\},
@@ -439,7 +564,7 @@ with each step capped so that the risk stays in $[0,1]$. Observed incidence in f
 
 Equation~\eqref{eq:cif_construction} is the discrete-time form of $F_1$ in Proposition~\ref{prop:competing}: each term multiplies the chance of a first stay at $t$ by the chance of reaching $t$ free of both a stay and death. Using the same estimator for predicted and observed incidence means a gap in a calibration plot reflects the model, not a difference in method.
 
-\paragraph{Censoring in performance measures.} Calibration, the Brier score, the area under the curve and net benefit at five years need each person's status at five years, which is unknown for those censored earlier. Rather than drop them, which inflates the observed risk, the pipeline weights those with known status by the inverse of the Kaplan--Meier probability of remaining uncensored \citep{blanche_2013,steyerberg_2019}. People who had the competing event before five years are known non-cases. Calibration-in-the-large is the intercept of a logistic recalibration with the slope fixed at one, and the calibration slope comes from an unpenalised logistic fit of the outcome on the logit of predicted risk.
+\paragraph{Censoring in performance measures.} Calibration, the Brier score, the area under the curve and net benefit at five years need each person's status at five years, which is unknown for those censored earlier. Rather than drop them, which inflates the observed risk, the pipeline weights those with known status by the inverse of the Kaplan--Meier probability of remaining uncensored \citep{blanche_2013,steyerberg_2019}. People who had the competing event before five years are known non-cases. In practical terms, each person followed to five years stands in for others like them who left the study earlier, much as a survey weight lets one participant stand for several people in the population. Calibration-in-the-large is the intercept of a logistic recalibration with the slope fixed at one, and the calibration slope comes from an unpenalised logistic fit of the outcome on the logit of predicted risk.
 
 Dropping them inflates risk because early events are always kept while event-free people are kept only if followed to the end. The weighting assumes censoring is unrelated to the outcome once time is accounted for, an assumption Section~\ref{sec:missing} returns to.
 
@@ -458,6 +583,8 @@ Using the NHATS income imputations keeps income consistent with the NHATS docume
 
 The construction section produced, for each person, a time, an event type and a frozen score. What remains is the model that relates them.
 
+The Cox model is the model behind most hazard ratios reported from clinical trials and cohort studies. The definition below states it in symbols; the reading after it says what each part means, and the text then applies it.
+
 \begin{definition}[Prognostic model]
 \label{def:cox}
 For each outcome the primary model is a Cox proportional-hazards model
@@ -475,6 +602,8 @@ $\exp(\beta_H)$ for a one-standard-deviation increase is reported with a
 \end{definition}
 
 The Cox model is preferred to a parametric model because the theory says nothing about the shape of risk over time, and to a logistic model for five-year death, which would discard timing and treat early-censored people as though their status were known.
+
+A further point concerns the score that enters the model. It is an estimate with error, and error in a predictor weakens the association that can be seen. Clinical epidemiology knows this as regression dilution: a single blood pressure reading predicts stroke less strongly than a person's usual blood pressure, because the single reading is imprecise. The proposition below states the size of the effect under a simple model of the error.
 
 \begin{proposition}[Attenuation by measurement error]
 \label{prop:attenuation}
@@ -600,6 +729,8 @@ Fixing the comparators in advance commits the thesis to reporting a comparison i
 
 Discrimination is assessed using time-dependent concordance and, where appropriate, time-dependent AUC \citep{harrell_1996,uno_2011,blanche_2013}. Calibration is assessed using calibration-in-the-large and calibration slope. Decision-curve analysis is used only if a clinically meaningful decision context and threshold range can be justified. Information criteria are reported as descriptive measures of relative model fit rather than as evidence of clinical superiority.
 
+These terms map directly onto diagnostic test evaluation. \emph{Discrimination} is the ability to rank people correctly: the concordance index is the probability that, of two people, the one who has the event first had the higher predicted risk, and it equals the area under the ROC curve when the outcome is a yes-or-no status at a fixed time. \emph{Calibration} is agreement between predicted and observed risk, the counterpart of checking an assay against standards of known concentration: calibration-in-the-large asks whether the average predicted risk matches the observed rate, as a check for constant bias, and the calibration slope asks whether predictions are too extreme or too modest, as a check for proportional bias. \emph{Net benefit}, the quantity a decision curve plots, weighs the true positives a rule identifies against its false positives at a chosen risk threshold, in the way a decision to act on a test result weighs cases found against unnecessary interventions; where a decision context justifies it, the pipeline evaluates it at thresholds of 5, 10 and 20 per cent.
+
 The two fail differently. A score can rank people correctly and get the level of risk wrong for everyone, so that decisions at a fixed threshold go wrong; it can also be calibrated on average and rank poorly.
 
 Incremental value is reported with uncertainty intervals and, where relevant, net reclassification or other measures only when their assumptions are satisfied. No arbitrary superiority threshold is treated as a universal criterion. The emphasis is on the magnitude, precision and practical meaning of incremental information.
@@ -609,6 +740,8 @@ Every comparison above assumes complete data on everyone. In a cohort of adults 
 \label{sec:missing}
 
 Missing data are described separately for indicators, covariates and outcomes. Multiple imputation by chained equations is used where the assumed missing-data mechanism and variable structure support it \citep{rubin_1987,vanbuuren_2011}. The imputation model includes variables associated with missingness and the measurement indicators, together with baseline auxiliary variables, while respecting variable type and survey structure where possible. It includes no outcome.
+
+Multiple imputation fills each missing answer several times with plausible values drawn from a model of how the answers relate to each other and to the auxiliary variables, analyses each completed file, and pools the results so that the spread between the files adds to the reported uncertainty. The closest laboratory practice is replicate testing: a result reported as the mean of replicates, with the variation between them, carries an honest statement of its precision. The parallel breaks down in one respect. Replicates are repeat measurements of the same specimen, whereas imputed values are predictions from a model, and they are only as good as the assumption that the observed variables explain why the answer is missing.
 
 Leaving outcomes out of the imputation model departs from a common recommendation, which is to include the outcome so that imputed values keep their association with it. That advice serves a single analysis whose aim is an unbiased association. Here the imputed values build the domain scores, which belong to the measurement stage and must satisfy Assumption~\ref{ass:outcome_blind}; an outcome in the imputation model would let the future shape the measure. The cost is that associations between imputed indicators and outcomes are weakened somewhat towards zero, which makes the prognostic tests conservative rather than flattering. The pipeline's tests check the rule directly: shuffling every outcome column leaves the fitted measurement model, its bounds and every domain score unchanged.
 
@@ -622,6 +755,8 @@ A further source of uncertainty is easy to overlook because it is built into the
 \label{sec:intval}
 
 A factor score is an estimated predictor rather than an observed covariate. Consequently, internal validation must account for uncertainty in both measurement and prediction. The primary bootstrap \citep{efron_tibshirani_1993,steyerberg_2019} procedure refits the measurement model, derives factor scores and refits the prognostic model within each resample. This prevents the validation procedure from treating the estimated score as fixed.
+
+The bootstrap draws many new samples of the same size from the cohort, with replacement, repeats the whole analysis in each and reads the uncertainty from the spread of the results; the pipeline draws 500 such samples. It is the counterpart of repeating a validation run on resampled material: if the conclusion holds across the repeats, it does not depend on which particular people happened to be in the sample.
 
 Bootstrapping only the Cox model would give intervals too narrow, because every resample would carry the same loadings and scores. The full refit also keeps the one-way rule inside each resample.
 
@@ -755,6 +890,10 @@ One of these deserves separate mention because it is a common-cause failure: a s
 \subsection{The gap between the specification and the system it models}
 
 The specification is itself a model of the study, and the study is a model of older people's health. \citet{box_1976} argued that a model should be judged by whether it is wrong in ways that matter for the purpose at hand, since it will be wrong in some way. The purpose here is narrow: to test whether a construct measured without reference to outcomes carries information about later mortality and hospital use in one population. The specification makes the ways it could be wrong for that purpose visible by pairing each assumption with a check. It is not designed to make the construct ready for use in decisions about individuals, and the governance limits of Section~\ref{sec:reporting} exist because the specification does not settle that question.
+
+\section*{What Is New in This Chapter}
+
+Composite health scores for older adults are common, and the methods used here (factor analysis, Cox models, competing-risk estimation, multiple imputation and bootstrap validation) are standard. What this chapter adds is the way they are joined. First, it states the separation of measurement from prediction as a property that can be tested, invariance of the fitted measurement model under permutation of the outcomes (Assumption~\ref{ass:outcome_blind}), and builds the pipeline so that the test can be run; the code that accompanies the thesis runs it, and a second analyst can repeat it. Second, it specifies the NHATS build in full: every variable and response code is declared in one layout file, checked against the NHATS crosswalk, instrument and User Guide, and the build refuses to run on anything undeclared (Section~\ref{sec:construction}; Appendix~\ref{app:datachecks}). Third, it dates deaths and first hospital stays in months from the public files alone and states when a death competes with a stay and when it is censored, choices that change the estimated incidence among the frailest people (Proposition~\ref{prop:competing}). Fourth, it fixes the domain-score bounds in the development split before any outcome is used, and pre-specifies a sensitivity analysis for the people the bounds place at zero. Each of these can be checked by reading the layout file, the build log and the permutation test, without access to the results.
 
 \section{What This Chapter Settles and What It Leaves Open}
 \label{sec:methods-close}

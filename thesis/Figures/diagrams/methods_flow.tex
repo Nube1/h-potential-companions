@@ -1,0 +1,29 @@
+% Cohort flow shell (Chapter 4, fig:methods-flow). Counts come from the run.
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  st/.style={hpbox, text width=5.2cm, minimum height=1.0cm, font=\footnotesize},
+  ex/.style={draw, dashed, thick, rounded corners=2pt, align=left, text width=4.6cm,
+             font=\footnotesize, inner sep=4pt},
+  node distance=7mm]
+  \node[st] (s1) {Sample persons in the Round~5 sample-person file\\ n = [\quad]};
+  \node[st, below=of s1] (s2) {With a Round~5 sample-person interview (residence codes 1, 2, 4)\\ n = [\quad]};
+  \node[st, below=of s2] (s3) {With a positive analytic weight\\ n = [\quad]};
+  \node[st, below=of s3] (s4) {With known follow-up status (a status showing the person alive, or a death, at Round~6 or later)\\ n = [\quad]};
+  \node[hpkey, text width=5.2cm, minimum height=1.0cm, font=\footnotesize, below=of s4] (s5) {\textbf{Analytic cohort}\\ n = [\quad]};
+  \node[st, text width=3.4cm, below left=9mm and -1.6cm of s5] (d) {Development split (70\%)\\ n = [\quad]};
+  \node[st, text width=3.4cm, below right=9mm and -1.6cm of s5] (h) {Hold-out split (30\%)\\ n = [\quad]};
+  \draw[hparrow] (s1) -- (s2); \draw[hparrow] (s2) -- (s3);
+  \draw[hparrow] (s3) -- (s4); \draw[hparrow] (s4) -- (s5);
+  \draw[hparrow] (s5.south) -- ++(0,-0.35) -| (d.north);
+  \draw[hparrow] (s5.south) -- ++(0,-0.35) -| (h.north);
+  % exclusion boxes
+  \coordinate (m12) at ($(s1.south)!0.5!(s2.north)$);
+  \coordinate (m23) at ($(s2.south)!0.5!(s3.north)$);
+  \coordinate (m34) at ($(s3.south)!0.5!(s4.north)$);
+  \node[ex, right=12mm of m12 -| s1.east, anchor=west] (e1) {Excluded: died before Round~5 (code 6) or facility questionnaire only (codes 3, 5, 7, 8)\quad n = [\quad]};
+  \node[ex, right=12mm of m23 -| s2.east, anchor=west] (e2) {Excluded: analytic weight missing or not positive\quad n = [\quad]};
+  \node[ex, right=12mm of m34 -| s3.east, anchor=west] (e3) {Excluded: no follow-up status known\quad n = [\quad]};
+  \draw[hparrow] (m12) -- (e1.west |- m12);
+  \draw[hparrow] (m23) -- (e2.west |- m23);
+  \draw[hparrow] (m34) -- (e3.west |- m34);
+\end{tikzpicture}}

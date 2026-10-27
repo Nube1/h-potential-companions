@@ -1,0 +1,41 @@
+% Study timeline across NHATS rounds (Chapter 4, fig:methods-timeline).
+{\hpdiagramsizes
+\begin{tikzpicture}[x=1.3cm, y=1cm]
+  % year axis
+  \draw[thick] (-0.3,0) -- (9.5,0);
+  \foreach \y [count=\i from 0] in {2011,...,2020} {
+    \draw[thick] (\i,0.12) -- (\i,-0.12);
+    \node[font=\footnotesize, below] at (\i,-0.12) {\y};
+  }
+  % round labels
+  \node[font=\scriptsize, above] at (0,0.12) {R1};
+  \foreach \r [count=\i from 1] in {2,3,4} {\node[font=\scriptsize, above, text=black!55] at (\i,0.12) {R\r};}
+  \node[font=\scriptsize\bfseries, above] at (4,0.12) {R5};
+  \foreach \r [count=\i from 5] in {6,...,10} {\node[font=\scriptsize, above] at (\i,0.12) {R\r};}
+  \node[hpnote, text=black!60] at (2,0.75) {no indicators drawn};
+  % Round 1 box
+  \node[hpbox, text width=2.6cm, anchor=south west] (r1) at (-0.35,1.15)
+    {\textbf{Round 1}\\[1pt]\footnotesize First interview of the 2011 cohort; source of education and gender for continuing members};
+  % Round 5 baseline
+  \node[hpkey, text width=2.3cm, anchor=south] (r5) at (4,1.15)
+    {\textbf{Round 5: baseline}\\[1pt]\footnotesize Replenished sample; all eleven indicators measured};
+  \draw[hparrow] (r1.east) -- node[hpnote, above] {two items} (r5.west |- r1.east);
+  % follow-up box
+  \node[hpbox, text width=4.9cm, anchor=south] (fu) at (7.35,1.15)
+    {\textbf{Rounds 6 to 10: follow-up}\\[1pt]\footnotesize Deaths from the tracker status; first overnight hospital stay asked at each interview};
+  \draw[thick] (r1.south -| 0,0) -- (0,0.5);
+  \draw[thick] (r5.south) -- (4,0.5);
+  \draw[thick] (5,0.65) -- (9,0.65);
+  \draw[thick] (fu.south) -- (fu.south |- 0,0.65);
+  % index date
+  \draw[very thick] (4,-0.5) -- (4,-0.75);
+  \node[font=\footnotesize\bfseries, below] at (4,-0.75) {Index date $t_0$};
+  % stage braces
+  \draw[decorate, decoration={brace, amplitude=5pt, mirror}, thick] (-0.2,-1.3) -- (3.95,-1.3)
+    node[midway, below=6pt, font=\small] {Measurement stage (at or before $t_0$)};
+  \draw[decorate, decoration={brace, amplitude=5pt, mirror}, thick] (4.05,-1.3) -- (9.2,-1.3)
+    node[midway, below=6pt, font=\small] {Outcome stage (after $t_0$), five years};
+  % one-way rule
+  \draw[hparrow] (1.2,-2.35) -- node[font=\footnotesize, fill=white, inner sep=2pt] {frozen scores pass forward} (7.2,-2.35);
+  \draw[hpdash, -{Stealth[length=2.2mm]}] (7.2,-2.85) -- node[font=\footnotesize, fill=white, inner sep=2pt] {$\boldsymbol\times$\ outcomes never pass back} (1.2,-2.85);
+\end{tikzpicture}}
