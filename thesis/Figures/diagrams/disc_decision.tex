@@ -1,0 +1,68 @@
+% Decision diagram for reading the results, Chapter 9 (Discussion).
+% Greyscale and line style carry every distinction: solid = framework kept,
+% dashed = kept with a qualification, dotted = counts against or narrows.
+{\hpdiagramsizes
+\begin{tikzpicture}[
+  pat/.style={draw, rounded corners=2pt, align=flush left, font=\footnotesize,
+              text width=4.3cm, inner sep=3pt, minimum height=0.74cm},
+  con/.style={pat, text width=4.9cm},
+  kept/.style={fill=black!6, thick, solid},
+  qual/.style={fill=white, thick, dashed},
+  agst/.style={fill=black!20, very thick, dotted},
+  stepbox/.style={hpkey, text width=2.3cm, font=\footnotesize, align=center},
+  link/.style={-{Stealth[length=1.6mm]}, semithick},
+  hd/.style={font=\footnotesize\bfseries, align=left},
+]
+\def\xs{1.35}   % step column centre
+\def\xp{5.15}   % pattern column centre
+\def\xc{10.75}  % conclusion column centre
+\def\xe{2.65}   % step column right edge
+% Column headings
+\node[hd] at (\xs,0.75) {Step};
+\node[hd, anchor=west] at (\xp-2.3,0.75) {Pattern the analysis returns};
+\node[hd, anchor=west] at (\xc-2.6,0.75) {Reading fixed in advance};
+% One branch: #1 y, #2 style, #3 pattern, #4 conclusion
+\def\hpdbranch#1#2#3#4{%
+  \node[pat,#2] (p) at (\xp,#1) {#3};
+  \node[con,#2] (c) at (\xc,#1) {#4};
+  \draw[link] (\xe,#1) -- (p.west);
+  \draw[link,#2,fill=none] (p.east) -- (c.west);
+}
+% ---- Step 1: measurement
+\hpdbranch{0}{kept}{Three domains fit, load well and stay distinct from frailty}{Construct measurable in this cohort; step 2 is then evidence about it}
+\hpdbranch{-0.92}{qual}{Contextual domains weak; formative form does better}{Composites: revise the measurement model, keep the theory}
+\hpdbranch{-1.84}{qual}{Contextual domains weak; formative form no better}{NHATS measures them poorly: untested, not refuted}
+\hpdbranch{-2.76}{qual}{Invariance fails across sex or age band}{Within-group use only; qualify every subgroup comparison}
+\hpdbranch{-3.68}{qual}{Loadings shift with estimator, item or cognition rule}{Structure reported as fragile, or as a range between the two rules}
+\hpdbranch{-4.6}{agst}{Domains inseparable; one factor fits as well as three}{Single-factor score only; three-domain theory set aside here}
+\node[stepbox, minimum height=5.4cm] (s1) at (\xs,-2.3) {\textbf{1}\\\textbf{Measurement}\\[2pt]Chapter~\ref{ch:results1}\\[4pt]Read first: it decides what step 2 is about};
+% ---- Step 2: prognosis
+\hpdbranch{-5.85}{kept}{Ranks well; predicted and observed risks agree}{Usable for ranking and at a threshold; net benefit read last}
+\hpdbranch{-6.77}{qual}{Death predicted, admission not}{Admission partly measures access; the two outcomes reported apart}
+\hpdbranch{-7.69}{qual}{Admission predicted, death not}{Score may track contact with services more than capacity}
+\hpdbranch{-8.61}{qual}{Conclusions change on the $[0.05,1]$ floor}{Result carried by the lowest scorers; both rules reported}
+\hpdbranch{-9.53}{agst}{Poorly calibrated after internal validation}{Cannot be used at a threshold; counts against the framework}
+\node[stepbox, minimum height=4.45cm] (s2) at (\xs,-7.69) {\textbf{2}\\\textbf{Prognosis}\\[2pt]Chapter~\ref{ch:results2}\\[4pt]Discrimination, then calibration, then net benefit};
+% ---- Step 3: comparison with frailty
+\hpdbranch{-10.78}{kept}{Paired gain survives removal of overlap and changes decisions}{Gain comes from the domains frailty does not cover}
+\hpdbranch{-11.7}{agst}{Gain clear of zero, but no decision changes}{Reported as a null for incremental value}
+\hpdbranch{-12.62}{agst}{Gain lost when overlapping indicators are removed}{Duplication of frailty information: a null for incremental value}
+\node[stepbox, minimum height=2.6cm] (s3) at (\xs,-11.7) {\textbf{3}\\\textbf{Comparison}\\[2pt]with the frailty index, paired};
+% ---- Step 4: realisation model
+\hpdbranch{-13.87}{kept}{Non-compensatory form beats the additive composite}{Weakest-domain reading gains support in these data}
+\hpdbranch{-14.79}{agst}{Indistinguishable from the additive composite, or worse}{Narrowed to a theoretical model; factor score kept}
+\node[stepbox, minimum height=1.7cm] (s4) at (\xs,-14.33) {\textbf{4}\\\textbf{Realisation}\\\textbf{model}\\[2pt]Chapter~\ref{chap:crf}};
+% Order of reading
+\draw[hparrow] (s1) -- (s2);
+\draw[hparrow] (s2) -- (s3);
+\draw[hparrow] (s3) -- (s4);
+% Closing line
+\node[hpnote, text width=12.5cm] at (6.5,-15.75) {On every branch the next step is external validation. No branch has yet been observed.};
+% Legend
+\node[draw, kept, minimum width=0.8cm, minimum height=0.35cm] (k1) at (0.6,-16.45) {};
+\node[font=\footnotesize, anchor=west] at (1.1,-16.45) {framework kept};
+\node[draw, qual, minimum width=0.8cm, minimum height=0.35cm] (k2) at (4.4,-16.45) {};
+\node[font=\footnotesize, anchor=west] at (4.9,-16.45) {kept with a qualification};
+\node[draw, agst, minimum width=0.8cm, minimum height=0.35cm] (k3) at (9.0,-16.45) {};
+\node[font=\footnotesize, anchor=west] at (9.5,-16.45) {counts against or narrows a claim};
+\end{tikzpicture}}

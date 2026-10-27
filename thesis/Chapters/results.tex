@@ -20,11 +20,14 @@ follows for measurement, for method, and for clinical and policy use, holding ea
 claim to what a single development cohort can support. The sixth reads the thesis
 as a systems problem: what kind of whole health capacity is, where a change does
 most, and what happens to a score once people act on it. The seventh sets out what
-would have to happen next, external validation first. The closing section states
-what the chapter settles and what it passes to Chapter~\ref{ch:conclusions}.
+would have to happen next, external validation first. Two closing sections follow.
+The first states what the thesis contributes, separating what stands now from what
+waits on the NHATS results. The second states what the chapter settles and what it
+passes to Chapter~\ref{ch:conclusions}.
 
 Two conventions run throughout. Each statistical term is given with its clinical
-equivalent at first use. Claims about performance are restated for the reference
+or laboratory equivalent at first use, and the chapter says where the parallel
+stops holding. Claims about performance are restated for the reference
 profiles of Table~\ref{tab:profiles} and are written conditionally, because the
 numbers are not yet in.
 \end{ataglance}
@@ -88,6 +91,22 @@ A score that correlates almost perfectly with a frailty index has passed no test
 worth passing, because it adds nothing the frailty index does not already
 supply.
 
+A laboratory reader already knows this sequence from assay validation. A latent
+domain cannot be observed directly. It is estimated from several survey
+indicators, much as an analyte concentration is inferred from an assay signal
+through a calibration curve. The measurement model is that calibration. Its
+loadings say how strongly each indicator tracks the domain, as one would ask how
+strongly a given assay tracks the analyte it is meant to measure. Reliability is
+the counterpart of precision: whether repeated or parallel readings agree.
+Validity is the counterpart of accuracy: whether the readings agree with the
+quantity they claim to measure. And discriminant validity is the question a
+laboratory asks of a new assay that correlates closely with an existing one: if
+the two always agree, the new one adds work and no information. The parallel has
+one limit worth stating at once. An assay can be checked against a reference
+material of known concentration. No reference standard of health capacity exists,
+so the measurement model can be checked only for internal coherence and for its
+relation to other measures and to later events.
+
 \medskip
 \noindent\emph{[Placeholder: summarise the psychometric findings from Chapter~\ref{ch:results1}. Report whether the hypothesised three-domain structure demonstrated satisfactory model fit, whether reliability and construct validity supported the proposed measurement model, whether measurement invariance \citep{meredith_1993,vandenberg_lance_2000} was established where tested, and whether the resulting factor scores provided a stable representation of the $H_{\text{potential}}$. Interpretation should focus on what these findings imply for the feasibility of measuring latent health capability.]}
 
@@ -99,6 +118,18 @@ them, how often the score puts the two in the right order. Calibration asks whet
 10 per cent risk means that about one in ten such people had the event, which is
 what matters the moment a number is spoken aloud in a consultation. Incremental
 value asks whether the new test changes management over the one already in use.
+
+Each has a laboratory counterpart. Discrimination for a survival outcome is
+summarised by the $C$-statistic, which reads like the area under an ROC curve: 0.5
+is no better than chance and 1 is perfect ordering. Calibration corresponds to
+checking an assay against standards of known value, where an assay that ranks
+samples correctly but reads every one too high still fails. Incremental
+value corresponds to the test a laboratory applies before adding a new assay to a
+panel. A new assay that correlates with an existing one adds value only if it
+changes decisions that the existing one would have got wrong. A hazard ratio,
+familiar from trials, is the ratio of event rates between two groups at each
+moment of follow-up; here it compares people one standard deviation apart on the
+score.
 
 \medskip
 \noindent\emph{[Placeholder: summarise the findings from Chapter~\ref{ch:results2}. Report whether the $H_{\text{potential}}$ independently predicted each co-primary outcome, five-year all-cause mortality and, separately, first overnight hospital stay, the magnitude of each association, the discrimination and calibration achieved, and whether the framework demonstrated incremental value over existing approaches such as frailty indices, QALY proxies \citep{whitehead_2010,drummond2015} and comorbidity measures. Interpretation should emphasise clinical significance rather than statistical significance alone.]}
@@ -156,7 +187,11 @@ evidence about that construct. If the model fails, the survival models still run
 and may still return a useful predictor, but the predictor is then a composite
 whose meaning has not been shown. Reading the prognostic results without first
 asking which of these two cases holds would let a good hazard ratio vouch for a
-measurement model that did not earn it.
+measurement model that did not earn it. A laboratory follows the same order for
+the same reason. A patient result from a run whose calibration or quality control
+failed is not reported, however plausible it looks, because nothing then ties the
+number to the analyte. Here the prognostic results are still reported in that
+case, but as results about an unnamed composite, not about health capacity.
 
 Within the prognostic results the order follows from use. A score used only to
 rank people, to decide who is visited first, needs discrimination and nothing
@@ -168,7 +203,12 @@ it depends on both and on the threshold chosen \citep{vickers_elkin_2006}.
 Incremental value is read against the comparator in use, in the paired form of
 Derivation~\ref{der:incremental}, and in absolute risks as in Worked
 Example~\ref{ex:disc:incremental}, because a ratio alone cannot show whether a
-decision changes.
+decision changes. The last question is whether the non-compensatory realisation
+model of Chapter~\ref{chap:crf} does better than a plain sum of the same domains.
+It comes last because it asks how the domains combine, which presumes that they
+have been measured and that the score predicts. The four steps, and the branch
+taken under each pattern, are drawn together in Figure~\ref{fig:disc-decision} at
+the end of this section.
 
 \subsection{Reading the Measurement Results}
 \label{sec:disc-read-measure}
@@ -190,7 +230,14 @@ to measure social enablement or structural freedom, and a domain measured by two
 three distant proxies will load poorly whatever its importance. Or the weakness may
 lie in the specification: social and structural conditions may not be reflections
 of one underlying quantity but components that combine to form it, in which case a
-reflective factor model is the wrong tool. The formative and hybrid specifications
+reflective factor model is the wrong tool. The distinction has a laboratory form.
+In a reflective model the indicators are several readings of one underlying
+quantity, as several assays of the same analyte should rise and fall together. In
+a formative model the indicators are separate components that together make up
+the quantity, as a panel score is assembled from tests that measure different
+things and need not agree with one another. Asking components of the second kind
+to behave like readings of the first kind will make them look poor even when each
+is accurate. The formative and hybrid specifications
 among the sensitivity analyses of Chapter~\ref{ch:methods} test the second reading.
 If those specifications behave better, the conclusion is that the contextual
 domains are composites, and the framework survives with a different measurement
@@ -209,11 +256,20 @@ In the fourth, the structure fits in the cohort as a whole but measurement
 invariance \citep{meredith_1993,vandenberg_lance_2000} fails across sex or across
 age band. The score could then be used within a group but not compared across
 groups, and every subgroup comparison in Chapter~\ref{ch:results2} would carry that
-qualification.
+qualification. Measurement invariance asks whether the instrument gives the same
+reading for the same level of capacity in men and women, or in younger and older
+respondents, as an assay should give the same reading for the same concentration
+in different patient groups or different laboratories. Where it does not, results
+can be compared within a group, as results can be compared within one laboratory,
+but a difference between groups may belong to the instrument and not to the
+people.
 
 Two of the stability checks reported in Chapter~\ref{ch:results1} bear on all four
-patterns. If the loadings move materially between the maximum-likelihood and WLSMV
-solutions, or when single indicators are removed in turn, the structure depends on
+patterns. They play the part that a change of method or reagent lot plays in assay
+validation: a result that holds only under one estimation method is a property of
+the method. If the loadings move materially between the maximum-likelihood and WLSMV
+solutions (two standard ways of fitting the model, the second built for answers on
+ordered categories), or when single indicators are removed in turn, the structure depends on
 a modelling choice or on one item, and is reported as fragile. If the loadings and
 biomedical scores move materially when the cognition of people whose proxies said
 they could not be tested is set to the lowest possible score in place of the imputed
@@ -240,7 +296,10 @@ reading is less comfortable, because it suggests the score tracks contact with
 services more than the capacity to stay alive. Death also competes with admission:
 a person who dies cannot then be admitted, so a score that predicts death strongly
 can appear to predict admission less well for that reason alone. The competing-risk
-treatment of Chapter~\ref{ch:methods} is there to keep these two effects apart.
+treatment of Chapter~\ref{ch:methods} is there to keep these two effects apart. A
+competing risk is an event that prevents the event of interest from being seen,
+as death does here; it differs from censoring, the cohort-study case of a patient
+lost to follow-up, who might still have had the event unobserved.
 
 The second is whether any gain over the frailty comparator survives the removal of
 indicators that overlap with it. One sensitivity analysis drops those indicators.
@@ -253,7 +312,11 @@ domain scale. The preregistered rule maps each domain onto $[0,1]$ using the 1st
 and 99th percentiles of the development split and clips values outside them, so
 that anyone below the 1st percentile on a domain is placed at, in effect, zero.
 Under the geometric realisation function a zero on one domain sets the whole score
-to zero whatever the other two are. The fixed-floor analysis maps the same bounds
+to zero whatever the other two are. The clipping resembles reporting every result
+below the lower limit of quantitation as that limit: the values become alike
+whatever their true level. The parallel stops there, because a low result for one
+analyte does not erase the results for the others, while under the geometric form
+a zero on one domain does. The fixed-floor analysis maps the same bounds
 onto $[0.05,1]$ instead. If the conclusions are the same under both rules, the
 floor does not drive them. If they differ, a small group at the bottom of one
 domain is carrying the result, and the report says so.
@@ -278,7 +341,7 @@ Biomedical strong, contextual domains weak; formative form better & Contextual d
 Biomedical strong, contextual domains weak; formative form no better & NHATS measures these domains poorly & Seek a cohort with richer indicators \\
 Domains inseparable & Single-factor score only & Set aside three-domain theory for these data \\
 Invariance fails across sex or age & Within-group use only & Qualify all subgroup comparisons \\
-Gain over frailty lost when overlap removed & Duplication, not new information & Report as null for incremental value \\
+Gain over frailty lost when overlap removed & Duplication, not new information & Report as null for incremental value; counts against the claim of new information \\
 Death predicted, admission not & Admission partly measures access & Report outcomes separately \\
 Conclusions change with the $[0.05,1]$ floor & Result carried by lowest scorers & Report both; review the scaling rule \\
 \bottomrule
@@ -304,6 +367,38 @@ the realisation function cannot be told apart from the additive composite, or do
 worse on calibration and prediction error, that chapter's own rule applies: the
 empirical claim for the realisation function is narrowed to a theoretical model, and
 the factor score is kept as the measurement backbone.
+
+Figure~\ref{fig:disc-decision} sets these commitments out in the order they will
+be read. It is a reading plan, not a result, and holds nothing that the text and
+Table~\ref{tab:disc-patterns} do not already state. Each step on the left is read
+only after the one above it. Each row records a pattern the analysis could
+return and the reading this chapter has already fixed for it. The line style and
+shading of a branch give its consequence for the framework: a solid line where the
+framework is kept, a dashed line where it is kept with a stated qualification, and
+a dotted line on a darker ground where the result counts against the framework or
+narrows one of its claims. Three features of the figure carry the argument. The
+measurement step comes first and has the most branches, because every later step
+is about the construct only if this one holds. Two of the patterns that count
+against the framework sit in the comparison step, where a score can pass every
+test of its own and still add nothing to the frailty index already in use. And
+the realisation model has its own failure branch, which narrows the claim for that
+model while leaving the factor score in place, so a result against the
+realisation model is not a result against the measure. Whatever branch the
+analysis takes, the next step is the same: external validation in a second
+cohort.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/disc_decision}
+\captionsetup{justification=justified, width=\linewidth}
+\caption{Reading plan for the results, fixed before any result is seen. Steps are
+read from top to bottom; measurement decides what the later steps are about. Each
+row gives a pattern the analysis could return and the reading the chapter assigns
+to it. Solid outline, light ground: framework kept. Dashed outline, white ground:
+kept with a qualification. Dotted outline, darker ground: counts against the
+framework or narrows a claim. No branch has yet been observed.}
+\label{fig:disc-decision}
+\end{figure}
 
 Any of these results would be reported as evidence against the framework, and the
 conceptual claims of this chapter would be narrowed to fit it. They would not be
@@ -483,7 +578,7 @@ going wrong.
 An index whose weights were fitted to death will predict death. What is left when
 that shortcut is refused is the question this section answers.
 
-Methodologically, the present thesis contributes to an expanding literature using latent variable models to represent complex multidimensional health constructs. Structural equation modelling has become increasingly important in health research because many clinically relevant concepts, including resilience, quality of life, intrinsic capacity \citep{cesari_2018} and wellbeing, cannot be observed directly but must instead be inferred from multiple imperfect indicators \citep{kline_2015,brown_2015}. The principal methodological contribution of the present work lies in its clear separation of measurement from prediction. Many composite indices derive weights directly from their association with clinical outcomes, creating a form of circular reasoning in which predictors are optimised for the outcomes they subsequently claim to predict. In contrast, the $H_{\text{potential}}$ was first estimated as a latent construct using confirmatory factor analysis before any prognostic analyses were undertaken, so that prediction evaluates the independent usefulness of the construct rather than contributing to its definition. This design is formalised below.
+Methodologically, the present thesis contributes to an expanding literature using latent variable models to represent complex multidimensional health constructs. Structural equation modelling has become increasingly important in health research because many clinically relevant concepts, including resilience, quality of life, intrinsic capacity \citep{cesari_2018} and wellbeing, cannot be observed directly but must instead be inferred from multiple imperfect indicators \citep{kline_2015,brown_2015}. The principal methodological contribution of the present work lies in its clear separation of measurement from prediction. Many composite indices derive weights directly from their association with clinical outcomes, creating a form of circular reasoning in which predictors are optimised for the outcomes they subsequently claim to predict. In contrast, the $H_{\text{potential}}$ was first estimated as a latent construct using confirmatory factor analysis (a method that tests whether the indicators vary together in the pattern a stated structure predicts) before any prognostic analyses were undertaken, so that prediction evaluates the independent usefulness of the construct rather than contributing to its definition. This design is formalised below. In plain terms, the derivation shows that the score is fixed from the indicators alone, before any death or admission is consulted, in the way an assay is calibrated against reference standards and not against the diagnoses it will later help to make. It then states the limit of that guarantee: a score built without the outcome can still be tuned to the sample, and that fault needs its own remedy.
 
 \begin{derivation}[Why the two-stage design avoids outcome-driven circularity]
 \label{der:noncircularity}
@@ -533,7 +628,7 @@ correction it applies, shrinkage, is regression to the mean under another name,
 since an estimate singled out because it looked extreme in this sample will look
 less extreme in the next \citep{harrell_1996,steyerberg_2019}.
 
-The prognostic analyses presented in Chapter~\ref{ch:results2} represent the first empirical evaluation of whether the latent construct captures clinically meaningful information regarding future health outcomes. Modern prediction research emphasises that clinically useful models require more than statistically significant associations: discrimination, calibration, internal validity and clinical utility are now regarded as equally important components of model evaluation \citep{steyerberg_2019,vancalster_2019}. The present thesis therefore adopted this broader evaluation framework rather than relying exclusively upon regression coefficients or hazard ratios. Prediction models should be judged according to whether they improve decision making, and not on whether their predictors achieve statistical significance, and the inclusion of decision-curve analysis and comparison with established measures positions the present work within contemporary standards for prediction model evaluation. The notion of incremental value used in that comparison is defined below.
+The prognostic analyses presented in Chapter~\ref{ch:results2} represent the first empirical evaluation of whether the latent construct captures clinically meaningful information regarding future health outcomes. Modern prediction research emphasises that clinically useful models require more than statistically significant associations: discrimination, calibration, internal validity and clinical utility are now regarded as equally important components of model evaluation \citep{steyerberg_2019,vancalster_2019}. The present thesis therefore adopted this broader evaluation framework rather than relying exclusively upon regression coefficients or hazard ratios. Prediction models should be judged according to whether they improve decision making, and not on whether their predictors achieve statistical significance, and the inclusion of decision-curve analysis and comparison with established measures positions the present work within contemporary standards for prediction model evaluation. The notion of incremental value used in that comparison is defined below. The definition says two things in symbols. The new score is judged by the change in performance when it is added to the model already in use, not by its performance alone. And because both models are fitted to the same people, the change must be estimated on the same resamples, as a method-comparison study runs both assays on the same specimens so that differences between specimens cancel and only the difference between methods remains.
 
 \begin{derivation}[Incremental prognostic value over a baseline model]
 \label{der:incremental}
@@ -547,6 +642,12 @@ replicates must fit both models and retain the within-replicate difference.
 Incremental value requires improved decision-relevant performance with acceptable
 calibration; a significant $\beta$ alone is insufficient.
 \end{derivation}
+
+\noindent For a clinician the last line of the derivation is the one that
+matters. A coefficient that is statistically significant shows that the score is
+associated with the outcome once the frailty index is known. It does not show
+that anyone would be managed differently, and only the second would justify
+asking a service to collect the extra information.
 
 \medskip
 \noindent\emph{[Placeholder: interpret the observed discrimination, calibration, comparative performance and clinical utility. Discuss how the results compare with published prognostic models in ageing populations and whether the observed performance supports further development of the $H_{\text{potential}}$.]}
@@ -806,6 +907,8 @@ The most important limitation is that development and internal validation were u
 Bootstrap correction answers a narrower question than it is usually asked to
 answer.
 
+In laboratory terms, bootstrap internal validation resembles repeating a validation run many times on material resampled from one batch. It shows how stable the performance is within that batch. External validation corresponds to an inter-laboratory comparison, in which the method meets specimens, staff and conditions it was not developed on.
+
 Related to the previous limitation, the study employed bootstrap internal validation rather than independent external validation. Bootstrap procedures estimate optimism and expected performance within the same underlying population dependably, but they cannot determine whether the model remains valid when applied to fundamentally different patient groups. Optimism-corrected performance estimates should therefore be interpreted as reflecting expected reproducibility within similar populations rather than universal transportability.
 
 \subsubsection{Observational study design}
@@ -823,7 +926,10 @@ regression dilution to an epidemiologist. Both mean the same thing here, that th
 association between the $H_{\text{potential}}$ and mortality is more likely to be
 understated than overstated. The direction is worth holding onto, because error
 of this kind flattens estimates towards no effect: a positive finding is not an
-artefact of it, while a null finding may well be.
+artefact of it, while a null finding may well be. The laboratory version is
+familiar: an imprecise assay correlates less strongly with a clinical outcome
+than the analyte itself does, because random error in the reading dilutes the
+association.
 
 The latent construct is estimated indirectly through observed indicators rather than measured directly, so estimated factor scores inevitably contain measurement error. Although structural equation modelling explicitly accounts for measurement error during estimation, and the bootstrap validation repeated the complete analytical pipeline, uncertainty associated with latent variable estimation cannot be eliminated entirely. This limitation is inherent to all latent variable models and emphasises the importance of continued psychometric evaluation during future external validation.
 
@@ -1133,8 +1239,24 @@ section applies that view to the thesis as a whole and asks four questions of it
 what kind of property capacity is, where a change does most, what the score does
 once people act on it, and how far claims of this kind can be trusted.
 
+A clinical reader can take the section's conclusions without its algebra. The
+three domains combine by multiplication, so a very low value on one of them holds
+down the whole score, and help does most where a person is weakest. Once a
+service acts on the score, the score and the service form a loop, and the rule
+the service uses decides whether gaps between people widen or narrow. None of
+this is estimated in the thesis; it is stated so that later studies know what to
+measure.
+
 \subsection{Capacity as a Property of the Whole}
 \label{sec:disc-sys-emergence}
+
+Haematologists know a quantity of this kind. In haemophilia~B, normal levels of
+the other clotting factors do not make up for a lack of factor~IX: the deficient
+factor limits the result, and a surplus elsewhere does not offset it. The
+realisation function treats the domains of health capacity in a similar, though
+milder, way. The parallel concerns the form of the combination only; the domain
+levels are not measured concentrations, and the degree to which one domain can
+offset another is a modelling choice, not a measured property.
 
 A property of a system is emergent when it belongs to the whole and cannot be
 assigned to any part \citep{vonbertalanffy_1968}. Under the geometric realisation
@@ -1170,6 +1292,11 @@ and it lies outside what one measurement occasion can see
 
 \subsection{Where a Change Does Most: the Weakest Domain}
 \label{sec:disc-sys-weakest}
+
+This subsection asks where a small improvement would raise the score most, and
+answers with the slopes of the realisation function. The answer is a statement
+about the model, not about any intervention, and its use for planning is limited
+in the ways set out at the end.
 
 The geometric form gives a plain answer to where a small change does most, and the
 answer is not the same in relative and absolute terms. In relative terms, a one per
@@ -1346,8 +1473,103 @@ In brief, the principal directions for future work are as follows.
   \item \textbf{Studying the score in use.} Implementation studies should observe the decision rule, the actions taken and their effect on the score's later accuracy, as well as patient outcomes.
 \end{itemize}
 
-Those are the directions the work opens. What the chapter has settled, and how
-far, is stated below.
+Those are the directions the work opens. Before the chapter states what it has
+settled, the contribution of the thesis as a whole is set out in one place.
+
+% =====================================================================
+\section{What This Thesis Contributes}
+\label{sec:disc-contributes}
+% =====================================================================
+
+\noindent A new assay earns its place in two stages. Its analytical validation,
+precision, linearity and agreement with reference material, can be completed at
+the bench. Its clinical value can be shown only in patients. The contributions of
+this thesis divide the same way. Five stand now, on the specification, the
+mathematics, the code and the argument, and can be checked by reading them or
+running them. Four depend on the NHATS results and are stated here as what those
+results would establish if they fall on the supported branches of
+Figure~\ref{fig:disc-decision}. The novelty table in A Guide for the Reader sets
+the same claims out chapter by chapter, with what existed before each.
+
+\paragraph{Contributions that stand now.}
+The first is the specification of the construct. Capability theory, frailty
+indices and health utilities existed before this work; none defines health
+capacity as one latent quantity with three named domains, Biomedical Potential,
+Social Modifiers and Systemic Burdens, each tied to stated survey indicators and
+estimated without reference to any outcome (Chapters~\ref{ch:theory}
+and~\ref{ch:methods}). The specification can be checked by reading it, and it fixes
+what the measurement model is required to show.
+
+The second is the realisation model and its proofs (Chapter~\ref{chap:crf}).
+Constant-elasticity functions and geometric means are established tools, and no claim is
+made for them. What the thesis adds is their use as a stated rule for combining
+the three domains, derived from axioms, with a theorem that characterises the
+primary form (Theorem~\ref{thm:crf_characterisation}), an exact decomposition of a
+person's capability gap by domain, a budget-constrained policy gradient, a proof
+that policy rankings need not carry over between health systems
+(Theorem~\ref{thm:nontransport}), and a head-to-head test fixed in advance that
+could reject the model (Section~\ref{sec:E-falsification}). The proofs can be
+checked line by line, and each stated property and worked example is asserted by
+a test in the verification suite (Appendix~\ref{app:verification}).
+
+The third is the verified analysis pipeline and the checks of the data. Every
+variable name, file and response code was checked against the NHATS documents,
+and the checks found faults that would have changed the results without any sign
+in the output: reversed activity codes, education missing for every continuing
+member of the cohort, and deaths without a proxy interview left out of the
+mortality outcome (Appendix~\ref{app:datachecks}). Each correction is held by a
+test that runs on every change to the code. In laboratory terms this is quality
+control applied to the data before the run, and it can be checked by running the
+suite.
+
+The fourth is the systems framing (Chapter~\ref{ch:systems} and
+Section~\ref{sec:disc-systems}). It treats capacity as a stock observed once, and
+the score, once used, as part of a loop with the service that acts on it. From
+this it derives requirements that no measurement property can meet on its own:
+report the domain scores beside the combined score, state the decision rule with
+the score, monitor calibration over time and by equity stratum, and record the
+actions taken. These are hypotheses and design requirements, not findings, and
+they can be checked against implementation studies.
+
+The fifth is the translation framework for haemophilia
+(Chapter~\ref{ch:translational}). It keeps the three domains and replaces their
+indicators with haemophilia-specific ones, through expert consensus,
+psychometric re-estimation, recalibration and external validation, in that order.
+It is a method for building a disease-specific version, not a validated
+haemophilia measure, and it ends at a measure, not at a treatment recommendation.
+
+The pre-registered reading rules of Section~\ref{sec:disc-reading} belong with
+these. The thesis fixes the reading of each possible result as well as the
+analysis, and that is what lets the contributions below be stated now without
+waiting to see which way the results fall.
+
+\paragraph{Contributions that depend on the NHATS results.}
+If the measurement results fall on the supported branch, they would establish
+that health capacity with three distinct domains can be measured from the
+indicators of a general ageing survey, with adequate fit, reliability and, where
+tested, invariance across sex and age band (Chapter~\ref{ch:results1}).
+
+If the prognostic results fall on the supported branch, they would establish that
+this score, built without reference to any outcome, predicts five-year mortality
+and, separately, a first overnight hospital stay, with discrimination and
+calibration that survive internal validation (Chapter~\ref{ch:results2}).
+
+If the comparison falls on the supported branch, it would establish that the
+score adds information, at decision thresholds in use, that the frailty index,
+the QALY proxy and comorbidity measures do not supply, and that the gain survives
+removal of the indicators the score shares with the frailty index. This is the
+result that would justify a service collecting the extra information.
+
+If the head-to-head test falls on the supported branch, it would establish that
+the non-compensatory realisation model predicts better than an additive composite
+of the same domains, which would give the weakest-domain reading of
+Section~\ref{sec:disc-sys-weakest} empirical support in this cohort.
+
+Each of these four would hold for one development cohort and would still need
+external validation. If a result falls on another branch, the corresponding claim
+is narrowed as Table~\ref{tab:disc-patterns} and
+Figure~\ref{fig:disc-decision} fix in advance, and the five contributions that
+stand now do not depend on it.
 
 % =====================================================================
 \section{What This Chapter Settles}
