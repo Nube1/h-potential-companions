@@ -169,9 +169,12 @@ comparators:
 
   # Health-utility proxy: NHATS items crosswalked to the five EQ-5D-3L
   # dimensions and valued with an additive tariff. OPTIONAL and VERIFY as above.
-  # The tariff below is the UK time trade-off tariff (Dolan 1997); CHECK EACH
-  # COEFFICIENT AGAINST THE PUBLISHED TABLE before a real run, or substitute
-  # the value set the thesis adopts. Cut-points [a, b]: below a is level 1,
+  # The tariff below is the UK time trade-off tariff (Dolan 1997, Med Care
+  # 35:1095-108). Checked against two published values: state 33333 gives
+  # -0.594, and state 32333 gives -0.484, the UK minimum that Mozzi et al. 2016
+  # (doi:10.2147/CEOR.S98226) report as -0.48, below 33332 (-0.429) as they
+  # report. The level-2 weights for mobility, usual activities and pain are
+  # not reached by these checks; confirm them against Dolan's table. Cut-points [a, b]: below a is level 1,
   # below b level 2, otherwise level 3.
   qaly_proxy:
     kind: eq5d_crosswalk

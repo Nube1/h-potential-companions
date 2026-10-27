@@ -1,0 +1,38 @@
+{
+  "database": "PubMed (MEDLINE and PubMed Central), searched through the PubMed search interface",
+  "date_run": "2026-10-27",
+  "publication_date_limits": "1990/01/01 to 2026/10/27",
+  "note": "Counts are as returned on the date run; re-running a query later will return more records as PubMed grows.",
+  "searches": [
+    {"tradition": "Health loss and health expectancy", "query": "(\"quality-adjusted life years\"[MeSH Terms] OR \"disability-adjusted life years\"[Title/Abstract] OR \"health expectancy\"[Title/Abstract] OR \"healthy life expectancy\"[Title/Abstract]) AND (measurement[Title/Abstract] OR valuation[Title/Abstract] OR conceptual[Title/Abstract])", "records": 1209},
+    {"tradition": "Quality of life in older adults", "query": "\"quality of life\"[MeSH Terms] AND aged[MeSH Terms] AND (\"health-related quality of life\"[Title/Abstract] OR \"EQ-5D\"[Title/Abstract]) AND (validity[Title/Abstract] OR measurement[Title/Abstract])", "records": 3022},
+    {"tradition": "Frailty and deficit accumulation", "query": "(\"frailty index\"[Title/Abstract] OR \"deficit accumulation\"[Title/Abstract]) AND (mortality[Title/Abstract] OR prognosis[Title/Abstract] OR prognostic[Title/Abstract] OR vulnerability[Title/Abstract])", "records": 2648,
+     "revision": "The first version, without 'vulnerability', returned 2418 records and missed Rockwood and Mitnitski (2007), a conceptual review that never mentions mortality."},
+    {"tradition": "Intrinsic capacity", "query": "\"intrinsic capacity\"[Title/Abstract] AND (older[Title/Abstract] OR ageing[Title/Abstract] OR aging[Title/Abstract])", "records": 940},
+    {"tradition": "Multidimensional health metrics", "query": "ATHLOS[Title/Abstract] OR (\"health metric\"[Title/Abstract] AND (\"item response theory\"[Title/Abstract] OR \"factor analysis\"[Title/Abstract]))", "records": 34},
+    {"tradition": "Capability theory and capability measures", "query": "(\"capability approach\"[Title/Abstract] OR \"ICECAP-O\"[Title/Abstract] OR \"capability wellbeing\"[Title/Abstract] OR (capability[Title/Abstract] AND Sen[Title/Abstract])) AND (health[Title/Abstract] OR \"quality of life\"[Title/Abstract])", "records": 358,
+     "revision": "The first version, without the capability-and-Sen term, returned 314 records and missed Grewal et al. (2006), the qualitative groundwork for ICECAP-O."},
+    {"tradition": "Social determinants in later life", "query": "\"social determinants of health\"[MeSH Terms] AND aged[MeSH Terms] AND (mortality[Title/Abstract] OR \"functional ability\"[Title/Abstract] OR disability[Title/Abstract])", "records": 544},
+    {"tradition": "Social vulnerability", "query": "\"social vulnerability\"[Title/Abstract] AND (index[Title/Abstract] OR mortality[Title/Abstract]) AND (aged[MeSH Terms] OR older[Title/Abstract])", "records": 660},
+    {"tradition": "Intersectionality and measurement", "query": "intersectionality[Title/Abstract] AND health[Title/Abstract] AND (measurement[Title/Abstract] OR quantitative[Title/Abstract])", "records": 312},
+    {"tradition": "Reflective and formative measurement", "query": "formative[Title/Abstract] AND reflective[Title/Abstract] AND (measurement[Title/Abstract] OR indicators[Title/Abstract])", "records": 85},
+    {"tradition": "NHATS as a data source", "query": "\"National Health and Aging Trends Study\"[Title/Abstract]", "records": 992},
+    {"tradition": "Ageing with haemophilia", "query": "hemophilia[MeSH Terms] AND aged[MeSH Terms] AND (\"quality of life\"[Title/Abstract] OR comorbidity[Title/Abstract] OR comorbidities[Title/Abstract])", "records": 192,
+     "note": "PubMed maps hemophilia[MeSH Terms] to 'hemophilia a'."}
+  ],
+  "coverage_check": {
+    "method": "Each final query was combined with the PubMed identifier of key works the review cites (query AND <pmid>[uid]); a result of one record means the search retrieves the work.",
+    "retrieved": {
+      "17634318": "Rockwood and Mitnitski 2007, frailty search",
+      "35830956": "Koivunen et al. 2022, intrinsic capacity search",
+      "31678933": "Beard et al. 2019, intrinsic capacity search",
+      "36512074": "Campbell et al. 2023, intrinsic capacity search",
+      "18493324": "Andrew et al. 2008, social vulnerability search",
+      "25213145": "Wallace et al. 2015, social vulnerability search",
+      "28281663": "Caballero et al. 2017, multidimensional metrics search",
+      "16168542": "Grewal et al. 2006, capability search"
+    },
+    "result": "8 of 8 PubMed-indexed key works retrieved by the final queries.",
+    "outside_pubmed": "Works outside PubMed's scope, such as Bowleg (2008) in Sex Roles, Jarvis et al. (2003) in the Journal of Consumer Research, Sen's philosophy and the WHO and NHATS documentation, are not covered by these searches."
+  }
+}
