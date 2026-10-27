@@ -3,4 +3,332 @@
 % ============================================================
 \label{ch:guide}
 
-[To be written.]
+This thesis asks whether a person's capacity to stay healthy in later life can
+be measured, and whether the measurement says anything about what happens to
+that person next. It proposes a measure called $H_{\text{potential}}$ (also
+written H-Potential). The measure has three parts, called domains.
+\emph{Biomedical Potential} is the physiological and functional reserve a
+person has: the body's capacity, as shown by health conditions, physical
+function and related survey items. \emph{Social Modifiers} are the
+interpersonal, behavioural and material conditions that help or hinder the use
+of that reserve. \emph{Systemic Burdens} are the structural and health-system
+barriers, such as cost and access to care, that decide whether support and
+treatment reach the person.
+
+The measure is developed in the National Health and Aging Trends Study
+(NHATS), a long-running survey that follows a nationally representative sample
+of Medicare beneficiaries aged 65 years and over in the United States
+\citep{kasper_2021}. Each person's score is fixed at one interview, Round~5,
+and is then tested against two events over the following five years: death
+from any cause, and a first overnight stay in hospital. A final chapter sets
+out how the same measure could be carried into haemophilia, where better
+treatment means that many people now live into older age with the disease.
+No haemophilia data are analysed in the thesis.
+
+At the time of writing, the analysis of the NHATS data has not been run. The
+results chapters are laid out in full, with marked places where the numbers
+will go, and every test, threshold and rule for reading the results is fixed
+before any result is seen. A reader should therefore read the thesis as a
+pre-specified study with its theory and design complete and its results
+pending, in the way a trial protocol and its statistical analysis plan are
+read before the trial reports.
+
+The examiners and most readers of this thesis are pathologists, haematologists
+and laboratory scientists. They know how an assay is validated, how a
+diagnostic test is evaluated, how cohort studies and trials are run, and how
+survival curves and hazard ratios are read. They are less likely to work every
+day with factor analysis, axioms and proofs, or the language of systems
+engineering. This guide is written for them. It states what the thesis claims
+as new (Section~\ref{sec:guide-new}), suggests a route through the chapters
+(Section~\ref{sec:guide-paths}), and gives a glossary that pairs each
+statistical or modelling term with its nearest counterpart in laboratory or
+clinical practice (Section~\ref{sec:guide-glossary}). The pairings compare
+methods, and each entry says where the comparison stops holding.
+Chapter~\ref{ch:theory} has a shorter glossary of the same kind
+(Section~\ref{sec:intro-glossary}), aimed at readers who move between clinical
+work, economics and statistics.
+
+% ------------------------------------------------------------
+\section*{What Is New in This Thesis}
+\addcontentsline{toc}{section}{What Is New in This Thesis}
+\label{sec:guide-new}
+
+The thesis does not claim to be the first to measure health in several
+dimensions, to combine biological and social information, or to estimate a
+health measure that cannot be observed directly. Earlier work has done each of
+these \citep{caballero_athlos_2017,who_2015_ageing}. What it claims is
+narrower, and it states each claim with the test that could reject it.
+
+The central contribution is a formal one. Most composite health scores add
+their parts together with chosen weights, so a high value in one part can
+always make up for a low value in another. The thesis instead writes down, in
+advance, the properties a measure of realised capability must have, and
+derives the form of the measure from them. The chief property is that complete
+social exclusion, or a health system that will not treat the person at all,
+cannot be cancelled by good biomedical reserve. A haematologist will recognise
+the pattern: a severe deficiency of one clotting factor is not corrected by
+normal levels of the others. The resulting rule, called the
+Capability Realisation Model (Chapter~\ref{chap:crf}), multiplies the domains
+instead of adding them. Several further properties then follow by proof rather
+than by assertion: biomedical reserve is worth more where the social and
+structural context is favourable; any gap in capability between two people
+splits exactly into biomedical, social and structural parts with nothing left
+over; and the model gives a rule for ranking interventions under a fixed budget
+in which the weight given to the worst-off is a single stated number
+\citep{atkinson_1970}.
+
+Around this model the thesis builds the means of testing it. The measurement
+of the three domains is fixed without looking at deaths or hospital stays, so
+that a later prediction is a test of the measure and not a product of fitting
+it. The prognostic analysis compares the measure with frailty, comorbidity,
+functional status and a health-utility proxy chosen in advance, and judges it
+on discrimination, calibration and clinical net benefit as well as on hazard
+ratios. The realisation model is then compared head to head with a simple
+additive score and with the score from the measurement model, under criteria
+fixed before the outcomes are seen. A translational chapter sets out how the
+measure would be adapted to haemophilia and checked there. A systems chapter
+treats the whole analysis as an engineered process, with requirements, a record
+of the ways it could fail, and a statement of who would act on the score.
+
+Table~\ref{tab:guide-novelty} sets these contributions out one by one. For
+each it gives what existed before, what the thesis adds, where the addition is
+made, and how it is tested or checked. The last column separates two kinds of
+check. Mathematical claims are checked by proof and by the code in
+Appendix~\ref{app:verification}, which reruns every computable statement in the
+text; that code checks arithmetic and algebra, not medicine. Empirical claims
+are tests the thesis has set up and whose answers depend on results not yet
+produced. Until those results exist, the empirical contributions are
+hypotheses with stated failure conditions (H1 to H6 of
+Chapter~\ref{ch:introduction}), and the thesis treats them as such.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.4cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{1.4cm} >{\raggedright\arraybackslash}p{3.7cm}}
+\caption{What the thesis adds, where, and how each addition is tested or checked. Empirical tests are set up but not yet run.}
+\label{tab:guide-novelty}\\
+\toprule
+\textbf{Contribution} & \textbf{What existed before} & \textbf{What this thesis adds} & \textbf{Where} & \textbf{How it is tested or checked} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{l}{\textit{Table~\ref{tab:guide-novelty} continued}} \\
+\toprule
+\textbf{Contribution} & \textbf{What existed before} & \textbf{What this thesis adds} & \textbf{Where} & \textbf{How it is tested or checked} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+Axiomatic realisation model & Composite scores, including the earlier formula $(L\cdot Q)S-B$, assert a rule for combining their parts, usually a weighted sum. & Six axioms stated first; the form $H=P\,S^{\alpha}R^{1-\alpha}$ derived from them; non-compensation and complementarity proved. & Ch.~\ref{chap:crf}; App.~\ref{app:mathematical_foundations} & Proofs, and the verification code of App.~\ref{app:verification}. Empirically, by hypothesis H6: a pre-specified head-to-head comparison with an additive score and the factor score, with parameters frozen before outcomes are seen. \\
+\addlinespace
+Gap decomposition and policy calculation & A single cost-per-outcome threshold; weighting of the worst-off left implicit. & An exact split of any capability gap into three parts; a budget-constrained policy gradient; an equity-weighted population measure with one declared parameter. & Ch.~\ref{chap:crf} & Proofs and verification code. The response of each domain to a real intervention lies outside the model and is not tested here. \\
+\addlinespace
+Health as capability in context & Frailty, intrinsic capacity, capability and social-determinants research developed largely apart; social factors often entered as covariates after the health measure was defined. & One ordered account separating biological capacity, enabling conditions, structural constraints, realised function and outcomes; a rule for when a social factor is part of the measure and when it is a cause acting on it. & Ch.~\ref{ch:theory}; Ch.~\ref{ch:systems} & H1: the three domains must be measurable and distinct. Discriminant validity against frailty in Ch.~\ref{ch:results1}. \\
+\addlinespace
+Measurement kept apart from prediction & Many prognostic indices choose items and weights by their link with the outcome they later predict. & The measure is fixed without outcome data; outcomes are left out of the imputation model; the bootstrap refits both stages in every resample. & Ch.~\ref{ch:methods}; Ch.~\ref{ch:results1} & A pipeline test: shuffling every outcome column leaves the measurement model and all domain scores unchanged. \\
+\addlinespace
+Rival measurement structures & A single general factor is often assumed behind a composite score. & A correlated three-domain model is the starting point; a single score is carried forward only if fit, determinacy and meaning support it. & Ch.~\ref{ch:methods}; Ch.~\ref{ch:results1} & H1, H2 and H5 (Ch.~\ref{ch:results1}); invariance by sex and age band, H4. Results pending. \\
+\addlinespace
+Prognostic value judged on several criteria & A statistically significant hazard ratio is often taken as enough. & Comparison with frailty, comorbidity, functional status and a utility proxy fixed in advance; discrimination, calibration, net benefit, optimism-corrected performance; death handled as a competing risk for admission. & Ch.~\ref{ch:methods}; Ch.~\ref{ch:results2} & H3 (Ch.~\ref{ch:results2}). Results pending. \\
+\addlinespace
+Route to haemophilia & Prediction models moved to a new population often perform worse there \citep{moons_2019,collins_2024}. & Indicator mapping, a proposed modified Delphi panel, re-estimation, invariance testing, recalibration and five phases of external validation, set out before any haemophilia data exist. & Ch.~\ref{ch:translational}; App.~\ref{app:hemo_dynamics} & Not yet tested; no haemophilia data are analysed. Each phase states its own criteria. \\
+\addlinespace
+The instrument as an engineered system & Psychometric and prognostic tests, with little said about who acts on a score or how errors pass between stages. & Requirements traced to tests, a record of failure modes and their effects, and a control structure for use. & Ch.~\ref{ch:systems}; App.~\ref{app:datachecks} & Requirements that need no data are checked by the code of App.~\ref{app:verification}; those that need data stay open until the analysis is run. \\
+\end{longtable}
+\endgroup
+
+Two points about Table~\ref{tab:guide-novelty} prevent a misreading. First,
+the rows are not independent claims of equal weight. The first row is the
+centre of the thesis; the measurement, prognostic and translational rows exist
+to give it something to be tested against, and the last row states what must
+surround any of them before a score is acted on. Second, a contribution in the
+table can fail without the others failing. If the three domains cannot be told
+apart, the realisation model has no sound inputs in these data, but its
+mathematics still stands; if the score predicts nothing beyond frailty, the
+measurement work still stands as a description. Chapter~\ref{ch:conclusions}
+states, for each hypothesis, what each possible result would mean.
+
+% ------------------------------------------------------------
+\section*{Reading Paths}
+\addcontentsline{toc}{section}{Reading Paths}
+\label{sec:guide-paths}
+
+The thesis has ten chapters and six appendices, and they do not all ask the
+same of the reader. Table~\ref{tab:guide-paths} sorts them into three groups.
+The first group can be read in full by a clinical reader: they deal with
+cohorts, outcomes, survival analysis and validation, and they give the
+clinical counterpart of each statistical term at first use. The second group
+can be read through their openings and their closing sections. Each main
+chapter opens with a short passage headed ``How to read this chapter'' or
+``The argument in outline'', which states its question and the order of its
+argument, and closes with a section on what the chapter settles and what it
+leaves open; together these carry the argument without the detail. The third
+group is mainly mathematical. Its results are used elsewhere, and each states
+in plain words what it establishes, so a reader can accept the result and
+leave the proof to those who wish to check it. Appendix~\ref{app:mathematical_foundations}
+follows each formal result with a remark headed \emph{In plain language},
+written to stand alone.
+
+\begin{table}[htbp]
+\centering
+\caption{Suggested reading paths for a clinical or laboratory reader.}
+\label{tab:guide-paths}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.3cm} >{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}p{8.6cm}}
+\toprule
+\textbf{Chapter or appendix} & \textbf{How to read it} & \textbf{What it establishes} \\
+\midrule
+\multicolumn{3}{l}{\textit{Read in full}} \\
+Ch.~\ref{ch:introduction}, Introduction and Literature Review & In full & The problem, the measures already in use, the aims, and hypotheses H1 to H6 with what each failure would mean. \\
+Ch.~\ref{ch:results1}, Measurement Model & In full & Whether the three domains can be measured in NHATS and told apart, and whether a single score is justified. \\
+Ch.~\ref{ch:results2}, Prognostic Performance & In full & Whether the score predicts death and first hospital stay, and whether it adds to frailty and other measures. \\
+Ch.~\ref{ch:translational}, Haemophilia & In full & How the domains map to haemophilia indicators, the proposed Delphi panel, and the phases of external validation. \\
+Ch.~\ref{ch:discussion}, Discussion & In full & How each possible pattern of results will be read, strengths and limitations, and future work. \\
+Ch.~\ref{ch:conclusions}, Conclusions & In full & The contributions, the answer to each aim and hypothesis as far as the thesis allows, and the limits of every claim. \\
+\midrule
+\multicolumn{3}{l}{\textit{Read the opening and closing sections}} \\
+Ch.~\ref{ch:theory}, Theoretical Framework & Opening, Sections~\ref{sec:intro-bridge}, \ref{sec:intro-glossary}; close & What the measure is meant to capture, the difference between a cause of health and a part of it, and why the earlier formula is a guide and not an estimator. \\
+Ch.~\ref{ch:systems}, Systems View & Opening, Section~\ref{sec:sys-fmea}, close & Capacity read as a stock and realised health as a flow; the analysis as a chain of stages with listed failure modes. \\
+App.~\ref{app:verification}, Verification & Opening & What the verification code checks, and what it cannot check. \\
+App.~\ref{app:datachecks}, Data Sources & Opening & How the NHATS files were checked against their documentation, and the corrections that followed. \\
+\midrule
+\multicolumn{3}{l}{\textit{Mainly mathematical: read the plain-language passages}} \\
+Ch.~\ref{ch:methods}, Formalism and Specification & Design, cohort, outcome and validation sections & The cohort, index date and outcomes; the factor model and the Cox model; the rule that the measure is fixed before outcomes are seen. \\
+Ch.~\ref{chap:crf}, Realisation Model & Opening box and close & The axioms, the multiplicative form, the exact gap decomposition, the policy gradient, and the head-to-head test that could reject the model. \\
+App.~\ref{app:mathematical_foundations}, Mathematical Foundations & \emph{In plain language} remarks & Why adding the domains breaks a basic requirement; the family of forms that survive; the difference between a construct and its indicators. \\
+App.~\ref{app:dynamical}, Dynamical Extension & Purpose and summary & A proposed model of how the biomedical state changes over time; not used in the empirical analysis. \\
+App.~\ref{app:hemo_dynamics}, Haemophilia Example & Factor kinetics and summary & A worked model of clotting factor levels, inhibitors and treatment, as an example of the dynamical extension. \\
+App.~\ref{app:computation}, Computation & Purpose & The algorithms for the dynamical simulation; separate from the empirical analysis code. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A haematologist reading for the haemophilia application can go from
+Chapter~\ref{ch:introduction} to Chapter~\ref{ch:translational} and then to
+Appendix~\ref{app:hemo_dynamics}, whose factor kinetics will be familiar
+material written in the notation of the dynamical extension. A reader who
+wants to judge the empirical design should read
+Chapter~\ref{ch:methods} for the cohort, outcomes and survival models
+alongside Chapters~\ref{ch:results1} and~\ref{ch:results2}. A reader who wants
+to judge the central formal claim should read the opening box of
+Chapter~\ref{chap:crf}, its table of axioms in plain terms, and its closing
+section, and then the falsification section of the same chapter, which fixes
+the comparison that would reject the model.
+
+% ------------------------------------------------------------
+\section*{A Glossary for the Laboratory Reader}
+\addcontentsline{toc}{section}{A Glossary for the Laboratory Reader}
+\label{sec:guide-glossary}
+
+Table~\ref{tab:guide-glossary} lists the terms from statistics, measurement
+theory and systems engineering that the thesis uses most often. Each is given
+a plain meaning and its nearest counterpart in laboratory or clinical
+practice. Several of the counterparts are close, because the problems are the
+same: estimating a quantity that cannot be seen directly, checking that a
+measurement is precise and accurate, and checking that it means the same thing
+in different groups. The last column also says where each counterpart stops
+holding. The break that recurs most often is this: a laboratory assay
+can be checked against reference material of known value, and a latent health
+domain has no such reference. Its scale is fixed by convention, and its
+validity rests on the pattern of evidence across many checks rather than on
+comparison with a known standard.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{6.6cm}}
+\caption{Terms used in the thesis, their plain meaning, and their nearest laboratory or clinical counterpart.}
+\label{tab:guide-glossary}\\
+\toprule
+\textbf{Term} & \textbf{Plain meaning} & \textbf{Nearest laboratory or clinical counterpart, and where it breaks down} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\textit{Table~\ref{tab:guide-glossary} continued}} \\
+\toprule
+\textbf{Term} & \textbf{Plain meaning} & \textbf{Nearest laboratory or clinical counterpart, and where it breaks down} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{3}{l}{\textit{Measurement}} \\
+\addlinespace
+Latent variable & A quantity that cannot be measured directly and is estimated from several observed measurements. Each domain, and $H_{\text{potential}}$, is latent. & An analyte concentration inferred from an assay signal through a calibration curve; or glomerular filtration rate estimated from creatinine and cystatin~C. Breaks down: an analyte exists as a physical quantity with a reference method; a latent domain has neither, and its zero and unit are fixed by convention. \\
+Indicator & One observed item, usually a survey answer, used to estimate a latent variable. & One test in a panel. Breaks down: most indicators are self-reported and take a few ordered categories, not a continuous reading. \\
+Factor loading & How strongly an indicator moves with the latent variable it is assigned to. A standardised loading near 1 means the indicator tracks the domain closely. & The slope of an assay's calibration curve: how much the signal changes per unit of analyte. Breaks down: a loading is estimated from the study data themselves, not from standards of known value. \\
+Reflective measurement & The indicators are effects of the latent variable, so they should rise and fall together. & One-stage and chromogenic factor~VIII assays both respond to the plasma factor~VIII level, so their results move together across patients. Breaks down: a health domain is not a single substance, and its indicators can share causes other than the domain. \\
+Formative measurement & The indicators make up the construct between them and need not be correlated. & The components of a clinical risk score, such as age, blood pressure and smoking. Breaks down: because the parts need not agree, internal-consistency measures of reliability do not apply. \\
+Confirmatory factor analysis & A test of a model, stated in advance, that says which indicator belongs to which domain, against the correlations observed in the data. & Checking in a validation study that each test in a panel responds to the analyte it was designed for and not to others. Breaks down: the whole pattern is judged at once, with no pure sample of any one domain. \\
+Higher-order factor & A single general factor assumed to lie behind the three domains, which would justify one overall score. & A single summary index reported from a panel. Breaks down: the thesis carries one score forward only if the data show the domains move together enough to support it; otherwise it reports the three domain scores. \\
+Model fit (CFI, TLI, RMSEA, SRMR) & How closely the correlations the model predicts match those observed. & The scatter of calibration standards about a fitted calibration curve. Breaks down: the usual cut-offs are conventions, not limits derived from a stated purpose, and in a large sample small, unimportant misfits can look significant. \\
+Factor score & Each person's estimated value on a latent variable, reported with its standard error. & A patient result reported with its measurement uncertainty. Breaks down: the uncertainty differs between people, depending on which of their items were answered. \\
+Reliability (composite reliability, omega) & The share of the variation in a score that reflects the latent variable rather than measurement error. & Assay precision. Breaks down: omega is computed from several items at one occasion, not from repeated measurement of one sample; and, as with a precise but biased assay, a reliable score can still measure the wrong thing. \\
+Average variance extracted (AVE) & The average share of each indicator's variation explained by its domain; 0.50 is the conventional level. & The share of an assay signal due to the analyte rather than to noise and interference. Breaks down: it is an average over indicators, so a domain can have adequate reliability with a low AVE if its indicators each capture a different aspect of it. \\
+Discriminant validity & Evidence that two domains, or the score and an existing measure such as frailty, are different things rather than one thing measured twice. & Analytical specificity: an immunoassay that cross-reacts with a related molecule cannot tell the two apart. Breaks down: it is judged from correlations (Fornell--Larcker criterion, HTMT ratio) because no sample contains only one domain. \\
+Measurement invariance & The measure gives the same reading for the same underlying level in different groups, here by sex and by age band. & An assay giving the same result for the same concentration in different patient groups or in different laboratories, as checked by inter-laboratory comparison. Breaks down: there is no shared reference material; invariance is tested in stages, first the pattern, then the loadings, then the intercepts or thresholds. \\
+\midrule
+\multicolumn{3}{l}{\textit{Data and design}} \\
+\addlinespace
+Index date & The date from which each person is followed: the Round~5 NHATS interview. & The enrolment or baseline visit of a cohort study. Breaks down: no clinical event defines it; it is fixed by the survey timetable. \\
+Outcome-blind measurement & The measurement model is fixed before any death or hospital stay is examined. & A protocol and analysis plan fixed before unblinding in a trial. Breaks down: the data already exist, so the safeguard is the order of the analysis and a test that the measure does not change when outcomes are shuffled. \\
+Multiple imputation & Each missing value is filled several times with plausible values drawn from a model; the analysis is run on each completed set and the results are combined. & No direct counterpart. It is not like repeating a failed assay: it creates no new measurement, and its purpose is to carry the uncertainty about the missing value into the result. \\
+Survey weight & The number of people in the population that each participant represents. NHATS samples some age and race groups more heavily on purpose, and the weights correct for this. & Correcting a reference-interval study that recruited some groups in larger numbers than they occur in the population. Breaks down: weights answer questions about the population, not about the internal structure of the measure. \\
+\midrule
+\multicolumn{3}{l}{\textit{Survival and prediction}} \\
+\addlinespace
+Hazard and hazard ratio & The hazard is the rate of an event among people still at risk at a given time. The hazard ratio compares that rate between groups, or per unit of a score. & As in trials and cohort studies. Breaks down: the score has no natural unit, so a hazard ratio per unit is read only on the scale the model fixes; and the ratio here is prognostic, not an estimate of what changing a person's score would do. \\
+Censoring & Follow-up ends before the event is seen; the person is known to be event-free up to that time. & A patient lost to follow-up, or alive at the end of a cohort study. Close match. \\
+Competing risk & An event that prevents the event of interest from being seen. Here death before any hospital stay prevents that stay. & In a cohort counting first admissions, deaths before admission. Breaks down: treating such deaths as ordinary censoring overstates the share admitted (Proposition~\ref{prop:competing}). \\
+Cause-specific and subdistribution hazard & Two ways to model an event with a competing risk. The first asks how fast admissions occur among those alive and not yet admitted (a question about mechanism); the second, the Fine--Gray model, describes the share admitted by a given time (a question about risk). & No laboratory counterpart. The thesis uses the first as its primary analysis and the second as a sensitivity analysis. \\
+Cumulative incidence & The share of people who have had the event by a given time, allowing for competing risks. & One minus the Kaplan--Meier survival estimate, when there are no competing risks. Breaks down: with competing risks, one minus Kaplan--Meier overstates it. \\
+Concordance (C-statistic) & The probability that, of two people, the one who has the event first had the higher predicted risk. & The area under an ROC curve. Breaks down: the time-dependent version used here allows for censoring and for when events occur, which a single ROC curve for a yes-or-no outcome does not. \\
+Calibration & Agreement between predicted and observed event rates, summarised by calibration-in-the-large (overall agreement) and the calibration slope (whether predictions are too extreme or too modest). & Checking an assay against standards of known value for bias. Breaks down: a risk model is checked against observed rates in groups of people, not against a single reference sample of known value. \\
+Net benefit and decision curve & The true positives a model finds, minus its false positives weighted by the harm of treating unnecessarily, at a chosen risk threshold, plotted across thresholds \citep{vickers_elkin_2006}. & Choosing a diagnostic cut-off by weighing sensitivity against specificity in the light of what follows a positive result. Breaks down: it needs a real decision and threshold; the thesis uses it only where one can be justified. \\
+Bootstrap optimism correction & The whole analysis is refitted in many samples drawn with replacement from the cohort, and the fall in performance when each refit is applied to the original data estimates how flattering the apparent performance is. & Repeating a validation run on resampled material. Breaks down: no new patients are involved, so it does not replace external validation in another population. \\
+External validation and recalibration & Testing the measure in a population not used to build it, and adjusting its baseline risk or scale where needed. & Transferring a reference interval to a new laboratory or population and verifying it there before use. Close match in purpose; the thesis sets out these steps for haemophilia but does not carry them out. \\
+\midrule
+\multicolumn{3}{l}{\textit{The realisation model}} \\
+\addlinespace
+Axiom & A requirement stated before the form of the measure is chosen; the form is then derived from the requirements. & Analytical performance specifications set before an assay is chosen. Breaks down: an axiom is not tested directly by data; the forms it allows are. \\
+Realisation function & The rule that combines biomedical potential $P$, social enablement $S$ and structural freedom $R$ into realised capability, $H=P\,S^{\alpha}R^{1-\alpha}$. & No direct counterpart. In the coagulation cascade, the output depends on every required factor being present, and the realisation function treats the context domains in a similar way. Breaks down: the function is smooth, so partial shortfalls reduce the output in proportion rather than stopping it. \\
+Compensatory and non-compensatory & In a compensatory (additive) rule a high value in one domain can make up for a low value in another. In a non-compensatory rule a severe shortfall in one domain limits what the others can achieve, and a complete shortfall cannot be made up at all. & Normal levels of the other clotting factors do not make up for a severe factor~VIII deficiency. Breaks down: treatment can restore haemostasis by another route, as bypassing agents do, whereas the axioms allow no route around a complete social or structural shortfall; and in the thesis's main form, shortfalls short of complete are partly compensated. \\
+\midrule
+\multicolumn{3}{l}{\textit{Systems terms}} \\
+\addlinespace
+Stock & A quantity that has built up and exists at a point in time. The thesis reads health capacity as a stock. & Body iron stores, as reflected in ferritin. Breaks down: capacity is not a physical quantity and has no direct marker. \\
+Flow & A rate of change per unit of time that adds to or drains a stock. & Daily iron absorption and loss; or the clearance rate of an infused clotting factor. Breaks down: NHATS records the domains at one interview, so the flows are not observed directly. \\
+Feedback loop & A chain in which the result of a process acts back on the process itself. & Thrombin activating factors~V and~VIII, which speeds further thrombin generation; protein~C, once activated, inactivating them. Breaks down: the feedback the thesis proposes between domains is slower, social as well as biological, and not tested by the data. \\
+Failure mode & A way in which a process can give a wrong result, recorded with its effect and the control that guards against it. & Pre-analytical, analytical and post-analytical errors in the total testing process; a miscoded survey answer behaves like a mislabelled sample, in that the wrong result looks valid. Close match in method. \\
+Verification and validation & Verification checks that the analysis was built as specified; validation checks that it measures the intended thing in practice. & Verifying a manufacturer's stated performance for an assay, as against validating a method for its intended clinical use. Close match. \\
+\end{longtable}
+\endgroup
+
+% ------------------------------------------------------------
+\section*{A Note on Notation}
+\addcontentsline{toc}{section}{A Note on Notation}
+\label{sec:guide-notation}
+
+The symbols used in the thesis are listed, with their meanings, in the List of
+Symbols in the front matter. Three groups of symbols recur and are worth
+knowing before the chapters are read. The letters $L$, $Q$, $S$ and $B$ belong
+to the earlier conceptual formula $(L\cdot Q)S-B$, which the thesis keeps as a
+guide to thinking and does not use to estimate the score. The letters $P$, $S$
+and $R$, each on a scale from 0 to 1, are the inputs to the realisation model
+of Chapter~\ref{chap:crf}, where $R=1-B$ is structural freedom, and $\alpha$
+and $\rho$ are its parameters, fixed before any outcome is examined. The Greek
+letter $\zeta$ denotes the latent health capacity estimated by the measurement
+model, and $\widehat H_i$ is the estimated score for person $i$. The letter $S$
+therefore has a related but different role in the conceptual formula and in the
+realisation model; the chapter in which it appears says which is meant. Chapter~\ref{chap:crf}
+also opens with its own table of notation, and every
+numbered equation in Chapter~\ref{chap:crf} is marked as a definition, a
+structural relation or a consequence of earlier equations, so that the role of
+each step can be seen without working through it.

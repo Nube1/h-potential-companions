@@ -1,30 +1,36 @@
-\begin{longtable}{@{\extracolsep{\fill}} c l  c @{}}
-\scriptsize
-\textbf{Symbol} & \textbf{Meaning} & \textbf{Section} \\
+% List of symbols. Locations are given by reference so they stay correct as
+% the chapters change. Symbols used only inside one proof are defined there.
+\begin{longtable}{@{} p{2.2cm} p{9.6cm} p{2.6cm} @{}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Where} \\
 \hline
 \endhead
-
-$H$ & Health Potential Metric (Years of Healthy, Equitable Life Potential) & 1.3, 3.1 \\
-$L$ & Life Expectancy Adjusted for Disease Severity (Years) & 2.2.1, 3.1.2 \\
-$Q$ & Quality-of-Life Multiplier ($1 - \kappa \sum w_i$) & 2.2.1, 3.1.2 \\
-$S$ & Social Modifier Term (Multiplicative factor for access and barriers) & 2.2.2, 3.1.2 \\
-$B$ & Systemic Burden Term (Total years of life potential lost) & 2.2.3, 3.1.2 \\
-$\kappa$ & Normative Scaling Constant (QoL sensitivity parameter, $\approx 0.34$) & 2.2.1 \\
-$w_i$ & Normalised Symptom/Severity Indicator (Input to $Q$) & 2.2.1 \\
-$A$ & Treatment Access (Logistic function of macro-covariates) & 2.2.2, 3.1.2 \\
-$T$ & Treatment Efficacy / Treatment Quality (Relative improvement factor) & 2.2.2, 3.1.2 \\
-$D$ & Disease Severity / Structural Barriers (Multiplicative Penalty Factor) & 2.2.2, 3.1.2 \\
-$C$ & Comorbidity Index (e.g., Normalised Charlson Index) & 2.2.2, 3.1.2 \\
-$\psi$ & Psychosocial / Stigma Penalty (Mental Health Burden) & 2.2.2, 3.1.2 \\
-$\varphi$ & Education Deficit (Years of foregone education) & 2.2.3, 3.1.2 \\
-$\Delta E$ & Pain-Years (Cumulative time in significant clinical pain) & 2.2.3, 3.1.2 \\
-$M$ & Economic Mobility Loss (Lost productive potential in equivalent years) & 2.2.3, 3.1.2 \\
-$X$ & Core Disease Marker Concentration (Generalized ODE State Variable) & 3.1.3, 5.1.1 \\
-$S_T$ & Clotting Factor Concentration (Haemophilia-specific $X$) & 3.1.3, 6.1 \\
-$Y$ & Inhibitor Titre (e.g., Bethesda Units) & 3.1.3, 6.2.1 \\
-$Z$ & Homeostatic / Restorative Factor (e.g., VWF concentration) & 3.1.3, 6.1 \\
-$dW_t$ & Wiener Process Increment (Source of continuous-time Gaussian noise) & 5.1.3, 5.2.1 \\
-$\rho(x, t)$ & Probability Density Function (PDF) of patient states (PDE) & 5.3.1 \\
-$\epsilon_A$ & Access Elasticity (Relative responsiveness of $H$ to $A$) & 4.3.1, E.9.1 \\
-
+\multicolumn{3}{@{}l}{\textit{The measure and its domains}} \\
+$P$ & Biomedical Potential: the domain score for the body's capacity, scaled to $[0,1]$ & Ch.~\ref{ch:theory}, \ref{app:crf} \\
+$S$ & Social Modifiers: the domain score for the social conditions that let capacity be used, scaled to $[0,1]$ (in the heuristic $(L\cdot Q)S-B$ of Chapter~\ref{ch:theory}, $S$ is instead a multiplicative social factor) & Ch.~\ref{ch:theory}, \ref{app:crf} \\
+$B$ & Systemic Burdens: the domain score for structural constraint, scaled to $[0,1]$, higher meaning more burden & Ch.~\ref{ch:theory}, \ref{app:crf} \\
+$R$ & Structural freedom, $R=1-B$ & Ch.~\ref{app:crf} \\
+$H$ & Realised capability, the H-Potential score produced by the realisation function from $P$, $S$ and $R$ & Ch.~\ref{app:crf} \\
+$\widehat H_i$ & The estimated score for person $i$ & Ch.~\ref{ch:methods} \\
+$\alpha$ & Weight given to $S$ against $R$ in the realisation function & Ch.~\ref{app:crf} \\
+$\rho$ & Substitution parameter of the CES family: how far one domain can make up for another (in Appendix~\ref{app:dynamical}, $\rho(x,t)$ is a density; see below) & Ch.~\ref{app:crf} \\
+\multicolumn{3}{@{}l}{\textit{Measurement model}} \\
+$\eta_k$ & Latent score of domain $k$ & Ch.~\ref{ch:methods} \\
+$\zeta$ & General (higher-order) factor common to the three domains & Ch.~\ref{ch:methods} \\
+$\lambda$ & Factor loading: how strongly an indicator tracks its domain & Ch.~\ref{ch:methods}, \ref{ch:results1} \\
+$\omega$ & Composite reliability of a domain & Ch.~\ref{ch:results1} \\
+\multicolumn{3}{@{}l}{\textit{Survival and prediction}} \\
+$h(t)$ & Hazard: the instantaneous rate of the event at time $t$ among those still at risk & Ch.~\ref{ch:methods}, \ref{ch:results2} \\
+$C$ & Concordance (Harrell's or Uno's C-statistic) & Ch.~\ref{ch:results2} \\
+\multicolumn{3}{@{}l}{\textit{Heuristic form of Chapter~\ref{ch:theory}}} \\
+$L$ & Life expectancy adjusted for disease severity (years) & Ch.~\ref{ch:theory} \\
+$Q$ & Quality-of-life multiplier, so that $L\cdot Q$ is quality-adjusted survival & Ch.~\ref{ch:theory} \\
+$T$ & Treatment input & App.~\ref{app:dynamical} \\
+\multicolumn{3}{@{}l}{\textit{Dynamical extension and haemophilia}} \\
+$X(t)$ & Disease marker concentration, the general state variable & App.~\ref{app:dynamical} \\
+$S_T$ & Clotting factor concentration (the haemophilia form of $X$) & App.~\ref{app:hemo_dynamics} \\
+$Y$ & Inhibitor titre (Bethesda units) & App.~\ref{app:hemo_dynamics} \\
+$\kappa$ & Efficacy of immune tolerance induction in suppressing the inhibitor & App.~\ref{app:hemo_dynamics} \\
+$Z$ & Homeostatic or restorative factor & App.~\ref{app:dynamical} \\
+$dW_t$ & Increment of a Wiener process, the source of random variation & App.~\ref{app:dynamical} \\
+$\rho(x,t)$ & Density of patient states across a cohort & App.~\ref{app:dynamical} \\
 \end{longtable}
