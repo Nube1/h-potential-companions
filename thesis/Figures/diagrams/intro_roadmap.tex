@@ -1,0 +1,61 @@
+% Roadmap of the thesis (Chapter 1, Figure fig:intro-roadmap). Greyscale; parts
+% shown as shaded bands, appendices as dashed boxes.
+{\hpdiagramsizes
+\begin{tikzpicture}[x=1cm, y=1cm, font=\footnotesize]
+\hyphenpenalty=10000 \exhyphenpenalty=10000
+\tikzset{
+  ch/.style={hpbox, font=\footnotesize, text width=2.3cm, minimum height=1.05cm, inner sep=3pt},
+  ap/.style={hpbox, hpdash, thin, fill=white, font=\scriptsize, text width=2.9cm,
+             minimum height=0.95cm, inner sep=2.5pt},
+  part/.style={font=\footnotesize\itshape, align=right, text width=1.55cm, anchor=east},
+  band/.style={fill=black!4, draw=black!35, rounded corners=3pt, inner sep=4pt},
+}
+% Chapters, laid out row by row (rows are the parts of the thesis)
+\node[ch] (c1) at (0,0)      {\textbf{1} Introduction and literature review};
+\node[ch] (c2) at (2.85,0)   {\textbf{2} Theoretical framework};
+\node[ch] (c3) at (5.7,0)    {\textbf{3} Systems view};
+\node[ch] (c4) at (5.7,-2)   {\textbf{4} Formalism and methods};
+\node[ch] (c5) at (2.85,-2)  {\textbf{5} Realisation model and policy};
+\node[ch] (c6) at (5.7,-4)   {\textbf{6} Results I: measurement};
+\node[ch] (c7) at (2.85,-4)  {\textbf{7} Prognostic performance};
+\node[ch] (c8) at (0,-6)     {\textbf{8} Haemophilia};
+\node[ch] (c9) at (2.85,-8)  {\textbf{9} Discussion};
+\node[ch] (c10) at (5.7,-8)  {\textbf{10} Conclusions};
+% Bands for the five parts
+\begin{scope}[on background layer]
+  \node[band, fit=(c1)(c3), minimum width=8.6cm] (b1) {};
+  \node[band, fit=(c5)(c4)(c1.west|-c4)] (b2) {};
+  \node[band, fit=(c7)(c6)(c1.west|-c6)] (b3) {};
+  \node[band, fit=(c8)(c3.east|-c8)] (b4) {};
+  \node[band, fit=(c1.west|-c9)(c10)] (b5) {};
+\end{scope}
+\node[part] at ([xshift=-2pt]b1.west) {Problem and theory};
+\node[part] at ([xshift=-2pt]b2.west) {Method and models};
+\node[part] at ([xshift=-2pt]b3.west) {Results};
+\node[part] at ([xshift=-2pt]b4.west) {Application};
+\node[part] at ([xshift=-2pt]b5.west) {Interpretation};
+% What each chapter feeds into
+\draw[hparrow] (c1) -- (c2);
+\draw[hparrow] (c2) -- (c3);
+\draw[hparrow] (c3) -- (c4);
+\draw[hparrow] (c2) -- (c5);
+\draw[hparrow] (c4) -- (c5);
+\draw[hparrow] (c4) -- (c6);
+\draw[hparrow] (c5) -- (c7);
+\draw[hparrow] (c6) -- (c7);
+\draw[hparrow] (c5.west) -| (c8.north);
+\draw[hparrow] (c7) -- (c9);
+\draw[hparrow] (c8.south) |- (c9.west);
+\draw[hparrow] (c9) -- (c10);
+% Appendices
+\node[ap] (aA) at (9.1,0.15)  {\textbf{A} Mathematical foundations\\(supports 4 and 5)};
+\node[ap] (aB) at (9.1,-1.55) {\textbf{B} Dynamical extension\\(extends A; used in C)};
+\node[ap] (aC) at (9.1,-3.25) {\textbf{C} Haemophilia example\\(supports 8)};
+\node[ap] (aD) at (9.1,-4.95) {\textbf{D} Computational implementation\\(implements B and C)};
+\node[ap] (aE) at (9.1,-6.65) {\textbf{E} Verification\\(checks computed results)};
+\node[ap] (aF) at (9.1,-8.35) {\textbf{F} Data checks\\(supports 4 and 6)};
+\begin{scope}[on background layer]
+  \node[draw=black!50, dashed, rounded corners=3pt, inner sep=4pt, fit=(aA)(aF)] (bap) {};
+\end{scope}
+\node[font=\footnotesize\itshape, anchor=south] at (bap.north) {Appendices};
+\end{tikzpicture}}

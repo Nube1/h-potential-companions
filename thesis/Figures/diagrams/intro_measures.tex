@@ -1,0 +1,33 @@
+% Existing measures against what each captures (Chapter 1, Figure fig:intro-measures).
+% Greyscale: the proposed construct is set apart by a darker fill, a thick
+% border and a dashed rule, so the figure reads in black and white.
+{\hpdiagramsizes
+\begin{tikzpicture}[x=1cm, y=1cm, font=\footnotesize]
+\hyphenpenalty=10000 \exhyphenpenalty=10000
+\tikzset{
+  ms/.style={hpbox, font=\footnotesize, text width=3.3cm, minimum height=0.95cm, inner sep=3pt},
+  capt/.style={hpbox, fill=white, font=\footnotesize, text width=3.6cm, minimum height=0.95cm, inner sep=3pt},
+  tm/.style={font=\footnotesize, text width=3.4cm, align=left, anchor=west},
+  hd/.style={font=\footnotesize\bfseries, align=center},
+}
+\node[hd] at (0,1)    {Measure};
+\node[hd] at (5.3,1)  {What it captures};
+\node[hd, text width=3.4cm, align=left, anchor=west] at (7.75,1) {What time it refers to};
+\foreach \i/\m/\c/\t in {
+  0/{Diagnosis and comorbidity counts}/{Disease: the pathology present}/{The present state},
+  1/{Functional scales}/{Current function: what a person can or does do}/{The present state},
+  2/{Frailty indices}/{Accumulated deficit: vulnerability and reduced reserve}/{The history up to now, as a stock of deficits},
+  3/{Quality-of-life and utility measures}/{Experienced health, and for utilities its value}/{The present state, as experienced},
+  4/{Prognostic models}/{Risk of an event}/{A future event}}
+{
+  \node[ms] (m\i) at (0,-1.35*\i) {\m};
+  \node[capt] (k\i) at (5.3,-1.35*\i) {\c};
+  \node[tm] at (7.75,-1.35*\i) {\t};
+  \draw[hparrow] (m\i) -- (k\i);
+}
+\draw[hpdash, black!60] (-1.9,-6.08) -- (11.2,-6.08);
+\node[ms, hpkey, font=\footnotesize\bfseries] (mh) at (0,-7.0) {$H_{\text{potential}}$ (proposed)};
+\node[capt, hpkey, fill=black!10] (kh) at (5.3,-7.0) {Capacity in context: biological capacity and the conditions for its use};
+\node[tm] at (7.75,-7.0) {The present level of capacity, tested against later events};
+\draw[hparrow, very thick] (mh) -- (kh);
+\end{tikzpicture}}
