@@ -1,7 +1,12 @@
 study:
   name: H-Potential NHATS development and internal validation
   seed: 20260905
-  status: preregistration-template
+  # Frozen on 27 October 2026, before any NHATS file was obtained or opened.
+  # Git tag prereg-v1 marks this version; any later change to this file or to
+  # configs/nhats_layout.yaml is a deviation and must be reported as one.
+  status: frozen
+  frozen_on: "2026-10-27"
+  frozen_tag: prereg-v1
 data:
   cohort: NHATS approved de-identified analytic extract
   id: participant_id
