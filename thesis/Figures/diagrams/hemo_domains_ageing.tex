@@ -1,0 +1,36 @@
+% Chapter 8 (validation.tex): the three domains for a person ageing with haemophilia.
+% Print-safe: domains differ by grey shade and by border style; burden path is dashed.
+{\hpdiagramsizes
+\begin{tikzpicture}[node distance=3.5mm, font=\footnotesize]
+\tikzset{
+  dom/.style={draw, rounded corners=2pt, align=left, text width=5.9cm, inner sep=4pt, minimum height=1.55cm},
+  bpd/.style={dom, fill=black!4, thick},
+  smd/.style={dom, fill=black!14, thick, densely dotted},
+  sbd/.style={dom, fill=white, thick, dashed},
+}
+\node[hpnote, text width=5.9cm, align=left, font=\footnotesize\itshape] (who)
+  {A person ageing with haemophilia: inherited deficiency of factor~VIII or IX,
+   joint damage built up over years, a possible inhibitor, and the comorbidity of age};
+\node[bpd, below=of who] (bp) {\textbf{Biomedical Potential}\\
+  Joint health (HJHS); annualised bleed rate; bleeding phenotype; functional
+  mobility; inhibitor status; age-related comorbidity};
+\node[smd, below=of bp] (sm) {\textbf{Social Modifiers}\\
+  Access to a comprehensive-care centre; distance and travel time to specialist
+  care; caregiver and peer support; health literacy; treatment self-management};
+\node[sbd, below=of sm] (sb) {\textbf{Systemic Burdens}\\
+  Supply-chain stability; factor availability; out-of-pocket costs; insurance or
+  funding security; structural barriers to care};
+\node[hpkey, text width=1.55cm, minimum height=1.6cm, right=0.95cm of sm] (h) {$H_{\text{potential}}$};
+\node[hpbox, align=left, text width=3.55cm, font=\footnotesize, right=1.25cm of h] (out)
+  {\textbf{Outcomes of interest}\\[1pt]
+   Recurrent bleeding\\ Progression of arthropathy\\ Unplanned hospitalisation\\
+   Orthopaedic intervention\\ Loss of quality of life\\ All-cause mortality};
+\draw[hparrow] (bp.east) -- node[above, pos=0.45] {$+$} (h.north west);
+\draw[hparrow, densely dotted] (sm.east) -- node[above] {$+$} (h.west);
+\draw[hparrow, dashed] (sb.east) -- node[below, pos=0.45] {$-$} (h.south west);
+\draw[hparrow] (h) -- node[above=1pt, font=\scriptsize] {predicts} (out);
+\node[hpnote, font=\scriptsize\itshape, text width=13.6cm, below=3mm of sb.south west, anchor=north west]
+  {Border and arrow style mark the domain: solid, Biomedical Potential; dotted, Social Modifiers;
+   dashed, Systemic Burdens, which lowers the score and is reverse coded before estimation.
+   No haemophilia data are analysed; indicators are proposals for the Delphi panel.};
+\end{tikzpicture}}

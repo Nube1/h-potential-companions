@@ -1,0 +1,32 @@
+% Chapter 8 (validation.tex): staged translation roadmap with outputs and decision points.
+% Print-safe: phase boxes shaded, outputs plain, decisions bold-bordered; the Delphi stage is dashed.
+{\hpdiagramsizes
+\begin{tikzpicture}[font=\footnotesize]
+\tikzset{
+  ph/.style={hpbox, font=\footnotesize, text width=2.75cm, minimum height=1.55cm},
+  pr/.style={draw, rounded corners=2pt, align=left, text width=4.65cm, inner sep=3pt, minimum height=1.55cm},
+  dc/.style={draw, very thick, align=left, text width=4.3cm, inner sep=3pt, minimum height=1.55cm},
+  phd/.style={ph, dashed, fill=white},
+  hd/.style={font=\footnotesize\bfseries, align=center},
+  link/.style={-{Stealth[length=1.6mm]}, semithick},
+}
+\def\rowgap{1.95cm}
+\foreach \n/\sty/\name/\prod/\dec in {%
+  0/phd/{\textbf{Before Phase 1}\\Delphi consultation}/{Clinically endorsed indicator set for each domain, with agreed directions}/{Retain if $A_j\geq0.80$ and $\operatorname{IQR}_j\leq1$; revise if $0.70\leq A_j<0.80$; remove if $A_j<0.70$. Stop after two stable rounds or three},
+  1/ph/{\textbf{Phase 1}\\Cohort assembly}/{Registry cohort from comprehensive-care centres, starting in South Africa; route to care recorded}/{Report the observed range of each domain, so a null result can be judged against the cohort boundary},
+  2/ph/{\textbf{Phase 2}\\Re-estimation of the measurement model}/{Confirmatory factor model with haemophilia indicators; reliability; factor correlations; configural invariance}/{Cross-loading: revise the indicator and return to the panel. Domains indistinguishable, or wrong signs that survive checking: stop},
+  3/ph/{\textbf{Phase 3}\\Recalibration}/{Re-estimated loadings, intercepts and thresholds; risk intercept $a$ and slope $b$; internal validation}/{Set interpretive thresholds anew from the haemophilia distribution; carry none over from NHATS},
+  4/ph/{\textbf{Phase 4}\\Prognostic evaluation}/{Association, discrimination, calibration and net benefit against factor level, joint score and inhibitor status}/{No added value: a verdict against clinical use. Added value: check that it comes from the social and systemic domains},
+  5/ph/{\textbf{Phase 5}\\Governance, ethics and reporting}/{Ethics approval and data-use agreements, in place before Phase 1; report to TRIPOD}/{Report against the standards of the development study so others can check the answer}%
+} {
+  \node[\sty] (p\n) at (0,-\n*\rowgap) {\name};
+  \node[pr, anchor=west] (o\n) at ($(p\n.east)+(0.4,0)$) {\prod};
+  \node[dc, anchor=west] (d\n) at ($(o\n.east)+(0.4,0)$) {\dec};
+  \draw[link] (p\n.east) -- (o\n.west);
+  \draw[link] (o\n.east) -- (d\n.west);
+}
+\foreach \a/\b in {0/1,1/2,2/3,3/4,4/5} \draw[hparrow] (p\a.south) -- (p\b.north);
+\node[hd, above=1.5mm of p0] {Stage};
+\node[hd, above=1.5mm of o0] {What it produces};
+\node[hd, above=1.5mm of d0] {Decision before the next stage};
+\end{tikzpicture}}
