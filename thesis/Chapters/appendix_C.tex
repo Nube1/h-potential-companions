@@ -113,7 +113,7 @@ driven by an immune process that has its own dynamics.
 \begin{definition}[Linear reference model]
 \label{def:C_linear}
 The traditional linearised form is
-$dS_T/dt=k_{\text{in}}T-k_{\text{inh}}Y-k_{\text{decay}}S_T$, which assumes
+$dS_T/dt=k_{\text{in}}T-k_{\text{inh}}Y S_T-k_{\text{decay}}S_T$, which assumes
 independence and proportionality among input, inhibition, and clearance.
 \end{definition}
 
@@ -140,20 +140,24 @@ $Y/K_I$, giving the linear coefficient.
 \end{proof}
 
 \begin{reading}[When the ward arithmetic is safe]
-This proposition is reassurance with a boundary attached. For $Y\ll K_I$, that
-is, a patient with a low-titre or absent inhibitor, the non-linear model
-collapses to the linear one and the standard dose calculation is correct.
+The proposition fixes when the linear model is exact. For $\beta=1$ and
+$Y\ll K_I$ the non-linear model collapses to the linear one. For $\beta>1$ it
+does not: the leading term is $(Y/K_I)^\beta$, which is smaller than $Y/K_I$
+below $K_I$, and above $K_I$ the Hill term saturates while the linear term keeps
+growing.
 
-The boundary is $Y$ approaching $K_I$. Above it the linear model does not merely
-lose a little accuracy; because $\beta>1$, it understates neutralisation by a
-growing factor, and it understates it most at the titres where getting the dose
-right matters most.
+With $k_{\text{inh}}=\alpha/K_I$, the linear model therefore overstates
+neutralisation at every positive titre, by the factor
+$(K_I^\beta+Y^\beta)/(K_I Y^{\beta-1})$. At $\beta=2$ this factor is never
+below two and grows with distance from $K_I$ in either direction. The linear
+steady state is accordingly lower than the non-linear one, so a dose computed
+from the linear model errs towards excess rather than towards failure.
 
 For Profile~B this separates the period before an inhibitor is detected, when
-conventional dosing works and the linear model predicts it correctly, from the
-period after, when the same calculation yields doses that fail. The biology
-need not change at the moment of detection. What changes is that $Y$ crosses
-into the region where the approximation stops holding.
+$Y=0$ and the two models agree, from the period after, when the linear model no
+longer describes the steady state. The biology need not change at the moment of
+detection; what changes is that $Y$ moves into the region where the
+approximation does not hold.
 \end{reading}
 \checkedby{tests/test_haemophilia.py::test_proposition_linear_approximation_at_low_titre}
 
@@ -209,8 +213,9 @@ for Y in (0, 1, 2, 3, 5, 10, 15, 40):
 \noindent The run gives $60.00$, $52.00$, $38.67$, $29.14$, $20.00$, $14.29$,
 $13.04$ and $12.15$. Group the losses and the shape is plain: the first two
 Bethesda units remove $21.3$ units of activity, a third of baseline; the next
-three remove $18.7$; the following ten remove $7.0$; and everything above
-$15$~BU removes less than $1$.
+three remove $18.7$; the following ten remove $7.0$; the rise from $15$ to
+$40$~BU removes $0.89$; and no higher titre can remove more than about $1.04$,
+since the steady state never falls below $60/(4+1)=12$.
 
 A clinician reading only the levels sees a curve falling smoothly. A clinician
 reading the losses sees that the interval from $0$ to $3$~BU costs more than
@@ -219,7 +224,7 @@ high-titre inhibitor is the dangerous one. The high-titre patient is in a worse
 place; the low-titre patient is on the steep part of the slope.
 
 \weanswer{$S_T^\ast$ falls from $60$ to $38.67$ over the first two Bethesda
-units, and by only $7.0$ more over the next ten. Asserted by
+units, and by only $7.0$ more over the ten from $5$ to $15$~BU. Asserted by
 \texttt{test\_worked\_example\_where\_the\_damage\_happens}.}
 \end{workedexample}
 
@@ -238,9 +243,10 @@ and above it $S_T^\ast<S_{\text{prot}}$.
 Solve $S_T^\ast(Y)=S_{\text{prot}}$ for the required Hill value $h_{\text{need}}$,
 then invert the Hill function \citep{hill_1910} $\mathrm{Hill}(Y)=h_{\text{need}}$ for $Y$. The
 monotonicity of $S_T^\ast$ in $Y$ (neutralisation increases with titre) gives the
-sign change across $Y_{\text{thr}}$. The lower non-linear steady state relative to
-the linear reference is qualitatively consistent with unexpected breakthrough
-bleeds at high titre.
+sign change across $Y_{\text{thr}}$. Relative to the linear reference with
+$k_{\text{inh}}=\alpha/K_I$ the non-linear steady state is higher at every
+titre, so breakthrough bleeding in this model arises from crossing
+$Y_{\text{thr}}$, not from the linear approximation.
 \end{proof}
 
 \begin{reading}[$Y_{\text{thr}}$ as a clinical decision point]
@@ -525,19 +531,21 @@ inhibitor threshold (Proposition~\ref{prop:C_threshold}); immune tolerance
 induction has an extinction condition (Proposition~\ref{prop:C_iti}) and gene
 therapy a closed-form equilibrium (Proposition~\ref{prop:C_gt}).
 
-Three of these results carry a threshold: the titre at which a regimen stops
-protecting, the suppression at which ITI succeeds rather than nearly succeeds,
-and the inhibitor level at which gene therapy becomes uneconomic. Each is a
-point at which a small change in circumstance produces a large change in
+Two of these results carry a threshold: the titre at which a regimen stops
+protecting, and the suppression at which ITI succeeds rather than nearly
+succeeds. The gene-therapy equilibrium carries none, since it falls smoothly
+with titre, and this appendix has no cost model from which an economic
+threshold could be derived. Each threshold is a point at which a small change in circumstance produces a large change in
 outcome, and each depends on something a health system controls rather than
 something the patient's biology decides. That is the connection back to the
 main argument: for Profile~B the Systemic Burdens domain is not a background
 variable in this model. It sits inside the equations that determine whether
 treatment works.
 
-The eleven tests in \texttt{verification/tests/test\_haemophilia.py} assert
+The twelve tests in \texttt{verification/tests/test\_haemophilia.py} assert
 these results, together with the worked examples above: the steady states at
-each titre, the point at which the regimen stops protecting, and the critical
+each titre, the direction in which the linear reference errs, the point at
+which the regimen stops protecting, and the critical
 suppression for immune tolerance induction. One of them asserts that a request
 for a threshold under a regimen that cannot reach protection raises an error
 rather than returning a number, because a silent wrong answer is the failure

@@ -12,7 +12,7 @@ someone else could reproduce it or show it wrong.
 
 Two separate pieces of software are described and it matters that they are not
 confused. The empirical analysis of Chapters~\ref{ch:methods}
-to~\ref{ch:results2} runs in R and is the work the thesis is judged on
+to~\ref{ch:results2} runs in Python and is the work the thesis is judged on
 (\S\ref{sec:D_relationship}). The dynamical simulation of
 Appendices~\ref{app:dynamical} and~\ref{app:hemo_dynamics} is a proposed future
 direction and is what the algorithms and solvers here describe
@@ -121,7 +121,7 @@ The total halved and its composition inverted. The calculation states the
 argument of this thesis in small form: a measure that tracked mortality alone
 would record the profile under modern treatment as almost unaffected, having
 correctly recorded the same profile in the 1970s as gravely affected, and would
-say nothing about the twenty years of reduced mobility that now make up the
+say nothing about the twenty-eight years of reduced mobility that now make up the
 burden.
 
 \weanswer{$\mathrm{DALY}=9.84$, eighty per cent of it disability, giving
@@ -174,8 +174,9 @@ has to be demonstrated rather than assumed.
   direction implicit schemes generalise this to higher dimensions.
 \end{itemize}
 For a sufficiently smooth problem in the asymptotic regime, fourth-order RK4
-should show an error ratio approaching $16$ under step halving; this is a
-recommended verification test rather than a result established in this archive.
+should show an error ratio approaching $16$ under step halving; the
+verification suite checks this
+(\texttt{test\_worked\_example\_rk4\_order\_of\_convergence}).
 
 \begin{reading}[What the order-of-convergence test actually checks]
 Halve the step size and the error of a method of order $q$ should fall by a
@@ -310,6 +311,7 @@ of Appendix~\ref{app:dynamical}.
 \label{sec:D_summary}
 This appendix collected the algorithms, solvers, complexity, and reproducibility
 requirements for the dynamical models of Appendices~\ref{app:dynamical} and
-\ref{app:hemo_dynamics}. It is deliberately separate from the empirical R
-pipeline of the main text. No claim of machine verification is made until the
-future simulation implementation and its tests are deposited with the thesis.
+\ref{app:hemo_dynamics}. It is deliberately separate from the empirical Python
+pipeline of the main text. The worked examples and the order of convergence are
+checked by the verification suite; a full simulation implementation for the
+dynamical models remains future work.

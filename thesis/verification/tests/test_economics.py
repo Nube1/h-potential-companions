@@ -89,3 +89,17 @@ def test_worked_example_profile_b_daly_split():
     bp = econ.biomedical_potential(L0=30.0, Q=0.72, dalys=total)
     assert 0.0 <= bp <= 1.0
     assert bp == pytest.approx(0.72 * (1 - 9.84 / 30.0), abs=1e-6)
+
+
+def test_cost_ratio_at_which_the_gradient_ranking_reverses():
+    """Chapter 4, ape-gradient: per unit of spend the ranking reverses only when
+    a unit of social enablement costs more than gs/gr = 1.14 times a unit of
+    structural freedom (not eleven times)."""
+    P, S, R, a = 0.55, 0.35, 0.40, 0.5
+    H = P * S**a * R ** (1 - a)
+    gs, gr = a * H / S, (1 - a) * H / R
+    assert round(gs, 4) == 0.2940 and round(gr, 4) == 0.2572
+    assert round(gs / gr, 2) == 1.14
+    for ratio in (1.0, 1.1):
+        assert gs / ratio > gr  # social still wins
+    assert gs / 1.2 < gr  # reversed

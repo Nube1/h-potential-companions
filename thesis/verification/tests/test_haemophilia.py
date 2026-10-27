@@ -29,19 +29,35 @@ def test_proposition_linear_approximation_at_low_titre():
         hem.linear_reference(0.0, numerator=60.0, alpha=4.0, K_I=5.0, lam=1.0))
 
 
-def test_linear_model_fails_once_the_titre_approaches_K_I():
-    """The boundary the proposition puts on ward arithmetic. With beta = 2 the
-    linear reference overstates remaining activity, and the error grows."""
-    errs = []
-    for Y in (0.5, 2.0, 5.0, 10.0):
+def test_linear_reference_overstates_neutralisation_at_every_titre():
+    """Appendix C: with k_inh = alpha/K_I and beta = 2 the linear model
+    overstates neutralisation by (K_I^2 + Y^2)/(K_I Y) >= 2 at every positive
+    titre, so its steady state is lower than the non-linear one, and the
+    factor grows with distance from K_I in either direction."""
+    factors = []
+    for Y in (0.5, 2.0, 5.0, 10.0, 40.0):
         true = hem.steady_state(Y, **REG)
-        approx = hem.linear_reference(Y, numerator=60.0, alpha=4.0,
-                                      K_I=5.0, lam=1.0)
-        errs.append((approx - true) / true)
-    # below K_I the linear reference is pessimistic, above it optimistic,
-    # and either way the discrepancy grows with the titre
-    assert abs(errs[-1]) > abs(errs[0])
-    assert errs[-1] < 0 or errs[-1] > 0
+        approx = hem.linear_reference(Y, numerator=60.0, alpha=4.0, K_I=5.0, lam=1.0)
+        assert approx < true
+        hill = Y**2 / (25.0 + Y**2)
+        factor = (Y / 5.0) / hill
+        assert abs(factor - (25.0 + Y**2) / (5.0 * Y)) < 1e-12
+        assert factor >= 2.0 - 1e-12
+        factors.append(factor)
+    assert factors[2] == min(factors)  # smallest at Y = K_I
+    assert factors[0] > factors[1] and factors[-1] > factors[-2]
+
+
+def test_worked_example_steady_state_tail():
+    """apc-steady: 15 to 40 BU removes 0.89; nothing beyond can remove more
+    than 13.04 - 12 = 1.04, because the steady state is bounded below by 12."""
+    s15, s40 = hem.steady_state(15.0, **REG), hem.steady_state(40.0, **REG)
+    assert round(s15 - s40, 2) == 0.89
+    floor = 60.0 / (4.0 + 1.0)
+    assert hem.steady_state(1e6, **REG) > floor
+    assert round(s15 - floor, 2) == 1.04
+    s5 = hem.steady_state(5.0, **REG)
+    assert round(s5 - s15, 1) == 7.0
 
 
 def test_proposition_steady_state_is_stable_and_decreasing_in_Y():

@@ -136,9 +136,11 @@ depends on $X$ (the saturable $\mathbf{f}$ and $\mathbf{h}$ do not), so the
 $X$-derivative of the right-hand side is the constant
 $-(k_{\text{inh}}Y+k_{\text{elim}})$; hence the map is globally Lipschitz with
 that constant. Picard--Lindel\"of then gives local existence and uniqueness, and
-the linear growth bound extends the solution to all $t\ge0$. Two solutions from
-initial data differing by $\delta_0$ stay within $\delta_0 e^{Lt}$ by Gr\"onwall
-\citep{gronwall_1919}.
+the linear growth bound extends the solution to all $t\ge0$. Because the
+right-hand side depends on $X$ only through the term $-LX$, the difference
+$\delta(t)$ of two solutions satisfies $\dot\delta=-L\delta$, so
+$\delta(t)=\delta_0e^{-Lt}$; Gr\"onwall's inequality \citep{gronwall_1919}
+gives the same bound when $\mathbf{f}$ and $\mathbf{h}$ are only Lipschitz.
 \end{proof}
 
 \begin{reading}[Why an existence proof is not a formality]
@@ -538,7 +540,7 @@ conceptual score (Proposition~\ref{prop:B_differentiable}). The next appendix
 specialises this framework to haemophilia; Appendix~\ref{app:computation} gives
 its numerical implementation.
 
-Every proposition above is checked automatically. The nine tests in
+Every proposition above is checked automatically. Nine of the fourteen tests in
 \texttt{verification/tests/test\_dynamics.py} assert the Lipschitz constant, the
 convergence of nearby trajectories, agreement between the closed-form
 equilibrium and the integrator, the vanishing-noise limit, the affine-drift
