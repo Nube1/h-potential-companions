@@ -7,12 +7,14 @@ mortality_time,outcome,time,yes,TO_MAP,days from baseline,right censored
 mortality_event,outcome,event,yes,TO_MAP,0 censored; 1 death,none
 hospital_time,outcome,time,yes,TO_MAP,days from baseline,right censored
 hospital_event,outcome,event,yes,TO_MAP,0 censored; 1 first overnight hospital stay,none
-bio_indicator_1,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-bio_indicator_2,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-bio_indicator_3,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-social_indicator_1,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-social_indicator_2,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-social_indicator_3,social,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
-systemic_indicator_1,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes
-systemic_indicator_2,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes
-systemic_indicator_3,systemic,indicator,yes,TO_MAP,reverse coded so higher equals lower burden,document special missing codes
+bio_multimorbidity,biomedical,indicator,yes,hc5disescn1-10 (count absent),higher equals fewer chronic conditions,NHATS reserved codes -1 to -9 set to missing
+bio_function,biomedical,indicator,yes,sc5/mo5/ha5/mc5 derived sfdf items (count without difficulty),higher equals more activities done alone without difficulty,NHATS reserved codes -1 to -9 set to missing
+bio_cognition,biomedical,indicator,yes,cg5dwrdimmrc + cg5dwrddlyrc + cg5dclkdraw,higher equals better cognition,NHATS reserved codes -1 to -9 set to missing
+bio_psych,biomedical,indicator,yes,hc5depresan1-4 (reverse sum),higher equals fewer depression and anxiety symptoms,NHATS reserved codes -1 to -9 set to missing
+soc_participation,social,indicator,yes,"pa5vistfrfam, pa5attrelser, pa5clbmtgrac, pa5outfrenjy",higher equals more participation,NHATS reserved codes -1 to -9 set to missing
+soc_network,social,indicator,yes,sn5dnumsn,higher equals larger network,NHATS reserved codes -1 to -9 set to missing
+soc_communication,social,indicator,yes,"ss5hearphone, ss5convquiet, ss5seewellst, ss5glrednewp",higher equals fewer communication limits,NHATS reserved codes -1 to -9 set to missing
+sys_economic,systemic,indicator,yes,ia5totinc (income file; name to check),higher equals lower income (burden),NHATS reserved codes -1 to -9 set to missing
+sys_education,systemic,indicator,yes,el5higstschl (name and file to check),higher equals less schooling (burden),NHATS reserved codes -1 to -9 set to missing
+sys_environment,systemic,indicator,yes,"ho5entrstair, ho5levelsflr, ho5homeamen1, ho5entrnramp",higher equals more home access barriers,NHATS reserved codes -1 to -9 set to missing
+sys_care_access,systemic,indicator,yes,"mc5havregdoc, mc5regdoclyr",higher equals more barriers to regular care,NHATS reserved codes -1 to -9 set to missing

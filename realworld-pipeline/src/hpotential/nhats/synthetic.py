@@ -53,56 +53,72 @@ def write_synthetic_nhats(
     sp[name("rl{r}dracehisp")] = rng.choice([1, 2, 3, 4], n, p=[0.68, 0.2, 0.04, 0.08])
 
     sp[name("hc{r}health")] = _with_missing(rng, _categorical(rng, -bio, [-1.3, -0.4, 0.5, 1.3]))
+    # Biomedical: conditions, activities, cognition, mood.
     for j in range(1, 11):
         p = 1 / (1 + np.exp(1.3 + 0.8 * bio - 0.15 * j / 10))
         sp[name(f"hc{{r}}disescn{j}")] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2), 0.01)
+    for item in (
+        "sc{r}deatsfdf",
+        "sc{r}dbathsfdf",
+        "sc{r}dtoilsfdf",
+        "sc{r}ddressfdf",
+        "mo{r}dbedsfdf",
+        "mo{r}dinsdsfdf",
+        "mo{r}doutsfdf",
+        "ha{r}dlaunsfdf",
+        "ha{r}dshopsfdf",
+        "ha{r}dmealsfdf",
+        "ha{r}dbanksfdf",
+        "mc{r}dmedssfdf",
+    ):
+        sp[name(item)] = _with_missing(
+            rng, _categorical(rng, -1.1 * bio + rng.normal(0, 0.8, n), [0.9, 1.5, 2.0, 2.5])
+        )
+    for item, top in (("cg{r}dwrdimmrc", 10), ("cg{r}dwrddlyrc", 10), ("cg{r}dclkdraw", 5)):
+        mean = top * (0.5 + 0.12 * bio)
+        sp[name(item)] = _with_missing(
+            rng, np.clip(np.round(mean + rng.normal(0, top * 0.18, n)), 0, top)
+        )
     for j in range(1, 5):
         sp[name(f"hc{{r}}depresan{j}")] = _with_missing(
             rng, _categorical(rng, -0.6 * bio + rng.normal(0, 0.9, n), [0.3, 1.2, 2.0])
         )
+    pain = -0.8 * bio + rng.normal(0, 0.9, n)
+    sp[name("ss{r}painbothr")] = _with_missing(rng, np.where(pain > 0.1, 1, 2))
+    sp[name("ss{r}painlimts")] = _with_missing(rng, np.where(pain > 0.9, 1, 2))
+    # Social: participation, network, communication.
     for item in ("vistfrfam", "attrelser", "clbmtgrac", "outfrenjy"):
         p = 1 / (1 + np.exp(-(0.4 + 0.9 * soc)))
         sp[name(f"pa{{r}}{item}")] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2))
     sp[name("sn{r}dnumsn")] = _with_missing(
         rng, np.clip(np.round(2 + 1.2 * soc + rng.normal(0, 1, n)), 0, 5)
     )
-    for item in ("knowwell", "willnghlp", "peoptrstd"):
-        sp[name(f"cm{{r}}{item}")] = _with_missing(
-            rng, _categorical(rng, -soc + rng.normal(0, 0.7, n), [-0.4, 0.8])
-        )
+    for item in ("ss{r}hearphone", "ss{r}convquiet", "ss{r}seewellst", "ss{r}glrednewp"):
+        p = 1 / (1 + np.exp(-(1.8 + 0.7 * soc + 0.5 * bio)))
+        sp[name(item)] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2))
+    # Systemic: income, schooling, home access, care access (higher = more burden).
     income = np.exp(10.4 - 0.7 * sysb + rng.normal(0, 0.5, n))
     sp[name("ia{r}totinc")] = _with_missing(rng, np.round(income, -2), 0.08)
-    sp[name("ip{r}cmedicaid")] = _with_missing(
-        rng, np.where(rng.random(n) < 1 / (1 + np.exp(2 - 1.3 * sysb)), 1, 2)
-    )
     sp[name("el{r}higstschl")] = _with_missing(
         rng, _categorical(rng, -sysb + rng.normal(0, 0.6, n), np.linspace(-1.6, 1.6, 8))
     )
+    for item, yes_is_barrier in (
+        ("ho{r}entrstair", True),
+        ("ho{r}homeamen1", False),
+        ("ho{r}entrnramp", False),
+    ):
+        p = 1 / (1 + np.exp(-(-0.3 + 0.8 * sysb)))
+        barrier = rng.random(n) < p
+        sp[name(item)] = _with_missing(rng, np.where(barrier == yes_is_barrier, 1, 2))
+    sp[name("ho{r}levelsflr")] = _with_missing(
+        rng, _categorical(rng, 0.6 * sysb + rng.normal(0, 1, n), [0.0, 1.0, 1.8, 2.5])
+    )
+    for item in ("mc{r}havregdoc", "mc{r}regdoclyr"):
+        p = 1 / (1 + np.exp(-(-2.0 + 0.9 * sysb)))
+        sp[name(item)] = _with_missing(rng, np.where(rng.random(n) < p, 2, 1))
     for item in ("walk6blks", "up20stair", "car20pds", "kneel", "bdovrhd"):
         p = 1 / (1 + np.exp(-(1.0 + 1.1 * bio)))
         sp[name(f"pc{{r}}{item}")] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2))
-
-    # Function and pain, for the ADL/IADL and utility-proxy comparators.
-    for item in (
-        "sc{r}eatdif",
-        "sc{r}bathdif",
-        "sc{r}toildif",
-        "sc{r}dresdif",
-        "mo{r}beddif",
-        "mo{r}insddif",
-        "mo{r}outdif",
-        "ha{r}laundif",
-        "ha{r}shopdif",
-        "ha{r}mealdif",
-        "ha{r}bankdif",
-        "mc{r}medsdif",
-    ):
-        sp[name(item)] = _with_missing(
-            rng, _categorical(rng, -1.1 * bio - 0.3 * soc + rng.normal(0, 0.8, n), [0.9, 1.6, 2.2])
-        )
-    pain = -0.8 * bio + rng.normal(0, 0.9, n)
-    sp[name("ss{r}painbothr")] = _with_missing(rng, np.where(pain > 0.1, 1, 2))
-    sp[name("ss{r}painlmtact")] = _with_missing(rng, np.where(pain > 0.9, 1, 2))
 
     # Outcomes from a latent hazard; capability = biomedical x context.
     potential = bio + 0.4 * soc - 0.4 * sysb

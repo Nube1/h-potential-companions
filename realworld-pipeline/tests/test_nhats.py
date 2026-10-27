@@ -39,13 +39,13 @@ def test_check_passes_on_complete_files(nhats_dir, layout):
 
 
 def test_check_names_missing_variables(tmp_path, layout, nhats_dir):
-    sp = pd.read_stata(nhats_dir / "NHATS_Round_5_SP_File.dta").drop(columns=["hc5health"])
+    sp = pd.read_stata(nhats_dir / "NHATS_Round_5_SP_File.dta").drop(columns=["sn5dnumsn"])
     for f in nhats_dir.iterdir():
         (tmp_path / f.name).write_bytes(f.read_bytes())
     sp.to_stata(tmp_path / "NHATS_Round_5_SP_File.dta", write_index=False, version=118)
     report = check(tmp_path, layout)
     assert not report.ok
-    assert "hc5health" in report.missing_variables["sp"]
+    assert "sn5dnumsn" in report.missing_variables["sp"]
     with pytest.raises(ValueError, match="layout check failed"):
         build(tmp_path, layout)
 
@@ -118,3 +118,28 @@ def test_demo_chain_draws_every_figure(tmp_path, monkeypatch):
         assert e["caption"]
     gap = next(e for e in index if e["name"] == "pol_03_income_gap_sources")["numbers"]
     assert gap["total"] == pytest.approx(gap["direct_check"], abs=1e-4)
+
+
+def test_baseline_variables_found_in_tracker_and_bad_codes_flagged(tmp_path):
+    """NHATS keeps weights and design variables in the tracker file; the build
+    must find them there. An answer outside the declared codes is reported."""
+    from hpotential.nhats import Layout, build, check, write_synthetic_nhats
+    from hpotential.nhats.ingest import _latest_tracker, find_file, read_table
+
+    layout = Layout.load(ROOT / "configs/nhats_layout.yaml")
+    write_synthetic_nhats(tmp_path, layout, 400, fmt=".csv")
+    pid = layout.name(layout.raw["ids"]["person"])
+    sp_path = find_file(tmp_path, layout.name(layout.raw["files"]["sp"]))
+    _, tr_path = _latest_tracker(tmp_path, layout)
+    sp, tr = read_table(sp_path), read_table(tr_path)
+    design = [layout.name(v) for v in layout.raw["design"].values()]
+    tr = tr.merge(sp[[pid, *design]], on=pid)
+    sp = sp.drop(columns=design)
+    sp.loc[0, layout.name("sc{r}deatsfdf")] = 9
+    sp.to_csv(sp_path, index=False)
+    tr.to_csv(tr_path, index=False)
+    report = check(tmp_path, layout)
+    assert report.ok, report.to_dict()
+    assert report.unexpected_codes[layout.name("sc{r}deatsfdf")] == [9.0]
+    frame, _ = build(tmp_path, layout)
+    assert frame["survey_weight"].notna().mean() > 0.9

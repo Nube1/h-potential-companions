@@ -49,8 +49,9 @@ def test_eq5d_best_and_worst_states():
 
 
 def test_optional_comparators_do_not_block_check():
+    """Only items used by nothing but an optional comparator may be absent
+    without failing the check; here that is the two pain items."""
     names = LAYOUT.optional_variables()
     assert set(names) == {"adl_iadl_count", "qaly_proxy"}
-    assert not set(np.concatenate(list(names.values()))) & set(LAYOUT.baseline_variables()) - {
-        LAYOUT.name(s) for s in ("pc{r}walk6blks", "pc{r}up20stair")
-    } - {LAYOUT.name(f"hc{{r}}depresan{i}") for i in range(1, 5)}
+    only_optional = set(np.concatenate(list(names.values()))) - set(LAYOUT.baseline_variables())
+    assert only_optional == {LAYOUT.name("ss{r}painbothr"), LAYOUT.name("ss{r}painlimts")}

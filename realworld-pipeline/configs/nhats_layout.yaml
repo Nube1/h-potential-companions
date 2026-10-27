@@ -21,6 +21,7 @@ release:
 files:                                  # file names inside --data-dir; .dta, .sas7bdat, .csv or .parquet
   sp: "NHATS_Round_{r}_SP_File"
   tracker: "NHATS_Round_{k}_Tracker_File"   # the latest tracker carries every earlier round's status
+  income: "NHATS_Round_{r}_Income_Imputation_File"  # optional; CHECK the file name in your release
 
 ids:
   person: spid
@@ -45,54 +46,80 @@ covariates:
     map: {1: White, 2: Black, 3: Other, 4: Hispanic}
 
 # Each indicator is oriented by `direction` in configs/study.yaml.
+# The eleven indicators are those of Chapter 5 (Table loadings), in the domains
+# of Chapter 3. NAMES marked [crosswalk] were checked against the NHATS Round 5
+# Crosswalk between Instruments and Codebook (02/15/2024). RESPONSE CODES marked
+# [assumed] could not be read from the documentation available here; the
+# nhats-check report lists any observed value outside them.
 indicators:
-  # Biomedical potential (higher = better)
-  bio_indicator_1:
-    label: Self-rated health (5 = excellent)
-    kind: reverse
-    source: "hc{r}health"               # 1 excellent ... 5 poor
-    range: [1, 5]
-  bio_indicator_2:
-    label: Conditions absent of ten
+  # ---- Biomedical Potential (higher = more capacity)
+  bio_multimorbidity:
+    label: Chronic conditions absent, of ten
     kind: count_absent
     sources: ["hc{r}disescn1", "hc{r}disescn2", "hc{r}disescn3", "hc{r}disescn4", "hc{r}disescn5",
-              "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]
-    present: [1, 7]                          # 1 = yes, 7 = previously reported
-  bio_indicator_3:
+              "hc{r}disescn6", "hc{r}disescn7", "hc{r}disescn8", "hc{r}disescn9", "hc{r}disescn10"]  # [crosswalk]
+    present: [1, 7]                      # 1 yes, 7 previously reported [assumed]
+    codes: [1, 2, 7]
+  bio_function:
+    label: Self-care, mobility and household activities done alone without difficulty, of twelve
+    kind: count_absent
+    sources: ["sc{r}deatsfdf", "sc{r}dbathsfdf", "sc{r}dtoilsfdf", "sc{r}ddressfdf",     # derived self-care [crosswalk]
+              "mo{r}dbedsfdf", "mo{r}dinsdsfdf", "mo{r}doutsfdf",                       # derived mobility [crosswalk]
+              "ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf",  # derived household [crosswalk]
+              "mc{r}dmedssfdf"]                                                          # derived medications [crosswalk]
+    present: [2, 3, 4, 5]                # difficulty or cannot do alone; 1 = no difficulty [assumed]
+    codes: [1, 2, 3, 4, 5]
+  bio_cognition:
+    label: Immediate and delayed word recall plus clock drawing
+    kind: sum
+    sources: ["cg{r}dwrdimmrc", "cg{r}dwrddlyrc", "cg{r}dclkdraw"]                     # [crosswalk]
+  bio_psych:
     label: PHQ-2 and GAD-2 symptom-free score
     kind: reverse_sum
-    sources: ["hc{r}depresan1", "hc{r}depresan2", "hc{r}depresan3", "hc{r}depresan4"]
-    range: [1, 4]                        # 1 not at all ... 4 nearly every day
-  # Social modifiers (higher = better)
-  social_indicator_1:
+    sources: ["hc{r}depresan1", "hc{r}depresan2", "hc{r}depresan3", "hc{r}depresan4"]  # [crosswalk]
+    range: [1, 4]                        # 1 not at all ... 4 nearly every day [assumed]
+  # ---- Social Modifiers (higher = more enablement)
+  soc_participation:
     label: Valued activities taken part in, of four
     kind: count_present
-    sources: ["pa{r}vistfrfam", "pa{r}attrelser", "pa{r}clbmtgrac", "pa{r}outfrenjy"]
-    present: [1]
-  social_indicator_2:
+    sources: ["pa{r}vistfrfam", "pa{r}attrelser", "pa{r}clbmtgrac", "pa{r}outfrenjy"]  # [crosswalk]
+    present: [1]                         # 1 yes [assumed]
+    codes: [1, 2]
+  soc_network:
     label: Social network size
     kind: value
-    source: "sn{r}dnumsn"
-  social_indicator_3:
-    label: Community cohesion (3 = agree a lot)
-    kind: reverse_mean
-    sources: ["cm{r}knowwell", "cm{r}willnghlp", "cm{r}peoptrstd"]
-    range: [1, 3]                        # 1 agree a lot ... 3 do not agree
-  # Systemic burdens (higher = more burden)
-  systemic_indicator_1:
+    source: "sn{r}dnumsn"                # [crosswalk]
+  soc_communication:
+    label: Communication functions without difficulty, of four
+    kind: count_present
+    sources: ["ss{r}hearphone", "ss{r}convquiet", "ss{r}seewellst", "ss{r}glrednewp"]   # [crosswalk]
+    present: [1]                         # 1 yes, can do [assumed]
+    codes: [1, 2]
+  # ---- Systemic Burdens (higher = more burden)
+  sys_economic:
     label: Income shortfall, minus log household income
     kind: neg_log
-    source: "ia{r}totinc"
-  systemic_indicator_2:
-    label: Medicaid enrolment
-    kind: binary
-    source: "ip{r}cmedicaid"
-    present: [1]
-  systemic_indicator_3:
-    label: Years of schooling not completed (of 9 levels)
+    source: "ia{r}totinc"                # NOT in the SP crosswalk: income is in the income file; CHECK NAME
+  sys_education:
+    label: Schooling levels not completed, of nine
     kind: reverse
-    source: "el{r}higstschl"             # 1 no schooling ... 9 post-graduate
-    range: [1, 9]
+    source: "el{r}higstschl"             # NOT in the SP crosswalk; CHECK NAME and file
+    range: [1, 9]                        # 1 no schooling ... 9 post-graduate [assumed]
+  sys_environment:
+    label: Home access barriers, of four
+    kind: count_present
+    sources: ["ho{r}entrstair", "ho{r}levelsflr", "ho{r}homeamen1", "ho{r}entrnramp"]   # [crosswalk]
+    present_by_source:                   # barrier codes per item [assumed]
+      "ho{r}entrstair": [1]              # stairs at the entrance: yes
+      "ho{r}levelsflr": [2, 3, 4, 5]     # more than one level
+      "ho{r}homeamen1": [2]              # bed, kitchen and bath not on one floor
+      "ho{r}entrnramp": [2]              # no ramp at the entrance
+  sys_care_access:
+    label: Barriers to regular medical care, of two
+    kind: count_present
+    sources: ["mc{r}havregdoc", "mc{r}regdoclyr"]                                       # [crosswalk]
+    present: [2]                         # 2 no regular doctor / not seen in last year [assumed]
+    codes: [1, 2]
 
 # Comparators built from baseline items only, never from outcomes.
 comparators:
@@ -128,17 +155,17 @@ comparators:
       "hc{r}disescn10": 2
 
   # Functional status only: count of ADL and IADL activities reported as
-  # difficult. OPTIONAL: if these items are absent from the release the
+  # difficult. Names are the derived 'without help' variables [crosswalk];
+  # the difficulty codes are [assumed]. OPTIONAL: if absent from a release the
   # comparator is skipped and reported, never blocking the build.
-  # VERIFY every name and the difficulty codes against the NHATS codebook.
   adl_iadl_count:
     kind: count_present
     optional: true
-    sources: ["sc{r}eatdif", "sc{r}bathdif", "sc{r}toildif", "sc{r}dresdif",    # ADL: eating, bathing, toileting, dressing
-              "mo{r}beddif", "mo{r}insddif", "mo{r}outdif",                    # ADL: bed, inside, outside
-              "ha{r}laundif", "ha{r}shopdif", "ha{r}mealdif", "ha{r}bankdif",  # IADL
-              "mc{r}medsdif"]                                                  # IADL: medications
-    present: [2, 3, 4]                   # assumed: 1 none, 2 a little, 3 some, 4 a lot
+    sources: ["sc{r}deatsfdf", "sc{r}dbathsfdf", "sc{r}dtoilsfdf", "sc{r}ddressfdf",    # ADL: eating, bathing, toileting, dressing
+              "mo{r}dbedsfdf", "mo{r}dinsdsfdf", "mo{r}doutsfdf",                    # ADL: bed, inside, outside
+              "ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf",  # IADL
+              "mc{r}dmedssfdf"]                                                  # IADL: medications
+    present: [2, 3, 4, 5]                # [assumed] 1 no difficulty
 
   # Health-utility proxy: NHATS items crosswalked to the five EQ-5D-3L
   # dimensions and valued with an additive tariff. OPTIONAL and VERIFY as above.
@@ -155,15 +182,15 @@ comparators:
         present: [2]
         cuts: [1, 2]
       self_care:           # ADL difficulty count
-        sources: ["sc{r}eatdif", "sc{r}bathdif", "sc{r}toildif", "sc{r}dresdif"]
-        present: [2, 3, 4]
+        sources: ["sc{r}deatsfdf", "sc{r}dbathsfdf", "sc{r}dtoilsfdf", "sc{r}ddressfdf"]
+        present: [2, 3, 4, 5]          # [assumed] 1 no difficulty
         cuts: [1, 3]
       usual_activities:    # IADL difficulty count
-        sources: ["ha{r}laundif", "ha{r}shopdif", "ha{r}mealdif", "ha{r}bankdif"]
-        present: [2, 3, 4]
+        sources: ["ha{r}dlaunsfdf", "ha{r}dshopsfdf", "ha{r}dmealsfdf", "ha{r}dbanksfdf"]
+        present: [2, 3, 4, 5]          # [assumed] 1 no difficulty
         cuts: [1, 3]
       pain:                # bothered by pain; pain limits activities
-        sources: ["ss{r}painbothr", "ss{r}painlmtact"]
+        sources: ["ss{r}painbothr", "ss{r}painlimts"]
         present: [1]
         cuts: [1, 2]
       anxiety_depression:  # PHQ-2 + GAD-2 item sum, each 1 (not at all) to 4

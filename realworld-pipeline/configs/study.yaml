@@ -20,13 +20,13 @@ measurement:
   floor_sensitivity: 0.05
   domains:
     biomedical:
-      indicators: [bio_indicator_1, bio_indicator_2, bio_indicator_3]
+      indicators: [bio_multimorbidity, bio_function, bio_cognition, bio_psych]
       direction: higher_better
     social:
-      indicators: [social_indicator_1, social_indicator_2, social_indicator_3]
+      indicators: [soc_participation, soc_network, soc_communication]
       direction: higher_better
     systemic:
-      indicators: [systemic_indicator_1, systemic_indicator_2, systemic_indicator_3]
+      indicators: [sys_economic, sys_education, sys_environment, sys_care_access]
       direction: higher_burden
 outcomes:
   horizons_days: [1825]

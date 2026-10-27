@@ -204,6 +204,44 @@ def _latest_tracker(data_dir: Path, layout: Layout) -> tuple[int, Path] | None:
     return None
 
 
+def _baseline_files(data_dir: Path, layout: Layout) -> list[tuple[str, Path]]:
+    """Files that may hold baseline variables, in search order.
+
+    NHATS keeps instrument items in the sample-person file, but the analytic
+    weights, design variables, derived race and vital status in the tracker
+    file, and imputed income in a separate income file. A baseline variable is
+    taken from the first of these files that holds it.
+    """
+    out = []
+    sp = find_file(data_dir, layout.name(layout.raw["files"]["sp"]))
+    if sp is not None:
+        out.append(("sp", sp))
+    tr = _latest_tracker(data_dir, layout)
+    if tr is not None:
+        out.append(("tracker", tr[1]))
+    stem = layout.raw["files"].get("income")
+    if stem:
+        inc = find_file(data_dir, layout.name(stem))
+        if inc is not None:
+            out.append(("income", inc))
+    return out
+
+
+def read_baseline(data_dir: Path, layout: Layout, columns: list[str]) -> pd.DataFrame:
+    """The requested baseline columns, gathered across files and joined on the person id."""
+    pid = layout.name(layout.raw["ids"]["person"])
+    frame, got = None, {pid}
+    for _, path in _baseline_files(data_dir, layout):
+        have = available_columns(path)
+        take = [c for c in columns if c in have and c not in got]
+        if pid not in have or (frame is not None and not take):
+            continue
+        part = read_table(path, [pid, *take]).set_index(pid)
+        got |= set(take)
+        frame = part if frame is None else frame.join(part, how="left")
+    return frame
+
+
 def check(data_dir: str | Path, layout: Layout) -> CheckReport:
     """Report absent files, absent variables and codes outside the layout."""
     data_dir = Path(data_dir)
@@ -215,13 +253,16 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
         report.missing_files.append(sp_stem)
     else:
         need = layout.baseline_variables()
-        have = available_columns(sp)
+        have = set()
+        for label, path in _baseline_files(data_dir, layout):
+            have |= available_columns(path)
+            report.files.setdefault(label, str(path))
         report.missing_variables["sp"] = [v for v in need if v not in have]
         for comp, names in layout.optional_variables().items():
             gone = [v for v in names if v not in have]
             if gone:
                 report.optional_missing[comp] = gone
-        frame = read_table(sp, [v for v in need if v in have])
+        frame = read_baseline(data_dir, layout, [v for v in need if v in have]).reset_index()
         report.rows["sp"] = len(frame)
         report.unexpected_codes.update(_unexpected_codes(frame, layout))
     tracker = _latest_tracker(data_dir, layout)
@@ -249,6 +290,8 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
 
 
 def _declared_codes(spec: dict) -> set[float] | None:
+    if "codes" in spec:  # the full set of valid answers, where the layout declares it
+        return {float(x) for x in spec["codes"]}
     if "map" in spec:
         return {float(x) for x in spec["map"]}
     if "range" in spec:
@@ -261,7 +304,11 @@ def _declared_codes(spec: dict) -> set[float] | None:
 
 def _unexpected_codes(frame: pd.DataFrame, layout: Layout) -> dict[str, list[float]]:
     out: dict[str, list[float]] = {}
-    specs = list(layout.raw["covariates"].values()) + list(layout.raw["indicators"].values())
+    specs = (
+        list(layout.raw["covariates"].values())
+        + list(layout.raw["indicators"].values())
+        + list(layout.raw.get("comparators", {}).values())
+    )
     special = set(layout.special_missing)
     for spec in specs:
         codes = _declared_codes(spec)
@@ -315,8 +362,22 @@ def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
         lo, hi = spec["range"]
         flipped = lo + hi - items
         return _prorated(flipped, "sum" if kind == "reverse_sum" else "mean")
+    if kind == "sum":
+        return _prorated(items, "sum")
     if kind in ("count_present", "count_absent", "binary"):
-        yes = items.isin([float(v) for v in spec["present"]]).astype(float).where(items.notna())
+        if "present_by_source" in spec:  # item-specific codes for "present"
+            yes = (
+                pd.DataFrame(
+                    {
+                        layout.name(s): items[layout.name(s)].isin([float(v) for v in codes])
+                        for s, codes in spec["present_by_source"].items()
+                    }
+                )
+                .astype(float)
+                .where(items.notna())
+            )
+        else:
+            yes = items.isin([float(v) for v in spec["present"]]).astype(float).where(items.notna())
         if kind == "binary":
             return yes.iloc[:, 0]
         present = _prorated(yes, "sum")
@@ -421,11 +482,11 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     if not report.ok:
         raise ValueError("NHATS layout check failed: " + json.dumps(report.to_dict(), indent=2))
     pid = layout.name(layout.raw["ids"]["person"])
-    have = available_columns(Path(report.files["sp"]))
+    have = set()
+    for _, path in _baseline_files(data_dir, layout):
+        have |= available_columns(path)
     optional = {v for names in layout.optional_variables().values() for v in names if v in have}
-    sp = read_table(
-        Path(report.files["sp"]), sorted(set(layout.baseline_variables()) | optional)
-    ).set_index(pid)
+    sp = read_baseline(data_dir, layout, sorted(set(layout.baseline_variables()) | optional))
     flow = {"sp_file_rows": len(sp)}
 
     out = pd.DataFrame(index=sp.index)
@@ -452,9 +513,10 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     for name, src in layout.raw.get("conditions", {}).items():
         x = _clean(sp[layout.name(src)], layout.special_missing)
         out[f"cond_{name}"] = x.isin([1.0, 7.0]).astype(float).where(x.notna())
-    income = layout.raw["indicators"].get("systemic_indicator_1", {})
-    if income.get("kind") == "neg_log":
-        out["income"] = _clean(sp[layout.name(income["source"])], layout.special_missing)
+    for spec in layout.raw["indicators"].values():
+        if spec.get("kind") == "neg_log":  # keep raw income for the concentration figures
+            out["income"] = _clean(sp[layout.name(spec["source"])], layout.special_missing)
+            break
 
     # Mortality from the latest tracker.
     latest, tracker_path = _latest_tracker(data_dir, layout)
