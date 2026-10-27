@@ -80,6 +80,7 @@ def _parser() -> argparse.ArgumentParser:
     x.add_argument("--config", default=DEFAULT_CONFIG)
     x.add_argument("--reps", type=int, default=200, help="bootstrap replicates")
     x.add_argument("--no-internal", action="store_true", help="skip the bootstrap refits")
+    x.add_argument("--jobs", type=int, default=0, help="processes for bootstrap refits (0 = all)")
     x.add_argument(
         "--allow-synthetic", action="store_true", help="test the wiring on a demo run (stamped)"
     )
@@ -143,7 +144,13 @@ def main(argv: list[str] | None = None) -> int:
         from .thesis_export import export
 
         report = export(
-            a.run, a.thesis, a.config, a.reps, a.allow_synthetic, internal=not a.no_internal
+            a.run,
+            a.thesis,
+            a.config,
+            a.reps,
+            a.allow_synthetic,
+            internal=not a.no_internal,
+            jobs=a.jobs,
         )
         print(json.dumps(report, indent=2))
     elif a.command == "run":

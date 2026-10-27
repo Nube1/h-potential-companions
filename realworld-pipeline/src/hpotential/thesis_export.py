@@ -184,16 +184,105 @@ def _loglik(frame, spec, cols) -> float:
     )
 
 
+# ----------------------------------------------------- bootstrap workers
+
+_BOOT: dict = {}
+
+
+def _invariance_one(args):
+    from .cfa import invariance
+
+    X, mask, pattern, w = args
+    return invariance([X[~mask], X[mask]], pattern, [w[~mask], w[mask]])
+
+
+def _pmap(fn, items, jobs):
+    """Map over items in worker processes when jobs > 1, in order."""
+    items = list(items)
+    if jobs > 1 and len(items) > 1:
+        from concurrent.futures import ProcessPoolExecutor
+
+        with ProcessPoolExecutor(min(jobs, len(items))) as ex:
+            return list(ex.map(fn, items))
+    return [fn(i) for i in items]
+
+
+def _wlsmv_one(args):
+    """One imputed copy through WLSMV; None if it fails to converge."""
+    from .wlsmv import fit_wlsmv
+
+    raw, pattern, w, seed, ordinal = args
+    try:
+        return fit_wlsmv(raw, pattern, w, reps=100, seed=seed, ordinal=ordinal)
+    except (np.linalg.LinAlgError, ValueError):
+        return None
+
+
+def _boot_init(base, cfg, endpoints, horizon, weight):
+    """Per-process state for the bootstrap refits (set once per worker)."""
+    _BOOT.update(base=base, cfg=cfg, endpoints=endpoints, horizon=horizon, weight=weight)
+
+
+def _boot_scored(model, rows: pd.DataFrame) -> pd.DataFrame:
+    cfg = _BOOT["cfg"]
+    dom = transform_measurement(rows, model, cfg).reset_index(drop=True)
+    h = candidate_scores(dom, cfg.raw["measurement"]["alpha"], [])["geometric_crf"]
+    out = rows.reset_index(drop=True).assign(geometric_crf=h.to_numpy())
+    out["female"] = (out["sex"].astype(str).str.lower() == "female").astype(float)
+    return out
+
+
+def _boot_perf(train, test, spec):
+    risk, _ = fit_predict_cox(
+        train,
+        test,
+        spec["time"],
+        spec["event"],
+        ["geometric_crf", "age", "female"],
+        _BOOT["horizon"],
+        _BOOT["weight"],
+        spec.get("competing"),
+    )
+    return _performance(test, spec, risk, _BOOT["horizon"])
+
+
+def _boot_rep(seed):
+    """One resample: refit everything, return optimism per endpoint and measure."""
+    base = _BOOT["base"]
+    rng = np.random.default_rng(int(seed))
+    idx = rng.integers(0, len(base), len(base))
+    b_rows = base.iloc[idx].reset_index(drop=True)
+    try:
+        model = fit_measurement(b_rows, _BOOT["cfg"], se=False)
+        b, orig = _boot_scored(model, b_rows), _boot_scored(model, base)
+    except (ValueError, ZeroDivisionError, np.linalg.LinAlgError):
+        return None
+    out = {}
+    for endpoint in PRIMARY:
+        spec = _BOOT["endpoints"][endpoint]
+        try:
+            on_boot, on_orig = _boot_perf(b, b, spec), _boot_perf(b, orig, spec)
+        except (ValueError, ZeroDivisionError):
+            continue
+        out[endpoint] = {k: on_boot[k] - on_orig[k] for k in on_boot}
+    return out
+
+
 # ---------------------------------------------------------------- the export
 
 
 class Export:
-    def __init__(self, run_dir, thesis_dir, config_path=None, reps=200, allow_synthetic=False):
+    def __init__(
+        self, run_dir, thesis_dir, config_path=None, reps=200, allow_synthetic=False, jobs=0
+    ):
         from .api import DEFAULT_CONFIG, PACKAGE_ROOT
 
         self.run = Path(run_dir)
         self.out = Path(thesis_dir) / "generated"
         self.reps = int(reps)
+        import os
+
+        self.jobs = int(jobs) if jobs and int(jobs) > 0 else (os.cpu_count() or 1)
         self.synthetic = (self.run / "SYNTHETIC").exists()
         if self.synthetic and not allow_synthetic:
             raise ValueError(
@@ -267,7 +356,7 @@ class Export:
         from scipy.stats import t as t_dist
 
         from .api import DEFAULT_LAYOUT
-        from .cfa import invariance, rmsea_interval
+        from .cfa import rmsea_interval, rubin
         from .measurement import DOMAINS, fit_measurement
 
         cfg = self.cfg
@@ -289,21 +378,65 @@ class Export:
             "systemic": "Systemic Burdens (reverse coded)",
         }
 
+        # WLSMV, the estimator Chapter 5 specifies as the check on ML. Ordinal
+        # indicators are classified on the observed data, and each imputed set is
+        # put back on its original scale so they can be rounded to categories.
+        from .measurement import _indicator_frame
+        from .wlsmv import classify
+
+        observed = _indicator_frame(train, cfg).to_numpy(float)
+        ordinal = classify(observed)
+        lo_obs, hi_obs = np.nanmin(observed, axis=0), np.nanmax(observed, axis=0)
+        w_tr = pd.to_numeric(train[self.weight], errors="coerce").fillna(0).to_numpy()
+        jobs = []
+        for Xi, c, sc in zip(mm.imputed(train, cfg), mm.centre, mm.scale, strict=True):
+            raw = Xi * sc + c
+            raw[:, ordinal] = np.clip(np.round(raw[:, ordinal]), lo_obs[ordinal], hi_obs[ordinal])
+            jobs.append((raw, mm.pattern, w_tr, cfg.seed, ordinal))
+        wl = [r for r in _pmap(_wlsmv_one, jobs, self.jobs) if r is not None]
+        self.wlsmv = None
+        if wl:
+            pooled_w = rubin(
+                np.array([np.abs(r.loadings) for r in wl]),
+                np.array([r.loadings_se**2 for r in wl]),
+            )
+            self.wlsmv = {
+                "fit": {
+                    k: float(np.mean([r.fit_indices()[k] for r in wl])) for k in wl[0].fit_indices()
+                },
+                "loadings": pooled_w["estimate"],
+                "n_ordinal": int(ordinal.sum()),
+                "imputations": len(wl),
+            }
+
         # Fit
         f = pooled["fit"]
         n = pooled["n"]
         p_chi = float(chi2_dist.sf(f["chi2"], f["df"]))
         lo, hi = rmsea_interval(f["chi2"], int(f["df"]), n)
+        g = self.wlsmv["fit"] if self.wlsmv else None
+        if g:
+            p_w = float(chi2_dist.sf(g["chi2"], g["df"]))
+            wl_lo, wl_hi = rmsea_interval(g["chi2"], int(g["df"]), n)
+            wcol = {
+                "chi2": f"{g['chi2']:.1f} ({g['df']:.0f}), {_p(p_w)}",
+                "cfi": f"{g['cfi']:.3f}",
+                "tli": f"{g['tli']:.3f}",
+                "rmsea": f"{g['rmsea']:.3f} ({wl_lo:.3f} to {wl_hi:.3f})",
+                "srmr": f"{g['srmr']:.3f}",
+            }
+        else:
+            wcol = dict.fromkeys(("chi2", "cfi", "tli", "rmsea", "srmr"), DASH)
         self.rows["fit"] = (
-            rf"$\chi^2$ (df), $p$ & {f['chi2']:.1f} ({f['df']:.0f}), {_p(p_chi)} & {DASH} & -- \\"
+            rf"$\chi^2$ (df), $p$ & {f['chi2']:.1f} ({f['df']:.0f}), {_p(p_chi)} & {wcol['chi2']} & -- \\"
             "\n"
-            rf"CFI & {f['cfi']:.3f} & {DASH} & $\geq 0.95$ \\"
+            rf"CFI & {f['cfi']:.3f} & {wcol['cfi']} & $\geq 0.95$ \\"
             "\n"
-            rf"TLI & {f['tli']:.3f} & {DASH} & $\geq 0.95$ \\"
+            rf"TLI & {f['tli']:.3f} & {wcol['tli']} & $\geq 0.95$ \\"
             "\n"
-            rf"RMSEA (90\% CI) & {f['rmsea']:.3f} ({lo:.3f} to {hi:.3f}) & {DASH} & $\leq 0.06$ \\"
+            rf"RMSEA (90\% CI) & {f['rmsea']:.3f} ({lo:.3f} to {hi:.3f}) & {wcol['rmsea']} & $\leq 0.06$ \\"
             "\n"
-            rf"SRMR & {f['srmr']:.3f} & {DASH} & $\leq 0.08$ \\"
+            rf"SRMR & {f['srmr']:.3f} & {wcol['srmr']} & $\leq 0.08$ \\"
             "\n" + self._stamp_rows(4)
         )
 
@@ -378,9 +511,7 @@ class Export:
         for gname, mask in (("sex", female), ("age band (80 and over)", old)):
             if min(mask.sum(), (~mask).sum()) < 100:
                 continue
-            per = [
-                invariance([X[~mask], X[mask]], mm.pattern, [w_all[~mask], w_all[mask]]) for X in Xs
-            ]
+            per = _pmap(_invariance_one, [(X, mask, mm.pattern, w_all) for X in Xs], self.jobs)
             inv[gname] = {
                 lvl: {
                     k: float(np.mean([r[lvl][k] for r in per]))
@@ -416,9 +547,24 @@ class Export:
             "tab:reliability",
             "tab:discriminant",
         ] + (["tab:secondorder"] if adm > 0 else [])
-        self.unfilled["tab:fit WLSMV column"] = (
-            "WLSMV (polychoric DWLS with mean-and-variance adjustment) is not implemented in the "
-            "Python CFA engine; the column stays a placeholder."
+        if self.wlsmv:
+            self.filled.append("tab:fit (WLSMV column)")
+        else:
+            self.unfilled["tab:fit WLSMV column"] = "WLSMV did not converge in any imputation."
+
+    def _wlsmv_sentence(self) -> str:
+        if not self.wlsmv:
+            return "WLSMV did not converge, so the estimators could not be compared."
+        ml = np.array(
+            [self.measurement["loadings"][c]["estimate"] for c in self.measurement["loadings"]]
+        )
+        diff = np.abs(ml - self.wlsmv["loadings"])
+        return (
+            f"Under WLSMV, with {self.wlsmv['n_ordinal']} of the {len(ml)} indicators treated as "
+            "ordinal, the standardised loadings differed from the ML estimates by at most "
+            f"{diff.max():.3f} (mean {diff.mean():.3f}), and CFI was "
+            f"{self.wlsmv['fit']['cfi']:.3f} (Table~\\ref{{tab:fit}}). The asymptotic covariance "
+            "of the polychoric and polyserial correlations was estimated by bootstrap."
         )
 
     def measurement_text(self, tdir: Path) -> dict:
@@ -482,7 +628,7 @@ class Export:
             + "Removing each indicator in turn changed the remaining standardised loadings by at "
             f"most {self.loo['max_shift']:.3f}, and CFI by at most "
             f"{max((abs(x) for x in self.loo['dcfi']), default=float('nan')):.3f}. "
-            "The WLSMV comparison is not yet available."
+            + self._wlsmv_sentence()
         )
         for k, body in paras.items():
             (tdir / f"{k}.tex").write_text(
@@ -516,7 +662,8 @@ class Export:
         self.filled.append("tab:sample (age, sex, multimorbidity)")
         self.unfilled["tab:sample other rows"] = (
             "ADL, IADL, cognition, PHQ-2 screen, participation, dual eligibility, education and "
-            "delayed care are not in the analytic extract yet; add them to nhats_layout.yaml."
+            "delayed care need item-level variables and cut-points; the analytic extract holds "
+            "the eleven indicator scores, not these binary summaries."
         )
 
     def events_table(self) -> None:
@@ -705,52 +852,30 @@ class Export:
         In each resample the imputation models, the joint CFA, the domain bounds
         and the Cox models are refitted on the bootstrap rows, then evaluated on
         those rows and on the original rows; the mean difference is the optimism.
-        The measurement model is fitted once per resample and shared by both
-        endpoints.
+        Resamples run in parallel across ``jobs`` processes. Each draws from its
+        own pre-generated seed, so the result does not depend on the number of
+        processes.
         """
-        cfg, alpha = self.cfg, self.cfg.raw["measurement"]["alpha"]
-        base = self.raw
+        state = (self.raw, self.cfg, self.endpoints, self.horizon, self.weight)
+        _boot_init(*state)
+        full_model = fit_measurement(self.raw, self.cfg, se=False)
+        full = _boot_scored(full_model, self.raw)
+        apparent = {e: _boot_perf(full, full, self.endpoints[e]) for e in PRIMARY}
+        seeds = self.rng.integers(0, 2**31 - 1, self.reps)
+        if self.jobs > 1:
+            from concurrent.futures import ProcessPoolExecutor
 
-        def scored(model, rows: pd.DataFrame) -> pd.DataFrame:
-            dom = transform_measurement(rows, model, cfg).reset_index(drop=True)
-            h = candidate_scores(dom, alpha, [])["geometric_crf"]
-            out = rows.reset_index(drop=True).assign(geometric_crf=h.to_numpy())
-            out["female"] = (out["sex"].astype(str).str.lower() == "female").astype(float)
-            return out
-
-        def perf(train, test, spec):
-            risk, _ = fit_predict_cox(
-                train,
-                test,
-                spec["time"],
-                spec["event"],
-                ["geometric_crf", "age", "female"],
-                self.horizon,
-                self.weight,
-                spec.get("competing"),
-            )
-            return _performance(test, spec, risk, self.horizon)
-
-        full = scored(fit_measurement(base, cfg, se=False), base)
-        apparent = {e: perf(full, full, self.endpoints[e]) for e in PRIMARY}
+            with ProcessPoolExecutor(self.jobs, initializer=_boot_init, initargs=state) as ex:
+                results = list(
+                    ex.map(_boot_rep, seeds, chunksize=max(1, self.reps // (4 * self.jobs)))
+                )
+        else:
+            results = [_boot_rep(sd) for sd in seeds]
         optimism = {e: {k: [] for k in apparent[e]} for e in PRIMARY}
-        n = len(base)
-        for _ in range(self.reps):
-            idx = self.rng.integers(0, n, n)
-            b_rows = base.iloc[idx].reset_index(drop=True)
-            try:
-                model = fit_measurement(b_rows, cfg, se=False)
-                b, orig = scored(model, b_rows), scored(model, base)
-            except (ValueError, ZeroDivisionError, np.linalg.LinAlgError):
-                continue
-            for endpoint in PRIMARY:
-                spec = self.endpoints[endpoint]
-                try:
-                    on_boot, on_orig = perf(b, b, spec), perf(b, orig, spec)
-                except (ValueError, ZeroDivisionError):
-                    continue
-                for k in apparent[endpoint]:
-                    optimism[endpoint][k].append(on_boot[k] - on_orig[k])
+        for res in results:
+            for endpoint, diffs in (res or {}).items():
+                for k, v in diffs.items():
+                    optimism[endpoint][k].append(v)
         rows, self.internal = [], {}
         for e_i, endpoint in enumerate(PRIMARY):
             app, opt = apparent[endpoint], optimism[endpoint]
@@ -1024,18 +1149,16 @@ class Export:
                 "a competing event; a death after missed interviews is censored at the last "
                 "answer.",
             ],
-            "never_filled_here": (
-                "Chapter 5 measurement-model results (estimation, fit, loadings, reliability, "
-                "second-order structure, invariance) come from the CFA in thesis/analysis/, "
-                "not from this pipeline."
-            ),
         }
         (self.out / "EXPORT.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
         return report
 
 
-def export(run_dir, thesis_dir, config_path=None, reps=200, allow_synthetic=False, internal=True):
-    return Export(run_dir, thesis_dir, config_path, reps, allow_synthetic).write(internal)
+def export(
+    run_dir, thesis_dir, config_path=None, reps=200, allow_synthetic=False, internal=True, jobs=0
+):
+    """Write thesis/generated from a run. ``jobs`` = 0 uses every processor core."""
+    return Export(run_dir, thesis_dir, config_path, reps, allow_synthetic, jobs).write(internal)
 
 
 __all__ = ["export", "harrell_c", "uno_c"]

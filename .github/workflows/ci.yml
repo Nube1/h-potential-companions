@@ -151,7 +151,7 @@ jobs:
             realworld-pipeline/outputs/ci/figures/
 
   thesis-verification:
-    # The 126 tests that assert every worked example and formal claim in the
+    # The 128 tests that assert every worked example and formal claim in the
     # thesis, plus the Python analysis scripts that replaced the R scaffold.
     runs-on: ubuntu-latest
     steps:

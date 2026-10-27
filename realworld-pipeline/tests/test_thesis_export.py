@@ -52,3 +52,33 @@ def test_export_from_demo(tmp_path, monkeypatch):
         assert (gen / "text" / f"{key}.tex").read_text().count(r"\hpstamp") == 1
     assert (gen / "figures" / "km_overall.tex").exists()
     assert json.loads((gen / "EXPORT.json").read_text())["not_filled"]
+
+
+def test_parallel_bootstrap_matches_sequential(tmp_path, monkeypatch):
+    """Each resample has its own seed, so the result does not depend on the
+    number of processes."""
+    from concurrent.futures import ProcessPoolExecutor
+
+    from hpotential.config import load_config
+    from hpotential.data import load_and_validate, synthetic_dataset
+    from hpotential.thesis_export import _boot_init, _boot_rep
+
+    cfg = load_config(ROOT / "configs/study.yaml")
+    cfg.raw["measurement"]["imputations"] = 2
+    p = tmp_path / "d.csv"
+    synthetic_dataset(cfg, 300).to_csv(p, index=False)
+    base, _ = load_and_validate(p, cfg)
+    state = (
+        base.reset_index(drop=True),
+        cfg,
+        cfg.raw["outcomes"]["endpoints"],
+        1825.0,
+        "survey_weight",
+    )
+    seeds = [11, 22, 33]
+    _boot_init(*state)
+    sequential = [_boot_rep(s) for s in seeds]
+    with ProcessPoolExecutor(2, initializer=_boot_init, initargs=state) as ex:
+        parallel = list(ex.map(_boot_rep, seeds))
+    np.testing.assert_equal(sequential, parallel)  # NaN-aware
+    assert all(r and "mortality" in r for r in sequential)
