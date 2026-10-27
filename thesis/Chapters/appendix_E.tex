@@ -4,6 +4,53 @@
 
 \label{app:crf}
 
+This chapter answers one question. Chapter~\ref{ch:methods} produces three
+scores for each person: biomedical potential, the health capacity of the body;
+social enablement, the people and services that let that capacity be used; and
+structural burden, the costs, distances and institutional barriers that stand
+in the way. A single figure for a person needs a rule that combines the three.
+The usual rule, often unstated, is to add them. This chapter argues for a
+different rule, proves what that rule does, and shows how it is used to compare
+policies.
+
+The choice matters for patients because a sum lets a strong domain hide a
+failing one. Under a sum, a person with good biological reserve and good
+social support who cannot reach a treatment centre at all still receives a
+high score, and a programme that would remove the barrier appears to have
+little to gain. The rule adopted here does not allow that: if either contextual
+domain is at zero, the combined score is zero, however good the others are.
+Haematologists already reason in this way. A coagulation result is not made
+normal by an excellent platelet count, and a severe deficiency of one clotting
+factor is not offset by normal levels of the others, because haemostasis needs
+each part to work. The parallel holds for the structure of the rule, in which
+the weakest part limits the whole. It breaks down in two places. In haemostasis
+the dependence is a biological mechanism that can be measured directly; here it
+is a stated assumption about how capacity and context combine, which the
+chapter sets out to test. And the primary rule of this chapter is milder than a
+pure bottleneck: a stronger domain still raises the score, but it cannot cancel
+a domain at zero.
+
+In words, the chapter establishes the following. A record of what people do
+cannot reveal what they are able to do, so a model of capacity and context is
+needed. Six requirements, stated in advance, rule out the additive rule and
+admit a family of multiplicative rules. One further assumption, that a given
+percentage improvement in a domain always yields the same percentage gain in
+the score, picks out a single member of that family, the geometric form. Under
+that form, any difference between two people or groups splits exactly into a
+biomedical, a social and a structural part; the next unit of spending does most
+good in the weakest domain; a funding decision reached in one health system
+does not carry over unchanged to another; and adding people into a population
+figure requires one declared judgement about inequality. The chapter then
+states in advance which empirical results would reject the rule.
+
+A note on vocabulary. An \emph{axiom} is a requirement stated before any data
+are seen, as a laboratory states acceptance criteria for an assay before the
+validation run. A \emph{proposition} or \emph{theorem} is a statement that
+follows from the axioms by argument alone, and its \emph{proof} is that
+argument. Each formal statement below is preceded by a plain account of what it
+says and followed by what it means in practice, so a reader who takes the
+proofs on trust can follow the chapter from the plain accounts.
+
 \begin{ataglance}[The argument in outline]
 This chapter has several moving parts, so it is worth setting out its shape before
 any equations appear. Each section does one of the following six things.
@@ -110,8 +157,45 @@ The reason a formal treatment is needed at all is that the obvious empirical
 strategy, fitting several candidate rules and keeping the best, does not work
 here. The next section says why.
 
+\section*{What Is New in This Chapter}
+Two kinds of measure existed before. Additive composite indices combine
+domains by a weighted sum or a count, as the frailty index counts deficits and
+divides by the number assessed \citep{rockwood_mitnitski_2007}; under such a
+rule a surplus in one domain makes up for a shortfall in another, a property
+the composite-index literature calls compensability and treats as an open
+choice of method \citep{greco_2019}. Existing capability measures, such as the
+ICECAP instruments \citep{icecap_o,icecap_a}, record capability from
+questionnaire answers and value it with population preference weights
+\citep{coast_2008}; they do not separate biological capacity from the context
+that lets it be used. This chapter adds four things. It states the
+requirements a combination rule must meet before choosing one, and shows that
+the additive rule fails one of them, essential enablement. It proves which
+single assumption, constant elasticities, selects the geometric form from the
+admissible family, so the choice rests on a condition that data can contradict.
+It derives from that form three policy objects: an exact gap decomposition with
+no residual, a gradient that points at the weakest domain, and a population
+measure with one declared inequality parameter. And it fixes in advance the
+comparisons with an additive composite and with the latent factor score that
+would reject or narrow the rule. The claims can be checked in two ways: a named
+test in the verification suite of Appendix~\ref{app:verification} asserts the
+numbers of each worked example, and Chapters~\ref{ch:results1}
+and~\ref{ch:results2} carry out the empirical comparison under the criteria of
+\S\ref{sec:E-falsification}. The geometric mean and the constant-elasticity
+family are established tools \citep{arrow_chenery_1961,cobb_douglas_1928}; the
+claim is for their use under these axioms, not for the tools.
+
 \section{The Identification Problem}
 \label{sec:E-identification}
+In plain words: two people can do the same things for different reasons, one
+by choice and one because nothing more is open to them, and a record of what
+they do cannot tell the two apart. Equation~\eqref{eq:identification} states
+this. The laboratory counterpart is a single abnormal reading with more than one
+cause: a prolonged clotting time may reflect a factor deficiency or an
+inhibitor, and a mixing study is needed to separate them. Here the extra
+information is a measurement of the inputs to capability. The parallel stops
+there, because a mixing study is an experiment on the sample, whereas the
+inputs here are measured from survey indicators with no intervention.
+
 The model exists to solve a problem that cross-sectional data cannot solve on their
 own. Let $\mathcal{C}_i$ be the set of health-related functionings genuinely open to
 person $i$, and let $F_i=\chi_i(\mathcal{C}_i)$ be the functioning actually observed,
@@ -152,6 +236,10 @@ it is measured, and what any rule combining them must respect.
 
 \section{Objects, Scale, and Axioms}
 \label{sec:E-axioms}
+This section fixes the three inputs and their scales, then lists six
+requirements that any rule for combining them must meet. Table~\ref{tab:E-plain}
+restates each requirement in one line, with the failure it prevents.
+
 For person $i$, let $P_i=L_iQ_i\geq0$ be biomedical potential measured in
 quality-adjusted life-years, $S_i\in[0,1]$ social enablement, and
 $B_i\in[0,1]$ structural burden. Define structural freedom $R_i=1-B_i$.
@@ -181,6 +269,42 @@ recorded. Burden is turned into freedom, $R=1-B$, so that zero means the
 absence of the enabler in both contextual domains and essential enablement can
 be written symmetrically.
 
+Several of the axioms have direct counterparts in laboratory practice.
+Normalisation plays the part of calibration against a reference standard: at
+the reference point, full enablement and no burden, the score must read its
+assigned value, the person's whole biomedical potential. Replication invariance
+is the requirement that the order of patients does not change when a result is
+reported in SI rather than conventional units. Monotonicity is the requirement
+that a higher factor level is never classed as more severe. Essential enablement
+is the non-compensatory rule described at the opening of the chapter. The
+counterparts describe the form of each requirement; unlike an assay, the
+combined score has no physical reference material against which it can be
+checked, so the axioms are judged by argument and by the tests of
+\S\ref{sec:E-falsification}.
+
+\begin{table}[htbp]\centering
+\caption{The six axioms in plain terms, with the failure each one prevents.}
+\label{tab:E-plain}
+\footnotesize
+\begin{tabular}{p{2.6cm} p{5.4cm} p{5.6cm}}
+\toprule
+\textbf{Axiom} & \textbf{Plain statement} & \textbf{Failure it prevents} \\
+\midrule
+1. Dimensional coherence & The combined score is in the same units as biomedical potential, quality-adjusted life-years. & A score that cannot sit beside a health gain without an arbitrary conversion factor. \\
+\addlinespace
+2. Normalisation & With full social enablement and no structural burden, a person realises all of their biomedical potential. & A scale with no fixed anchor, so that scores cannot be compared across studies. \\
+\addlinespace
+3. Monotonicity & Improving any domain never lowers the score. & A ranking in which a person made better off is scored as worse off. \\
+\addlinespace
+4. Bounded realisation & Context can at best let a person use all of their capacity; it cannot add to it. & Scores above the biological ceiling, which would let the model fit any pattern. \\
+\addlinespace
+5. Essential enablement & If social enablement or structural freedom is zero, the score is zero, whatever the biomedical potential. & A wholly excluded person scored as well off because the other domains are strong; this is the failure of the additive rule. \\
+\addlinespace
+6. Replication invariance & Changing the units in which an indicator is recorded does not change who ranks above whom. & Rankings that depend on a recording convention rather than on the people measured. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{notationtable}
 $P=L\cdot Q$ & Biomedical potential & Disease-adjusted life expectancy $L$ scaled by a quality-of-life multiplier $Q$; the health capacity a person has, in quality-adjusted life-years. \\
 \addlinespace
@@ -202,7 +326,9 @@ $\varepsilon\geq0$ & Inequality aversion & How strongly the population measure p
 \section{Two Ontologies: Capacity-Ceiling and Relational}
 \label{sec:E-ontologies}
 One axiom is not neutral: the fourth takes a side on what health capability
-is.
+is. The word \emph{ontology} here means a view of what kind of thing health
+capability is, and the two views below differ on whether context can only
+release capacity or can also add to it.
 
 Axiom~4 (bounded realisation) encodes a specific ontological choice, and it is worth
 stating the alternative it rules out. Under the \emph{capacity-ceiling} ontology,
@@ -259,6 +385,13 @@ however far $S$ rises.
 With the ceiling adopted, $H=P\cdot M(S,R)$, and the open question is the
 shape of $M$. Many functions satisfy the axioms. The family chosen has one
 parameter, and that parameter has a meaning that can be argued over.
+
+The bracket in Equation~\eqref{eq:crf_ces} below is a weighted average of the two
+contextual scores of a particular kind, a generalised (or power) mean, in which
+the parameter $\rho$ sets how far a high score can make up for a low one.
+Economists call the form constant elasticity of substitution (CES). At
+$\rho=0$ it becomes the geometric mean, and as $\rho$ falls it moves towards the
+smaller of the two scores.
 
 For $0<\alpha<1$ and $\rho\leq0$, define \citep{arrow_chenery_1961}
 \begin{equation}
@@ -358,6 +491,13 @@ throughout. Asserted by
 \texttt{test\_worked\_example\_rho\_reverses\_the\_ranking}.}
 \end{workedexample}
 
+The first formal result checks that every member of the family meets the
+requirements. In words: multiplying biomedical potential by such an average of
+two numbers between zero and one keeps the units, never exceeds the potential,
+rises when any input rises, and falls to zero when either contextual score is
+zero. A clinician need not follow the proof to use the result, which is that any
+member of the family may be chosen without breaking the axioms.
+
 \begin{proposition}[Axiomatic admissibility]
 For $P\geq0$, $S,R\in[0,1]$, $0<\alpha<1$, and $\rho\leq0$, the CRF satisfies
 dimensional coherence, normalisation, monotonicity, bounded realisation, and
@@ -406,6 +546,17 @@ uniqueness result requires additional, empirically contestable structure.
 Without one, the primary form would look like a familiar default, and the
 question ``why not $\rho=-1$?'' could be met only with preference. The theorem
 replaces preference with a condition that can be wrong.
+
+The theorem says that if one extra condition is accepted, the geometric form
+is the only rule left. The condition is constant elasticity. An
+\emph{elasticity} is the percentage change in the score that follows a one per
+cent change in an input; \emph{constant} means the ratio is the same at every
+starting level. On a plot of the logarithm of the score against the logarithm
+of an input, constant elasticity is a straight line with slope $\alpha$, as in a
+log-log calibration curve that is linear. The parallel shows where the
+assumption is weakest: a real calibration curve is linear only over its working
+range, whereas the theorem assumes the line holds over the whole range from
+near zero to full enablement.
 
 \begin{theorem}[Characterisation by constant domain elasticities]
 \label{thm:crf_characterisation}
@@ -456,6 +607,12 @@ difference, not a matter of preference, and it is one of the pre-specified
 comparisons in \S\ref{sec:E-falsification}.
 \end{reading}
 
+The next result compares the geometric rule with the additive rule for
+contexts that share the same average. It shows that the geometric score is never
+higher than the additive one, and that the two are equal only when the two
+contextual scores are equal. The proof rests on a classical inequality between
+the arithmetic and geometric means.
+
 \begin{proposition}[Balance or bottleneck penalty]
 \label{prop:crf_balance}
 Let $M=\alpha S+(1-\alpha)R$ be a fixed weighted arithmetic level of contextual
@@ -484,6 +641,14 @@ The clinical parallel is a service that reports mean waiting time. Two clinics
 averaging six weeks are not equivalent if one sees everyone at six weeks and the
 other sees most people in a week and a few after a year. The mean is blind to
 the tail by construction, and so is any additive index.
+
+A laboratory parallel makes the same point. Two patients can have the same
+mean of two clotting factor levels, one with both levels moderately low and the
+other with one level normal and the other severely low; only the second has a
+single severe deficit that needs targeting. No laboratory would average factor
+levels before interpreting them, and the parallel is offered for what averaging
+discards, not as a description of practice. The penalty measures that
+discarded information.
 \end{reading}
 
 \begin{workedexample}[ape-penalty]{Pricing the bottleneck}
@@ -534,6 +699,12 @@ Figure~\ref{fig:E-balance} illustrates the balance penalty. Holding the arithmet
 The previous section left open how the form responds to change, which is the
 question a policy asks.
 
+The question is how much the score changes when one domain changes by a small
+amount and the others stay fixed. That quantity is the partial derivative,
+written $\partial H/\partial S$ for social enablement; it can be read as the
+slope of the score against that domain. Equation~\eqref{eq:crf_elasticities}
+gives the same information in percentage terms.
+
 For the primary geometric model, suppressing person subscripts, \citep{cobb_douglas_1928}
 \begin{align}
 \frac{\partial H}{\partial P}&=S^{\alpha}R^{1-\alpha}, &
@@ -558,6 +729,12 @@ low measured $S$ is a large relative error, which passes into $H$ scaled by
 $\alpha$, so scores for people with very low enablement need wider intervals
 (\S\ref{sec:E-systems}).
 
+The proposition below says that the domains reinforce one another: a gain in
+biomedical potential is worth more to a person whose context is good, and a
+gain in context is worth more to a person with more capacity to use. In
+mathematical terms this is a positive cross-partial derivative, the rate at
+which the slope for one domain rises as another domain rises.
+
 \begin{proposition}[Biomedical--context complementarity]
 For interior values, $\partial^2H/(\partial P\partial S)>0$ and
 $\partial^2H/(\partial P\partial R)>0$.
@@ -579,6 +756,13 @@ and the return to a better context is larger where there is capacity to use it. 
 disadvantages therefore compound rather than sum. An additive score, whose
 cross-partials are zero by construction, cannot express this, which is exactly why
 intersectional disadvantage is invisible to it.
+
+In practice, within the model, the same treatment gain in biomedical potential
+yields more realised potential where social and structural conditions let it be
+used, and better access yields more for patients with more capacity to gain.
+Clinical and contextual work therefore raise each other's yield. This is a
+property of the model; whether people show it is a question for the data of
+Chapters~\ref{ch:results1} and~\ref{ch:results2}.
 \end{reading}
 
 Cross-partials describe how the model behaves at a point. Comparing two people,
@@ -596,6 +780,10 @@ Figure~\ref{fig:E-marginal} checks the complementarity result numerically: the a
 
 \section{Exact Capability-Gap Decomposition}
 \label{sec:E-gap}
+This section answers a reporting question: when two people or groups differ in
+realised potential, how much of the difference comes from each domain? On the
+logarithmic scale the answer is exact.
+
 For two people or populations $a$ and $b$ with positive domains,
 \begin{equation}
 \log\frac{H_a}{H_b}
@@ -693,7 +881,16 @@ response functions and cost $c(u)$. A local allocation problem is
 \quad\text{subject to}\quad c(u)\leq C,
 \label{eq:crf_policy}
 \end{equation}
-optionally adding an equity penalty or lower-tail constraint. The chain rule gives
+optionally adding an equity penalty or lower-tail constraint. In words,
+Equation~\eqref{eq:crf_policy} chooses the mix of interventions that raises
+expected realised potential most without exceeding the budget. The gain from
+one intervention, given next, multiplies two quantities for each domain: how
+much the score changes when the domain changes, which the model supplies, and
+how much the intervention changes the domain, which must come from trials or
+programme evaluations. Clinicians know the same separation between a surrogate
+relation and a treatment effect: knowing that a higher trough factor level goes
+with fewer bleeds does not say how far a given regimen raises the trough. The
+chain rule gives
 \begin{equation}
 \frac{dH}{du_j}=
 \frac{\partial H}{\partial P}\frac{dP}{du_j}
@@ -770,6 +967,11 @@ The gradient left \eqref{eq:crf_policy} unsolved, because a decision weighs
 more than realised potential. The question is how to carry the rest to a
 decision without merging it into one figure.
 
+A cost-effectiveness analysis usually ends in one number, the cost per
+quality-adjusted life-year gained, set against a threshold. This section keeps
+the evidence as eight separate entries instead, so that a committee sees which
+domain moved, for whom, and at what cost.
+
 A capability metric must not be flattened into a single monetary threshold. For an
 intervention $a$ in jurisdiction $j$, the evidence is carried as an eight-coordinate
 policy vector \citep{drummond2015}
@@ -832,6 +1034,13 @@ to another, even when the clinical effect is identical.
 
 \section{Non-Transportability of Policy Rankings}
 \label{sec:E-transport}
+The theorem below states formally what health technology assessment meets in
+practice: two countries can see the same clinical effect from a treatment and
+still reach opposite decisions about funding it, because prices, budgets and the
+value placed on a unit of health differ. The proof uses the incremental net
+monetary benefit, the value of the health gained at the local willingness to
+pay minus the extra cost.
+
 \begin{theorem}[Non-transportability]
 \label{thm:nontransport}
 Equal capability-profile shifts, $\Delta X_j(a)=\Delta X_k(a)$, and equal health
@@ -862,13 +1071,20 @@ The proof places the difference in cost, threshold and budget ceiling, all
 outside the realisation function. This is the formal ground for the staged
 transport procedure of Chapter~\ref{ch:methods}, in which local economic
 evaluation comes last, and it bears directly on the haemophilia work of
-Chapter~\ref{ch:translational}.
+Chapter~\ref{ch:translational}. In practice, a decision to fund a haemophilia
+therapy in one country is evidence about its clinical effect elsewhere, not
+about whether it should be funded there.
 
 Everything to this point concerns one person at a time. Adding people up is a
 separate operation, and it cannot be done without a value judgement.
 
 \section{Equity-Sensitive Population Potential}
 \label{sec:E-equity}
+The question here is how to summarise a population whose members differ in
+realised potential. The answer below is a single level which, if every person
+had it, would be judged as good as the actual unequal spread. One parameter,
+$\varepsilon$, states how much weight the summary gives to people at the low end.
+
 Individual capability and population equity are different estimands. For
 strictly positive $H_i$ and inequality-aversion parameter $\varepsilon\geq0$,
 define the equally distributed equivalent potential \citep{atkinson_1970}
@@ -1039,6 +1255,20 @@ bias, and it enters $H$ through the elasticity $\alpha$.
 \label{sec:E-falsification}
 Everything so far shows the model is coherent and computable, not that it
 describes people. This section states in advance what would count against it.
+
+The procedure is that of a method comparison study whose acceptance criteria
+are fixed before the run. Some terms need a gloss. The SEM factor score is the
+latent-variable score of Chapter~\ref{ch:results1}, inferred from several
+indicators as an analyte concentration is inferred from an assay signal through
+a calibration. A paired bootstrap repeats the whole analysis on many resampled
+copies of the data, as a validation run is repeated on resampled material, and
+compares the rival scores on the same copies. Factor-score determinacy is how
+closely an estimated score tracks the quantity it estimates, the counterpart of
+assay precision. The heterotrait-monotrait ratio (HTMT) checks that indicators
+of different domains agree less with one another than with indicators of their
+own domain. Scalar invariance means that an indicator gives the same reading for
+the same underlying level in different groups, as an assay should give the same
+result for the same concentration in different laboratories.
 
 The mathematical contribution is supported only if the following pre-specified
 tests succeed:
