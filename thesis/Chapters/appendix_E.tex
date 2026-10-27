@@ -71,6 +71,21 @@ are carried through with numbers so that each result can be checked.
 \end{ataglance}
 
 \section{Purpose and Status}
+Chapter~\ref{ch:methods} sets out how to obtain three outcome-independent
+domain scores for each person: biomedical potential, social enablement and
+structural burden. It does not say how to combine them. Yet the moment one number is reported for a
+person, some rule of combination has been used, written down or not, and the
+unwritten rule is usually the sum. This chapter asks which rule should be used
+instead, on what grounds, and what follows for policy once it is fixed.
+
+The question has to be settled now for two reasons. Chapters~\ref{ch:results1}
+and~\ref{ch:results2} test the combined score against an additive composite,
+and that test means nothing unless the rule is fixed before the outcomes are
+seen. And the systems view of Chapter~\ref{ch:systems} treats the domains as
+interacting parts of one system: a rule that adds them assumes they do not
+interact, a rule that multiplies them assumes they do. The choice is a claim
+about how the system works.
+
 This chapter presents the central formal contribution of the thesis: an axiomatic
 Capability Realisation Function (CRF) that turns the conceptual claim of health as
 capability-in-context into a falsifiable mathematical model, together with an
@@ -84,6 +99,12 @@ including constant-elasticity \citep{arrow_chenery_1961} and geometric means, ar
 tools, and no priority claim is made for those tools themselves. The measurement
 model of the preceding chapters supplies the outcome-independent domain scores
 against which the CRF is tested head-to-head.
+
+The order of sections guards against the ways such a chapter can go wrong. A
+rule chosen because it fits the data inherits the data's biases, so the axioms
+come first. A rule defended for convenience hides its assumption, so a theorem
+names it. A rule presented as settled when it is only plausible escapes test,
+so the chapter states in advance the results that would reject it.
 
 The reason a formal treatment is needed at all is that the obvious empirical
 strategy, fitting several candidate rules and keeping the best, does not work
@@ -107,6 +128,18 @@ separates the two without an explicit model of biological reserve, enabling
 conditions and structural constraints. The Capability Realisation Function is that
 model: it reconstructs realised capability from $P$, $S$ and $R$ rather than reading
 it off achieved functioning.
+
+More data of the same kind does not help. Suppose two people each leave the
+house twice a week; for one, $\chi$ picks two outings from a set that includes
+daily ones, and for the other two is the most the set contains. Any statistic
+of the outings treats them alike, because it sees $F$ and not $\mathcal{C}$,
+and following them for longer does not separate a stable preference from a
+stable barrier. Only information about the inputs to $\mathcal{C}$ does that.
+
+The rejected alternative takes observed activity itself as the measure of
+health capability. It needs no model, but used to target policy it would score
+a person held down by structure the same as one who chose to rest, and a
+programme aimed at the barrier would see no gap to close.
 \begin{reading}[Why a model is needed at all]
 If we measure only what people currently do, we cannot tell a free choice from a
 blocked one: the same score can mean ``well and choosing to rest'' or ``able but
@@ -135,6 +168,19 @@ The realised potential $H(P,S,R)$ is required to satisfy:
 The fifth axiom encodes non-compensation: complete social exclusion or complete
 structural obstruction cannot be cancelled by biomedical advantage.
 
+Each axiom blocks a specific failure. Dimensional coherence keeps $H$ in
+quality-adjusted life-years, so it can sit beside the health gain $\Delta Q_j$
+in the evidence vector later in the chapter with no conversion factor to
+choose. Normalisation anchors the scale. Monotonicity forbids a ranking in which
+an improvement lowers the score. Essential enablement does most work, and it is
+the axiom an additive rule breaks: under $\alpha S+(1-\alpha)R$, a person with
+$S=0$ and $R$ near one still scores close to $(1-\alpha)P$, a large realised
+potential for someone wholly excluded. Replication invariance stops the
+ordering of people from depending on the units in which an indicator was
+recorded. Burden is turned into freedom, $R=1-B$, so that zero means the
+absence of the enabler in both contextual domains and essential enablement can
+be written symmetrically.
+
 \begin{notationtable}
 $P=L\cdot Q$ & Biomedical potential & Disease-adjusted life expectancy $L$ scaled by a quality-of-life multiplier $Q$; the health capacity a person has, in quality-adjusted life-years. \\
 \addlinespace
@@ -155,6 +201,9 @@ $\varepsilon\geq0$ & Inequality aversion & How strongly the population measure p
 
 \section{Two Ontologies: Capacity-Ceiling and Relational}
 \label{sec:E-ontologies}
+One axiom is not neutral: the fourth takes a side on what health capability
+is.
+
 Axiom~4 (bounded realisation) encodes a specific ontological choice, and it is worth
 stating the alternative it rules out. Under the \emph{capacity-ceiling} ontology,
 biological potential $P$ is the non-negotiable upper bound and context is a
@@ -178,6 +227,13 @@ testable default. The relational extension, in which the conversion factor may e
 one for a specific assistive mechanism, is a declared direction for future work;
 adopting it would relax Axiom~4 and must be argued for a named mechanism rather than
 assumed.
+
+The ceiling is preferred because it can be tested. Under \eqref{eq:ceiling}
+the share $H/P$ lies between zero and one and can be compared across people;
+under \eqref{eq:relational} $G$ is unrestricted, so any pattern can be fitted
+and the model forbids nothing. The relational form becomes testable only once
+the lifting mechanism is named and measured, and the three domains carry no
+such measure.
 \begin{reading}[What the choice commits us to]
 The capacity-ceiling model says context can only help a person use the health they
 have, never manufacture more; it cannot represent a wheelchair that expands real
@@ -187,6 +243,9 @@ separate claim to be made explicitly.
 \end{reading}
 
 Figure~\ref{fig:E-ceiling} shows the capacity ceiling numerically: the share of biomedical potential that is realised, $H/P$, rises with social enablement at every level of structural freedom, but reaches one only when both contextual domains are at one.
+Each curve is steepest near $S=0$, so the first gains in a missing enabler are
+the largest (\S\ref{sec:E-marginal}), and the curves for low $R$ stay low
+however far $S$ rises.
 
 \begin{figure}[htbp]
 \centering
@@ -197,6 +256,10 @@ Figure~\ref{fig:E-ceiling} shows the capacity ceiling numerically: the share of 
 
 \section{Capability Realisation Family}
 \label{sec:E-family}
+With the ceiling adopted, $H=P\cdot M(S,R)$, and the open question is the
+shape of $M$. Many functions satisfy the axioms. The family chosen has one
+parameter, and that parameter has a meaning that can be argued over.
+
 For $0<\alpha<1$ and $\rho\leq0$, define \citep{arrow_chenery_1961}
 \begin{equation}
 H_{\alpha,\rho}(P,S,R)
@@ -213,6 +276,14 @@ As $\rho\rightarrow-\infty$, the enabling term approaches
 $\min(S,R)$, representing the strongest non-compensatory case. The parameter
 $\rho$ therefore measures permitted substitution between social enablement and
 structural freedom; it is not merely a curve-fitting constant.
+
+The family runs from the geometric mean to the bottleneck along one parameter,
+and keeping $P$ outside the bracket makes the ceiling hold for every member.
+The arithmetic mean, $\rho=1$, still returns $(1-\alpha)R$ at $S=0$, which
+breaks essential enablement; that is why the range stops at $\rho\le0$. The
+main rejected option was a free nonlinear function of $S$ and $R$ estimated from
+data. It would fit at least as well, but an ethical commitment about
+substitution would then be settled by whatever pattern the sample contained.
 
 \begin{reading}[What the form says]
 The bracket is a non-compensatory average of the two enablers: as one of them falls
@@ -300,6 +371,12 @@ argument. For $\rho<0$, if either argument tends to zero its negative power
 diverges and the mean tends to zero; Equation~\eqref{eq:crf_geometric} has the
 same boundary property because both exponents are positive.
 \end{proof}
+The proposition covers five of the six axioms. Replication invariance is a
+requirement on how the measurement step of Chapter~\ref{ch:methods} builds a
+domain as much as on $H$. The geometric member meets it in a strong form:
+multiplying $S$ by a positive constant multiplies every $H$ by the same factor,
+so the ordering of people is unchanged. Members with $\rho<0$ lack this, one
+reason the geometric form is primary and the others are sensitivity models.
 
 The axioms admit a family, not a function. Narrowing the family to one member
 needs an assumption the axioms do not supply, and that assumption should be
@@ -325,6 +402,10 @@ Figure~\ref{fig:E-levelsets} draws the level sets of the contextual mean $M(S,R)
 \label{sec:E-characterisation}
 The six axioms define an admissible class rather than a unique function. A
 uniqueness result requires additional, empirically contestable structure.
+
+Without one, the primary form would look like a familiar default, and the
+question ``why not $\rho=-1$?'' could be met only with preference. The theorem
+replaces preference with a condition that can be wrong.
 
 \begin{theorem}[Characterisation by constant domain elasticities]
 \label{thm:crf_characterisation}
@@ -352,7 +433,12 @@ The theorem does not claim that constant elasticities are universally true. It
 shows exactly which substantive restriction produces the primary CRF and makes
 that restriction testable against the wider family in Equation~\eqref{eq:crf_ces}.
 
-\begin{reading}[What ``constant elasticity'' commits you to]
+Proportionality in $P$, the other assumption, follows from the ceiling: the
+context sets the share realised, and a share applies alike to large and small
+capacities. If the share depended on $P$, the separation of capacity from
+context that the identification argument needed would be lost.
+
+\begin{reading}[What ``constant elasticity'' commits the model to]
 The theorem's load-bearing assumption is that
 $\partial\log H/\partial\log S$ equals the same $\alpha$ everywhere. In words:
 a one per cent improvement in social enablement raises realised capability by
@@ -445,6 +531,9 @@ Figure~\ref{fig:E-balance} illustrates the balance penalty. Holding the arithmet
 
 \section{Marginal Effects and Complementarity}
 \label{sec:E-marginal}
+The previous section left open how the form responds to change, which is the
+question a policy asks.
+
 For the primary geometric model, suppressing person subscripts, \citep{cobb_douglas_1928}
 \begin{align}
 \frac{\partial H}{\partial P}&=S^{\alpha}R^{1-\alpha}, &
@@ -461,6 +550,13 @@ Thus the elasticities are
 \frac{\partial\log H}{\partial\log R}=1-\alpha.
 \label{eq:crf_elasticities}
 \end{equation}
+Since $\partial H/\partial S=\alpha H/S$, the return to social enablement is
+largest where $S$ is smallest and grows without bound as $S$ approaches zero
+with $R$ positive; the same holds for $R$. The first unit of a missing enabler
+does the most good. The warning is that near the boundary a small error in a
+low measured $S$ is a large relative error, which passes into $H$ scaled by
+$\alpha$, so scores for people with very low enablement need wider intervals
+(\S\ref{sec:E-systems}).
 
 \begin{proposition}[Biomedical--context complementarity]
 For interior values, $\partial^2H/(\partial P\partial S)>0$ and
@@ -512,6 +608,12 @@ Equation~\eqref{eq:crf_gap} exactly decomposes a relative capability gap into
 biomedical, social-enablement, and structural-freedom components without a
 residual interaction term. It supports transparent equity reporting while the
 level equation retains interaction through multiplication.
+
+The log scale is used because the level difference $H_a-H_b$ splits into
+single-factor terms plus joint terms that belong to no one domain, and any rule
+for assigning them changes the reported shares with no change in the people
+compared. On the log scale the joint terms vanish. The price is that the parts
+are shares of a relative gap, not amounts of realised potential.
 
 \begin{reading}[How to read a capability gap]
 On the log scale the multiplicative model becomes additive, so any gap between two
@@ -579,6 +681,10 @@ Figure~\ref{fig:E-gap} applies the decomposition to two profiles that differ onl
 
 \section{Policy Gradient Under a Budget Constraint}
 \label{sec:E-gradient}
+A decomposition says where a gap comes from. It does not say where money
+should go, because closing a gap in one domain may cost far more than closing
+it in another. The next step brings cost into the calculation.
+
 Let interventions $u=(u_P,u_S,u_B)$ change the domains through differentiable
 response functions and cost $c(u)$. A local allocation problem is
 \citep{weinstein_zeckhauser_1973}
@@ -597,6 +703,14 @@ optionally adding an equity penalty or lower-tail constraint. The chain rule giv
 \end{equation}
 These derivatives rank marginal model-implied gains, not causal effects. Causal
 policy use additionally requires identified intervention-response functions.
+
+In \eqref{eq:crf_policy_gradient} the model supplies the first factor of each
+term; the second, how far an intervention moves a domain, must come from trials
+or programme evaluations. The gradient is also local. With $\alpha=0.5$ the two
+contextual gradients are equal when $S=R$, so raising the lower domain past the
+higher hands the larger gradient to the other. A budget spent in one block on
+the initial bottleneck may overshoot; spending in steps, with the gradient
+recomputed between them, avoids this.
 
 \begin{reading}[For policy]
 The gradient ranks where a marginal unit of budget buys the most realised potential,
@@ -652,6 +766,10 @@ the weaker domain. Asserted by
 \end{workedexample}
 
 \section{Integrated Policy Calculation: the Evidence Vector}
+The gradient left \eqref{eq:crf_policy} unsolved, because a decision weighs
+more than realised potential. The question is how to carry the rest to a
+decision without merging it into one figure.
+
 A capability metric must not be flattened into a single monetary threshold. For an
 intervention $a$ in jurisdiction $j$, the evidence is carried as an eight-coordinate
 policy vector \citep{drummond2015}
@@ -700,6 +818,14 @@ coordinates separate so a decision can weigh them explicitly rather than have th
 weighting hidden inside a single ratio.
 \end{reading}
 
+The rejected alternative is a single cost-effectiveness ratio against a
+threshold. Two interventions with the same ratio may work through different
+domains for different people, one raising $P$ for the well enabled, another
+relieving a structural bottleneck for those with least, and the ratio treats
+them as equal. The vector also shows that the model supplies only the domain
+shifts and the health gain; cost, budget and legal duty come from the
+jurisdiction.
+
 Keeping the coordinates separate has a consequence that is easy to state and
 uncomfortable to accept: a decision reached in one country cannot be exported
 to another, even when the clinical effect is identical.
@@ -732,6 +858,12 @@ framework's global ambition is therefore conditional by construction, which is w
 keeps it honest.
 \end{reading}
 
+The proof places the difference in cost, threshold and budget ceiling, all
+outside the realisation function. This is the formal ground for the staged
+transport procedure of Chapter~\ref{ch:methods}, in which local economic
+evaluation comes last, and it bears directly on the haemophilia work of
+Chapter~\ref{ch:translational}.
+
 Everything to this point concerns one person at a time. Adding people up is a
 separate operation, and it cannot be done without a value judgement.
 
@@ -762,6 +894,13 @@ receives greater weight. Zero values require either the limiting interpretation
 or a declared positive floor; this normative choice must be reported. The thesis
 reports results across a pre-specified range of $\varepsilon$ rather than selecting
 the value that favours a preferred policy.
+
+A mean reported beside a separate inequality index leaves the trade-off
+between them unstated, and a count below a threshold ignores how far below
+people are. The equally distributed equivalent keeps the units of $H$ and puts
+the value judgement in one parameter. The positivity condition matters: under
+essential enablement a wholly excluded person has $H_i=0$, and for
+$\varepsilon\geq1$ one such person drives the functional to zero.
 
 \begin{reading}[What inequality aversion buys]
 The population measure is the level of realised potential that, if everyone had it,
@@ -831,6 +970,10 @@ Figure~\ref{fig:E-ede} traces the equally distributed equivalent for a populatio
 
 \section{Simulation Experiments}
 \label{sec:crf_simulations}
+Proofs do not show that the code implements the model proved. The simulations
+check that for the cases they cover, and the suite of
+Appendix~\ref{app:verification} asserts the numbers in the worked examples.
+
 The reproducible script \texttt{analysis/02\_crf\_simulation.py} constructs four
 illustrative profiles and compares the additive realisation score, geometric CRF,
 harmonic CRF ($\rho=-1$), and limiting bottleneck score. The examples are
@@ -867,7 +1010,16 @@ marginal gains for biomedical, social, and burden-reducing interventions. These
 gradients illustrate how aggregation can change priorities; they are not causal
 treatment effects.
 
+In Figure~\ref{fig:crf_profile_comparison}, profiles with equal average
+context stay together under the additive score and separate under the
+non-compensatory ones. Figure~\ref{fig:crf_rho_sensitivity} shows the effect
+as a function of $\rho$, which is why $\rho$ is fixed before outcomes are
+seen. Figure~\ref{fig:crf_equity_aversion} repeats the pattern of
+Figure~\ref{fig:E-ede} for simulated profiles.
+
 Two measurement checks bear on whether the domain inputs can be trusted. Figure~\ref{fig:E-determinacy} shows how the determinacy of a single-factor score depends on the loadings and the number of indicators, and how the uncertainty of the social domain grows as its indicators go missing while staying below the prior because the domains are correlated. Figure~\ref{fig:E-drift} shows the bias that follows when the intercepts of the social indicators drift between populations, and the coverage of the 95\% posterior intervals in each simulated scenario.
+They belong here because a bias in a low social score is a large relative
+bias, and it enters $H$ through the elasticity $\alpha$.
 
 \begin{figure}[htbp]
 \centering
@@ -885,6 +1037,9 @@ Two measurement checks bear on whether the domain inputs can be trusted. Figure~
 
 \section{Falsification and Empirical Comparison}
 \label{sec:E-falsification}
+Everything so far shows the model is coherent and computable, not that it
+describes people. This section states in advance what would count against it.
+
 The mathematical contribution is supported only if the following pre-specified
 tests succeed:
 \begin{enumerate}
@@ -900,6 +1055,13 @@ tests succeed:
 \end{enumerate}
 Failure of these tests rejects or narrows the CRF; it does not invalidate the
 separate latent measurement model.
+
+Each test guards against a different error. If people with very low measured
+structural freedom do not do worse, essential enablement has no support. The
+third and fourth tests guard against the likeliest error, a model that wins
+because it had more tuning than its rivals; the fifth against a model right on
+average and wrong for a group, a serious failure in an equity measure. The
+measurement model of Chapter~\ref{ch:results1} stands on different evidence.
 
 \subsection{Head-to-head empirical protocol}
 The empirical comparison uses the same analytic sample, imputations, resamples,
@@ -961,9 +1123,177 @@ profile $(P,S,R)$. If criterion~4 holds, the non-compensatory hypothesis is refu
 and compensatory additive modelling is restored. Declaring these before the outcome
 analysis is what makes the framework interrogable.
 
-\section{Summary}
+\section{A Systems View of the Realisation Function}
+\label{sec:E-systems}
+The sections above ask what the realisation function implies.
+Chapter~\ref{ch:systems} asks what kind of system it describes and what that
+description leaves out. This section applies that question to the function.
+
+\subsection{The function as a coupling between subsystems}
+In the terms of \S\ref{sec:sys-boundary}, each domain summarises the state of a
+subsystem with its own parts and dynamics: the body and the care that acts on
+it; the people and services around a person; and the institutions, costs and
+distances between a person and what they need. None produces realised health
+alone. The realisation function is the rule for how they meet, an interface
+specification stating how the output of each subsystem is conditioned by the
+others.
+
+Read this way, the choice between an additive and a multiplicative rule is a
+choice between two kinds of coupling. An additive rule treats the three
+subsystems as parallel channels whose contributions pile up independently, so
+that a failure in one channel removes only that channel's share. A
+multiplicative rule treats them as stages in series, each of which passes on
+only a fraction of what it receives. The capacity a person has passes through
+social enablement and then through structural freedom, and what emerges is
+the product. The reliability of components in series is computed the same way,
+as the product of the reliabilities of the parts, and for the same reason: the
+output requires every stage to work.
+
+The series reading explains the intersectional result of \S\ref{sec:E-marginal}
+in systems terms. The positive cross-partials are a property of the coupling,
+not of any single domain. A report that examines each domain alone, however
+well measured, cannot show them, because they exist only in the relation
+between domains. This is emergence in the sense used in Chapter~\ref{ch:systems}: a
+property of the whole that is absent from each part. The exact log
+decomposition of \S\ref{sec:E-gap} does not contradict this. It splits a
+relative gap into parts without residual, but the gain in realised potential
+from a given change in one domain still depends on the levels of the other two.
+
+\subsection{Why the weakest domain binds}
+The multiplicative form makes the weakest domain the binding constraint, and
+the reason can be read from the elasticities in \eqref{eq:crf_elasticities}.
+To first order, the proportional change in realised potential is
+$\alpha\,\Delta S/S+(1-\alpha)\,\Delta R/R$. An equal absolute improvement in
+either domain is a larger proportional improvement in the domain that is
+lower, and so it moves $H$ more there. For the geometric form the stronger
+domain still contributes; improving it helps, but less. As $\rho$ falls towards
+$-\infty$ the help from the stronger domain shrinks to nothing and only the
+minimum matters, which is the bottleneck case in its pure form. Between these
+two lies the whole admissible family, and $\rho$ sets how strictly the weakest
+domain governs.
+
+Worked Example~\ref{ex:ape-gradient} showed this for Profile~A, whose social
+enablement is the lower contextual coordinate and draws the larger gradient.
+For Profile~B the lower coordinate is structural freedom, so the same model,
+with the same parameters, directs attention elsewhere. The place where an
+intervention does most good is therefore a property of the state of the
+system, not of the domain. A policy that funds the same domain for everyone
+assumes that the binding constraint is the same for everyone, and under a
+multiplicative coupling that assumption is false whenever profiles differ in
+which domain is lowest.
+
+This bears on the account of where policy can act given in
+\S\ref{sec:sys-leverage}. \citet{meadows_1999} ranks the places at which a
+system can be changed, and places changes to parameters below changes to the
+structure and rules of the system. In the present model the quantities a
+programme moves, $S$ and $R$ for a given group, are parameters in that sense.
+The aggregation rule is part of the structure. Worked Example~\ref{ex:ape-rho}
+showed that changing $\rho$ alone, with no change in any person, reverses the
+ranking of two contexts. A decision about $\rho$ therefore has more effect on
+which programmes look best than any single programme has on the scores. That
+is the systems reason, in addition to the ethical one already given, for fixing
+$\rho$ in advance and reporting results across a range of it.
+
+The binding domain also changes as the system is acted on. The local character
+of the gradient, discussed in \S\ref{sec:E-gradient}, is the series coupling
+seen over the course of an intervention: relieve one bottleneck far enough and
+another domain becomes the constraint. A planner who reads the gradient once
+and commits the whole budget acts on a picture of the system that the
+intervention itself makes out of date. The control structure of
+\S\ref{sec:sys-control} needs feedback to the decision-maker, in the form of a
+recomputed profile, between steps of spending.
+
+Errors travel the same way. Under a series coupling an error in the weakest
+domain matters most, for the reason an improvement there does
+(\S\ref{sec:E-marginal}). For the failure-mode analysis of
+\S\ref{sec:sys-fmea}, measurement error in a low domain should therefore be
+rated more severe than the same error near the upper bound, and the checks of
+Figures~\ref{fig:E-determinacy} and~\ref{fig:E-drift} supply its inputs.
+
+\subsection{What the static function leaves out}
+The function maps current $P$, $S$ and $R$, taken as given from outside, to a
+current $H$. Two features of the real system fall outside that boundary.
+
+The first is delay. In the language of \S\ref{sec:sys-stocks}, biomedical
+potential behaves like a stock: it is built up and run down over years, and
+realised health is the flow that the stock and its context allow. A change in
+context does not move the stock at once. A clinic opened this year may raise
+structural freedom now, but its effect on biomedical potential, through
+treatment received and complications avoided, arrives later. The static
+function credits the whole effect at the moment $R$ changes and records none of
+the later change in $P$. It can therefore understate the long-run effect of a
+contextual change, and it cannot say when the effect will be seen.
+
+The second is feedback between domains. The static function treats $P$, $S$
+and $R$ as independent inputs, but \S\ref{sec:sys-loops} describes loops that
+connect them over time. Low structural freedom can lower biomedical potential
+if it means missed treatment. Lower biomedical potential can reduce social
+enablement if illness narrows a person's contact with others and with
+services. Where such a loop reinforces itself, relieving the bottleneck has
+effects beyond the first round, and the long-run gain exceeds the gain the
+gradient reports. Where a loop balances, for example where a service rations
+its supply as demand rises, the long-run gain is smaller than the gradient
+reports. The static gradient gives the first-round effect only. It does not say
+which kind of loop is acting, so it does not say which way the long-run effect
+departs from the first round.
+
+Appendix~\ref{app:dynamical} takes up the first of these. It gives the
+biomedical term a state $X(t)$ that rises and falls with treatment and
+clearance, so that $L$ follows that state with a lag, and its time-varying form
+in \S\ref{sec:B_timevarying} lets every domain change in time. Two limits of
+that extension should be stated plainly. It is written for the heuristic score
+$(LQ)S-B$ rather than for the realisation function, and it argues that its
+structural point carries over rather than deriving the dynamic form of
+\eqref{eq:crf_geometric}. And it treats $S(t)$ and $B(t)$ as given paths, so
+the feedback from the biomedical state back to the contextual domains is not
+modelled there either. Feedback between domains is therefore an open problem
+for the thesis, not one the dynamical extension has solved.
+
+\subsection{The model and the system}
+A last caution follows from \citet{box_1976}: every model is wrong in some
+respects, and the question is whether it is wrong in ways that matter for the
+use to which it is put.
+The realisation function is built for two uses, ranking contexts by how far
+they let capacity be realised and showing where a marginal gain is largest. For
+both, the series coupling and the ceiling are the features that matter, and
+both are tested by the comparisons of \S\ref{sec:E-falsification}. For a third
+use, forecasting how a population's health will change after a programme, the
+static form is the wrong tool, for the reasons of delay and feedback just
+given. In the terms of \S\ref{sec:sys-pipeline}, verification asks whether the
+code computes the function this chapter defines, and the test suite answers it;
+validation asks whether that function describes the system it is applied to,
+and only the empirical chapters can answer that.
+
+\section{What This Chapter Settles and What It Leaves Open}
 The CRF supplies the thesis with a dimensionally coherent and falsifiable
 mathematical object. Its distinctive contribution is not the geometric mean alone,
 but the combined axioms, non-compensatory interpretation, complementarity proof,
 exact equity-gap decomposition, causal caveat, and pre-specified comparison with
 the outcome-independent SEM metric.
+
+The chapter settles four matters. It settles that observed functioning cannot
+stand in for capability, so a model of capacity and context is required. It
+settles which rules of combination are admissible, and that the additive rule
+is not among them because it breaks essential enablement. It settles that the
+geometric form follows from one named assumption, constant contextual
+elasticities, and that this assumption can be tested against the wider family.
+And it settles the form of the policy objects built on the score: a gap
+decomposition with no residual, a gradient that points at the binding domain,
+an evidence vector that keeps its coordinates apart, and a population measure
+whose value judgement is a single declared parameter.
+
+It leaves open what only data or further theory can answer. Whether the
+combined score predicts mortality and hospitalisation better than its rivals is
+the question of Chapter~\ref{ch:results2}, judged by the criteria fixed above;
+whether elasticities are constant, and which value of $\rho$ fits best, those
+comparisons address but cannot fully settle. The response functions that would
+turn the gradient into a policy lie outside the model, and the dynamical
+extension takes up the omitted delays only in part and the feedback between
+domains not at all.
+
+The next chapter is needed because every result here assumes inputs that have
+not yet been shown to exist. The realisation function takes $P$, $S$ and $R$
+as given. If the three domains cannot be told apart in the data, or cannot be
+measured with enough precision at the low end where the function is most
+sensitive, the function has nothing sound to combine. Chapter~\ref{ch:results1}
+tests that first.
