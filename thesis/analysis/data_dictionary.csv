@@ -6,7 +6,7 @@ sex,administrative,covariate,yes,TO_MAP,factor with declared reference,document 
 mortality_time,outcome,time,yes,TO_MAP,days from baseline,right censored
 mortality_event,outcome,event,yes,TO_MAP,0 censored; 1 death,none
 hospital_time,outcome,time,yes,TO_MAP,days from baseline,right censored
-hospital_event,outcome,event,yes,TO_MAP,0 censored; 1 first unplanned admission,none
+hospital_event,outcome,event,yes,TO_MAP,0 censored; 1 first overnight hospital stay,none
 bio_indicator_1,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
 bio_indicator_2,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
 bio_indicator_3,biomedical,indicator,yes,TO_MAP,direction higher equals greater potential,document special missing codes
