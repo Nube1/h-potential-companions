@@ -2,7 +2,7 @@
 \label{ch:theory}
 
 \begin{ataglance}[The argument in outline]
-This chapter sets out the theoretical framework. It builds on the literature reviewed in Chapter~\ref{ch:introduction} in seven steps.
+This chapter sets out the theoretical framework. It builds on the literature reviewed in Chapter~\ref{ch:introduction} in eight steps.
 \begin{enumerate}\setlength{\itemsep}{2pt}
 \item \emph{Build the bridge} from determinants of health to health-related capability, and introduce two illustrative profiles used to check the argument.
 \item \emph{Set out the field as a taxonomy.} Five ontological traditions each answer a different question about what ``health'' names (Table~\ref{tab:taxonomy}).
@@ -11,10 +11,13 @@ This chapter sets out the theoretical framework. It builds on the literature rev
 \item \emph{Place the construct in economics and policy,} where the temptation to overclaim is strongest.
 \item \emph{Replace the heuristic formula} with a realisation function derived from stated axioms.
 \item \emph{End in falsifiable propositions,} not a declaration of validity.
+\item \emph{Read the framework as a system} (Section~\ref{sec:lit-systems}): which of its links are causal claims, which are definitions, where it assumes feedback and where it ignores it, and what it leaves outside its boundary.
 \end{enumerate}
 \end{ataglance}
 
 \noindent
+This chapter asks one question: what, exactly, would a measure of health-related capability be measuring, and how would anyone know if it were measuring something else? The question matters now for a practical reason. Health systems that serve ageing populations have to decide where support goes, and composite scores that combine clinical and social information, of the kinds reviewed in Chapter~\ref{ch:introduction}, invite use for that purpose. A score built on an unclear construct will still produce numbers, and those numbers will still be acted on. If the construct is confused, the error does not stay in the thesis; it moves into decisions about who is assessed, who is supported and who is passed over. The time to settle what the construct is, and what would show it to be wrong, is before any data are analysed, which is why this chapter comes before the methods.
+
 The central problem addressed in this chapter is not whether health is multidimensional. That proposition is well established. Nor is it whether health can be represented by a composite score. The literature contains several successful examples of multidimensional measurement, including the Global Burden of Disease framework, health-expectancy measures, frailty indices, intrinsic-capacity measures, capability measures and latent health metrics developed through factor analysis and item-response theory. The more difficult question is what is gained, and what is lost, when these traditions are brought together in a single construct intended to represent an individual's health-related potential rather than a current health state, a count of deficits, or a probability of an adverse event.
 
 Chapter~\ref{ch:introduction} reviewed five bodies of scholarship: (i) health-state and health-loss measurement; (ii) frailty and deficit accumulation; (iii) the WHO healthy-ageing and intrinsic-capacity framework; (iv) capability theory and capability measurement; and (v) social determinants and social vulnerability. The purpose of bringing these traditions together is not to imply that they are interchangeable. On the contrary, their differences provide the theoretical problem that the thesis must resolve. If intrinsic capacity describes what an individual is able to draw upon, functional ability describes what is realised in context, capability describes the opportunity to achieve valued states and activities, and social vulnerability describes accumulated exposure to social disadvantage, then a proposed health-capability construct must specify precisely where it sits among these concepts.
@@ -23,11 +26,16 @@ This leads to a deliberately restrictive claim. The $H_{\text{potential}}$ is no
 
 The chapter consequently ends not with a declaration that the proposed construct is valid, but with a set of propositions that the empirical work must attempt to falsify. The logic is important. A thesis of this kind is strongest when the data are allowed to demonstrate that the proposed construct is unnecessary, multidimensional without a valid general factor, or prognostically redundant. The objective is not to protect the proposed index from such findings but to determine what the evidence can legitimately support.
 
+The order of the chapter follows from that aim. It starts with the conceptual move the whole thesis depends on, the step from a determinant of health to a component of capability, because every later choice inherits the answer. It then lays the established traditions side by side, chooses between rival accounts of what health is, and shows why capability cannot be read off observed behaviour. Only after those foundations does it ask what the construct could be used for, because uses that the foundations do not support should be ruled out before anyone is tempted by them. The formal part comes last: the original formula is demoted, an axiomatic realisation function takes its place, and the chapter closes with propositions that the data can reject. A final section reads the whole framework as a system, which prepares the ground for Chapter~\ref{ch:systems}.
+
 \section{From determinants to capability: the proposed bridge}
 \label{sec:intro-bridge}
 
+The opening pages left one matter unsettled: if the ingredients of the construct already exist in other literatures, what joins them? The answer has to be given first, because a join made carelessly at this stage cannot be repaired by later statistics. A measurement model will fit whatever variables it is given, and it will not report that a variable was put in the wrong place.
 
 The central conceptual move of the thesis is to distinguish between a determinant of health and a component of health-related capability. Income, education, housing, transport and access to care can influence health without necessarily being equivalent to health. Conversely, intrinsic capacity may be high while opportunities to exercise that capacity are constrained by an inaccessible environment. The same underlying physical capacity may therefore produce very different lived possibilities in different contexts.
+
+The distinction has a direct consequence for measurement. A determinant is something that acts on health from outside; it belongs on the right-hand side of a causal model. A component is part of what is being measured; it belongs inside the construct. If income is treated as a component, a fall in income lowers measured capability by definition, and no study could then ask whether income affects capability, because the answer would be built in. If income is treated as a determinant, it is kept outside and its effect becomes something to estimate. Neither choice is free. Treating social conditions only as determinants returns to a purely biomedical measure, while treating them only as components makes every association between context and capability true by construction. The thesis does not settle this by decree. It names each domain's role and, where the literature does not fix the role, tests rival placements (Section~\ref{sec:lit-candidates}). In the terms of Chapter~\ref{ch:systems}, the choice is a choice about where the boundary of the measured system falls (Section~\ref{sec:sys-boundary}), and the choice has to be made openly because the data cannot make it.
 
 This distinction is consistent with the capability approach, but the thesis does not equate health capability with the broader philosophical concept of human wellbeing. Capability theory is concerned with substantive opportunities, whereas health measurement requires a bounded account of what those opportunities mean in relation to health. The WHO framework offers a practical bridge because it explicitly describes functional ability as emerging from intrinsic capacity, environmental characteristics and their interaction \citep{who_2015_ageing}. The proposed construct builds from this relationship but asks whether it can be made sufficiently explicit and measurable to support individual-level statistical inference.
 
@@ -35,9 +43,13 @@ A second bridge is required with social-determinants and life-course research. S
 
 A third bridge concerns frailty and reserve. Frailty research provides a powerful demonstration that health can be represented as multidimensional vulnerability rather than as a single diagnosis. At the same time, frailty and capability answer different questions. Frailty asks, in broad terms, how vulnerable a person is to adverse stressors; capability asks what the person is able to realise within a given context. The empirical relationship between these constructs is therefore a testable question, not a definitional identity. A successful H-potential measure should correlate with frailty while retaining information that is not reducible to accumulated deficit burden.
 
+The two failure cases mark the limits of what counts as success. If the correlation with frailty were close to one, the new measure would be a frailty index under another name, and the thesis would have added vocabulary rather than knowledge. If the correlation were near zero, something would be wrong with the biomedical domain, since any measure of later-life health capacity ought to move with the burden of accumulated deficits. The useful region lies between, and the empirical chapters judge it by discriminant validity tests rather than by a fixed number chosen in advance (Chapter~\ref{ch:results1}).
+
+The three bridges share a structure. Each joins a tradition that describes a person to one that describes the person's circumstances, and each has to say what passes across the join. The WHO bridge passes capacity into function through the environment. The social-determinants bridge passes disadvantage into constrained realisation. The frailty bridge passes vulnerability into reduced reserve. A join that leaves unclear what passes across it is where most errors in composite measures arise, because indicators from one side can be read as if they belonged to the other.
+
 These bridges lead to the proposed construct, $H_{\text{potential}}$, introduced in Chapter~\ref{ch:introduction}. It is defined as health-related capability in later life: the combination of biological and functional capacities available to an individual and the enabling or constraining conditions through which those capacities can be realised. The definition is deliberately relational. It does not treat social disadvantage as a biological property, nor does it treat future mortality as part of the definition of health.
 
-Before the theory is developed, two reference profiles are fixed so that later results can be illustrated with the same numbers throughout.
+A definition this abstract is hard to check. Before the theory is developed, two reference profiles are fixed so that later results can be illustrated with the same numbers throughout, and so that a reader can test each claim against a case rather than take it on trust.
 
 \section{Two Reference Profiles}
 \label{sec:intro-cases}
@@ -65,7 +77,12 @@ Profile B, structure unfavourable & 0.30 & 4.0 & 0.70 & 0.20 \\
 
 Where a later example changes one coordinate of a profile, for instance raising the structural freedom of Profile~A, the change is stated with the example and the other coordinates keep the values in Table~\ref{tab:profiles}.
 
+Three choices about the profiles need a reason. First, they are invented values rather than records drawn from NHATS. The empirical analysis has not yet been run, and a profile taken from the data would tempt the reader to read it as a finding. Fixed values make clear that the examples test the logic of the framework, not its fit. Second, there are two profiles and not one. A single profile can show what a formula returns, but it cannot show how two formulas differ, and most of the arguments in this chapter are comparisons. Third, Profile~B is given in two versions that differ in one coordinate. Changing one input while holding the others fixed is the simplest way to show which part of a model is doing the work, and it is the same logic that the gap decomposition of Chapter~\ref{chap:crf} makes exact. Table~\ref{tab:profiles} reports $P$ on both the unit and the natural scale; the reason for carrying two scales is given in Remark~\ref{rem:int:scales}.
+
 \section{What Does It Mean to Measure Health?}
+\label{sec:lit-measure}
+
+The bridge and the profiles assume that health-related capability is something that can be measured at all. That assumption is the next thing to examine, because a construct that cannot be measured cannot be tested, and a thesis that cannot test its construct can only describe it.
 
 Measurement begins with a construct, not an algorithm. A score can be calculated whenever observations are combined, but calculation does not establish that the resulting quantity corresponds to a meaningful latent attribute. This distinction is particularly important in multidimensional health research because the word \emph{health} is used to describe states, capacities, functionings, opportunities, vulnerabilities and outcomes that occupy different conceptual levels.
 
@@ -162,6 +179,23 @@ the right-hand end of the sequence and infer leftwards. This thesis samples the
 left and middle and refuses to infer from behaviour, which is the position the
 next equation formalises.
 
+Two features of the sequence matter for what follows, and both are easier to see
+when it is read as a chain of linked processes rather than as a list of
+concepts. The first is that the stages do not change at the same speed. A
+health condition can reduce capacity over years, while an environmental change
+such as the loss of a driver or the closure of a clinic can change what a person
+is able to do within weeks. A measure taken at one moment therefore records
+stages that are out of step with one another, and two people with the same
+current function may be moving in opposite directions. Chapter~\ref{ch:systems}
+treats this as the difference between a stock and a flow, with capacity as the
+stock and realised health as the flow (Section~\ref{sec:sys-stocks}). The
+second is that the sequence, as written, runs one way. Nothing in
+\eqref{eq:conceptual_sequence} lets an outcome act back on capacity, although
+an admission to hospital plainly can reduce the capacity of an older person.
+The omission is deliberate at this stage, because the cross-sectional
+construct needs an ordering before it can say anything about change, but it is
+an omission, and Section~\ref{sec:lit-systems} returns to it.
+
 The thesis therefore asks whether underlying health-related potential can be
 measured separately from realised function. Its general construct statement is
 \begin{equation}
@@ -242,9 +276,14 @@ The present thesis therefore uses the term \emph{health-related capability} in a
 
 A further distinction is required between a latent construct and a prognostic outcome. A score derived from NHATS is not itself future health. It is an estimate of a latent state hypothesised to be associated with subsequent outcomes. Mortality and hospitalisation therefore cannot be used to define the construct without creating circularity. The measurement model must be developed before the prognostic model is evaluated. Prediction is evidence relevant to validity, but prediction alone does not establish construct meaning.
 
+The circularity is easy to fall into and worth showing in general terms. Suppose indicators are chosen, or weighted, because they predict death. The resulting score will then predict death well in the sample used to build it, and that performance will be reported as evidence that the score measures health capability. But the score was shaped to predict death, so its predictive performance is evidence only that the shaping worked. It says nothing about whether the score measures capability rather than, for example, proximity to the end of life. Keeping outcomes out of construction is what allows prediction to count as an independent test. The cost is that the construct will usually predict less well than a model built for prediction alone, and the thesis accepts that cost (Chapter~\ref{ch:results2}).
+
 If several conceptions of health are in play, the first task is to lay them out and see which question each answers. The next section does that side by side rather than in sequence, because the differences between them are the argument.
 
 \section{A Taxonomy of Ontological Traditions}
+\label{sec:lit-taxonomy}
+
+The previous section established that ``health'' is used for quantities at different levels, from capacities to outcomes. It did not say which traditions use it for which, or where they leave a gap. That is the work of this section.
 
 Five ontological traditions define what the word \emph{health} names, and each answers
 a different question. To make the gap the thesis addresses precise, they are set out as
@@ -297,11 +336,38 @@ gap, and the rest of the chapter tests whether it can be told apart from its
 neighbours.
 \end{reading}
 
+The rows of Table~\ref{tab:taxonomy} also differ in a way the columns do not
+show directly: where each tradition draws the line between the person and the
+world. Biostatistical naturalism draws it at the skin, so that everything
+outside the body is environment. Intrinsic capacity draws it in nearly the same
+place but admits mental as well as physical capacity. Action-theoretic holism
+moves the line outward to include the person's goals, and then fixes the world
+as ``standard circumstances''. The capability approach moves it furthest,
+treating the person's real options, which depend on institutions, as the thing
+assessed. Social-vulnerability indices invert the picture: they measure the
+world around the person and attribute it to the person. Read this way, the gap
+the thesis aims at is a specific placement of that line. Capacity sits inside
+the person, enabling and constraining conditions sit outside, and the construct
+is a measure of how the two connect. Section~\ref{sec:lit-systems} takes this
+reading further.
+
+The taxonomy has a limit that should be stated. Each tradition is reduced to a
+single row, and real literatures are less tidy: there are frailty measures
+that include social items, and intrinsic-capacity work that discusses
+environment at length. The rows describe the centre of each tradition, not its
+edges. The argument does not need the edges to be clean. It needs only that no
+established tradition, at its centre, measures health-bounded capability as
+capacity converted by context, and the ``conceptual limit'' column supports
+that.
+
 A gap in a table is not yet a justification. Whether anything belongs in that
 gap depends on what one thinks health is, and on that question the philosophy
 of medicine is openly divided.
 
 \section{Rival Philosophies of Health and Their Mathematical Consequences}
+\label{sec:lit-philosophies}
+
+The taxonomy located a gap but could not say whether anything belongs in it. That depends on a prior question, what health is, and the answers given in the philosophy of medicine lead to different equations. This section follows each answer to its mathematical form, because a philosophical position left in words can be quietly abandoned when a model is fitted, whereas one written as a constraint on a function cannot.
 
 The word \emph{health} does not name a philosophically uncontested natural
 kind. A naturalist position, associated most prominently with Boorse's
@@ -369,6 +435,15 @@ health needs and fair procedures when not all needs can be met.
 settle priority. It makes procedural legitimacy, reasons, revisability and
 opportunity effects part of the assessment.
 
+Daniels matters to the construct in a second way. His account ties health to
+the range of opportunities a person has, which is close to the capability view,
+but it keeps ``normal functioning'' as the reference point and so stays nearer
+to the biological pole than Sen or Venkatapuram. It therefore supports a
+measure in which biological capacity is reported in its own right, while
+explaining why its value to the person depends on the opportunities it opens.
+That is the shape of the layered position the thesis adopts at the end of this
+section.
+
 These positions generate two rival ontologies for the thesis. The
 \emph{capacity-ceiling ontology} treats $P$ as the maximum potentially
 realisable quantity and context as a conversion factor:
@@ -385,6 +460,16 @@ Neither is selected by terminology. The ceiling model is more conservative and
 clinically anchored; the relational model is more faithful to capability and
 disability scholarship. The empirical analysis can examine their consequences,
 but fit cannot decide the philosophical question by itself.
+
+The two ontologies can also be stated as two placements of a boundary. Under
+the ceiling ontology a wheelchair, a hearing aid or a carer lies outside the
+person: it is part of the context that converts capacity into function, and it
+cannot add capacity. Under the relational ontology the same aid can lie inside
+the capability being measured, because the person with the aid is able to do
+things the person without it cannot. The disagreement is therefore not about
+any fact that could be observed in a survey. It is about where the system
+under measurement ends, and that is decided before the data are collected
+(Section~\ref{sec:sys-boundary}).
 
 \begin{definition}[Capacity-ceiling ontology]
 \label{def:lit-ceiling}
@@ -444,10 +529,25 @@ Scalar aggregation is secondary and conditional. Both ceiling and relational
 aggregations are sensitivity models. This prevents a philosophical commitment
 from being concealed inside a single equation.
 
+The layered position has a cost, and the alternatives show what it is. The
+simplest course would be to choose the ceiling model, report one number and
+move on. That would make the thesis easier to read and its results easier to
+use, but it would build the naturalist objection into the construct without
+admitting it, so that every reader who held the relational view would be
+handed a number that answered a question they had not asked. The opposite
+course, choosing the relational model alone, fails in the mirror image. A
+third course, averaging the two, produces a quantity no one holds a theory of.
+Reporting the profile first and both aggregations second is more work for the
+reader, but it keeps each commitment visible and lets a reader who rejects one
+ontology still use the results.
+
 Both ontologies share one difficulty, and it is prior to either of them. Each
 treats capability as something a person has. Nobody has ever observed one.
 
 \section{Epistemology: Why Capability Cannot Be Read Directly from Function}
+\label{sec:lit-epistemology}
+
+The ontologies of the previous section say what capability is. They do not say how anyone could find out how much of it a person has, and the obvious answer, look at what the person does, turns out to fail. This section shows why it fails and what has to replace it.
 
 Let $\mathcal C_i$ be the set of health-related functionings genuinely
 available to person $i$, and let the achieved functioning be
@@ -583,11 +683,40 @@ claim made by H-Potential must therefore remain modest: it estimates selected
 conditions relevant to health-related opportunity; it does not directly observe
 freedom.
 
+The limit on self-report deserves a closer look, because it behaves like a
+feedback process rather than a fixed error. A person who has lived with a
+constraint for a long time may come to expect less, and a person who expects
+less may report fewer unmet needs. Reported opportunity then moves towards
+whatever the person has, and the size of the gap that self-report can detect
+shrinks as the constraint lasts longer. In systems terms this is a balancing
+loop: expectation adjusts until the felt gap closes, whether or not the real
+gap has (Section~\ref{sec:sys-loops}). Its practical consequence for the
+thesis is that a self-reported indicator of unmet need will understate
+constraint most for those who have been constrained longest. External
+indicators, such as whether a service exists within reach, do not adapt in
+this way, which is one reason the structural domain draws on them where NHATS
+allows. They carry the opposite risk, that the assessor's values replace the
+person's, and the two kinds of indicator are therefore used together rather
+than one in place of the other.
+
 The implication for validity is that statistical covariance is insufficient.
 Content validation must include clinicians, patients and affected communities;
 the indicators must be checked against what people have reason to value; and
 discordance between observed functioning, reported opportunity and structural
 conditions must be studied rather than averaged away.
+
+These three requirements are not decoration added to a statistical study.
+Each guards against a failure that the statistics cannot see. Covariance among
+indicators shows that they move together; it cannot show that they move
+together for the reason the theory gives. Content review by those affected is
+the only check on whether an indicator means, in their lives, what the analyst
+takes it to mean. Study of discordance is the check on whether the averaging
+done by a latent model has hidden the very cases, capacity without opportunity
+or opportunity without capacity, that the construct exists to detect. The
+thesis meets the first requirement only in part, since NHATS fixes the items
+available, and the indicator choices of Chapter~\ref{ch:methods} rest on
+content judgements drawn from the literature rather than on review by the
+people measured.
 
 With the conceptual and epistemic ground laid, and the measurement traditions
 reviewed in Chapter~\ref{ch:introduction}, the question becomes what such a
@@ -595,12 +724,27 @@ measure could legitimately be used for. The economics is where the temptation
 to overclaim is strongest.
 
 \section{Economic Interpretation: Value, Opportunity Cost and Distribution}
+\label{sec:lit-economics}
+
+The epistemology section ended with a modest claim: H-Potential estimates selected conditions relevant to opportunity and does not observe freedom. A measure with that standing can still be misused, and economics is where misuse is most likely, because economic evaluation needs a number per person and H-Potential appears to supply one. This section sets out what the number can and cannot do in that setting.
 
 H-Potential is not an economic evaluation outcome. A QALY combines time and
 preference-based health-state value; a budget-impact analysis measures
 affordability; cost-effectiveness compares incremental costs and consequences.
 An H-Potential score has none of these meanings by construction. In particular,
 the latent scale does not support a cost-per-H-Potential-unit threshold.
+
+The reason is specific. A cost-per-unit threshold needs a scale on which a
+gain of one unit means the same thing wherever it occurs, so that buying a unit
+for one person can be compared with buying a unit for another. A QALY claims
+that property, through its anchoring at full health and death and the
+preference weights attached to states between them. A latent factor score
+claims nothing of the kind. Its origin is the sample mean and its unit is the
+sample standard deviation, so a change of $0.1$ near the bottom of the
+distribution need not equal a change of $0.1$ near the top in any sense that
+matters to the person. Dividing cost by such a change gives a ratio with no
+fixed meaning, and a threshold set on that ratio would rank interventions by an
+accident of standardisation.
 
 The economic relevance instead lies in diagnosis and heterogeneity. Suppose an
 intervention $a$ changes the profile from $X_i(0)$ to $X_i(a)$ at cost $C_i(a)$.
@@ -629,6 +773,16 @@ effects can differ in cost, in who is responsible and in how long they take.
 This is the practical reason the framework keeps the profile as a vector. The
 scalar deletes the information a commissioner needs in order to act.
 \end{reading}
+
+The vector also records which part of the system an intervention acts on, and
+that bears on how long its effect will last. A change in $P$ through
+treatment may fade as the condition progresses. A change in $R$ through
+removing a financial barrier persists for as long as the policy does, and for
+everyone it reaches. A change in $S$ through support may depend on a carer or a
+scheme that can itself be withdrawn. Equal effects at one time point can
+therefore have different paths over time, which a single-period scalar cannot
+show and which Chapter~\ref{ch:systems} discusses as the question of where an
+intervention acts in a system (Section~\ref{sec:sys-leverage}).
 
 Opportunity cost remains unavoidable. Funding an intervention displaces other
 health-producing activity. H-Potential cannot make that displaced health
@@ -787,6 +941,9 @@ If the calculation cannot settle the decision, something else must, and that
 something is a process rather than a formula.
 
 \section{Policy Bearing and Governance}
+\label{sec:lit-policy}
+
+The calculation of the previous section showed that the same profile change can be worth funding in one jurisdiction and not in another. It left open who decides, by what process, and what stops a score from being used in ways its evidence does not support. Those are questions about governance, and they are taken up here.
 
 The policy attraction of H-Potential is that it can reveal why similar clinical
 states lead to different realised opportunities. The corresponding danger is
@@ -801,6 +958,22 @@ for support, accessible environments or assistive technology. A low $R$ may
 identify institutional barriers requiring policy correction. The profile points
 to different duties; it does not measure worth, compliance or probable return
 on investment.
+
+The danger is sharper than a single wrong decision, because a score used to
+allocate resources can change the quantity it measures. Consider the
+desert-based use in general terms. A low $R$ leads to a low score; the low
+score is read as low potential; investment is withheld; the barriers that
+produced the low $R$ stay in place or grow; the next assessment returns a
+lower score still. Each step is locally reasonable to the institution taking
+it, and the sequence is a reinforcing loop in which the measure confirms
+itself (Section~\ref{sec:sys-loops}). The remedial use reverses the sign of
+one link: a low $R$ leads to action on the barrier, and if the action works
+the next score rises. Which loop operates is decided by the institution that
+acts on the score, not by the score. The framework can only make the remedial
+reading the natural one, by reporting domains rather than a rank and by naming
+the duty each domain points to. Chapter~\ref{ch:systems} treats the question
+of who acts on the score, and what information returns to them, as the
+control structure of the measurement system (Section~\ref{sec:sys-control}).
 
 The relevant policy problem is global, but it is not context-free. WHO defines
 health technology assessment as a multidisciplinary appraisal of clinical,
@@ -835,6 +1008,19 @@ remain calibrated and whether local recalibration or refitting is necessary.
 local costs, displaced services, budgets, legal duties and public values are
 considered. Success at an earlier level does not entail success at a later one.
 
+The four kinds are ordered, and the order matters for what a failure means. A
+measure that fails conceptual transport should not be tested further in that
+setting, since there is nothing coherent to measure. A measure that passes
+conceptual transport but fails measurement transport may still be used after
+local adaptation of its items, but scores cannot then be compared directly
+across settings. A measure that passes both but fails predictive transport
+needs recalibration before its risks are quoted. Failure at the last level,
+decision transport, says nothing against the measure: it says that local
+costs and values lead to a different decision, which is the normal state of
+affairs in health policy. Treating these as one question would make every
+local disagreement look like a failure of the construct, or every success in
+the development cohort look like a licence to use it elsewhere.
+
 Country settings are thus comparative tests rather than rival answers to the
 question of scope. The United States supplies the developmental cohort. South
 Africa is a substantively important future case because a more resource-
@@ -856,6 +1042,18 @@ basis for automated denial, rationing or reimbursement. Economic appraisal must
 remain separate enough to expose opportunity cost and budget impact rather than
 hiding them inside the construct.
 
+The safeguards are layered on purpose. No one of them is sufficient: public
+disclosure of weights does not help a person who is never told the score was
+used, and a right of appeal does not help if the domains themselves were
+defined without those affected. Each safeguard catches some failures that the
+others miss, so that a misuse has to pass all of them to cause harm. Reason's
+account of how accidents pass through several imperfect defences describes
+this design \citep{reason_1990}, and Section~\ref{sec:sys-fmea} applies it to
+the measurement pipeline. The weakness of layered defences is also known. If
+the layers share a cause of failure, such as a single agency that controls
+disclosure, audit and appeal together, they can fail at once, and the apparent
+depth is lost.
+
 These safeguards delimit the policy claim. At the present stage H-Potential is
 a research and diagnostic framework. It may inform needs assessment, service
 design, inequality surveillance and hypothesis generation. It is not validated
@@ -866,6 +1064,9 @@ That leaves the original formula, which needs demoting before it can be
 replaced.
 
 \section{The H-potential Equation as a Heuristic, Not an Estimator}
+\label{sec:lit-heuristic}
+
+The governance argument rests on the profile being reported in parts. The thesis began, however, with a single formula that combined the parts into one number, and that formula has to be examined before it is replaced. Retiring it without examination would leave open the suspicion that it was dropped because it was inconvenient rather than because it was wrong.
 
 The original formulation
 \begin{equation}
@@ -882,6 +1083,8 @@ below one says the reverse. $B$ is a burden imposed by the system, subtracted
 at the end.
 
 Multiplication by $S$ assumes that social conditions proportionally scale every unit of biomedical potential. Subtraction of $B$ assumes that systemic burden exists on a common additive scale with the quantity produced by $(L\cdot Q)S$. Neither assumption follows from WHO's framework, capability theory, social-determinants research or frailty science. In particular, capability theory does not imply that a reduction in social opportunity should be numerically equivalent to a unit reduction in biological capacity.
+
+The formula should not be dismissed wholesale, because two of its features survive into the replacement. It puts biomedical potential first and lets context act on it, which is the ordering of the WHO architecture. And it multiplies rather than adds the social term, which already expresses the idea that context changes what capacity is worth, the interaction that Assumption~\ref{ass:lit-interaction} makes formal. What fails is the treatment of burden. Subtracting $B$ makes burden a fixed toll, the same for a person with much capacity as for one with little, and it lets the toll exceed what there is to pay. Both consequences run against the interaction the formula was meant to express, since a barrier ought to cost a person in proportion to what it blocks. The proposition below states the second consequence precisely.
 
 \begin{proposition}[The heuristic is not bounded below by zero]
 \label{prop:lit-heuristic}
@@ -961,6 +1164,8 @@ Demoting the heuristic leaves a vacancy, which the next section fills.
 \section{From heuristic to an axiomatic realisation model}
 \label{sec:intro-maths}
 
+Demoting the heuristic raises the question it was meant to answer: if not $(L\cdot Q)S-B$, then what? There are two ways to answer. One is to propose a better formula and argue for it by example. The other is to state what any acceptable formula must do and find the formulas that do it. The first is quicker, but every example invites a counter-example, and the choice of formula ends up resting on which examples the author happened to pick. The second makes the assumptions the object of debate, which is where the debate belongs. The thesis takes the second route.
+
 The central formal contribution of the thesis is to replace that heuristic with a principled object. Chapter~\ref{chap:crf} develops an axiomatic Capability Realisation Function (CRF): rather than assert a formula, it states the properties a realisation measure must satisfy, including non-compensation, and derives the admissible family from them. The primary form, \citep{cobb_douglas_1928}
 \begin{equation}
     H(P,S,R)=P\,S^{\alpha}R^{1-\alpha},\qquad R=1-B,\ 0<\alpha<1,
@@ -984,6 +1189,17 @@ its weakest link''. Multiply by zero on either side and the product is zero.
 This is the property an additive index cannot reproduce, and it is the reason
 the form was chosen rather than assumed.
 \end{reading}
+
+The form has a further property that the later chapters use and that is easy to
+miss. Taking logarithms of \eqref{eq:crf_intro} gives
+$\log H=\log P+\alpha\log S+(1-\alpha)\log R$, which is additive. The
+interaction between capacity and context therefore lives on the level scale and
+disappears on the log scale. That is what makes the exact gap decomposition of
+Chapter~\ref{chap:crf} possible: a ratio of two people's realised capability
+splits into a biomedical, a social and a structural part with nothing left
+over. An arbitrary function of $(P,S,R)$ would not split in this way, and any
+attribution of a gap to one domain would then depend on the order in which the
+domains were changed.
 
 The three coordinates are used by every chapter that follows, so they are
 fixed here once.
@@ -1145,6 +1361,8 @@ With the formal object in place, the candidate representations that compete with
 \section{Candidate Mathematical Representations and Their Tests}
 \label{sec:lit-candidates}
 
+The previous section derived a primary form, but derivation from axioms is only as good as the axioms, and an examiner who doubts the non-compensation axiom is owed a fair comparison with the forms that drop it. This section sets out those forms and the tests that would choose between them.
+
 Equation~\ref{eq:hp_general_class} defines a class of admissible models rather
 than selecting one. Four candidates expose the principal aggregation assumptions \citep{arrow_chenery_1961}:
 \begin{align}
@@ -1172,6 +1390,19 @@ and proportional trade-offs. The CES \citep{arrow_chenery_1961} model varies sub
 $\rho\rightarrow1$ approaches a weighted arithmetic mean,
 $\rho\rightarrow0$ the geometric case, and $\rho\rightarrow-\infty$ a
 bottleneck limit. These are empirical and normative alternatives.
+
+The four are chosen because they span the question that matters, how far one
+domain can stand in for another, with as few parameters as possible. The
+additive model is the default that most composite indices adopt, and leaving it
+out would make the comparison look rigged. The interaction model is the
+smallest change to the additive one that admits complementarity, so if
+complementarity is present it should show here first. The multiplicative and
+CES forms make complementarity part of the structure rather than an added
+term, and CES nests the others as limits, so a single parameter $\rho$ indexes
+the whole range from full substitution to none. More flexible forms, such as
+splines or tree ensembles, are not among the candidates. They might fit
+better, but they have no parameter that answers the substitution question, and
+a construct whose aggregation rule cannot be stated cannot be argued about.
 
 \begin{proposition}[Aggregation can reverse a ranking]
 \label{prop:lit-reversal}
@@ -1249,6 +1480,18 @@ and structural indicators into the reflective model. It compares admissible
 measurement structures without outcomes and only then compares the candidate
 realisations against prespecified comparators and downstream outcomes.
 
+The difference between the two directions is not a technicality. A reflective
+model says that the latent domain causes its indicators, so the indicators
+should correlate, and dropping one should not change what is measured. A
+formative model says that the indicators make up the domain, so they need not
+correlate, and dropping one changes the construct. Forcing social indicators
+into a reflective model would treat income, living arrangement and access to
+transport as symptoms of a single underlying social state, and would discard
+any indicator that failed to correlate with the rest. The indicators most
+likely to be discarded would be those that capture a distinct barrier, which
+are the ones the structural domain most needs. Chapter~\ref{ch:methods}
+specifies how each domain is modelled.
+
 The more defensible conceptual representation is therefore
 \begin{equation}
 H_{\text{potential}}=f(BP,SM,SB),
@@ -1259,6 +1502,9 @@ Everything in this chapter now reduces to a short list of statements that could
 turn out to be false.
 
 \section{From Literature to Testable Propositions}
+\label{sec:lit-propositions}
+
+The chapter so far has made choices: a placement of the boundary between person and context, an ontology held in two versions, a refusal to read capability off behaviour, a derived functional form and a set of rivals for it. A choice that cannot be shown wrong is a preference. This section turns the choices into statements the data can contradict.
 
 The literature synthesis generates the following propositions.
 
@@ -1274,12 +1520,19 @@ The literature synthesis generates the following propositions.
 
 Each proposition has a corresponding empirical obligation. The first requires exploratory and confirmatory dimensionality analysis; the second requires convergent and discriminant validity testing; the third requires domain-level and sensitivity analyses; the fourth requires nested and incremental prognostic comparisons; the fifth requires competing measurement structures and factor-determinacy assessment; the sixth requires measurement-invariance analysis; and the seventh requires independently specified survival and hospitalisation models with internal validation.
 
+The propositions are not equally important, and their failures do not have equal consequences. If the multidimensionality proposition fails, the indicators measure a single health state and the three-domain framework has no empirical footing in NHATS; that would be the most serious result, since it removes the object the other propositions concern. If the distinctiveness proposition fails, the domains may be real but the construct adds nothing to frailty or social vulnerability, and the thesis would have to say that its integration is not worth a separate measure. If the general-factor proposition fails, the thesis loses its scalar but keeps its profile, which on the argument of the economics and policy sections is the more useful object in any case. If the equity proposition fails, comparisons across the groups where invariance breaks must stop, but comparisons within groups may stand. If the prognostic proposition fails, the construct may still be valid as a description of capability; it would then be a measure that does not forecast, which is a limitation and not a refutation. Stating these consequences now, before any result is known, prevents the reading of each result from being adjusted to suit it.
+
+The propositions also stand in an order of dependence. The equity and prognostic propositions are tested on scores, and the scores exist only if the measurement model holds; a strong prognostic result from a measurement model that failed would be uninterpretable. The results should therefore be read in the order listed, and a failure early in the list limits what can be claimed from later tests rather than being offset by them.
+
 This mapping also establishes a direct link to the computational implementation. The code should not merely calculate a final score. It must preserve the distinction between theory generation, measurement evaluation, score estimation and outcome prediction. Every model-selection decision must therefore be traceable to a stated theoretical proposition or methodological criterion.
 
 Traceability is a property of the code as much as of the argument, which makes
 it a design requirement rather than a promise.
 
 \section{Implications for the Empirical Design and Codebase}
+\label{sec:lit-design}
+
+A proposition is only falsifiable if the analysis that tests it is able to return the unwelcome answer. The previous section stated what could fail; this one states what the empirical design and the code must do so that a failure, if it occurs, is reported rather than absorbed.
 
 The literature review changes the empirical design in several concrete ways. First, indicator selection must be documented as a theory-to-variable mapping. Each indicator should have a stated construct, domain, expected direction and justification from the literature. Second, candidate measurement models must be fitted before outcome variables are introduced into model selection. Third, the analysis must include explicit tests of alternative structures rather than only the preferred model.
 
@@ -1291,8 +1544,12 @@ Sixth, the prognostic analysis must remain downstream of measurement. Mortality 
 
 Finally, the code should be designed to expose failure. It should be possible for the pipeline to conclude that no defensible general factor exists, that a domain is empirically redundant, that measurement invariance fails, or that prognostic performance adds little beyond established comparators. Such outcomes would not constitute programming failures. They would be scientifically informative findings about the proposed construct.
 
+These implications can be read as requirements on an engineered system, and the reading makes them easier to check. Each proposition of the previous section becomes a requirement that some stage of the pipeline must meet, and each requirement needs a test that shows whether it was met. The requirement that outcomes do not shape the measurement model, for example, is met only if the code that fits the measurement model has no access to the outcome variables, and that can be checked by inspection rather than taken on trust. Engineering practice separates verification, which asks whether the system was built as specified, from validation, which asks whether the specification was the right one \citep{incose_2015}. The distinction maps onto the thesis. Appendix~\ref{app:verification} checks that the code computes what the mathematics of Appendix~\ref{app:mathematical_foundations} says; the empirical chapters ask whether what the mathematics says is a good account of health capability. Section~\ref{sec:sys-pipeline} develops this view, and Section~\ref{sec:sys-fmea} lists the ways the pipeline could fail and what each failure would do to the reported results.
+
 \section{A reader's glossary: the same idea in two languages}
 \label{sec:intro-glossary}
+
+The design requirements above use terms from statistics, and the propositions before them use terms from economics and clinical research. Before the framework is read as a whole, the vocabulary needs a common reference, since an argument that crosses three disciplines can fail simply because one word means different things to different readers.
 
 This thesis is written for three readerships that do not share a vocabulary.
 Clinicians, health economists and statisticians each have a name for most of
@@ -1323,7 +1580,7 @@ Shrinkage & Regression to the mean & An extreme estimate from sparse information
 \addlinespace
 Censoring & Alive at last contact & The person's later fate is unknown, which is information, not a missing value. \\
 \addlinespace
-Competing risk & An event that ends the follow-up & Death removes a person from being at risk of the admission you were counting. \\
+Competing risk & An event that ends the follow-up & Death removes a person from being at risk of the admission being counted. \\
 \addlinespace
 Immortal time & A window where the event could not occur & The design guarantees survival over an interval, and the guarantee looks like benefit. \\
 \addlinespace
@@ -1345,9 +1602,9 @@ Identification & Telling a blocked patient from a choosing one & Whether the dat
 \addlinespace
 Non-compensation & A chain is as strong as its weakest link & Cardiac output cannot rescue a haemoglobin of two. \\
 \addlinespace
-Elasticity of substitution & How far one thing stands in for another & Whether good support can make up for a system that will not treat you. \\
+Elasticity of substitution & How far one thing stands in for another & Whether good support can make up for a system that will not treat the person. \\
 \addlinespace
-Opportunity cost, $\lambda$ & Patients you never meet & The health lost elsewhere when this budget is spent here. \\
+Opportunity cost, $\lambda$ & Patients the clinician never meets & The health lost elsewhere when this budget is spent here. \\
 \addlinespace
 Inequality aversion, $\varepsilon$ & How much a gain to the worst-off counts & The exchange rate between total health and its distribution. \\
 \addlinespace
@@ -1358,10 +1615,77 @@ Internal validation & The model marking its own homework & How much of the appar
 \end{tabular}
 \end{table}
 
-\section{Conclusion}
+\section{A Systems View of the Theoretical Framework}
+\label{sec:lit-systems}
+
+Each part of the framework has now been defended on its own terms. What has not been asked is how the parts behave together, and that is a separate question, since parts that are each defensible can combine into a whole that is not. Systems thinking supplies a disciplined way to ask it: name the components and what passes between them, say which links are claims about the world and which are choices of language, find the loops, and say what has been left outside \citep{vonbertalanffy_1968,meadows_2008}. Chapter~\ref{ch:systems} sets out these ideas in general. This section applies them to the framework of this chapter only.
+
+\subsection{The three domains as interacting components}
+
+In the static framework the three domains meet at one place, the realisation function. They do not act on one another; each is measured separately, and they combine only in producing $H$. The interface between them is therefore fully described by the form of $f$, and the choice of $f$ is a choice about how the components interact.
+
+Under the geometric form \eqref{eq:crf_intro} the interaction is complementary. The gain in $H$ from a small rise in $P$ is $S^{\alpha}R^{1-\alpha}$, which is larger where context is better, and the gain from a rise in $S$ or $R$ is likewise larger where $P$ is higher. Realised capability is then a property of the combination rather than of any one domain. Profile~B makes this concrete. Its two versions differ only in $R$, and $H$ differs by a factor of $2.06$; but if $P$ were zero, the same change in $R$ would change nothing. The effect of structural freedom on the level of realised capability cannot be stated without stating the other two domains. In the language of Chapter~\ref{ch:systems}, $H$ is an emergent quantity: it belongs to the whole and not to the parts. The log scale is the one exception, and it is an exception by construction, as the earlier remark on the gap decomposition showed.
+
+\subsection{Which links are causal claims and which are definitions}
+
+The framework contains several kinds of link, and they are easily confused because they are all written as arrows or equations. Table~\ref{tab:lit-links} sorts them. The first column names the link, the second says what kind of statement it is, and the third says how, if at all, the data can bear on it.
+
+\begin{table}[htbp]
+\centering
+\caption{The links in the theoretical framework, sorted by the kind of statement each makes.}
+\label{tab:lit-links}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{0.30\linewidth} p{0.24\linewidth} p{0.38\linewidth}}
+\toprule
+\textbf{Link} & \textbf{Kind of statement} & \textbf{How the data bear on it} \\
+\midrule
+$R=1-B$ & Definition & Not at all; it fixes orientation \\
+\addlinespace
+$H=P\,S^{\alpha}R^{1-\alpha}$, \eqref{eq:crf_intro} & Definition resting on stated axioms & Indirectly, by comparison with rival forms (Section~\ref{sec:lit-candidates}) \\
+\addlinespace
+$F_i=\chi_i(\mathcal C_i)$, Definition~\ref{def:lit-choicemap} & Model of observation & Not testable; Theorem~\ref{thm:lit-identification} follows from it \\
+\addlinespace
+$FA=f(IC,E,IC\times E)$, Assumption~\ref{ass:lit-interaction} & Causal claim & Testable through the interaction (Chapter~\ref{ch:results2}) \\
+\addlinespace
+Arrows of \eqref{eq:conceptual_sequence} & Ordering, not identified effect & Weakly, through temporal order in panel data \\
+\addlinespace
+Reflective indicators, \eqref{eq:reflective_measurement_bridge} & Causal claim, latent to indicator & Testable through fit and local independence \\
+\addlinespace
+Formative indicators & Definition & Not by internal fit; judged by content \\
+\addlinespace
+Construct to mortality and hospitalisation & Predictive association & Testable; not a claim about cause \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The sorting matters because the two kinds of statement fail in different ways. A causal claim can be false, and data can show it. A definition cannot be false; it can only be unhelpful, and data show that only indirectly, when a rival definition does the same work better. The risk is to report a consequence of a definition as if it were a finding. The gap decomposition of Profile~B is the plainest case. It puts the whole gap on the structural domain, but that result follows from the profile having equal $P$ and equal $S$ and from the form of the function. Nothing was discovered. When the same decomposition is applied to NHATS data, the shares it reports will be as good as the measurement of the domains and the choice of form, and no better. Reading Table~\ref{tab:lit-links} before reading the results is a guard against mistaking arithmetic for evidence.
+
+\subsection{Where feedback is assumed and where it is ignored}
+
+The chapter assumes feedback in two places, both outside the construct. The epistemology section described a balancing loop in which expectations adapt to constraint and self-reported need falls. The policy section described a reinforcing loop in which a low score, read as low potential, leads to withheld investment and a lower score. In both, the loop acts on how the construct is measured or used, not on the domains themselves.
+
+Inside the construct, feedback is ignored. The domains are treated as inputs that do not respond to one another or to outcomes. That is a simplification, and the plausible loops are not hard to name. Illness can reduce social participation and so lower $S$. Support can aid recovery and so raise $P$. Barriers to care can delay treatment, so that a low $R$ becomes a low $P$ some years later. A hospital admission, which the framework treats only as an outcome, can reduce capacity. The life-course literature cited earlier describes disadvantage as cumulative \citep{marmot_2005,who_sdh_2008}, which is a description of loops of this kind acting over decades.
+
+Ignoring these loops has a specific consequence for the propositions. A higher-order factor model reads the correlation among domains as evidence of a common cause. Loops among the domains produce correlation too, without any common cause, because each domain has partly been shaped by the others over the life course. If the general-factor proposition is supported, the support is therefore consistent with two different structures, a shared latent capability or a history of mutual influence, and a single cross-section cannot tell them apart \citep{sterman_2000}. The thesis does not resolve this. It states the ambiguity here so that a supported general factor is not over-read, and it leaves the dynamic question to Appendix~\ref{app:dynamical} and to the treatment of loops in Section~\ref{sec:sys-loops}.
+
+\subsection{What the framework leaves outside its boundary}
+
+Every model draws a boundary, and the choice reflects a purpose rather than a fact about the world \citep{checkland_1981}. The framework leaves several things outside, each for a stated reason. Outcomes are outside to avoid circularity. Choice, $\chi_i$, is outside because it cannot be observed, which is the point of Theorem~\ref{thm:lit-identification}. Wellbeing beyond health is outside to keep the construct distinct from capability wellbeing measures. Budgets and opportunity cost are outside so that economic appraisal stays separate and visible. The institution that acts on the score is outside, and the governance argument depends on it staying separate. Time is outside the cross-sectional construct and inside only the dynamic extension.
+
+Each exclusion buys something and costs something. The main cost is that some excluded elements respond to the score. An institution that uses the score to target support changes $R$ and $S$ for the people it targets, so the structural domain is not a fixed input once the measure is in use. A boundary drawn so that a responsive element is treated as fixed is a known source of error in system models \citep{sterman_2000}, and it is the reason Chapter~\ref{ch:systems} treats the measurement instrument and the people who act on it as part of the system under study (Section~\ref{sec:sys-control}). Drawing the boundary wider is not a free remedy either. The philosophical section showed that a boundary drawn to include every circumstance makes health indistinguishable from welfare.
+
+The framework is a model of a person in context, and it will be wrong in some respects. Box's advice was to ask which of a model's simplifications matter \citep{box_1976}. On the argument of this section, three matter most: the absence of feedback among the domains, the absence of time, and the treatment of context as unaffected by the measure. None of them invalidates the cross-sectional test the thesis runs, but each limits what a passed test can be taken to show, and each is a reason the next chapter is needed.
+
+\section{What the Chapter Settles and What It Leaves Open}
+\label{sec:lit-close}
 
 The literature reveals a mature field rather than an empty space. QALYs and DALYs address health loss and comparative valuation; health expectancy addresses expected population health over time; quality-of-life instruments describe experienced health; frailty captures accumulated vulnerability; intrinsic capacity describes the physical and mental capacities available to an individual; capability measures address opportunities to achieve valued states; and social-vulnerability measures quantify contextual disadvantage. The challenge is not to replace these traditions but to determine whether a coherent bridge among them is empirically defensible.
 
 The proposed H-potential therefore enters the literature with a deliberately modest claim. Its novelty, if established, will not be that it is the first multidimensional health metric. Nor will it be that it includes social determinants or uses latent-variable methods. The potential contribution is the explicit testing of a health-bounded construct in which biological capacity, enabling social conditions and structural constraints are considered jointly, while measurement validity is kept analytically separate from prognostic performance.
 
 That proposition remains open. If the data show that H-potential is indistinguishable from intrinsic capacity, frailty, social vulnerability or an established health metric, the thesis must conclude that the proposed integration does not warrant a separate construct. If the domains are coherent but a general factor is not, the appropriate result may be a multidomain profile rather than a scalar score. If the score is coherent and incrementally predictive, the contribution becomes stronger. In all cases, the scientific value lies in allowing the empirical evidence to determine which interpretation survives interrogation.
+
+The chapter settles the terms of that test. It fixes what the construct is: health-related capability, bounded to health, built from capacity and the conditions that convert or block it. It fixes what the construct is not: a frailty index, a wellbeing measure, a risk score or a basis for allocation. It shows why capability must be modelled rather than observed, replaces a formula that could return negative capability with one derived from axioms, and turns each choice into a proposition the data can reject.
+
+It leaves open whether the data support any of this, which is the work of the empirical chapters. It also leaves open questions the framework, as a static model of one person at one time, cannot pose. It does not say how the domains act on one another over time, or what happens to the measured quantity once an institution starts acting on the measure. Nor does it say which parts of the measurement pipeline could fail, or what each failure would do to the reported results. The systems reading in Section~\ref{sec:lit-systems} found these gaps but did not fill them. Chapter~\ref{ch:systems} takes them up, setting out the systems view of both health capacity and the instrument that measures it, before Chapter~\ref{ch:methods} turns the framework into a specified analysis.
