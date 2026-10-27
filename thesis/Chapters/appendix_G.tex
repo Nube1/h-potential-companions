@@ -42,7 +42,8 @@ which list every final case status code \citep{nhats_dcp_r5_2015}; the
 Round~10 weighting paper, which confirms that the same codes are used in
 later rounds \citep{dematteis_2021_r10weights}; and the income imputation
 paper, which gives the name of the auxiliary income file
-\citep{hu_freedman_2024_income}. The tariff was checked against the
+\citep{hu_freedman_2024_income}. The Round~6 crosswalk identified the public
+variables that date the outcomes \citep{nhats_r6_crosswalk_2024}. The tariff was checked against the
 discussion paper in which the UK time trade-off tariff was first published
 \citep{dolan_1995_che}. The tariff is more often cited from the later journal
 article \citep{dolan_1997}, which was not available for this check.
@@ -63,6 +64,7 @@ NHATS User Guide, Rounds 1 to 14 & August 2026 & Codes of derived variables; res
 NHATS Data Collection Procedures, Round 5 & 2015 & Final case status codes (Table II.F-1) \\
 NHATS Technical Paper 28, Round 10 weights & July 2021 & Status codes in a later round (Table 1) \\
 NHATS Technical Paper 43, income imputations & May 2025 & Name and content of the auxiliary income file \\
+NHATS Round 6 crosswalk between instruments and codebook & 15 February 2024 & Public variables that date interviews and deaths \\
 Dolan, Gudex, Kind and Williams (1995), Discussion Paper 138 & 1995 & All coefficients of the UK EQ-5D time trade-off tariff \\
 \bottomrule
 \end{tabular}
@@ -197,7 +199,8 @@ Income & Twenty imputations used when present, else five; couple income divided 
 Income file & Named as NHATS names it; a renamed file for the round is also found & Technical Paper 43 \\
 Deaths & Status 86 (deceased, no proxy) counted with 62 & Data Collection Procedures \\
 Follow-up & Extended only by a status showing the person alive & Data Collection Procedures \\
-Imputation model & Proxy respondent, cognition not asked and reported dementia added & Instrument; User Guide \\
+Imputation model & Proxy respondent, cognition not asked, reported dementia and the AD8 proxy screen added & Instrument; User Guide \\
+Event times & Dated in months from interview, case-status and death-interval variables, not whole rounds & Round 6 crosswalk; User Guide \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -216,6 +219,20 @@ reached or known to be alive: a completed interview, a refusal or inability
 to take part, absence during fieldwork, a move outside the area or out of the
 country, or a refusal by the facility. A proxy's refusal is not taken as a
 sign of life, because the proxy may be refusing an interview about a death.
+
+The timing of events changed as well. The first version placed every event at
+the midpoint of a whole round, so that all deaths fell at one of five times.
+The public files carry more than that. The tracker gives the month and year of
+each sample-person interview, with a revised month for Rounds 3 to 8, and the
+month each case status was set. For a death with a last-month-of-life
+interview, the follow-up file gives the number of months between the last
+interview and the death \citep{freedman_nhats_userguide_2026}. Times are now
+measured in months from the Round~5 interview. A death with a proxy interview
+is dated by the reported interval; a death without one, by the midpoint
+between the last month the person was known alive and the month the death was
+recorded. A first hospital stay is placed midway between the interview that
+reports it and the previous one. The exact date of death is a restricted
+variable and was not used.
 
 The income change needs a word of explanation as well. The previous layout used the
 reported total, which is missing for a large share of respondents and, for
@@ -270,11 +287,14 @@ The checks settled most questions about names and codes. The following were
 not settled, or cannot be settled from documents, and the reader should weigh
 the results with them in mind.
 
-\paragraph{Timing of deaths.} The tracker records the round at which a death
-is reported, not the date of death, so a death is placed at the midpoint of
-the interval in which it occurred. A death found only after one or more
-rounds in which the person could not be traced is placed in the last such
-interval, and its timing is correspondingly less precise.
+\paragraph{Timing of deaths.} A death with a proxy interview is dated to the
+month, from the interval the proxy reports. A death without one, which is the
+smaller group, is known only to lie between the last month the person was
+seen alive and the month the death was recorded, and is placed at the
+midpoint. A first hospital stay is likewise known only to lie between two
+interviews. Errors of this kind are of the order of a few months and shift
+event times in both directions; they matter little for five-year risk but
+more for risk at one year.
 
 \paragraph{One name differs between documents.} The derived medication variable
 is listed in the crosswalk as \texttt{mc5dmedssfdf} and in the User Guide as
@@ -284,17 +304,23 @@ if the variable is absent, so a mismatch cannot pass unnoticed.
 \paragraph{Proxy respondents.} Social network size is not asked when a proxy
 answers for the sample person, and word recall and clock drawing are not
 administered when the proxy says the person cannot be asked. These values are
-missing for reasons tied to the person's health. Three baseline flags are
+missing for reasons tied to the person's health. Four baseline variables are
 therefore added to the imputation model: whether a proxy answered, whether
-the proxy said the cognitive tests could not be given, and whether dementia
-has been reported. The flags are never outcomes, so the measurement stage
+the proxy said the cognitive tests could not be given, whether dementia has
+been reported, and the score on the AD8, the eight-item dementia screen NHATS
+puts to proxy respondents, scored as NHATS recommends
+\citep{freedman_nhats_userguide_2026}. The flags are never outcomes, so the measurement stage
 remains blind to them. They help where people in the same position were
 measured: proxy cases whose cognition was tested, for instance, inform the
-imputation of other proxy cases. They cannot help for cognition among those
-who could not be tested, since none of that group has a score from which the
-model could learn. For that group the primary analysis imputes cognition from
-the remaining indicators and the flags, and a sensitivity analysis sets their
-cognition to the lowest possible score instead. Chapter~\ref{ch:results1}
+imputation of other proxy cases. The AD8 matters most here. A flag that is set
+only for people with no cognition score cannot teach the model anything about
+their cognition, since no one in that group has a score to learn from. The AD8
+can: proxies answer it both for people who were tested and for people who were
+not, so the model learns how test scores fall as the AD8 rises among the
+tested, and carries that relation to the untested. That relation is still an
+extrapolation, because the untested sit at the severe end of the AD8, beyond
+most of the people from whom it was learned. A sensitivity analysis therefore
+sets their cognition to the lowest possible score instead. Chapter~\ref{ch:results1}
 reports how far the loadings and the biomedical domain scores move between
 the two rules. The truth lies between them: the imputation is likely to
 overstate the cognition of these people, and the lowest score to understate
@@ -341,6 +367,8 @@ no barrier, that education and gender are filled from Round~1, that decedents
 leave the sample, that income is taken from the twenty imputations and
 equivalised and that a renamed income file is still found, that a death with
 no proxy counts as a death, that an untraced round does not extend follow-up,
-and that the proxy flags reach the imputation model. These tests run on every change to the code, so a later edit
+and that the proxy flags and the AD8 score reach the imputation model, that the
+AD8 is scored as NHATS recommends, and that deaths and hospital stays are
+dated from the NHATS months. These tests run on every change to the code, so a later edit
 that reintroduced one of the errors would be caught before it reached the
 results.

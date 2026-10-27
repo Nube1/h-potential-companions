@@ -3,9 +3,9 @@ participant_id,administrative,id,yes,spid (all files),unique identifier,none
 survey_weight,administrative,weight,yes,w5anfinwgt0 (SP file),positive numeric; sample limited to r5dresid 1 2 4,decedents (r5dresid 6) excluded because NHATS assigns them a positive weight in error
 age,biomedical,predictor,yes,r5d2intvrage (SP file),band midpoints 67 to 92 years,NHATS reserved codes -1 to -9 set to missing
 sex,administrative,covariate,yes,r5dgender (SP file) else r1dgender (Round 1 SP file),1 male; 2 female,continuing sample filled from Round 1
-mortality_time,outcome,time,yes,r6status-r10status (latest tracker file),days from baseline at interval midpoints,right censored
+mortality_time,outcome,time,yes,r5-r10 spstatdtmt/yr and casestdtmt/yr (tracker); dmds6-10dintvl (follow-up SP files),days from the Round 5 interview month,right censored at the last month known alive
 mortality_event,outcome,event,yes,r6status-r10status = 62 or 86,0 censored; 1 death,follow-up extends only through rounds with a status showing the person alive
-hospital_time,outcome,time,yes,hc6hosptstay-hc10hosptstay (follow-up SP files),days from baseline at interval midpoints,right censored; death is a competing event
+hospital_time,outcome,time,yes,hc6hosptstay-hc10hosptstay (follow-up SP files) and interview months (tracker),days from the Round 5 interview month; midpoint between interviews,right censored; death is a competing event
 hospital_event,outcome,event,yes,hc6hosptstay-hc10hosptstay = 1,0 censored; 1 first overnight hospital stay,none
 bio_multimorbidity,biomedical,indicator,yes,hc5disescn1-10 (count absent),1 yes and 7 previously reported count as present,NHATS reserved codes -1 to -9 set to missing
 bio_function,biomedical,indicator,yes,sc5/mo5/ha5/mc5 derived sfdf items (count without limitation),codes 1 3 5 are a limitation; 2 4 and 9 are not,codes 6 7 8 and reserved codes set to missing
@@ -21,3 +21,4 @@ sys_care_access,systemic,indicator,yes,"mc5havregdoc, mc5regdoclyr",2 no counts 
 proxy_respondent,administrative,auxiliary,no,is5resptype = 2,1 proxy answered; 0 sample person,imputation model only
 cognition_not_asked,administrative,auxiliary,no,cg5dwrdimmrc cg5dwrddlyrc cg5dclkdraw = -2 or -3,1 proxy said the person cannot be tested,imputation model and sensitivity analysis only
 dementia_reported,administrative,auxiliary,no,hc5disescn9 = 1 or 7,1 dementia or Alzheimer's reported,imputation model only
+ad8_score,administrative,auxiliary,no,cp5chgthink1-8 and cp5dad8dem,0 to 8 as NHATS scores the AD8; 0 for self-respondents,imputation model only
