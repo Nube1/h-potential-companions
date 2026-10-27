@@ -82,6 +82,8 @@ class Layout:
         sample = self.raw.get("sample")
         if sample:
             names.add(self.name(sample["residence"]))
+        for spec in self.raw.get("auxiliary", {}).values():
+            names |= {self.name(s) for s in _sources(spec)}
         return sorted(names)
 
     def preferred_variables(self) -> list[str]:
@@ -254,10 +256,26 @@ def _baseline_files(data_dir: Path, layout: Layout) -> list[tuple[str, Path]]:
         out.append(("tracker", tr[1]))
     stem = layout.raw["files"].get("income")
     if stem:
-        inc = find_file(data_dir, layout.name(stem))
+        inc = find_file(data_dir, layout.name(stem)) or _find_income_file(data_dir, layout.r)
         if inc is not None:
             out.append(("income", inc))
     return out
+
+
+def _find_income_file(data_dir: Path, r: int) -> Path | None:
+    """An auxiliary income-imputation file for round ``r`` under another name.
+
+    NHATS names it NHATS_Round_<r>_Int_Inc_Imp_File (Technical Paper 43);
+    any file for the round whose name mentions both income and imputation is
+    accepted, so a renamed or re-versioned download is still found.
+    """
+    pattern = re.compile(rf"nhats_round_{r}_.*inc.*imp", re.IGNORECASE)
+    hits = sorted(
+        p
+        for p in Path(data_dir).rglob("*")
+        if p.suffix.lower() in READERS and pattern.search(p.stem)
+    )
+    return hits[0] if hits else None
 
 
 def read_baseline(data_dir: Path, layout: Layout, columns: list[str]) -> pd.DataFrame:
@@ -487,6 +505,24 @@ def score_item(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     raise ValueError(f"Unknown indicator kind: {kind}")
 
 
+def auxiliary_flag(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
+    """1 if any source item takes one of ``flag_codes``, else 0; missing if no item is usable.
+
+    Flag codes may be NHATS reserved codes (-2 and -3 mark a proxy saying the
+    person cannot be asked), so they are read before reserved codes are cleared.
+    """
+    codes = [float(c) for c in spec["flag_codes"]]
+    raw = pd.DataFrame(
+        {
+            layout.name(s): pd.to_numeric(frame[layout.name(s)], errors="coerce")
+            for s in _sources(spec)
+        }
+    )
+    hit = raw.isin(codes).any(axis=1)
+    usable = (raw.notna() & ~raw.isin(layout.special_missing)).any(axis=1) | hit
+    return hit.astype(float).where(usable)
+
+
 def neg_log_income(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     """Income shortfall: minus the mean log equivalised income over NHATS imputations.
 
@@ -625,6 +661,14 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     filled = _fill_from_earlier_rounds(sp, data_dir, layout)
     if filled:
         flow["filled_from_earlier_round"] = filled
+    for spec in layout.raw["indicators"].values():
+        if spec.get("kind") == "neg_log_income":
+            pref = [layout.name(s) for s in spec.get("imputations", [])]
+            flow["income_source"] = (
+                f"{len(pref)} interval-regression imputations (income file)"
+                if pref and all(c in sp for c in pref)
+                else f"{len(spec['fallback_imputations'])} hot-deck imputations (SP file)"
+            )
 
     out = pd.DataFrame(index=sp.index)
     out["participant_id"] = sp.index.astype(str)
@@ -647,6 +691,8 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
         out[name] = score_item(sp, layout, spec)
     if skipped:
         flow["comparators_skipped"] = {k: f"{len(v)} variables absent" for k, v in skipped.items()}
+    for name, spec in layout.raw.get("auxiliary", {}).items():
+        out[name] = auxiliary_flag(sp, layout, spec)
     for name, src in layout.raw.get("conditions", {}).items():
         x = _clean(sp[layout.name(src)], layout.special_missing)
         out[f"cond_{name}"] = x.isin([1.0, 7.0]).astype(float).where(x.notna())
@@ -669,7 +715,12 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     )
     dead = status.isin([float(c) for c in mort["event_codes"]])
     dead = dead & ~dead.shift(1, axis=1, fill_value=False).cummax(axis=1)
-    known = status.notna()
+    if "alive_codes" in mort:
+        # Only a status that shows the person was alive that round extends
+        # follow-up; "unable to locate", "work stopped" and the like do not.
+        known = status.isin([float(c) for c in mort["alive_codes"]]) | dead
+    else:
+        known = status.notna()
     out["mortality_time"], out["mortality_event"] = _outcome_times(known, dead, layout)
 
     # First overnight hospital stay from follow-up SP files, censored at death.

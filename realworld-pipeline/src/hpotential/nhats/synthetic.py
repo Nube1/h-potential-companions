@@ -104,6 +104,13 @@ def write_synthetic_nhats(
         sp[name(f"hc{{r}}depresan{j}")] = _with_missing(
             rng, _categorical(rng, -0.6 * bio + rng.normal(0, 0.9, n), [0.3, 1.2, 2.0])
         )
+    # Proxy respondents, commoner when capacity is low; some proxies say the
+    # person cannot do the cognitive tests (-2) and the network is not asked.
+    proxy = rng.random(n) < 1 / (1 + np.exp(2.6 + 0.9 * bio))
+    sp[name("is{r}resptype")] = np.where(proxy, 2, 1)
+    cannot = proxy & (rng.random(n) < 0.5)
+    for item in ("cg{r}dwrdimmrc", "cg{r}dwrddlyrc", "cg{r}dclkdraw"):
+        sp[name(item)] = np.where(cannot, -2, sp[name(item)])
     pain = -0.8 * bio + rng.normal(0, 0.9, n)
     sp[name("ss{r}painbothr")] = _with_missing(rng, np.where(pain > 0.1, 1, 2))
     sp[name("ss{r}painlimts")] = _with_missing(rng, np.where(pain > 0.9, 1, 2))
@@ -111,8 +118,8 @@ def write_synthetic_nhats(
     for item in ("vistfrfam", "attrelser", "clbmtgrac", "outfrenjy"):
         p = 1 / (1 + np.exp(-(0.4 + 0.9 * soc)))
         sp[name(f"pa{{r}}{item}")] = _with_missing(rng, np.where(rng.random(n) < p, 1, 2))
-    sp[name("sn{r}dnumsn")] = _with_missing(
-        rng, np.clip(np.round(2 + 1.2 * soc + rng.normal(0, 1, n)), 0, 5)
+    sp[name("sn{r}dnumsn")] = np.where(
+        proxy, -1, _with_missing(rng, np.clip(np.round(2 + 1.2 * soc + rng.normal(0, 1, n)), 0, 5))
     )
     for item in ("ss{r}hearphone", "ss{r}convquiet", "ss{r}seewellst", "ss{r}glrednewp"):
         p = 1 / (1 + np.exp(-(1.8 + 0.7 * soc + 0.5 * bio)))
@@ -176,14 +183,16 @@ def write_synthetic_nhats(
 
     ks = layout.follow_ups
     tracker = pd.DataFrame({name(layout.raw["ids"]["person"]): sp.iloc[:, 0]})
-    status_code = layout.raw["outcomes"]["mortality"]["event_codes"][0]
+    death_codes = layout.raw["outcomes"]["mortality"]["event_codes"]
+    # Most deaths have a last-month-of-life interview (62); some have no proxy (86).
+    death_code = np.where(rng.random(n) < 0.06, death_codes[-1], death_codes[0])
     paths = []
     for k in ks:
         years = k - r
         dead = death_years <= years
         lost = (attrition_years <= years) & ~dead
-        status = np.where(dead, status_code, 60)  # 60: interviewed (made-up code)
-        status = np.where(lost, -9, status)
+        status = np.where(dead, death_code, 60)  # 60: interview completed
+        status = np.where(lost, 79, status)  # 79: unable to locate
         tracker[name("r{k}status", k)] = status
         fu = pd.DataFrame({name(layout.raw["ids"]["person"]): sp.iloc[:, 0]})
         alive = ~dead & ~lost

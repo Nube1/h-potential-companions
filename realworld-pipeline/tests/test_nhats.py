@@ -211,3 +211,77 @@ def test_income_prefers_twenty_imputations_and_equivalises(layout):
     # Without the income file, the five SP-file imputations are used.
     frame = frame.drop(columns=[layout.name(s) for s in spec["imputations"]])
     assert score_item(frame, layout, spec).iloc[1] == pytest.approx(-np.log1p(99.0))
+
+
+def test_deaths_without_proxy_count_and_untraced_rounds_do_not_extend_follow_up(tmp_path, layout):
+    """86 (deceased, no proxy) is a death; 79 (unable to locate) is not a sign of life."""
+    from hpotential.nhats.ingest import _latest_tracker, read_table
+
+    write_synthetic_nhats(tmp_path, layout, n=400, seed=5, fmt=".csv")
+    first, _ = build(tmp_path, layout)
+    a, b = (int(x) for x in first["participant_id"].iloc[:2])
+    _, tpath = _latest_tracker(tmp_path, layout)
+    tr = read_table(tpath)
+    pid = layout.name(layout.raw["ids"]["person"])
+    for k in layout.follow_ups:
+        col = layout.name("r{k}status", k)
+        tr.loc[tr[pid] == a, col] = 86 if k >= 7 else 60  # dies between Rounds 6 and 7, no proxy
+        tr.loc[tr[pid] == b, col] = 60 if k == 6 else 79  # seen in Round 6, then untraced
+    tr.to_csv(tpath, index=False)
+    frame, _ = build(tmp_path, layout)
+    rows = frame.set_index("participant_id")
+    d = layout.days_per_round
+    assert rows.loc[str(a), "mortality_event"] == 1
+    assert rows.loc[str(a), "mortality_time"] == pytest.approx(1.5 * d)
+    assert rows.loc[str(b), "mortality_event"] == 0
+    assert rows.loc[str(b), "mortality_time"] == pytest.approx(1.0 * d)  # censored at Round 6
+
+
+def test_income_file_found_under_another_name(tmp_path, layout):
+    from hpotential.nhats.ingest import _baseline_files
+
+    write_synthetic_nhats(tmp_path, layout, n=200, seed=9, fmt=".csv")
+    stem = layout.name(layout.raw["files"]["income"])
+    src = next(p for p in tmp_path.iterdir() if p.stem.lower() == stem)
+    src.rename(tmp_path / "NHATS_Round_5_Income_Imputations_v2.csv")
+    labels = dict(_baseline_files(tmp_path, layout))
+    assert labels["income"].name == "NHATS_Round_5_Income_Imputations_v2.csv"
+    _, flow = build(tmp_path, layout)
+    assert flow["income_source"].startswith("20 interval-regression")
+
+
+def test_proxy_flags_reach_the_imputation_model(tmp_path, layout):
+    from hpotential.measurement import _aux_frame
+
+    write_synthetic_nhats(tmp_path, layout, n=600, seed=11, fmt=".csv")
+    frame, _ = build(tmp_path, layout)
+    assert frame["proxy_respondent"].mean() > 0
+    # Everyone flagged as not asked is a proxy case, and their cognition is missing.
+    flagged = frame["cognition_not_asked"] == 1
+    assert flagged.any() and (frame.loc[flagged, "proxy_respondent"] == 1).all()
+    assert frame.loc[flagged, "bio_cognition"].isna().all()
+    cfg = load_config(ROOT / "configs/study.yaml")
+    aux = _aux_frame(frame, cfg)
+    assert {"proxy_respondent", "cognition_not_asked", "dementia_reported"} <= set(aux.columns)
+
+
+def test_not_asked_floor_is_a_sensitivity_rule_only():
+    import copy
+
+    from hpotential.config import StudyConfig
+    from hpotential.measurement import _indicator_frame
+
+    cfg = load_config(ROOT / "configs/study.yaml")
+    cols = [c for d in cfg.indicators.values() for c in d["indicators"]]
+    df = pd.DataFrame({c: [1.0, 2.0] for c in cols})
+    df["bio_cognition"] = [np.nan, np.nan]
+    df["cognition_not_asked"] = [1, 0]
+    assert _indicator_frame(df, cfg)["bio_cognition"].isna().all()  # primary: left to imputation
+    raw = copy.deepcopy(cfg.raw)
+    raw["measurement"]["not_asked_floor"] = {
+        "flag": "cognition_not_asked",
+        "indicators": ["bio_cognition"],
+        "value": 0,
+    }
+    out = _indicator_frame(df, StudyConfig(raw, cfg.path))["bio_cognition"]
+    assert out.iloc[0] == 0 and np.isnan(out.iloc[1])

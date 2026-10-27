@@ -541,6 +541,33 @@ class Export:
             shifts.append(float(np.max(np.abs(std_j - base_std[keep]))))
             dcfi.append(fj.cfi - base.cfi)
         self.loo = {"max_shift": max(shifts) if shifts else np.nan, "dcfi": dcfi}
+
+        # Sensitivity: people a proxy said could not be tested on cognition are
+        # imputed in the primary analysis; here their cognition is set to the
+        # lowest possible score instead (thesis appendix on data checks).
+        self.floor_sens = None
+        flag = "cognition_not_asked"
+        cog = [c for d in DOMAINS for c in cfg.indicators[d]["indicators"] if "cognition" in c]
+        if flag in train and cog and pd.to_numeric(train[flag], errors="coerce").eq(1).any():
+            import copy
+
+            from .config import StudyConfig
+
+            raw2 = copy.deepcopy(cfg.raw)
+            raw2["measurement"]["not_asked_floor"] = {"flag": flag, "indicators": cog, "value": 0}
+            cfg2 = StudyConfig(raw2, cfg.path)
+            mm2 = fit_measurement(train, cfg2, se=False)
+
+            def mean_loadings(m):
+                return np.mean([[e for e, _ in f.standardised_loadings()] for f in m.fits], axis=0)
+
+            s1 = mm.raw_scores(train, cfg)["biomedical"]
+            s2 = mm2.raw_scores(train, cfg2)["biomedical"]
+            self.floor_sens = {
+                "n": int(pd.to_numeric(train[flag], errors="coerce").eq(1).sum()),
+                "max_shift": float(np.max(np.abs(mean_loadings(mm2) - mean_loadings(mm)))),
+                "corr": float(np.corrcoef(s1, s2)[0, 1]),
+            }
         self.filled += [
             "tab:fit (ML column)",
             "tab:loadings",
@@ -551,6 +578,22 @@ class Export:
             self.filled.append("tab:fit (WLSMV column)")
         else:
             self.unfilled["tab:fit WLSMV column"] = "WLSMV did not converge in any imputation."
+
+    def _floor_sentence(self) -> str:
+        s = self.floor_sens
+        if not s:
+            return ""
+        who = (
+            f"the {s['n']:,} development participants"
+            if s["n"] >= 11
+            else "the development participants (fewer than 11)"
+        )
+        return (
+            f" Setting cognition to the lowest possible score for {who} whom a proxy said could "
+            "not be tested, instead of imputing it, changed the standardised loadings by at most "
+            f"{s['max_shift']:.3f}, and the biomedical domain scores under the two rules correlated "
+            f"at {s['corr']:.3f}."
+        )
 
     def _wlsmv_sentence(self) -> str:
         if not self.wlsmv:
@@ -629,6 +672,7 @@ class Export:
             f"most {self.loo['max_shift']:.3f}, and CFI by at most "
             f"{max((abs(x) for x in self.loo['dcfi']), default=float('nan')):.3f}. "
             + self._wlsmv_sentence()
+            + self._floor_sentence()
         )
         for k, body in paras.items():
             (tdir / f"{k}.tex").write_text(

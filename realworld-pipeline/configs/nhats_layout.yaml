@@ -25,11 +25,11 @@ release:
 files:                                  # file names inside --data-dir; .dta, .sas7bdat, .csv or .parquet
   sp: "NHATS_Round_{r}_SP_File"
   tracker: "NHATS_Round_{k}_Tracker_File"   # the latest tracker carries every earlier round's status
-  # Auxiliary file with 20 income imputations (User Guide sec. II, "Auxiliary
-  # Income Imputation Files"). Optional: the five SP-file imputations are used
-  # without it. The file stem is not given in the documentation read; rename
-  # here to match your download.
-  income: "NHATS_Round_{r}_Income_Imputation_File"
+  # Auxiliary file with the 20 income imputations. Name as in NHATS Technical
+  # Paper 43 (May 2025), which merges "NHATS_Round_12_Int_Inc_Imp_File.dta".
+  # Optional: if it is absent the five SP-file imputations are used, and any
+  # round-5 file whose name mentions income and imputation is also accepted.
+  income: "NHATS_Round_{r}_Int_Inc_Imp_File"
 
 ids:
   person: spid
@@ -170,6 +170,18 @@ indicators:
     present: [2]                         # 2 no regular doctor / not seen in last year [instrument]
     codes: [1, 2]
 
+# Baseline flags for the imputation model (configs/study.yaml, measurement.auxiliary).
+auxiliary:
+  proxy_respondent:                      # IS2: 1 sample person, 2 proxy [instrument]
+    source: "is{r}resptype"
+    flag_codes: [2]
+  cognition_not_asked:                   # -2/-3: proxy says the person cannot be asked [guide]
+    sources: ["cg{r}dwrdimmrc", "cg{r}dwrddlyrc", "cg{r}dclkdraw"]
+    flag_codes: [-2, -3]
+  dementia_reported:                     # HC2I dementia or Alzheimer's: 1 yes, 7 previously reported
+    source: "hc{r}disescn9"
+    flag_codes: [1, 7]
+
 # Comparators built from baseline items only, never from outcomes.
 comparators:
   comorbidity_index:
@@ -266,10 +278,17 @@ comparators:
 outcomes:
   mortality:
     status: "r{k}status"
-    # 62 = deceased, Last Month of Life interview done [User Guide III]. Other
-    # deceased codes (no LML interview) are not listed in the documents read;
-    # nhats-check prints every status value seen so they can be added here.
-    event_codes: [62]
+    # Final disposition codes, NHATS Data Collection Procedures Round 5, Table
+    # II.F-1, and the Round 10 weights paper, Table 1: 62 deceased with a Last
+    # Month of Life interview; 86 deceased, no proxy available.
+    event_codes: [62, 86]
+    # Statuses that show the person was alive that round: 60, 61, 63, 64
+    # (an interview completed), 75-78 (unable, too ill, refusal, language
+    # barrier: the person was reached), 80 (unavailable), 82 (outside the PSU),
+    # 83 (ineligible, moved out of the US), 85 (facility refusal). Not included:
+    # 79 unable to locate, 87 proxy refusal (may concern a death), 88 work
+    # stopped, 89 other. A person is censored at the last round known alive.
+    alive_codes: [60, 61, 63, 64, 75, 76, 77, 78, 80, 82, 83, 85]
   hospitalisation:
     sp_item: "hc{k}hosptstay"            # overnight stay since the last interview (continuing sample) [instrument HC7]
     present: [1]

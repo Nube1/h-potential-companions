@@ -39,15 +39,41 @@ def _orient(df, spec):
 
 
 def _indicator_frame(df, cfg) -> pd.DataFrame:
+    """The oriented indicators, after the optional not-asked floor.
+
+    ``measurement.not_asked_floor`` ({flag, indicators, value}) is a
+    sensitivity analysis: where ``flag`` is 1 (a proxy said the person could
+    not be tested) the listed indicators are set to ``value`` instead of being
+    imputed. The primary analysis leaves them to the imputation model.
+    """
+    rule = cfg.raw["measurement"].get("not_asked_floor")
+    if rule and rule["flag"] in df:
+        df = df.copy()
+        hit = pd.to_numeric(df[rule["flag"]], errors="coerce").eq(1)
+        for col in rule["indicators"]:
+            df.loc[hit, col] = float(rule["value"])
     return pd.concat([_orient(df, cfg.indicators[d]) for d in DOMAINS], axis=1)
 
 
-def _aux_frame(df) -> pd.DataFrame:
+def _aux_frame(df, cfg=None) -> pd.DataFrame:
+    """Variables that inform the imputation but are not indicators.
+
+    Age and sex always. ``measurement.auxiliary`` in the configuration adds
+    baseline flags that bear on why an indicator is missing: whether a proxy
+    answered, whether the proxy said the person could not do the cognitive
+    tests, and reported dementia. With these in the model, a value missing
+    because the person could not be asked is imputed from people in the same
+    position rather than from everyone. Outcomes are never auxiliary.
+    """
     aux = pd.DataFrame(index=df.index)
     if "age" in df:
         aux["age"] = pd.to_numeric(df["age"], errors="coerce")
     if "sex" in df:
         aux["female"] = (df["sex"].astype(str).str.lower() == "female").astype(float)
+    names = cfg.raw["measurement"].get("auxiliary", []) if cfg is not None else []
+    for name in names:
+        if name in df:
+            aux[name] = pd.to_numeric(df[name], errors="coerce").fillna(0.0)
     return aux
 
 
@@ -65,7 +91,7 @@ class MeasurementModel:
     def imputed(self, df, cfg):
         """The m standardised imputed indicator matrices for these rows."""
         X = _indicator_frame(df, cfg)
-        Z = pd.concat([X, _aux_frame(df)], axis=1).to_numpy(float)
+        Z = pd.concat([X, _aux_frame(df, cfg)], axis=1).to_numpy(float)
         p = X.shape[1]
         out = []
         for imp, c, s in zip(self.imputers, self.centre, self.scale, strict=True):
@@ -150,7 +176,7 @@ def fit_measurement(train: pd.DataFrame, cfg, se: bool = True) -> MeasurementMod
         pattern[d] = list(range(start, start + k))
         start += k
     model = MeasurementModel(columns=list(X.columns), pattern=pattern)
-    Z = pd.concat([X, _aux_frame(train)], axis=1).to_numpy(float)
+    Z = pd.concat([X, _aux_frame(train, cfg)], axis=1).to_numpy(float)
     w = None
     wcol = cfg.raw["data"].get("weight")
     if wcol and wcol in train:

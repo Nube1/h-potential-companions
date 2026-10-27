@@ -14,6 +14,11 @@ measurement:
   # Multiple imputation by chained equations, then the joint three-domain CFA
   # fitted to each imputed development set; scores are averaged over imputations.
   imputations: 10
+  # Baseline flags added to the imputation model (never outcomes). They mark
+  # why an indicator may be missing: a proxy answered, the proxy said the
+  # person could not do the cognitive tests, or dementia was reported.
+  # Thesis Appendix "Data Sources and Their Verification".
+  auxiliary: [proxy_respondent, cognition_not_asked, dementia_reported]
   rho_sensitivity: [-1.0, 0.5]
   # Preregistered scaling clips each domain to [~0, ~1] at the 1st and 99th
   # training percentiles. Sensitivity: the same bounds mapped onto [floor, 1].
