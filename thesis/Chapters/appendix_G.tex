@@ -1,0 +1,311 @@
+% ============================================================
+% APPENDIX G -- Data sources and their verification
+% ============================================================
+
+\label{app:datachecks}
+
+\begin{ataglance}[How to read this appendix]
+This appendix records how the NHATS variables and the health-utility tariff
+used in the analysis were checked against their published sources, what the
+checks changed, and what they could not settle. \S\ref{sec:G_sources} lists
+the documents consulted. \S\ref{sec:G_names} reports the check of variable
+names and files, and \S\ref{sec:G_codes} the check of response codes.
+\S\ref{sec:G_changes} sets out the corrections that followed.
+\S\ref{sec:G_tariff} reports the check of the EQ-5D tariff.
+\S\ref{sec:G_limits} states the shortcomings that remain and how each bears on
+the results. \S\ref{sec:G_enforce} describes how the checks are enforced when
+the analysis is run.
+\end{ataglance}
+
+\section{Purpose and Sources}
+\label{sec:G_sources}
+
+The analytic file is built by a script from the NHATS public-use files, and
+every variable name and response code it uses is declared in one layout file
+(Section~\ref{sec:survival}). The script can confirm that a declared variable
+exists in the files supplied to it, and that each observed value is one of the
+declared codes. It cannot confirm that a declared code means what the layout
+assumes it means. That check has to be made against the documents NHATS
+publishes, and it was made, item by item, on 27 October 2026, before any
+analysis of NHATS data.
+
+Table~\ref{tab:G_sources} lists the documents consulted and what each was used
+to check. The Round~5 crosswalk lists every public-use variable together with
+the file that holds it and the sample groups to which the question was put
+\citep{nhats_r5_crosswalk_2024}. The Round~5 instrument gives the wording and
+answer codes of each question and the routing that decides who is asked
+\citep{nhats_r5_instrument_2024}. The User Guide defines the variables NHATS
+derives from several questions, and records known errors in the released files
+\citep{freedman_nhats_userguide_2026}. The tariff was checked against the
+discussion paper in which the UK time trade-off tariff was first published
+\citep{dolan_1995_che}. The tariff is more often cited from the later journal
+article \citep{dolan_1997}, which was not available for this check.
+
+\begin{table}[htbp]
+\centering
+\caption{Documents against which the data layout was checked.}
+\label{tab:G_sources}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5.2cm} p{2.6cm} p{6.2cm}}
+\toprule
+\textbf{Document} & \textbf{Version} & \textbf{Used to check} \\
+\midrule
+NHATS Round 5 crosswalk between instruments and codebook (spreadsheet) & 15 February 2024 & Variable names; the file that holds each variable; which sample groups were asked \\
+NHATS Round 5 data collection instrument & February 2024 & Question wording, answer codes and routing \\
+NHATS User Guide, Rounds 1 to 14 & August 2026 & Codes of derived variables; residence status; data notices \\
+Dolan, Gudex, Kind and Williams (1995), Discussion Paper 138 & 1995 & All coefficients of the UK EQ-5D time trade-off tariff \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Variable Names and Files}
+\label{sec:G_names}
+
+Every variable named in the layout was looked up in the Round~5 crosswalk.
+Three names were wrong. All three are items of the physical capacity section
+used in the frailty comparator, and had been written from the NHATS naming
+pattern rather than read from the crosswalk. Their correct names were found in
+the same section of the crosswalk and the layout was corrected
+(Table~\ref{tab:G_changes}). After the corrections described below, all 89
+Round~5 variables in the layout appear in the Round~5 crosswalk, and the two
+Round~1 variables it draws on appear in the Round~1 crosswalk.
+The design variables (analytic weight, variance stratum and variance cluster)
+are on the sample-person file, as are the derived race and ethnicity variable
+and the marital status used for income equivalisation. Vital status is on the
+tracker file. Total income is held in three forms: the reported amount and
+five hot-deck imputations on the sample-person file, and twenty
+interval-regression imputations in a separate income imputation file
+\citep{freedman_nhats_userguide_2026}.
+
+The crosswalk also shows which sample groups were asked each question, and
+this exposed a gap that a check of names alone would not find. The education
+question, and the question from which gender is derived, are put only to people
+at their first interview. Continuing members of the 2011 cohort answered them
+in Round~1, so their Round~5 values are missing by design. Without a further
+step, education would have been missing for every continuing member of the
+analytic cohort. The build now fills these
+two items from the Round~1 sample-person file for continuing members. The
+derived race and ethnicity variable needs no such step, since NHATS carries the
+Round~1 value forward into the Round~5 file \citep{freedman_nhats_userguide_2026}.
+
+\section{Response Codes}
+\label{sec:G_codes}
+
+Table~\ref{tab:G_codes} summarises the codes read from the instrument and the
+User Guide for each indicator, and how each code is used. For most items the
+codes are the NHATS convention for a yes-or-no question (1 yes, 2 no) and
+matched the layout. Three groups of items needed more care.
+
+The twelve activity items behind the function indicator are not answers to a
+single question. NHATS derives each from several questions and codes the result
+as follows: 1, did not do the activity by oneself in the last month; 2, did it
+by oneself with no difficulty; 3, did it by oneself with difficulty; 4 and 5,
+as 2 and 3 when whether it was done alone is unknown; 6 and 7, difficulty
+unknown; 8, not done in the last month; and, for medications only, 9, takes no
+medications \citep{freedman_nhats_userguide_2026}. The layout had read these
+as a scale of increasing difficulty, with 1 meaning no difficulty. Under that
+reading code~2, which means no difficulty, was counted as a limitation. The
+indicator now counts codes 1, 3 and 5 as a limitation, codes 2, 4 and 9 as
+none, and treats codes 6, 7 and 8 as missing.
+
+For people continuing from earlier rounds, the Round~5 disease questions ask
+only about conditions diagnosed since the last interview, and a condition
+already reported is coded 7 \citep{nhats_r5_instrument_2024}. A condition is
+therefore counted as present when coded 1 or 7, which is how the layout
+already read it; the check confirmed the reading rather than changing it.
+
+Two home environment questions are skipped by design for some people. The
+number of floors is not asked in multi-unit buildings, and whether bedroom,
+kitchen and bathroom share a floor is not asked of people in one-floor homes
+\citep{nhats_r5_instrument_2024}. The skipped answer carries the NHATS code for
+``inapplicable'', which the build would otherwise treat as missing. For a
+one-floor home the skipped answer is known: the rooms share a floor. The build
+reads both skips as the absence of a barrier. The floors question itself has
+four answers, the last being four or more, not five as the layout had assumed.
+
+\begin{table}[htbp]
+\centering
+\caption{Response codes used for each indicator, as read from the Round~5 instrument and the User Guide.}
+\label{tab:G_codes}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{3.0cm} p{5.6cm} p{5.4cm}}
+\toprule
+\textbf{Indicator} & \textbf{Codes} & \textbf{Use} \\
+\midrule
+Chronic conditions & 1 yes; 2 no; 7 previously reported & Present if 1 or 7 \\
+Function & 1 to 9, derived (see text) & Limitation if 1, 3 or 5; missing if 6 to 8 \\
+Cognition & Recall 0 to 10; clock 0 to 5 & Summed; reserved codes missing \\
+Depression and anxiety & 1 not at all to 4 nearly every day & Reversed and summed \\
+Participation & 1 yes; 2 no (last month) & Count of yes \\
+Social network & 0 to 5 people & Value; not asked of proxies \\
+Communication & 1 yes; 2 no & Count of yes \\
+Income & Dollars; marital status 1 to 6 & Minus mean log equivalised income \\
+Education & 1 no schooling to 9 master's or doctoral & Reversed \\
+Home access & Stairs, ramp, same floor 1 yes, 2 no; floors 1 to 4 & Count of barriers; skips read as none \\
+Care access & 1 yes; 2 no & Count of no \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Corrections Made}
+\label{sec:G_changes}
+
+Table~\ref{tab:G_changes} lists every change made to the layout or the build
+as a result of the checks, with the source that required it. Two of them would
+have changed the results had they gone unnoticed. The reversed activity codes
+would have counted people who manage an activity alone without difficulty as
+limited in it, and so inverted part of the function indicator. The missing
+education values would have left one of the four systemic indicators to be
+imputed for every continuing member of the cohort. A third
+concerns the sample itself. The User Guide records that people who died before
+the Round~5 interview were given a positive 2015 analytic weight in error
+\citep{freedman_nhats_userguide_2026}. They have no Round~5 interview and
+cannot contribute baseline indicators; the build now restricts the analytic
+sample to people with a Round~5 sample-person interview, which removes them
+along with facility-only cases.
+
+\begin{table}[htbp]
+\centering
+\caption{Changes to the data layout and build that followed from the checks.}
+\label{tab:G_changes}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{4.2cm} p{6.4cm} p{3.4cm}}
+\toprule
+\textbf{Item} & \textbf{Change} & \textbf{Source} \\
+\midrule
+Function indicator and two comparators & Activity codes read as in the User Guide; code 2 is no limitation & User Guide, derived variables \\
+Education & Filled from the Round~1 file for continuing members & Crosswalk; User Guide \\
+Gender & Filled from the Round~1 file where missing & Crosswalk \\
+Analytic sample & Restricted to people with a Round~5 interview; decedents excluded & User Guide, residence status and data notices \\
+Frailty comparator & Three names corrected; reach overhead and bend over both used & Crosswalk \\
+Floors & Four codes, not five & Instrument \\
+Home access & Skipped questions read as no barrier & Instrument routing \\
+Race and ethnicity & Code 5 (more than one race, no primary) as other; code 6 missing & User Guide \\
+Income & Twenty imputations used when present, else five; couple income divided by $\sqrt{2}$ & Crosswalk; User Guide \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The income change needs a word of explanation. The previous layout used the
+reported total, which is missing for a large share of respondents and, for
+those married or living with a partner, is the income of the couple. The build
+now averages the logarithm of income over the NHATS imputations and divides
+couple income by the square root of two, the conventional square-root
+equivalence scale, so that a single person and a couple with the same income
+per head are scored alike.
+
+\section{The Health-Utility Tariff}
+\label{sec:G_tariff}
+
+The utility comparator values crosswalked EQ-5D levels with the UK time
+trade-off tariff. Each of its eleven coefficients was compared with Table~1 of
+\citet{dolan_1995_che}, and all eleven agree (Table~\ref{tab:G_tariff}). Two
+further checks were made by computation. The paper's own worked example, state
+11223, gives $1 - 0.081 - 0.036 - 0.123 - 0.236 - 0.269 = 0.255$, as printed.
+The worst state, 33333, gives $-0.594$; since every coefficient is positive,
+no state can score lower.
+
+\begin{table}[htbp]
+\centering
+\caption[UK EQ-5D time trade-off coefficients used in the utility comparator]{UK EQ-5D time trade-off coefficients used in the utility comparator, as checked against \citet{dolan_1995_che}, Table~1.}
+\label{tab:G_tariff}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{5.0cm} p{2.0cm} p{2.0cm}}
+\toprule
+\textbf{Term} & \textbf{Level 2} & \textbf{Level 3} \\
+\midrule
+Mobility & 0.069 & 0.314 \\
+Self-care & 0.104 & 0.214 \\
+Usual activities & 0.036 & 0.094 \\
+Pain or discomfort & 0.123 & 0.386 \\
+Anxiety or depression & 0.071 & 0.236 \\
+\midrule
+Constant (any level above 1) & \multicolumn{2}{l}{0.081} \\
+N3 (any level 3) & \multicolumn{2}{l}{0.269} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The tariff being right does not make the comparator a validated utility. NHATS
+does not administer the EQ-5D, and the levels are assigned from NHATS items by
+a crosswalk written for this thesis. The comparator is labelled a utility
+proxy throughout for that reason.
+
+\section{Shortcomings That Remain}
+\label{sec:G_limits}
+
+The checks settled most questions about names and codes. The following were
+not settled, or cannot be settled from documents, and the reader should weigh
+the results with them in mind.
+
+\paragraph{Deaths without a last-month-of-life interview.} The User Guide
+confirms that tracker status 62 marks a death for which the last-month-of-life
+interview was done. It does not list the full set of tracker status codes, and
+the documents read do not say how a death without that interview is coded. If
+such deaths carry another code, they would be counted as losses to follow-up
+rather than deaths. The pre-analysis check prints every status value found in
+the tracker file, so that any further death code can be added to the layout
+before the outcome is built.
+
+\paragraph{Income file name.} The User Guide describes the twenty-imputation
+income file but the documents read do not give its file name. If the name in
+the layout does not match the release, the build falls back to the five
+imputations on the sample-person file and records which source it used.
+
+\paragraph{One name differs between documents.} The derived medication variable
+is listed in the crosswalk as \texttt{mc5dmedssfdf} and in the User Guide as
+\texttt{mc\#dmedsfdf}. The layout uses the crosswalk spelling. The build stops
+if the variable is absent, so a mismatch cannot pass unnoticed.
+
+\paragraph{Proxy respondents.} Social network size is not asked when a proxy
+answers for the sample person. Word recall and clock drawing are not
+administered when the proxy says the person cannot be asked. In both cases the
+value is set to missing and imputed. The missingness is related to the
+person's health, and to cognition in particular, so imputation from the other
+indicators is likely to overstate the scores of these respondents. NHATS
+classifies dementia in such cases from a proxy screening instrument; that
+classification was not used, because it would bring a diagnostic judgement into
+an indicator meant to measure performance.
+
+\paragraph{Income imputation.} Averaging the logarithm of income over the NHATS
+imputations gives one value per person and discards the spread between
+imputations. Standard errors that involve the income indicator are therefore
+somewhat too small. The square-root scale for couples is a convention, not an
+estimate.
+
+\paragraph{Skipped home items.} Reading the skipped floors question as one
+level is exact for one-floor homes but an assumption for multi-unit buildings,
+where a dwelling may span more than one level. The effect is to understate
+barriers for a minority of people in multi-unit buildings.
+
+\paragraph{First-interview items.} Education and gender for continuing members
+are taken from Round~1, four years before the index assessment. Education
+completed by people aged 65 and over is unlikely to change in that interval.
+A continuing member whose Round~1 answer is itself missing stays missing.
+
+\paragraph{Documents and release.} The User Guide consulted is the edition
+covering Rounds 1 to 14. Where NHATS has reissued a Round~5 file since its
+first release, the names and codes may differ from those documented at the
+time. The pre-analysis check described next guards against that, but only for
+names and codes, not for changes of meaning.
+
+\section{How the Checks Are Enforced}
+\label{sec:G_enforce}
+
+The checks above are recorded in two places that the analysis cannot bypass.
+The layout file cites, beside each variable, the document from which its name
+and codes were read. Before the analytic file is built, the pipeline confirms
+that every declared variable is present in the files supplied, reports every
+value outside the declared codes and every tracker status value, and stops if
+any required variable is absent. The test suite of the pipeline contains a
+test for each correction in Table~\ref{tab:G_changes}: that code~2 of an
+activity item counts as no limitation, that a skipped home question counts as
+no barrier, that education and gender are filled from Round~1, that decedents
+leave the sample, and that income is taken from the twenty imputations and
+equivalised. These tests run on every change to the code, so a later edit
+that reintroduced one of the errors would be caught before it reached the
+results.
