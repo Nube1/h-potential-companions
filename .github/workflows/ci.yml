@@ -149,3 +149,18 @@ jobs:
             realworld-pipeline/outputs/ci/model_performance.csv
             realworld-pipeline/outputs/ci/equity_performance.csv
             realworld-pipeline/outputs/ci/figures/
+
+  thesis-verification:
+    # The 126 tests that assert every worked example and formal claim in the
+    # thesis, plus the Python analysis scripts that replaced the R scaffold.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: thesis
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install "numpy>=1.26,<3" "pytest>=8,<9"
+      - run: python -m pytest -q thesis/verification/tests
+      - run: python thesis/analysis/04_formal_property_checks.py
