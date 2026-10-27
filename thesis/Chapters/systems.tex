@@ -1,36 +1,1189 @@
 % ============================================================
-% CHAPTER 3 -- A systems view (skeleton; to be written)
+% CHAPTER 3 -- A systems view of health capacity and of the
+% instrument that measures it
 % ============================================================
+
+\noindent
+Chapter~\ref{ch:literature} ended with a construct and a set of propositions
+that the data may reject. It did not say how the parts of that construct act on
+one another over time, or how the chain of files, models and decisions that
+will test it can fail. This chapter asks what changes when both are treated as
+systems: what the boundary of each is, which parts move together, where a
+change does most good, and where an error enters and how far it travels. The
+question matters before any equation is written, because the formalism of
+Chapter~\ref{ch:methods} and the realisation model of Chapter~\ref{chap:crf}
+each make choices that only a systems view can justify. The choice of a
+multiplicative realisation function is a claim about how the domains interact.
+The choice to freeze the measurement model before any outcome is read is a
+claim about where errors in an analysis come from. Neither claim is obvious, and
+this chapter states the reasoning behind both.
 
 \section{Two Systems}
 \label{sec:sys-intro}
 
+The thesis deals with two systems, and it helps to keep them apart from the
+start.
+
+The first is the system being measured. A person's health capacity in later
+life is produced by biomedical, social and systemic parts that act on one
+another. Chronic disease limits what a body can do; limited function reduces
+how often a person leaves the house; fewer contacts mean less help when help
+is needed; and the cost of care, the layout of a home and the distance to a
+clinic shape all of these. No single part holds the capacity. It belongs to
+the arrangement. That is the sense in which Chapter~\ref{ch:literature}
+called the construct relational, and it is the first reason a systems view is
+needed: a property that belongs to an arrangement cannot be read from any one
+of its parts.
+
+The second is the system doing the measuring. Between the NHATS public-use
+files and a number printed in Chapter~\ref{ch:results1} sit a layout file, a
+build script, a set of checks, an imputation model, a joint factor model, a
+scoring rule, survival models, a validation procedure and a step that writes
+tables into the thesis. Each stage takes the output of the one before it and
+trusts it. An error made early, such as reading a response code the wrong way
+round, does not stay where it was made. It passes through every later stage
+and arrives in the results looking like a finding. Appendix~\ref{app:datachecks}
+records five errors of that kind that were caught before any analysis was run.
+The second reason for a systems view is that a chain of trusting stages needs
+to be designed so that errors are caught, and the design has to be stated
+before it can be checked.
+
+Systems thinking in health has grown from a wish to explain why interventions
+that work in trials so often disappoint in practice. \citet{peters_2014}
+argues that health problems sit inside systems with many actors, feedback and
+delays, and that methods which isolate a single cause miss the behaviour that
+matters. \citet{diez_roux_2011} makes the same case for health disparities:
+the persistence of unequal health across generations is a property of feedback
+among individual, social and institutional processes, and regression on
+independent risk factors cannot represent it. \citet{rutter_2017} asks public
+health to judge evidence by how an intervention changes the system it enters,
+not by whether it changes a single outcome in isolation. Each of these papers
+sets a standard that a capability construct should meet: it should say how
+its parts depend on one another and what follows when one of them moves.
+
+The ideas themselves are older. \citet{vonbertalanffy_1968} proposed a general
+theory of open systems, whose behaviour depends on exchange with an
+environment and whose properties belong to the whole rather than to any part.
+\citet{ashby_1956} gave the control of such systems a precise form: a
+regulator can hold a system steady only if it can respond to as many kinds of
+disturbance as the system can suffer. \citet{meadows_2008} set out the working
+vocabulary used here, of stocks, flows, delays and feedback loops, in a form
+that does not need differential equations to be useful. The thesis borrows
+from both traditions. From the first it takes the idea that health capacity is
+a property of an arrangement. From the second it takes the habit of asking,
+for any measuring system, what disturbances it can detect and what it is blind
+to.
+
+The chapter has two halves that mirror the two systems.
+Sections~\ref{sec:sys-boundary} to~\ref{sec:sys-resilience} treat the system
+being measured. They fix its boundary, describe capacity as a stock and
+realised health as a flow, set out the feedback among the three domains, ask
+where a change in that system does most good, and consider what the construct
+can say about resilience. Sections~\ref{sec:sys-pipeline}
+to~\ref{sec:sys-control} treat the measuring system. They describe the
+pipeline as an engineered system with requirements and checks, list its
+failure modes with the controls against each, and set out who acts on the
+score and what they learn from acting. Section~\ref{sec:sys-limits} states
+what systems thinking cannot do for this thesis, and
+Section~\ref{sec:sys-close} says what each later chapter takes from this one.
+
+A caution belongs at the start. Nothing in this chapter is evidence for the
+construct. The diagrams and loop structures below organise questions and
+design checks; they do not show that the three domains exist, that the
+indicators measure them, or that the score predicts anything. Those questions
+belong to the data, and the chapter's last substantive section returns to this
+point.
+
 \section{Boundary, Components and Interfaces}
 \label{sec:sys-boundary}
+
+The opening section left a question that every systems analysis must answer
+first: where does the system end? A boundary decides what the analysis
+explains and what it takes as given. Draw it too tight and the causes of the
+behaviour lie outside it; draw it too wide and nothing can be measured.
+\citet{checkland_1981} called these choices boundary judgements and insisted
+that they be stated, since they are made by the analyst and not found in the
+world. This section states the judgements made here.
+
+\paragraph{Four levels.} Health capacity in later life can be described at
+four levels. The first is the person: their body, their mind and the
+functions these support. The second is the household: who else lives there,
+what income enters it, what the home is like. The third is the set of
+services the person can reach: clinics, hospitals, transport and paid or
+unpaid help. The fourth is the policy environment: the rules of Medicare and
+Medicaid, the price of care, the design of housing and the law. Each level
+acts on the ones inside it, and in the long run the inner levels act back, as
+when the needs of an ageing population shape the services built for it.
+
+\paragraph{What is endogenous and what is given.} The thesis treats the first
+two levels and part of the third as inside the system. A person's chronic
+conditions, function, cognition and mood make up Biomedical Potential. Their
+participation in activities, the size of their network and their means of
+staying in contact make up Social Modifiers. Their income, education, the
+barriers in their home and the barriers they meet in reaching care make up
+Systemic Burdens. These eleven indicators are the observed face of the three
+domains, and the domains can change one another. The fourth level, and the
+supply side of the third, are taken as given. The thesis does not model how a
+clinic decides its opening hours, how Medicare sets its rules, or how a city
+builds its transport. These shape Systemic Burdens, but the thesis observes
+only their effect on the person, through indicators such as whether the person
+could reach care when they needed it.
+
+The cost of this choice should be plain. A policy that changes the fourth
+level, such as a new rule on home adaptations, enters the system only through
+the indicators it moves. If it moves something the indicators do not record,
+the construct cannot see it. A wider boundary would avoid that blindness but
+would need data on services and policies that NHATS does not hold and that no
+individual-level survey could hold in full. The narrower boundary was chosen
+because it can be measured, and its blindness is stated rather than hidden.
+
+\paragraph{The observation interface.} Every system has a point at which the
+analyst sees it, and that point shapes what can be known. Here it is the
+NHATS interview: a yearly conversation with a sample person or a proxy,
+coded into public-use files. The interface has properties that matter for the
+argument. It sees the person once a year, so anything that happens between
+interviews is either reported later or missed. It sees through a proxy for
+people who cannot answer for themselves, and some items are not asked of
+proxies at all, which means the people with the lowest capacity are seen
+least clearly (Appendix~\ref{app:datachecks}). It records the month of each
+interview and of each final case status, but not the exact date of death. An
+engineer would say the sensor has a sampling interval of a year, a known blind
+spot for the most impaired, and a timing resolution of a month. Those
+properties limit every later claim, and Chapter~\ref{ch:methods} sets the
+analysis to fit within them.
+
+\paragraph{Components.} The three domains are the components of the measured
+system. They are defined by what they contribute rather than by where they
+sit. Biomedical Potential is what the body and mind make possible. Social
+Modifiers are the conditions that let a person turn that possibility into
+activity, and Systemic Burdens are the conditions that stand in the way. The
+same fact about the world can touch more than one domain: low income affects
+diet, which affects disease, and also affects whether a person can pay for
+transport to a clinic. The thesis does not assume the domains are
+independent. It assumes they are distinct, which is a weaker claim and one
+that the measurement model of Chapter~\ref{ch:methods} tests by asking whether
+a correlated three-domain structure fits better than a single factor.
+
+\paragraph{The interface that couples the components.} The realisation
+function of Chapter~\ref{chap:crf},
+\[
+H(P,S,R)=P\,S^{\alpha}R^{1-\alpha},\qquad R=1-B,
+\]
+is the interface between the components and the property the thesis cares
+about. It states how biomedical potential $P$, social enablement $S$ and
+structural freedom $R$ combine into realised capability $H$. In engineering
+terms it is the specification of how the subsystems connect, and like any
+interface it constrains what can happen on either side. Because it is
+multiplicative, no component can make up for the absence of another: if $S$
+or $R$ is zero, $H$ is zero whatever the value of $P$. This is the
+non-compensation axiom of Chapter~\ref{chap:crf}, and in systems language it
+says that the components are coupled in series rather than in parallel. A
+series arrangement fails when any link fails; a parallel one keeps working
+while any link holds. Chapter~\ref{ch:literature} argued from theory that
+health capability behaves in series, and Section~\ref{sec:sys-leverage} draws
+out what that implies for policy.
+
+\paragraph{Emergence.} One consequence of the boundary and the interface
+should be stated now, because it governs how the score may be read. Realised
+capability is a property of the whole that no domain possesses alone. Two
+people with the same biomedical potential can have very different realised
+capability, and two people with the same realised capability can reach it by
+very different routes. The score therefore cannot be read backwards to say
+which domain is responsible for a low value; that requires the domain profile
+itself, which is why the thesis reports the profile alongside any summary
+score. Reading a single number as if it located the problem is the first
+misuse that Section~\ref{sec:sys-control} guards against.
+
+\paragraph{Boundary of the measuring system.} The measuring system has a
+boundary too. It begins at the NHATS public-use files as released and ends at
+the tables and figures written into this thesis. What happens before the
+files, such as how NHATS fields its survey, and what happens after the
+thesis, such as how anyone might use the score, lie outside. The first is
+taken as given and checked only where NHATS publishes the documents to check
+it against. The second is outside the thesis's control but not outside its
+responsibility, which is why Section~\ref{sec:sys-control} treats the use of
+the score as part of the design.
+
+With the boundary fixed, the next question is how the system inside it
+changes over time.
 
 \section{Stocks, Flows and Delays}
 \label{sec:sys-stocks}
 
+A boundary says what is inside the system. It does not say how the inside
+changes. The basic distinction in system dynamics is between a stock, which is
+an amount that accumulates, and a flow, which is a rate that adds to or drains
+it \citep{forrester_1961,sterman_2000}. The level of a stock at any moment
+reflects the whole history of its flows, which is why stocks give a system memory and
+why they change slowly even when the flows change fast. This section reads
+the construct in those terms.
+
+\paragraph{Capacity as a stock.} Biomedical Potential behaves like a stock. It
+is built over a lifetime by growth, education, nutrition and care, and it is
+drawn down by disease, injury and age. At any interview it reflects all that
+came before. A person does not lose function overnight because of a bad
+month, and does not regain it overnight because of a good one. Social
+Modifiers and Systemic Burdens are partly stocks as well: a network of
+friends, savings, a paid-off home and years of schooling are all
+accumulations. Other parts are closer to flows, such as monthly income or the
+number of times in a month a person goes out.
+
+\paragraph{Realised health as a flow.} Realised capability, $H$, is better
+read as a flow. It is what the stock of capacity yields, per unit of time, in
+the conditions the person lives in. On the natural scale of
+Chapter~\ref{chap:crf}, where $P=L\cdot Q$ is measured in quality-adjusted
+life-years, $H$ is a number of good years realised; but the same reading holds
+on the unit scale, where $H$ is the share of the calibration population's
+range that a person reaches. The distinction matters because a flow can fall
+while the stock behind it is intact. A person whose bus route is cut may stop
+attending a day centre. Their realised capability falls at once, but their
+biomedical potential has not changed. If the route is restored soon, the flow
+recovers. If it is not, the lost activity begins in time to draw down the
+stock as well, and the person may not regain what they had.
+
+\paragraph{Inflows and outflows.} The inflows to the biomedical stock include
+treatment, rehabilitation, exercise and the repair the body carries out by
+itself. The outflows include the progression of chronic disease, acute events
+such as a fall or a stroke, and the slow losses of age. Social and systemic
+stocks have their own flows: a network gains members through activity and
+loses them through death, moves and withdrawal; savings rise with income and
+fall with spending on care. The three domains share flows, which is the source
+of the feedback set out in Section~\ref{sec:sys-loops}. Spending on care is an
+outflow from savings and an inflow to biomedical capacity at once.
+
+\paragraph{Delays.} Between a change in one part of the system and its effect
+on another there is usually a delay, and delays shape what a single
+measurement can show. Three are central here. The first is the delay in
+diagnosis: a disease may draw down capacity for years before it is named and
+treated, so the inflow of treatment starts late. The second is the delay in
+access: once a need is known, reaching the service that meets it takes time,
+and the delay is longer where Systemic Burdens are high. The third is the
+delay between a change in income or support and its effect on health, which
+may run to years. \citet{sterman_2000} shows that delays in a feedback loop
+are a common cause of overshoot and oscillation, because the corrective action
+continues after the need for it has passed, or begins after the damage is
+done.
+
+Delays bear on the design of the thesis in two ways. First, they mean that a
+baseline score taken at one interview reflects the stocks at that moment,
+including the effects of past flows that may already have changed. A person
+whose care access has just improved will not yet show the benefit. Second,
+they set the time scale of the outcomes. Mortality and hospitalisation over
+the follow-up rounds are the result of flows acting on stocks over years, and
+a baseline score can predict them only to the extent that the stocks it
+records persist. Chapter~\ref{ch:results2} tests that persistence indirectly,
+by asking whether the baseline score predicts outcomes years later.
+
+\paragraph{The static reading and the dynamic extension.} The empirical
+construct is a reading of the stocks at one time. Appendix~\ref{app:dynamical}
+sets out what a reading over time would look like. It
+introduces a state variable $X(t)$ behind the biomedical term, whose rate of
+change rises with treatment and repair and falls with inhibition and
+clearance, and which settles at a level where these balance. In stock-and-flow
+terms, $X(t)$ is a stock, the terms of its differential equation are the
+flows, and the level at which it settles is the equilibrium at which inflow
+equals outflow. The appendix then adds noise, because two people on the same
+regimen do not follow the same path, and finally follows a whole cohort as a
+density that moves and spreads. The static score of the empirical chapters is
+the special case in which time does not appear. The appendix is a proposed
+direction and is not used in the validation, but it shows that the
+stock-and-flow reading is more than a figure of speech: the construct can be
+given dynamics without changing its definition.
+
+\paragraph{Why stocks change slowly, and why it matters here.}
+\citet{meadows_2008} notes that the slowness of stocks is what lets a system
+be managed at all: a stock buffers the flows and gives time to act. For this
+thesis the same slowness has a second consequence. It is the reason a single
+baseline measurement can carry information about outcomes years later. If
+capacity were a flow that changed month to month, a reading at one interview
+would say little about the next five years. Because it is a stock, the reading
+persists. The prognostic analysis of Chapter~\ref{ch:results2} rests on that
+persistence without stating it, and this section states it.
+
+The stocks and flows describe what accumulates. They do not yet say why some
+changes feed on themselves while others correct themselves. That is the
+subject of the next section.
+
 \section{Feedback Among the Three Domains}
 \label{sec:sys-loops}
+
+Stocks and flows describe what accumulates. Feedback describes why some
+changes grow and others fade. A feedback loop is a closed chain of causes in
+which a change in one part returns, through the others, to act on itself.
+Each link in such a chain has a polarity. A link is positive when a rise in
+the cause moves the effect in the same direction, and negative when it moves
+the effect in the opposite direction. The polarity of the loop is the product
+of the polarities of its links: a loop with no negative links, or an even
+number of them, is reinforcing and amplifies any change; a loop with an odd
+number of negative links is balancing and works against change, pulling the
+system towards some level \citep{sterman_2000,meadows_2008}. Reinforcing loops
+produce growth and collapse. Balancing loops produce stability, and also the
+resistance that frustrates many policies.
+
+Figure~\ref{fig:sys-loops} sets out the feedback among the three domains that
+the theory of Chapter~\ref{ch:literature} implies. It is drawn in general terms
+from that theory and from the boundary of
+Section~\ref{sec:sys-boundary}. No link in it is estimated, and no strength is
+attached to any link. Its purpose is to make the causal claims behind the
+construct explicit enough to be questioned.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  loopmark/.style={draw, circle, thick, font=\small\bfseries,
+                   inner sep=1pt, minimum size=7mm},
+  pol/.style={font=\bfseries, fill=white, inner sep=1pt}
+]
+\node[hpbox, text width=1.9cm] (C) at (-4.4,0) {Care\\received};
+\node[hpkey, text width=1.9cm] (P) at (0,0) {Biomedical\\potential $P$};
+\node[hpbox, text width=2.2cm] (S) at (3.6,2.7) {Social\\enablement $S$};
+\node[hpbox, text width=2.2cm] (B) at (3.6,-2.7) {Systemic\\burden $B$};
+\node[hpbox, text width=1.9cm] (H) at (7.0,0) {Realised\\capability $H$};
+% R1: biomedical potential and social enablement
+\draw[hparrow] (P.north) to[bend left=30] node[pol, midway] {$+$} (S.west);
+\draw[hparrow, hpdash] (S.south) to[bend left=30] node[pol, midway] {$+$} (P.north east);
+\node[loopmark] at ($(P)!0.5!(S)$) {R1};
+% R2: biomedical potential and systemic burden
+\draw[hparrow] (P.south) to[bend right=30] node[pol, midway] {$-$} (B.west);
+\draw[hparrow, hpdash] (B.north) to[bend right=30] node[pol, midway] {$-$} (P.south east);
+\node[loopmark] at ($(P)!0.5!(B)$) {R2};
+% B1: biomedical potential and care received
+\draw[hparrow] (P) to[bend right=45] node[pol, midway] {$-$} (C);
+\draw[hparrow, hpdash] (C) to[bend right=45] node[pol, midway] {$+$} (P);
+\node[loopmark] at ($(P)!0.5!(C)$) {B1};
+% Burden weakens the balancing loop
+\draw[hparrow] (B.south) to[out=-90, in=-90, looseness=0.6] node[pol, midway] {$-$} (C.south);
+% The realisation function
+\draw[hparrow] (P) -- node[pol, midway] {$+$} (H);
+\draw[hparrow] (S) -- node[pol, midway] {$+$} (H);
+\draw[hparrow] (B) -- node[pol, midway] {$-$} (H);
+\end{tikzpicture}
+\caption[Feedback among the three domains]{Feedback among the three domains,
+drawn from theory and not estimated. A $+$ on a link means that a rise in the
+cause moves the effect in the same direction; a $-$ means it moves the effect
+in the opposite direction. Circled labels mark the loops: R1 and R2 are
+reinforcing, B1 is balancing. Solid links are expected to act within the
+interval between two NHATS interviews; dashed links are expected to act over a
+longer delay. The delay marking is a judgement made to show where delays sit,
+not a measured lag. The three links into realised capability $H$ are the
+realisation function of Chapter~\ref{chap:crf} and form no loop, because the
+thesis measures $H$ at one time.}
+\label{fig:sys-loops}
+\end{figure}
+
+\paragraph{R1: capacity and participation.} The upper loop in
+Figure~\ref{fig:sys-loops} links Biomedical Potential and social enablement.
+A person with more capacity can take part in more: they go out, see others,
+volunteer and keep up the contacts that make up a network. Participation in
+turn maintains capacity, through physical activity, mental stimulation and the
+practical help that a network provides when an illness strikes. Both links are
+positive, so the loop is reinforcing. Run downwards, it describes a familiar
+pattern in later life: an illness cuts activity, the loss of activity weakens
+the body and the network, and the person comes out of the illness with less
+than they had before it. Run upwards, the same loop describes a person whose
+activity keeps them able to remain active. The return link is drawn dashed
+because the effect of participation on capacity builds over months and years,
+while the effect of capacity on participation can be felt within weeks.
+
+\paragraph{R2: capacity and burden.} The lower loop links Biomedical Potential
+and Systemic Burdens. A fall in capacity raises burden: care costs rise, a
+home that was adequate becomes a barrier, and a trip to a clinic that was
+easy becomes hard. The link is negative, because more capacity means less
+burden. Burden in turn draws down capacity: high costs lead people to delay or
+forgo care, and barriers in the home cut activity. That link is also negative.
+Two negative links make a reinforcing loop. It is the loop through which
+illness and hardship feed one another, and it is drawn with a dashed return
+link because the effect of burden on capacity, like the effect of
+participation, takes time to show.
+
+\paragraph{B1: capacity and care.} The left-hand loop is the one a health
+system is built to supply. A fall in capacity raises the need for care, and
+more care is sought and received; the link from capacity to care received is
+negative. Care restores capacity, or slows its loss; that link is positive.
+One negative link makes a balancing loop. It works to hold capacity near a
+level, and it is the reason most people recover from most illnesses. Its
+return link is dashed because the effect of care runs through the delays of
+Section~\ref{sec:sys-stocks}: a need must be noticed, a diagnosis made and a
+service reached before treatment can act.
+
+\paragraph{The coupling that matters most.} The link from Systemic Burdens to
+care received is the one that ties the loops together. It is negative: the
+higher the burden, the less care a given need produces. Its effect is to
+weaken B1 exactly where R2 is strongest. A person with high burden is more
+exposed to the reinforcing loop that drives decline, and has a weaker
+balancing loop to stop it. This is a mechanism by which disadvantages
+compound rather than add, and it gives a dynamic reason to expect the positive
+cross-partials of the realisation function that Chapter~\ref{chap:crf}
+derives from axioms. The two arguments are consistent; neither proves the
+other. The cross-partials are a property of a static function, and the loops
+are a hypothesis about how the world moves.
+
+\paragraph{Which loop dominates.} A system with both kinds of loop can behave
+in more than one way, depending on which loop is stronger at the time. When a
+person has ample capacity, the balancing loop is likely to dominate. A shock is
+absorbed, care restores what was lost, and the person returns near their
+earlier level. When capacity is low and burden high, the reinforcing loops may
+dominate, so that each loss makes the next more likely. The change between
+these regimes need not be gradual. Near the level at which the reinforcing
+loops overtake the balancing one, a small further loss can tip the system
+from recovery into decline. This is the sense in which the system is
+nonlinear: the response to a shock depends on the state in which the shock
+arrives as well as on its size. Section~\ref{sec:sys-resilience} returns to
+what such a threshold would mean for measurement.
+
+\paragraph{What the thesis can test, and what it cannot.} The loops are
+hypotheses. The empirical design of this thesis cannot test them directly, and
+it is better to say so here than to let the figure imply otherwise. The
+measurement model uses indicators from a single round. Correlations among the
+three domains at one time are what feedback would leave behind, but they are
+also what a common cause, such as a lifetime of poverty acting on all three
+domains at once, would leave behind. A cross-section cannot tell the two
+apart. The prognostic analysis tests a consequence of the loops, that a
+baseline reading of the stocks predicts later outcomes, but a prediction can
+succeed for reasons other than the ones drawn here. A direct test would need
+repeated measurement of all three domains and a model of how each round's
+values depend on the last. NHATS collects the repeated rounds; the thesis does
+not model them, and Appendix~\ref{app:dynamical} sets out the form such a
+model would take. The figure therefore serves two purposes in this thesis. It
+states the causal reasoning that justifies the realisation function, and it
+names the longitudinal study that would be needed to test that reasoning.
+
+The loops show how the system moves. The next question is where a change
+would move it most.
 
 \section{Leverage Points}
 \label{sec:sys-leverage}
 
+If feedback decides how the system responds to a change, the choice of where
+to make the change is not neutral. \citet{meadows_1999} ordered the places to
+intervene in a system by how much each can alter its behaviour. At the bottom
+of her list are numbers: the parameters, subsidies and standards that absorb
+most of the attention of policy. Above them come the sizes of buffers, the
+physical structure of stocks and flows, the length of delays, the strength of
+balancing loops and the gain of reinforcing ones. Higher still come the flows
+of information, the rules of the system, its power to change its own
+structure, its goals, and at the top the set of shared ideas from which the
+system arises. Her claim is that the higher places are harder to reach but
+change more, and that people often push the lower ones hard while ignoring the
+higher.
+
+\paragraph{The list mapped to the domains.} Each of these places has a
+counterpart in the system of Figure~\ref{fig:sys-loops}. The lowest, the
+numbers, are mostly found in Systemic Burdens: the size of a co-payment, the
+level of a benefit, the income threshold for a programme. Buffers are the
+stocks that absorb shocks: savings on the systemic side, and on the biomedical
+side the reserve that lets a person lose some function without losing
+independence. The physical structure of stocks and flows is the built
+environment: the stock of accessible housing, the routes of public transport,
+the location of clinics. These are slow and costly to change, which is why
+they shape Systemic Burdens for decades. Delays sit on the dashed links of the
+figure; shortening the delay between need and care strengthens B1 without
+changing anything else. The gain of the reinforcing loops can be cut at
+particular links: support that keeps a person taking part in activities after
+an acute illness slows R1, and protection against high care costs slows R2.
+
+Information flows sit higher on the list, and here the construct itself
+becomes an intervention. A score that reports a person's domain profile adds
+a flow of information that did not exist before: it tells a clinician or a
+programme manager which domain is binding. \citet{meadows_1999} placed new
+information flows above most changes of parameters, because people act
+differently when they can see what they could not see before. The same
+argument is the reason Section~\ref{sec:sys-control} treats the use of the
+score as part of the design. Rules sit above information: who is eligible for
+what, and on what evidence. The governance rule of Chapter~\ref{ch:methods},
+that the score may not be the sole basis for automated denial, reimbursement
+or triage, is a rule of exactly this kind. At the top of the list, the goals
+of the system and the ideas behind them, sits the argument of
+Chapter~\ref{ch:literature}: that a health system might aim at realised
+capability rather than at the absence of disease alone. The thesis does not
+claim to move that level. It offers a way of measuring progress if someone
+else does.
+
+\paragraph{Why the weakest domain binds.} The realisation function adds a
+second, more formal, answer to the question of where to act. For the primary
+form, the gradients of Chapter~\ref{chap:crf} are
+\[
+\frac{\partial H}{\partial S}=\alpha\,\frac{H}{S},
+\qquad
+\frac{\partial H}{\partial R}=(1-\alpha)\,\frac{H}{R}.
+\]
+The gain from one more unit of a contextual domain is inversely proportional
+to that domain's current level. The ratio of the two gains is
+\[
+\frac{\partial H/\partial S}{\partial H/\partial R}
+=\frac{\alpha}{1-\alpha}\cdot\frac{R}{S}.
+\]
+With equal weights, $\alpha=1/2$, the ratio is simply $R/S$. If a person's
+structural freedom is three times their social enablement, a unit gain in
+social enablement raises realised capability three times as much as a unit
+gain in structural freedom. The domain that is lowest relative to its weight
+is the one where a unit of change buys most. Two further features push the
+same way. Each domain is bounded above by $1$, so a domain that is already
+high has little room left to rise. And as either contextual domain falls
+towards zero, realised capability falls towards zero whatever the other
+domains hold. In the wider family of Chapter~\ref{chap:crf}, a substitution
+parameter $\rho<0$ makes the contextual mean move closer to the smaller of its
+two arguments as $\rho$ falls, so the weakest domain binds harder still.
+
+The elasticities tell the same story from another angle. They are fixed:
+$1$ for $P$, $\alpha$ for $S$ and $1-\alpha$ for $R$. A ten per cent rise in
+any one domain therefore yields the same proportional rise in realised
+capability whatever that domain's level. But ten per cent of a low value is a
+small absolute change, and ten per cent of a high value may be impossible.
+The policy question is usually about absolute changes bought with a budget,
+and on that question the gradients, not the elasticities, are the guide.
+
+\paragraph{What this means for where policy acts.} Three consequences follow,
+each with a limit. First, improving the strongest domain buys little.
+A programme that adds clinical treatment for a person whose binding constraint
+is that they cannot reach the clinic will show a small gain in realised
+capability, because the treatment raises a domain that was not binding. Under
+an additive index the same programme would score well, since an additive
+index lets strength in one domain cover weakness in another; that is the
+substitution the non-compensation axiom forbids. Second, the binding domain
+differs from person to person, so a policy aimed at one domain will help some
+people much and others little. A population average of the gradient hides
+this. The equity-sensitive population measure and the subgroup reporting of
+Chapter~\ref{chap:crf} exist to keep it visible. Third, the gradient ranks
+model-implied gains per unit of domain, not per unit of money and not as
+causal effects. The budget-constrained calculation of Chapter~\ref{chap:crf}
+divides each gain by its cost, and the ranking can reverse when the cheap
+domain to improve is not the binding one. Even then, it needs response
+functions that say how much a given programme moves a domain, and those are
+causal quantities this thesis does not estimate. The evidence vector of that
+chapter keeps the domain changes, the health gain, the costs, the budget
+impact, the distribution and the legal constraints as separate coordinates,
+so that a decision can weigh them openly.
+
+The feedback of Section~\ref{sec:sys-loops} adds one more caution. The
+gradient is a static quantity. An intervention at the binding domain may also
+weaken a reinforcing loop, as when restored transport lets a person resume the
+activity that maintains their capacity. Its long-run effect could then exceed
+what the gradient suggests. The reverse is also possible: a balancing loop
+elsewhere in the system may absorb part of the change. The static model cannot
+say which. It can say where the first effect of a change is largest, and the
+thesis claims no more than that.
+
+Knowing where to push says nothing about what happens when the system is
+pushed by events no one chose. That is the subject of the next section.
+
 \section{Reserve, Robustness and Resilience}
 \label{sec:sys-resilience}
+
+The last section asked where a deliberate change does most good. Most changes
+in later life are not deliberate: a fall, an infection, a bereavement or the
+loss of a carer arrives unasked. The question this section takes up is what
+the construct can say about how a person's system responds to such a shock.
+Three related ideas are needed, and they are often confused.
+
+\paragraph{Reserve.} Reserve is the amount by which a stock exceeds the level
+at which function fails. A person with ample reserve can lose a good deal of
+capacity before they lose independence; a person with little reserve cannot.
+Reserve is a property of the stock at one time, and so it is the property
+closest to what a single baseline reading measures.
+
+\paragraph{Resistance to perturbation.} The second property in the title of
+this section is the one \citet{kitano_2004} studies in biological systems: the
+ability of a system to maintain its functions against perturbations. He traces it to a small number of design features:
+feedback control, redundancy, so that another mechanism takes over when one
+fails, modularity, so that damage stays local, and decoupling, so that
+variation at one level does not pass to the next. Kitano also notes that a
+system tuned to resist the perturbations it commonly meets may be fragile to
+those it rarely meets. In the terms of this chapter, the balancing loop B1 is
+a feedback control, and the multiplicative interface of
+Section~\ref{sec:sys-boundary} is the opposite of redundancy: a series
+arrangement in which a shock to any domain passes straight to realised
+capability.
+
+\paragraph{Resilience.} \citet{holling_1973} separated two properties that
+the word stability had blurred. Stability, in his sense, is how quickly a
+system returns to equilibrium after a disturbance. Resilience is how large a
+disturbance the system can absorb before it moves to a different state
+altogether, one from which it does not return. A system can be stable but not
+resilient, returning quickly from small shocks and failing under a large one.
+\citet{whitson_2016} reviewed how the idea has been applied to older adults
+and described physical resilience as the ability to resist or recover from
+functional decline after a health stressor. They treat it as an emerging
+construct, defined by the response to a stressor rather than by a state
+measured in its absence.
+
+\paragraph{Early warning.} If a system can move to a different state, it is
+natural to ask whether the move can be seen coming. \citet{scheffer_2009}
+showed that many systems approaching a critical transition share generic
+signs: they recover more slowly from small disturbances, and their
+fluctuations grow larger and more strongly correlated from one observation to
+the next. \citet{olde_rikkert_2016} proposed that slower recovery could serve
+as a general marker of risk for acute transitions in chronic disease. The
+signal in both cases is dynamic. It lies in how the system responds over time,
+not in its level at one moment.
+
+\paragraph{What H-potential reads.} Against these definitions the position of
+the construct is clear. H-potential is a static reading of a dynamic property.
+It records the level of the stocks at one interview: how much capacity a
+person has, how enabling their circumstances are, how heavy their burdens.
+That is closest to reserve. It does not record how fast the person returns
+after a shock, which is stability in Holling's sense, or how large a shock
+they can take, which is resilience. Two people with the same score could
+differ in both, if the loops of Figure~\ref{fig:sys-loops} are of different
+strength in their lives.
+
+The construct can claim three things. It can claim to measure something
+related to reserve, to the extent that its domains capture the stocks. It can
+claim that, if reserve and resilience are related, a higher score should go
+with better outcomes after shocks; the prognostic analysis of
+Chapter~\ref{ch:results2} tests a weaker form of this, through death and
+hospitalisation over follow-up. And it can claim that, because the
+realisation function is multiplicative, a low value in any one domain marks a
+person whose realised capability is exposed to shocks in that domain.
+
+It cannot claim to measure resilience, and it cannot claim to warn of a
+transition. Both require repeated observation. The NHATS rounds are a year
+apart, which is coarse beside the weeks over which recovery from an acute
+illness takes place, and the thesis uses a single baseline round. The
+dynamical extension of Appendix~\ref{app:dynamical} shows where a measure of
+resilience would sit: in a model with an equilibrium, the speed of return
+after a small disturbance is set by the slope of the drift at that
+equilibrium, and a slope falling towards zero is the slowing of recovery that
+\citet{scheffer_2009} describe. Estimating it would need frequent
+measurements of the biomedical state, which this thesis does not have.
+
+\paragraph{A threshold in the measure is not a threshold in the person.} One
+point needs care. The scoring rule of Chapter~\ref{ch:methods} maps each
+domain onto the unit interval using the 1st and 99th percentiles of the
+development split, and places anyone below the lower bound at, in effect,
+zero. At zero, the geometric form gives no weight to the other domains. That
+is a threshold, but it is a property of the measuring system, not of the
+person. It would be a mistake to read a score of zero as evidence that a
+person has crossed a critical transition. The fixed-floor sensitivity
+analysis, which maps the same bounds onto $[0.05,1]$, exists to show how much
+the results depend on this artefact of measurement. The distinction between
+a threshold in the world and a threshold in the instrument leads to the second
+half of the chapter, which treats the instrument as a system in its own right.
 
 \section{The Measurement Pipeline as an Engineered System}
 \label{sec:sys-pipeline}
 
+The first half of the chapter treated the system being measured. The last
+section ended on a threshold that belongs to the instrument rather than to the
+person, and that is the point at which the second system comes into view.
+The measuring system is not a single model. It is a chain of stages, each
+built by hand, each taking the output of the stage before it, and each able to
+fail. Systems engineering offers a discipline for such chains: state what the
+system must do as requirements, define the interfaces between its parts,
+control changes to its configuration, and check both that it was built as
+specified and that what was specified is what was needed
+\citep{incose_2015}. This section applies that discipline to the pipeline of
+this thesis.
+
+\paragraph{Stages.} The pipeline has nine stages. It starts from the NHATS
+public-use files as released: the Round~5 sample-person file for baseline
+information, the follow-up files for Rounds~6 to~10, the latest tracker file
+for vital status, the Round~1 file for items asked only at a first interview,
+and the income imputation file. A layout check then confirms that every
+variable declared in the layout file is present in the release in use, and
+that every observed value is a declared code or one of the NHATS reserved
+missing-data codes; the pipeline refuses to proceed while a declared variable
+is absent. The build stage restricts the sample to people with a Round~5
+sample-person interview, fills education and gender from Round~1 for
+continuing members, codes the eleven indicators and dates each outcome in
+months from the Round~5 interview. The imputation stage fills missing
+indicators by chained equations in the development split, using the
+indicators, age, sex and four baseline flags but no outcome. The measurement
+stage fits the joint three-domain factor model to each imputed set. The
+scoring stage averages each person's factor scores over the imputations and
+maps them onto the unit interval with bounds taken from the development split,
+then applies the realisation function and computes the comparator scores. The
+survival stage fits the Cox models, with cause-specific models for
+hospitalisation and death before hospitalisation. The validation stage
+measures discrimination, calibration and net benefit, refitting the whole
+chain in each bootstrap resample and reporting results by subgroup. The export
+stage writes tables and figures into the thesis from the analysis outputs,
+with counts below 11 suppressed. Chapter~\ref{ch:methods} specifies each stage
+in full; the point here is their arrangement.
+
+\paragraph{Requirements.} A requirement is a statement of what the system
+must do, written so that it can be checked. The pipeline's requirements come
+from two sources. Some follow from the theory: that outcomes never enter
+measurement, because a construct fitted to the outcomes it later predicts is a
+risk score and not a construct. Some follow from the data: that every variable
+name and code matches what NHATS documents, because a pipeline that reads a
+valid code with the wrong meaning will run without complaint and produce wrong
+results. Others follow from the duty to readers and to participants: that every
+printed number can be traced to code that produced it, and that no table can
+identify a small group. Table~\ref{tab:sys-requirements} lists eight of them,
+with the place in the thesis that states each and the check that tests it.
+
+\begin{table}[htbp]
+\centering
+\caption{Requirements of the measuring system, where each is stated, and how
+each is checked. The last column marks whether the check is verification
+(the system computes what was specified) or validation (what was specified
+serves its purpose).}
+\label{tab:sys-requirements}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.0cm} p{2.4cm} p{5.6cm} p{1.4cm}}
+\toprule
+\textbf{Requirement} & \textbf{Stated in} & \textbf{How it is checked} & \textbf{Kind} \\
+\midrule
+Outcomes never enter measurement & Assumption~\ref{ass:outcome_blind} & Measurement model and scaling bounds frozen before outcomes are read; a test asserts that no outcome variable reaches the imputation or factor model; permuting the outcomes must leave the measurement model unchanged & Verification \\
+\addlinespace
+Every variable name and response code matches the NHATS documents & Appendix~\ref{app:datachecks} & Item-by-item check against the crosswalk, instrument and User Guide; the layout file cites the source of each name and code & Verification \\
+\addlinespace
+Every declared variable is present and every value is a declared or reserved code & Chapter~\ref{ch:methods} & Pre-build check that stops if a variable is absent and reports every value outside the declared codes & Verification \\
+\addlinespace
+Every correction stays corrected & Appendix~\ref{app:datachecks} & One test for each correction in Table~\ref{tab:G_changes}, run on every change to the code & Verification \\
+\addlinespace
+Every numbered result that can be checked by computation agrees with the implementation & Appendix~\ref{app:verification} & One test named for each statement; the results table is regenerated with every build of the thesis & Verification \\
+\addlinespace
+No count below 11 is published & Chapter~\ref{ch:methods} & Suppression in the export stage for every table and figure; participant-level files kept out of archived outputs & Verification \\
+\addlinespace
+Uncertainty in the estimated score is carried into performance estimates & Chapter~\ref{ch:methods} & Bootstrap that refits measurement, scoring and survival models in each resample & Validation \\
+\addlinespace
+The measure works alike across groups before groups are compared & Chapter~\ref{ch:methods} & Measurement invariance tests and subgroup calibration; failures reported, not hidden & Validation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Interfaces.} The stages meet at interfaces, and most failures in
+engineered systems occur there, where one part assumes something about
+another that is not true. The pipeline has four interfaces that matter. The
+first lies between the NHATS documents and the code, and its form is the
+layout file: one file that declares every variable name and response code the
+build uses, with the source document for each. The second lies between the
+raw files and the analysis, and its form is a data contract: the analysis
+expects named columns of stated types, unique identifiers, valid weights and
+event times, and the contract check refuses data that do not meet it. The
+third lies between measurement and prediction, and its form is the frozen
+measurement model. The survival stage reads the loadings, imputation models
+and scaling bounds; it cannot write to them. That one-way interface is the
+engineering form of Assumption~\ref{ass:outcome_blind}. The fourth lies
+between the analysis outputs and the thesis, and its form is the export
+stage, which writes tables from outputs so that no number is copied by hand.
+
+\paragraph{Configuration control.} A system whose parts can be changed one at
+a time needs a record of which version of each part produced which result.
+The pipeline keeps that record in three ways. There is one layout file, so a
+name or code is declared in one place and changed in one place. Every change
+to the code and the layout is held under version control, so any result can
+be traced to the state of the files that produced it. And the study
+configuration, which fixes the indicator set and directions, the weight
+$\alpha$, the range of the substitution parameter $\rho$, the scaling bounds,
+the comparators, the subgroups, the horizons and the rejection rules, is
+to be frozen and committed before any outcome is opened. In engineering terms that
+commitment is a requirement freeze. It does not prevent change. It makes any
+later change visible as a change made after the outcomes were seen, which is
+the information a reader needs to judge it.
+
+\paragraph{Verification and validation.} The distinction between these two
+checks is the most useful single idea that systems engineering brings to this
+thesis. Verification asks whether the system computes what was specified.
+Validation asks whether what was specified does what it was meant to do
+\citep{incose_2015}. A pipeline can pass verification and fail validation: it
+can compute exactly the factor model, the scores and the survival models it
+was designed to compute, and the construct can still fail to measure anything
+distinct or to predict anything. The reverse cannot happen in any useful sense.
+If the pipeline fails verification, its validation results describe an object
+other than the one specified, and they cannot be read as evidence about the
+construct.
+
+The thesis keeps the two apart. Verification is carried by two appendices.
+Appendix~\ref{app:verification} records a suite in which each numbered result
+that can be checked by computation is asserted by a test named for it, and the
+table of outcomes is regenerated with every build, so it cannot report a state
+of affairs that has ceased to be true. Appendix~\ref{app:datachecks} records
+the check of every variable name and code against the NHATS documents, and the
+tests that keep each correction in place. Validation is carried by the
+empirical chapters. Chapter~\ref{ch:results1} asks whether the measurement
+model fits, whether the domains are distinct and reliable, and whether the
+structure holds across groups. Chapter~\ref{ch:results2} asks whether the
+score predicts death and hospitalisation, whether it is calibrated and whether
+it adds to established measures. Verification comes first in the order of
+work because a validation result on an unverified pipeline has no clear
+meaning.
+
+Two limits of verification should be stated. A test suite tests what its
+author thought to test; Appendix~\ref{app:verification} says this of its own
+suite, and records two errors that were caught only because a test happened
+to assert the right property. And verification against the NHATS documents
+can confirm a name and a code but not that the code means, in every case,
+what the documents say. Both limits lead to the next section, which asks how
+the pipeline can fail and what stands in the way of each failure.
+
 \section{Failure Modes and Their Effects}
 \label{sec:sys-fmea}
+
+Requirements say what the pipeline must do. They do not say how it can fail,
+and a list of requirements that are each met can still describe a system that
+fails in a way no requirement anticipated. Failure mode and effects analysis
+approaches the question from the other end \citep{stamatis_2003}. For each
+part of a system it asks how the part could fail, what the failure would do
+to the rest of the system, how it would be detected, and what control
+prevents it or limits its effect. In industrial practice each failure mode is
+also scored for severity, frequency and ease of detection, and the scores are
+multiplied to rank them. The thesis does not score them: there is no record of
+how often each failure occurs in pipelines of this kind, and numbers made up to
+fill the columns would give a false impression of precision. It lists them
+instead.
+
+Table~\ref{tab:sys-fmea} sets out ten failure modes. The first five are real.
+Each is an error that was present in the pipeline and was caught by the checks
+of Appendix~\ref{app:datachecks} before any analysis of NHATS data. The last
+five are failure modes at the level of design, which the thesis guards
+against by construction.
+
+\begin{table}[htbp]
+\centering
+\caption{Failure modes of the measuring system. The first five rows are errors
+found in the pipeline and corrected before analysis
+(Appendix~\ref{app:datachecks}); the last five are design-level failure modes
+the thesis guards against.}
+\label{tab:sys-fmea}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{p{3.2cm} p{3.6cm} p{3.4cm} p{3.6cm}}
+\toprule
+\textbf{Failure mode} & \textbf{Effect} & \textbf{How detected} & \textbf{Control} \\
+\midrule
+Activity codes read as a scale of rising difficulty & Code~2, no difficulty, counted as a limitation; function indicator and two comparators partly inverted & Codes compared with the User Guide's definitions of derived variables & Codes read as documented; a test asserts that code~2 counts as no limitation \\
+\addlinespace
+Education and gender missing by design for continuing members & A systemic indicator imputed for every continuing member of the cohort & Crosswalk shows these items are asked only at a first interview & Filled from the Round~1 file; a test asserts the fill \\
+\addlinespace
+Decedents before Round~5 given a positive weight in the NHATS file & People with no baseline interview enter the weighted sample & User Guide data notice & Sample restricted to people with a Round~5 interview; a test asserts decedents leave \\
+\addlinespace
+Second death code (no proxy) omitted & Deaths without a proxy treated as losses to follow-up; mortality understated & Final case status table in the Data Collection Procedures; the build reports every status value & Both death codes counted; a test asserts the second counts \\
+\addlinespace
+Untraced rounds counted as alive & Follow-up extended into rounds in which the person may have died; risk understated & Review of what each status code shows & Follow-up extended only by a status that shows the person alive; a test asserts it \\
+\midrule
+Outcome information reaches measurement & Score fitted to predict rather than to measure; prognostic performance overstated & Permutation of outcomes must leave the measurement model unchanged; a test asserts no outcome reaches the imputation or factor model & Measurement frozen and configuration committed before outcomes are opened; one-way interface \\
+\addlinespace
+Optimism from overfitting & Apparent performance exceeds performance in new data & Bootstrap that refits the whole chain; comparison with apparent performance & Pre-specified models; measurement refitted within each resample \\
+\addlinespace
+Miscalibration in subgroups & Risk wrong for some groups though right on average & Calibration and discrimination by pre-specified subgroup; invariance tests & Failures reported; no group comparison where invariance fails \\
+\addlinespace
+Small counts published & Participants identifiable & Export stage checks every count & Counts below 11 suppressed; participant-level files not archived \\
+\addlinespace
+Misuse of the score & Care withheld, or a low score read as locating its cause & Not detectable inside the pipeline & Domain profile reported with the score; score not to be the sole basis for denial or triage; explanation and appeal (Section~\ref{sec:sys-control}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{What the real failures share.} The five errors in the upper half of
+Table~\ref{tab:sys-fmea} have one feature in common, and it is the reason they
+are instructive. None of them would have stopped the pipeline. Each involved a
+valid code read with the wrong meaning, a value missing for a reason the code
+did not know, or a status the code treated as something it was not. The
+automated check of presence and code range passes all of them, because the
+codes were all codes NHATS uses. They were found by a slower check: reading,
+item by item, what NHATS says each code means and to whom each question was
+put. The lesson for design is that an automated check confirms the form of the
+data and a documentary check confirms its meaning, and a pipeline needs both.
+
+Their effects also differ in kind. The reversed activity codes would have
+inverted part of an indicator and produced a wrong measurement. The missing
+education values would have replaced an observed indicator with an imputed one
+for a large part of the cohort, which is a quieter error: the results would
+have looked plausible and been less informative than they appeared. The
+remaining three concern who is followed and for how long. Decedents carrying a
+weight would have entered a cohort meant to start alive. The missed death code
+and the untraced rounds would have biased follow-up in one direction, by
+treating deaths as losses or by extending the time at risk past the point at
+which the person was known to be alive; both would have shifted estimated risk
+downwards. None of the five would have been visible in the results.
+
+\paragraph{Common-cause failure.} A common-cause failure is one in which a
+single fault disables several parts at once, and it is dangerous because it
+defeats checks that rely on comparing those parts. The layout file is a
+common cause by design. It feeds every indicator, every comparator and every
+outcome, so an error in it can reach many places at once. The activity code
+error shows the danger concretely: it touched the function indicator and two
+of the comparators (Table~\ref{tab:G_changes}). The thesis compares the
+H-potential score with those comparators to judge whether it adds anything.
+If both the score and a comparator draw on the same misread items, the
+comparison cannot reveal the error, because both are wrong in the same
+direction. The comparison of construct and comparator is therefore not an
+independent check of the data layer. The defence against a common cause has
+to sit at the common cause itself, which is why the layout file cites a source
+for every entry and why each correction has its own test.
+
+There is a reason the layout file is a single point nonetheless. The
+alternative, declaring names and codes in each script that uses them, would
+remove the common cause and replace it with many separate chances to make the
+same mistake differently in each place. One file that is checked against the
+documents is easier to get right than many that are not. The cost of the
+choice is that an error in it travels far, and the control is to check it
+hardest.
+
+\paragraph{Defence in depth.} \citet{reason_1990} argued that failures in
+complex systems seldom have a single cause. They arise when latent
+conditions, flaws built into the system long before, combine with an active
+error or an unusual circumstance, and when each of the defences between them
+happens to have a gap in the same place. The remedy is several independent
+layers of defence, so that an error which passes one is stopped by another.
+The pipeline has such layers. The documentary check of
+Appendix~\ref{app:datachecks} comes first and catches errors of meaning. The
+pre-build check catches absent variables and unexpected codes, including those
+that appear when NHATS reissues a file. The regression tests catch a
+correction that a later edit undoes. The verification suite of
+Appendix~\ref{app:verification} catches a formula that does not compute what
+the text states. The bootstrap and the sensitivity analyses catch results that
+depend on chance or on a single arbitrary choice. Internal validation by
+subgroup catches a model that is right on average and wrong for some. The
+governance rule on use catches, or at least forbids, the misuse that no part
+of the pipeline can see. The latent conditions in Reason's sense are the
+errors in the layout that sit unnoticed until data run through them; the five
+caught here were latent conditions of exactly that kind.
+
+\paragraph{Tight coupling.} \citet{perrow_1984} argued that some systems will
+fail however carefully they are run, because their parts are tightly coupled,
+so that a failure in one passes quickly to the next with no slack and no
+chance to intervene, and their interactions are complex enough that operators
+cannot foresee how two failures will combine. A scripted pipeline is tightly
+coupled. Each stage consumes the last one's output at once and without
+inspection, and the speed and repeatability that make scripting valuable are
+the same properties that let an error pass from the first stage to the last
+in seconds. The pipeline loosens its coupling at chosen points. It stops when
+a declared variable is absent rather than proceeding with what it has. It
+reports every tracker status value and every value outside the declared codes,
+so that a person reads them before the build continues. It records which
+income source it used. Each of these is a point at which a human can see what
+the machine is about to do. The cost is that the pipeline is slower to run and
+more verbose than it need be. The benefit is that a person reads what the
+machine would otherwise pass over in silence, and every status value the
+tracker holds is now listed for that reading.
+
+Perrow's argument has a second edge. Adding defences adds parts, and the
+defences can themselves fail or interact. A test suite that is wrong can give
+false comfort, as Appendix~\ref{app:verification} records of a conservation
+test that passed while a sign error moved probability the wrong way. The
+layers of defence above are therefore not a guarantee. They reduce the chance
+that an error of a known kind reaches the results. They say nothing about
+errors of a kind not yet imagined.
+
+The failure modes so far end at the edge of the pipeline. The last row of
+Table~\ref{tab:sys-fmea} does not: misuse of the score happens after the
+pipeline has done its work. The next section treats the people who use the
+score as part of the system.
 
 \section{Who Acts on the Score: the Control Structure}
 \label{sec:sys-control}
 
+The pipeline produces a number. What happens next depends on who reads it and
+what they do. \citet{leveson_2011} argued that safety in complex systems is
+best understood as a problem of control rather than of component failure.
+A system is safe when every controller, human or automatic, has an adequate
+model of the process it controls, issues control actions that keep the
+process within safe limits, and receives feedback that tells it what its
+actions have done. Accidents arise when a controller's model of the process
+drifts from the process itself, so that actions that seemed right turn out to
+be wrong. In Leveson's terms a score is not a controller. It is part of the
+feedback that controllers receive, and a change in that feedback changes what
+they do.
+
+\paragraph{Controllers.} Three kinds of controller could act on an
+H-potential score if it were used, and the thesis treats such use as outside
+the present validation. A clinician acting on one person could use the domain
+profile to decide whom to refer, what to review and which barrier to address
+in a care plan. A programme manager acting on a caseload could use scores to
+decide whom to reach first, or which service to offer to whom. A policy maker
+acting on a population could use the distribution of domain scores to decide
+where to spend a budget and which eligibility rules to set. Above all three
+sit the researchers who maintain the model and decide when it must be
+recalibrated.
+
+\paragraph{Control actions and feedback.} Each controller receives feedback
+on a different time scale. A clinician sees one person again within weeks or
+months and learns quickly whether a referral helped, but learns about one
+person at a time. A programme manager sees caseload outcomes over months, with
+the delays of reporting and the noise of small numbers. A policy maker sees
+population outcomes over years, often through surveys such as NHATS itself,
+which report a year or more after the events they describe. The longer the
+feedback delay, the longer a controller's model of the process can drift
+before anything corrects it, and the delays of Section~\ref{sec:sys-stocks}
+add to the delays of reporting. A policy that acts on Systemic Burdens may not
+show its effect on capacity for years, and by then the policy maker may have
+moved on.
+
+\paragraph{Unsafe control actions.} Leveson classifies unsafe control actions
+into four kinds: an action needed for safety is not given; an unsafe action is
+given; an action is given too early, too late or in the wrong order; or an
+action is stopped too soon or continued too long. Each has a counterpart in
+the use of this score. The clearest unsafe action is to use the score to
+withhold care, for example by judging that a person with low realised
+capability will gain too little from treatment to justify it. The realisation
+function makes this temptation concrete, since the gain from a biomedical
+intervention is smaller where context is poor. Reading that as a reason to
+deny care reverses the purpose of the construct, which is to show where
+context should be improved. A needed action can be omitted when a moderate
+summary score hides a domain near the floor, which is why the domain profile
+must be reported with the score. An action can come too late when the score
+is updated only at long intervals. And a model can be used too long, after the
+population it was calibrated in has changed, or in a population it was never
+calibrated in, which is the problem of transport that Chapter~\ref{ch:methods}
+treats as a fresh validation rather than a calculation.
+
+\paragraph{Allocation feedback and prevention.} \citet{bishai_2014} used a
+systems model to argue that health systems tend to under-invest in prevention
+because the visible demand of people who are already ill draws resources
+towards cure, and the resulting shortfall in prevention adds to the number of
+people who need cure. A score used to allocate services could repeat that
+pattern. If resources follow the lowest scores, they go to people whose
+domains have already fallen far, and not to people whose domains are
+intermediate and falling, for whom a timely change might prevent the fall. The
+domain profile offers a different use: to find the binding domain while it is
+still above the floor, when the reinforcing loops of
+Figure~\ref{fig:sys-loops} have not yet taken hold. Whether any such use does
+good is an empirical question about programmes, which the thesis does not
+address. The point here is that the allocation rule is part of the system, and
+a rule that seems neutral can set up a feedback of its own.
+
+\paragraph{A score in use changes what it measures.} The last point is the
+one that most separates a deployed score from a research finding. A model of
+risk describes a system in which the model is not used. Once it is used, it
+becomes part of the system. If programmes direct help to people with low
+scores and the help works, the relation between a low score and a poor
+outcome weakens, and the model will appear to lose its accuracy precisely
+because it has succeeded. If low scores lead to care being withheld, the
+relation strengthens, and the model will appear more accurate than it is
+because it has caused some of the outcomes it predicts. Indicators can also
+change meaning once they matter: an item that was answered without thought
+in a survey may be answered differently when the answer affects access to a
+service. In each case the validation reported in this thesis describes the
+system before the score entered it.
+
+It follows that monitoring after deployment is a requirement of any use, not
+an optional extra. The monitoring would need to track calibration over time
+and by subgroup, the distribution of indicator responses, and the outcomes of
+people who were acted on and of people who were not. It would also need a
+route by which a person can learn why they were scored as they were and
+challenge it. Chapter~\ref{ch:methods} states that person-level use requires an
+explanation and appeal mechanism and that the score may not be the sole basis
+for automated denial, reimbursement or triage. In Leveson's terms these are
+constraints placed on the controllers, and the monitoring is the feedback that
+tells the maintainers whether the constraints hold.
+
 \section{The Limits of Systems Thinking}
 \label{sec:sys-limits}
 
+The chapter has used systems ideas to fix a boundary, describe feedback, rank
+places to intervene, separate reserve from resilience, set requirements and
+list failure modes. A reader may fairly ask what this has shown. The answer
+is less than the vocabulary might suggest, and this section says why.
+
+\citet{box_1976} observed that since every model is wrong, the scientist
+cannot reach a correct one by elaboration, and should instead seek an
+economical description and worry about what is importantly wrong. The loop
+diagram of Figure~\ref{fig:sys-loops} is a model in this sense, and a weak
+one. It names variables and the signs of the links between them. It gives no
+strengths, no delays in months and no functional forms. A diagram of that
+kind predicts nothing on its own, and a model that predicts nothing cannot be
+tested. Worse, a loop diagram can explain almost any behaviour after the
+fact: if a person declines, a reinforcing loop dominated; if they recover, the
+balancing loop did. An account that fits every outcome is not supported by any
+of them. The diagram earns its place only where it leads to a claim that could
+fail, and in this thesis it leads to two: that the domains should be
+correlated but distinct, and that a baseline reading should predict later
+outcomes. Both are tested in the empirical chapters, and neither is unique to
+the loops.
+
+Boundary choices are judgements, as \citet{checkland_1981} insisted, and a
+different judgement would produce a different system. A boundary that made
+health services and policy endogenous would turn several of the givens of
+Section~\ref{sec:sys-boundary} into variables, and the feedback in
+Figure~\ref{fig:sys-loops} would include the response of services to the
+needs they observe. The conclusions about where to act could change. The
+thesis chose its boundary to match what NHATS can observe, and that is a
+reason of feasibility, not of truth.
+
+A related risk is that of linking everything to everything. In a system as
+large as a person's health and circumstances, almost every factor affects
+almost every other through some path. A diagram that drew all of them would
+be complete and useless, since it would offer no basis for choosing one
+intervention over another. The figure in this chapter is kept to three domains
+and one service flow for that reason. The cost is that it leaves out paths
+that may matter, and the reader should not take its sparseness as a claim that
+those paths are absent.
+
+The engineering half has limits of its own. A failure mode and effects
+analysis lists the failures its author thought of; the ten in
+Table~\ref{tab:sys-fmea} are not all the ways the pipeline could fail. A
+requirements table describes what was required, not what should have been.
+And the language of verification can lend a pipeline an authority it has not
+earned, since a pipeline that does exactly what was specified is only as good
+as the specification.
+
+The use this thesis makes of systems thinking is therefore narrow. It uses it
+to structure questions, by asking of each part of the construct what it
+depends on and what depends on it, and to design checks, by asking of each
+stage of the pipeline how it could fail and what would catch the failure. It
+does not use systems thinking as evidence for the construct. Whether the three
+domains exist, whether the indicators measure them and whether the score
+predicts outcomes are questions for the data, and nothing in this chapter
+answers them.
+
 \section{What This Chapter Settles}
 \label{sec:sys-close}
+
+The chapter began by asking what changes when the construct and the
+instrument that measures it are treated as systems. It settles four things.
+It fixes the boundary of the measured system at the person, the household and
+the part of services the person meets, with NHATS as the interface through
+which the system is seen. It reads capacity as a stock and realised health as
+a flow, which explains why a single reading can carry information about later
+outcomes and why it cannot measure recovery. It shows that a multiplicative
+realisation function makes the weakest domain the one where a unit of change
+does most, so that improving a strong domain buys little. And it sets out the
+pipeline as a chain of stages with stated requirements, named interfaces,
+listed failure modes and layered defences, in which verification and
+validation are kept apart.
+
+It leaves open the questions that only data can answer: whether the feedback
+of Figure~\ref{fig:sys-loops} operates, whether the three domains can be
+measured as distinct, and whether the score predicts what the theory says it
+should. Each later chapter takes something from this one.
+
+Chapter~\ref{ch:methods}, the formalism, takes the boundary and the
+observation interface, which set what the analysis can and cannot know, and
+the one-way interface between measurement and prediction, which it states as
+Assumption~\ref{ass:outcome_blind}. Its account of the analytic file, the
+timing of events and the scoring rule is the specification against which the
+pipeline is verified.
+
+Chapter~\ref{chap:crf}, the realisation model, takes the reading of the
+realisation function as an interface that couples the domains in series. Its
+axioms state formally what Section~\ref{sec:sys-boundary} stated in words,
+its cross-partials are the static trace of the compounding that
+Section~\ref{sec:sys-loops} describes, and its policy gradient is the formal
+version of the argument of Section~\ref{sec:sys-leverage} that the binding
+domain is where a unit of change does most.
+
+Chapter~\ref{ch:results1}, on the measurement model, tests whether the
+components of Section~\ref{sec:sys-boundary} are distinct. Correlated domains
+would be consistent with the feedback of Section~\ref{sec:sys-loops}, and also
+with common causes, and the chapter does not claim to separate them. Its
+invariance tests are the validation of the last requirement in
+Table~\ref{tab:sys-requirements}.
+
+Chapter~\ref{ch:results2}, on prognostic performance, tests the persistence
+of the stocks that Section~\ref{sec:sys-stocks} identified as the basis for
+prediction, and applies the controls against optimism and subgroup
+miscalibration listed in Table~\ref{tab:sys-fmea}.
+
+Chapter~\ref{ch:translational}, the haemophilia application, redraws the
+boundary for one disease. It substitutes disease-specific indicators and
+treats the move as a new validation problem, as Section~\ref{sec:sys-control}
+says any change of population must be. Its dynamical companion in the
+appendices makes one balancing loop explicit, in which treatment restores a
+factor level that disease and clearance draw down.
+
+Chapter~\ref{ch:discussion} returns to the limits of
+Section~\ref{sec:sys-limits} and to the control structure of
+Section~\ref{sec:sys-control}, asking what the results permit and what any
+use of the score would require. Chapter~\ref{ch:conclusions} states what the
+thesis settles.
+
+The next step is to make the measuring system precise. This chapter has said
+what the pipeline must do and how it can fail. Chapter~\ref{ch:methods} says
+exactly what it computes: the data, the factor structures, the score and the
+survival models, each specified before any outcome is seen, so that the
+verification described here has a specification to verify against.
