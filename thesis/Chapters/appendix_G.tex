@@ -36,7 +36,13 @@ the file that holds it and the sample groups to which the question was put
 answer codes of each question and the routing that decides who is asked
 \citep{nhats_r5_instrument_2024}. The User Guide defines the variables NHATS
 derives from several questions, and records known errors in the released files
-\citep{freedman_nhats_userguide_2026}. The tariff was checked against the
+\citep{freedman_nhats_userguide_2026}. Three further NHATS documents settled
+questions the first three left open: the Round~5 data collection procedures,
+which list every final case status code \citep{nhats_dcp_r5_2015}; the
+Round~10 weighting paper, which confirms that the same codes are used in
+later rounds \citep{dematteis_2021_r10weights}; and the income imputation
+paper, which gives the name of the auxiliary income file
+\citep{hu_freedman_2024_income}. The tariff was checked against the
 discussion paper in which the UK time trade-off tariff was first published
 \citep{dolan_1995_che}. The tariff is more often cited from the later journal
 article \citep{dolan_1997}, which was not available for this check.
@@ -54,6 +60,9 @@ article \citep{dolan_1997}, which was not available for this check.
 NHATS Round 5 crosswalk between instruments and codebook (spreadsheet) & 15 February 2024 & Variable names; the file that holds each variable; which sample groups were asked \\
 NHATS Round 5 data collection instrument & February 2024 & Question wording, answer codes and routing \\
 NHATS User Guide, Rounds 1 to 14 & August 2026 & Codes of derived variables; residence status; data notices \\
+NHATS Data Collection Procedures, Round 5 & 2015 & Final case status codes (Table II.F-1) \\
+NHATS Technical Paper 28, Round 10 weights & July 2021 & Status codes in a later round (Table 1) \\
+NHATS Technical Paper 43, income imputations & May 2025 & Name and content of the auxiliary income file \\
 Dolan, Gudex, Kind and Williams (1995), Discussion Paper 138 & 1995 & All coefficients of the UK EQ-5D time trade-off tariff \\
 \bottomrule
 \end{tabular}
@@ -185,11 +194,30 @@ Floors & Four codes, not five & Instrument \\
 Home access & Skipped questions read as no barrier & Instrument routing \\
 Race and ethnicity & Code 5 (more than one race, no primary) as other; code 6 missing & User Guide \\
 Income & Twenty imputations used when present, else five; couple income divided by $\sqrt{2}$ & Crosswalk; User Guide \\
+Income file & Named as NHATS names it; a renamed file for the round is also found & Technical Paper 43 \\
+Deaths & Status 86 (deceased, no proxy) counted with 62 & Data Collection Procedures \\
+Follow-up & Extended only by a status showing the person alive & Data Collection Procedures \\
+Imputation model & Proxy respondent, cognition not asked and reported dementia added & Instrument; User Guide \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The income change needs a word of explanation. The previous layout used the
+The changes to the mortality outcome need a word of explanation. NHATS
+assigns each case a final status at every round. Two codes record a death:
+62, when a proxy completed the last-month-of-life interview, and 86, when
+the person had died and no proxy was available \citep{nhats_dcp_r5_2015}.
+The layout had listed only 62, so deaths with no proxy would have been
+treated as losses to follow-up. Both now count. The same table showed a
+second fault. The build had treated any recorded status as evidence that the
+person was alive in that round, so a case coded ``unable to locate'' extended
+follow-up to a round in which the person might already have died. Follow-up
+now extends only through rounds with a status that shows the person was
+reached or known to be alive: a completed interview, a refusal or inability
+to take part, absence during fieldwork, a move outside the area or out of the
+country, or a refusal by the facility. A proxy's refusal is not taken as a
+sign of life, because the proxy may be refusing an interview about a death.
+
+The income change needs a word of explanation as well. The previous layout used the
 reported total, which is missing for a large share of respondents and, for
 those married or living with a partner, is the income of the couple. The build
 now averages the logarithm of income over the NHATS imputations and divides
@@ -242,19 +270,11 @@ The checks settled most questions about names and codes. The following were
 not settled, or cannot be settled from documents, and the reader should weigh
 the results with them in mind.
 
-\paragraph{Deaths without a last-month-of-life interview.} The User Guide
-confirms that tracker status 62 marks a death for which the last-month-of-life
-interview was done. It does not list the full set of tracker status codes, and
-the documents read do not say how a death without that interview is coded. If
-such deaths carry another code, they would be counted as losses to follow-up
-rather than deaths. The pre-analysis check prints every status value found in
-the tracker file, so that any further death code can be added to the layout
-before the outcome is built.
-
-\paragraph{Income file name.} The User Guide describes the twenty-imputation
-income file but the documents read do not give its file name. If the name in
-the layout does not match the release, the build falls back to the five
-imputations on the sample-person file and records which source it used.
+\paragraph{Timing of deaths.} The tracker records the round at which a death
+is reported, not the date of death, so a death is placed at the midpoint of
+the interval in which it occurred. A death found only after one or more
+rounds in which the person could not be traced is placed in the last such
+interval, and its timing is correspondingly less precise.
 
 \paragraph{One name differs between documents.} The derived medication variable
 is listed in the crosswalk as \texttt{mc5dmedssfdf} and in the User Guide as
@@ -262,14 +282,26 @@ is listed in the crosswalk as \texttt{mc5dmedssfdf} and in the User Guide as
 if the variable is absent, so a mismatch cannot pass unnoticed.
 
 \paragraph{Proxy respondents.} Social network size is not asked when a proxy
-answers for the sample person. Word recall and clock drawing are not
-administered when the proxy says the person cannot be asked. In both cases the
-value is set to missing and imputed. The missingness is related to the
-person's health, and to cognition in particular, so imputation from the other
-indicators is likely to overstate the scores of these respondents. NHATS
-classifies dementia in such cases from a proxy screening instrument; that
-classification was not used, because it would bring a diagnostic judgement into
-an indicator meant to measure performance.
+answers for the sample person, and word recall and clock drawing are not
+administered when the proxy says the person cannot be asked. These values are
+missing for reasons tied to the person's health. Three baseline flags are
+therefore added to the imputation model: whether a proxy answered, whether
+the proxy said the cognitive tests could not be given, and whether dementia
+has been reported. The flags are never outcomes, so the measurement stage
+remains blind to them. They help where people in the same position were
+measured: proxy cases whose cognition was tested, for instance, inform the
+imputation of other proxy cases. They cannot help for cognition among those
+who could not be tested, since none of that group has a score from which the
+model could learn. For that group the primary analysis imputes cognition from
+the remaining indicators and the flags, and a sensitivity analysis sets their
+cognition to the lowest possible score instead. Chapter~\ref{ch:results1}
+reports how far the loadings and the biomedical domain scores move between
+the two rules. The truth lies between them: the imputation is likely to
+overstate the cognition of these people, and the lowest score to understate
+it for some. NHATS classifies dementia in such cases from a proxy screening
+instrument; that classification was not used as an indicator, because it
+would bring a diagnostic judgement into an indicator meant to measure
+performance.
 
 \paragraph{Income imputation.} Averaging the logarithm of income over the NHATS
 imputations gives one value per person and discards the spread between
@@ -300,12 +332,15 @@ The checks above are recorded in two places that the analysis cannot bypass.
 The layout file cites, beside each variable, the document from which its name
 and codes were read. Before the analytic file is built, the pipeline confirms
 that every declared variable is present in the files supplied, reports every
-value outside the declared codes and every tracker status value, and stops if
+value outside the declared codes and every tracker status value, and records
+which income source it used, and stops if
 any required variable is absent. The test suite of the pipeline contains a
 test for each correction in Table~\ref{tab:G_changes}: that code~2 of an
 activity item counts as no limitation, that a skipped home question counts as
 no barrier, that education and gender are filled from Round~1, that decedents
-leave the sample, and that income is taken from the twenty imputations and
-equivalised. These tests run on every change to the code, so a later edit
+leave the sample, that income is taken from the twenty imputations and
+equivalised and that a renamed income file is still found, that a death with
+no proxy counts as a death, that an untraced round does not extend follow-up,
+and that the proxy flags reach the imputation model. These tests run on every change to the code, so a later edit
 that reintroduced one of the errors would be caught before it reached the
 results.
