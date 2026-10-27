@@ -33,8 +33,8 @@ the implemented function across a grid of inputs, which catches a
 transcription error in a formula. It checks that each worked example in the
 text returns the number the text prints, which catches arithmetic slips and,
 more usefully, catches them again whenever a parameter is later edited. It
-checks the internal consistency of the running cases, so that Mrs~A's realised
-capability is the same figure in Chapter~\ref{ch:theory} and in
+checks the internal consistency of the running cases, so that the realised
+capability of Profile~A is the same figure in Chapter~\ref{ch:theory} and in
 Chapter~\ref{app:crf}. And it checks the qualitative claims the prose makes
 about the mathematics, such as that lowering the substitution parameter
 punishes imbalance harder, which are the claims most easily asserted and least
@@ -120,7 +120,7 @@ The naming rule is the part that makes the suite usable rather than
 decorative. Every test function is named for the statement it asserts:
 \texttt{test\_proposition\_inhibitor\_threshold},
 \texttt{test\_theorem\_gap\_decomposition\_is\_exact},
-\texttt{test\_worked\_example\_mrs\_a\_absolute\_risk}. A reader who doubts
+\texttt{test\_worked\_example\_profile\_a\_absolute\_risk}. A reader who doubts
 Proposition~\ref{prop:C_threshold} can find the test that asserts it by name,
 read the assertion, and change the numbers. Every test carries a docstring
 naming the result and saying in one sentence what would be wrong if it failed.
@@ -177,9 +177,9 @@ what kinds of checking catch what kinds of mistake.
 
 \subsection{A worked example that proved nothing}
 
-The compensation example in \S\ref{app:a-additivity} was written with Mr~B's
-structural freedom falling from $0.20$ to $0.05$ while immune tolerance
-induction raised his biomedical potential from $0.30$ to $0.60$. The additive
+The compensation example in \S\ref{app:a-additivity} was written with the
+structural freedom of Profile~B falling from $0.20$ to $0.05$ while its
+biomedical potential rose from $0.30$ to $0.60$. The additive
 index scores the change as an improvement, which was the point. The realisation
 function was supposed to score it as a deterioration, and does not: both
 profiles return exactly $0.112$, because

@@ -13,8 +13,8 @@ def test_definition_hazard_ratio_to_absolute_risk():
         prog.hazard_ratio_to_risk(0.0, 1.4)
 
 
-def test_worked_example_mrs_a_absolute_risk():
-    """Worked Example 8.1 and 6.1: HR 1.4 per SD, Mrs A one SD below the mean, a
+def test_worked_example_profile_a_absolute_risk():
+    """Worked Example 8.1 and 6.1: HR 1.4 per SD, Profile A one SD below the mean, a
     20 per cent five-year baseline. About 27 per cent, seven extra deaths per
     hundred, one per fourteen women like her."""
     base, hr = 0.20, 1.4
@@ -120,7 +120,7 @@ def test_attenuation_is_monotone_in_reliability():
 
 
 # ---------------------------------------------------------------------------
-# Chapter 6 additions: absolute risk for Mrs A, the independence of
+# Chapter 6 additions: absolute risk for Profile A, the independence of
 # discrimination and calibration, net benefit at a stated threshold, and the
 # optimism gap.
 # ---------------------------------------------------------------------------
@@ -136,8 +136,8 @@ def _auc(pred, outcome):
     return total / (len(pos) * len(neg))
 
 
-def test_worked_example_mrs_a_absolute_risk_from_a_hazard_ratio_of_072():
-    """Worked Example 6.1: a hazard ratio of 0.72 per SD, Mrs A one SD below
+def test_worked_example_profile_a_absolute_risk_from_a_hazard_ratio_of_072():
+    """Worked Example 6.1: a hazard ratio of 0.72 per SD, Profile A one SD below
     the mean, a 20 per cent five-year baseline. About 27 per cent, a gap of
     seven points, one death prevented per fifteen women lifted."""
     multiplier = 1.0 / 0.72

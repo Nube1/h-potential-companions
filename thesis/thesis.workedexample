@@ -1,40 +1,40 @@
-\contentsline {workedexample}{\numberline {2.1}Three people, one recorded outcome}{32}{workedexample.2.1}%
-\contentsline {workedexample}{\numberline {2.2}Mrs A scored by the original formula}{38}{workedexample.2.2}%
-\contentsline {workedexample}{\numberline {2.3}Mrs~A under the geometric rule and the additive rule}{41}{workedexample.2.3}%
-\contentsline {workedexample}{\numberline {2.4}Mr~B funded and Mr~B rationed, one coordinate apart}{42}{workedexample.2.4}%
-\contentsline {workedexample}{\numberline {2.5}The reversal, with the numbers}{43}{workedexample.2.5}%
-\contentsline {workedexample}{\numberline {3.1}What censoring death does to a five-year figure}{57}{workedexample.3.1}%
-\contentsline {workedexample}{\numberline {3.2}Attenuation, with the numbers}{60}{workedexample.3.2}%
-\contentsline {workedexample}{\numberline {4.1}Three rules, one pair of contexts, three rankings}{72}{workedexample.4.1}%
-\contentsline {workedexample}{\numberline {4.2}Pricing the bottleneck}{75}{workedexample.4.2}%
-\contentsline {workedexample}{\numberline {4.3}Decomposing a gap, with Mr~B against himself}{77}{workedexample.4.3}%
-\contentsline {workedexample}{\numberline {4.4}Where the next pound goes, for Mrs~A}{79}{workedexample.4.4}%
-\contentsline {workedexample}{\numberline {4.5}Pricing the equity judgement}{82}{workedexample.4.5}%
-\contentsline {workedexample}{\numberline {5.1}Composite reliability and AVE from a set of loadings}{98}{workedexample.5.1}%
-\contentsline {workedexample}{\numberline {5.2}An HTMT ratio, and where the 0.85 line falls}{99}{workedexample.5.2}%
-\contentsline {workedexample}{\numberline {5.3}Shrinkage on a simulated latent variable}{104}{workedexample.5.3}%
-\contentsline {workedexample}{\numberline {6.1}Mrs~A, from a hazard ratio to an absolute risk}{115}{workedexample.6.1}%
-\contentsline {workedexample}{\numberline {6.2}A transformation that keeps C and destroys calibration}{123}{workedexample.6.2}%
-\contentsline {workedexample}{\numberline {6.3}Net benefit at a threshold above the event rate}{129}{workedexample.6.3}%
-\contentsline {workedexample}{\numberline {6.4}The optimism gap on simulated data}{137}{workedexample.6.4}%
-\contentsline {workedexample}{\numberline {7.1}Mr~B's realised capability from haemophilia indicators}{150}{workedexample.7.1}%
-\contentsline {workedexample}{\numberline {7.2}Moving the inhibitor threshold by changing the dose}{157}{workedexample.7.2}%
-\contentsline {workedexample}{\numberline {7.3}An intercept shift moves a cut-point}{163}{workedexample.7.3}%
-\contentsline {workedexample}{\numberline {8.1}Reading an incremental hazard ratio against its comparator}{176}{workedexample.8.1}%
-\contentsline {workedexample}{\numberline {9.1}How a null result should be read at a given reliability}{201}{workedexample.9.1}%
-\contentsline {workedexample}{\numberline {A.1}The two running cases as profiles}{208}{workedexample.A.1}%
-\contentsline {workedexample}{\numberline {A.2}An additive index rewards stranding a patient}{210}{workedexample.A.2}%
-\contentsline {workedexample}{\numberline {A.3}Three values of $\rho $, two patients}{212}{workedexample.A.3}%
-\contentsline {workedexample}{\numberline {A.4}Counting deprivations for Mrs~A}{215}{workedexample.A.4}%
-\contentsline {workedexample}{\numberline {A.5}The four objects, for Mrs~A}{218}{workedexample.A.5}%
-\contentsline {workedexample}{\numberline {A.6}Net health benefit for emicizumab}{219}{workedexample.A.6}%
-\contentsline {workedexample}{\numberline {A.7}A transfer between two groups, at three values of $\varepsilon $}{220}{workedexample.A.7}%
-\contentsline {workedexample}{\numberline {B.1}Two trajectories from two assay readings}{225}{workedexample.B.1}%
-\contentsline {workedexample}{\numberline {B.2}The steady state read as a trough level}{226}{workedexample.B.2}%
-\contentsline {workedexample}{\numberline {B.3}Drift and diffusion, separated numerically}{229}{workedexample.B.3}%
-\contentsline {workedexample}{\numberline {C.1}Where the inhibitor does its damage}{235}{workedexample.C.1}%
-\contentsline {workedexample}{\numberline {C.2}Buying titre headroom with dose}{236}{workedexample.C.2}%
-\contentsline {workedexample}{\numberline {C.3}What a ten per cent shortfall in ITI costs}{237}{workedexample.C.3}%
-\contentsline {workedexample}{\numberline {C.4}Two routes to the same transgene level}{239}{workedexample.C.4}%
-\contentsline {workedexample}{\numberline {D.1}Mr~B's burden, split into its two parts}{244}{workedexample.D.1}%
-\contentsline {workedexample}{\numberline {D.2}Running the convergence test rather than asserting it}{246}{workedexample.D.2}%
+\contentsline {workedexample}{\numberline {2.1}Three capability sets, one recorded outcome}{31}{workedexample.2.1}%
+\contentsline {workedexample}{\numberline {2.2}Profile~A scored by the original formula}{38}{workedexample.2.2}%
+\contentsline {workedexample}{\numberline {2.3}Profile~A under the geometric rule and the additive rule}{40}{workedexample.2.3}%
+\contentsline {workedexample}{\numberline {2.4}Profile~B with structure favourable and unfavourable, one coordinate apart}{40}{workedexample.2.4}%
+\contentsline {workedexample}{\numberline {2.5}The reversal, with the numbers}{42}{workedexample.2.5}%
+\contentsline {workedexample}{\numberline {3.1}What censoring death does to a five-year figure}{55}{workedexample.3.1}%
+\contentsline {workedexample}{\numberline {3.2}Attenuation, with the numbers}{58}{workedexample.3.2}%
+\contentsline {workedexample}{\numberline {4.1}Three rules, one pair of contexts, three rankings}{69}{workedexample.4.1}%
+\contentsline {workedexample}{\numberline {4.2}Pricing the bottleneck}{73}{workedexample.4.2}%
+\contentsline {workedexample}{\numberline {4.3}Decomposing a gap within Profile~B}{75}{workedexample.4.3}%
+\contentsline {workedexample}{\numberline {4.4}Marginal gains by domain, for Profile~A}{76}{workedexample.4.4}%
+\contentsline {workedexample}{\numberline {4.5}Pricing the equity judgement}{79}{workedexample.4.5}%
+\contentsline {workedexample}{\numberline {5.1}Composite reliability and AVE from a set of loadings}{95}{workedexample.5.1}%
+\contentsline {workedexample}{\numberline {5.2}An HTMT ratio, and where the 0.85 line falls}{96}{workedexample.5.2}%
+\contentsline {workedexample}{\numberline {5.3}Shrinkage on a simulated latent variable}{100}{workedexample.5.3}%
+\contentsline {workedexample}{\numberline {6.1}Profile~A, from a hazard ratio to an absolute risk}{111}{workedexample.6.1}%
+\contentsline {workedexample}{\numberline {6.2}A transformation that keeps C and destroys calibration}{119}{workedexample.6.2}%
+\contentsline {workedexample}{\numberline {6.3}Net benefit at a threshold above the event rate}{124}{workedexample.6.3}%
+\contentsline {workedexample}{\numberline {6.4}The optimism gap on simulated data}{131}{workedexample.6.4}%
+\contentsline {workedexample}{\numberline {7.1}Realised capability of Profile~B from haemophilia indicators}{144}{workedexample.7.1}%
+\contentsline {workedexample}{\numberline {7.2}Moving the inhibitor threshold by changing the dose}{151}{workedexample.7.2}%
+\contentsline {workedexample}{\numberline {7.3}An intercept shift moves a cut-point}{156}{workedexample.7.3}%
+\contentsline {workedexample}{\numberline {8.1}Reading an incremental hazard ratio against its comparator}{169}{workedexample.8.1}%
+\contentsline {workedexample}{\numberline {9.1}How a null result should be read at a given reliability}{193}{workedexample.9.1}%
+\contentsline {workedexample}{\numberline {A.1}The two reference profiles}{200}{workedexample.A.1}%
+\contentsline {workedexample}{\numberline {A.2}An additive index can rise when structural freedom collapses}{202}{workedexample.A.2}%
+\contentsline {workedexample}{\numberline {A.3}Three values of $\rho $, two profiles}{203}{workedexample.A.3}%
+\contentsline {workedexample}{\numberline {A.4}Counting deprivations for Profile~A}{206}{workedexample.A.4}%
+\contentsline {workedexample}{\numberline {A.5}The four objects, for Profile~A}{208}{workedexample.A.5}%
+\contentsline {workedexample}{\numberline {A.6}Net health benefit for a single intervention}{210}{workedexample.A.6}%
+\contentsline {workedexample}{\numberline {A.7}A transfer between two groups, at three values of $\varepsilon $}{211}{workedexample.A.7}%
+\contentsline {workedexample}{\numberline {B.1}Two trajectories from two assay readings}{215}{workedexample.B.1}%
+\contentsline {workedexample}{\numberline {B.2}The steady state read as a trough level}{216}{workedexample.B.2}%
+\contentsline {workedexample}{\numberline {B.3}Drift and diffusion, separated numerically}{218}{workedexample.B.3}%
+\contentsline {workedexample}{\numberline {C.1}Where the inhibitor does its damage}{224}{workedexample.C.1}%
+\contentsline {workedexample}{\numberline {C.2}Buying titre headroom with dose}{225}{workedexample.C.2}%
+\contentsline {workedexample}{\numberline {C.3}What a ten per cent shortfall in ITI costs}{226}{workedexample.C.3}%
+\contentsline {workedexample}{\numberline {C.4}Two routes to the same transgene level}{227}{workedexample.C.4}%
+\contentsline {workedexample}{\numberline {D.1}The burden of Profile~B, split into its two parts}{232}{workedexample.D.1}%
+\contentsline {workedexample}{\numberline {D.2}Running the convergence test rather than asserting it}{234}{workedexample.D.2}%

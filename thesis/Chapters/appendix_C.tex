@@ -7,11 +7,11 @@
 \label{app:hemo_dynamics}
 
 \begin{ataglance}[How to read this appendix]
-This is Mr~B's appendix. Appendix~\ref{app:dynamical} built a
-disease-independent machine; here the abstract symbols are given names a
-haematologist uses. The latent state $X$ becomes circulating factor~VIII or
+This appendix applies the dynamics to Profile~B of Table~\ref{tab:profiles}.
+Appendix~\ref{app:dynamical} built a disease-independent model; here its
+abstract symbols take clinical names. The latent state $X$ becomes circulating factor~VIII or
 IX activity, the inhibitory factor $Y$ becomes inhibitor titre in Bethesda
-units, and and, for haemophilia~A, the homeostatic factor $Z$ becomes von~Willebrand
+units, and, for haemophilia~A, the homeostatic factor $Z$ becomes von~Willebrand
 factor. Von~Willebrand factor stabilises factor~VIII and not factor~IX, so in
 haemophilia~B the stabilisation term $h(Z)$ is set to zero and the model
 reduces to infusion, neutralisation and clearance.
@@ -149,12 +149,11 @@ lose a little accuracy; because $\beta>1$, it understates neutralisation by a
 growing factor, and it understates it most at the titres where getting the dose
 right matters most.
 
-For Mr~B this is the difference between the years before his inhibitor was
-detected, when conventional dosing worked and the linear model would have
-predicted it correctly, and the years after, when the same calculation began
-producing doses that failed. Nothing about the underlying biology changed at the
-moment of detection. What changed was that his $Y$ crossed into the region where
-the approximation stops holding.
+For Profile~B this separates the period before an inhibitor is detected, when
+conventional dosing works and the linear model predicts it correctly, from the
+period after, when the same calculation yields doses that fail. The biology
+need not change at the moment of detection. What changes is that $Y$ crosses
+into the region where the approximation stops holding.
 \end{reading}
 \checkedby{tests/test_haemophilia.py::test_proposition_linear_approximation_at_low_titre}
 
@@ -252,7 +251,7 @@ the patient's steady-state activity crosses from adequate to inadequate.
 Continue the arithmetic above with a protective threshold of
 $S_{\text{prot}}=20$. Then $h_{\text{need}}=(60/20-1.0)/4.0=0.5$, and
 $Y_{\text{thr}}=5\left(0.5/0.5\right)^{1/2}=5$~BU. Below $5$~BU this regimen
-keeps Mr~B protected; above it, it does not, and no amount of adherence will
+keeps Profile~B protected; above it, it does not, and no amount of adherence will
 change that.
 
 Two things follow. The threshold depends on the regimen, so it moves when the
@@ -283,8 +282,8 @@ for numerator in (60.0, 75.0, 90.0, 110.0):
 \end{wecode}
 
 \noindent Thresholds of $5.00$, $7.42$ and $13.23$~BU, and at an input of
-$110$ no finite threshold at all, because that regimen holds him at or above
-$S_{\text{prot}}$ whatever his titre. The function raises rather than returning
+$110$ no finite threshold at all, because that regimen holds factor activity at or
+above $S_{\text{prot}}$ whatever the titre. The function raises rather than returning
 a number, which is the behaviour wanted: a silent wrong answer here would be a
 dosing recommendation.
 
@@ -293,7 +292,7 @@ the numerator buys $2.4$~BU of headroom, the next $20$ per cent buys $5.8$~BU.
 That shape argues in two directions at once. It is the case for treating a
 rising titre aggressively while the titre is still low, since headroom is cheap
 at the margin. It is also the reason the strategy runs out: the numerator is
-bounded by what can be infused, tolerated and paid for, and Mr~B's titre is
+bounded by what can be infused, tolerated and paid for, and the titre is
 not.
 
 \weanswer{Raising the numerator from $60$ to $90$ moves the protective
@@ -351,7 +350,7 @@ adherence to a threshold therapy is closer to no therapy than to full therapy,
 and interruptions caused by supply failure or funding gaps are not minor
 setbacks but a different outcome.
 
-That is also where this appendix touches the rest of the thesis. Whether Mr~B
+That is also where this appendix touches the rest of the thesis. Whether Profile~B
 completes ITI depends on continuous product supply for months, which is a
 Systemic Burdens variable, not a biomedical one.
 \end{reading}
@@ -379,8 +378,8 @@ critical, it settles at $12$~BU.
 The reading is the one clinicians already give when they insist on
 uninterrupted courses: ninety per cent of the required suppression does not buy
 ninety per cent of the benefit, it buys a persistent inhibitor at ninety per
-cent of the cost. Whether Mr~B receives $0.45$ or $0.405$ depends on whether
-his product supply holds for the months the course runs, which is a Systemic
+cent of the cost. Whether Profile~B receives $0.45$ or $0.405$ depends on whether
+product supply holds for the months the course runs, which is a Systemic
 Burdens variable and not a biomedical one.
 
 \weanswer{Suppression at ninety per cent of critical leaves a standing titre of
@@ -470,7 +469,7 @@ upfront-costly-but-long-term-saving, moderate-cyclic, and high-chronic-cost
 strategies.
 \end{remark}
 
-All of the above is deterministic, and the clinical events that matter to Mr~B
+All of the above is deterministic, and the clinical events that matter for Profile~B
 are not. A patient with an adequate average factor level still bleeds, and
 seeing why requires putting the noise back in.
 
@@ -490,16 +489,15 @@ bleeds, which is not what happens on a ward.
 
 The stochastic version replaces the settled level with a level that fluctuates
 around it, and the quantity of interest changes accordingly. It is no longer
-``is his average factor activity adequate'' but ``what fraction of the week does
-he spend below the threshold''. Those two questions can have opposite answers.
+``is average factor activity adequate'' but ``what fraction of the week is
+spent below the threshold''. Those two questions can have opposite answers.
 
 The accumulating joint damage term makes the consequence permanent. Each
 excursion below $S_{\text{prot}}$ adds to $Z$, and $Z$ does not recover fully.
-This is the formal version of the clinical fact that Mr~B's left knee was
-destroyed not by one catastrophic bleed but by a series of small ones over
-twenty years, each of which looked survivable at the time.
-
-A measure that averaged his factor levels would have called him adequately
+This is the formal version of the clinical observation that a joint is
+usually destroyed by a series of small bleeds over many years, each of which
+looked survivable at the time, and not by one catastrophic bleed. A measure
+that averaged factor levels would have classed the patient as adequately
 treated throughout.
 \end{reading}
 
@@ -533,9 +531,9 @@ and the inhibitor level at which gene therapy becomes uneconomic. Each is a
 point at which a small change in circumstance produces a large change in
 outcome, and each depends on something a health system controls rather than
 something the patient's biology decides. That is the connection back to the
-main argument: Mr~B's Systemic Burdens domain is not a background variable in
-this model, it sits inside the equations that determine whether his treatment
-works.
+main argument: for Profile~B the Systemic Burdens domain is not a background
+variable in this model. It sits inside the equations that determine whether
+treatment works.
 
 The eleven tests in \texttt{verification/tests/test\_haemophilia.py} assert
 these results, together with the worked examples above: the steady states at

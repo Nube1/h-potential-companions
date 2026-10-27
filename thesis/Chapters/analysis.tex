@@ -18,10 +18,9 @@ are derived last (\S\ref{sec:anal-scores}) and stress-tested
 (\S\ref{sec:anal-robust}).
 
 Two conventions run through the chapter. Every statistical term is given its
-clinical twin at first use, so that a reader who thinks in diagnostic tests can
-follow a reader who thinks in loadings. And Mrs~A, introduced in
-Chapter~\ref{ch:theory}, is the person the numbers are applied to
-wherever an abstraction needs a body.
+clinical counterpart at first use, so that a reader who thinks in diagnostic
+tests can follow a reader who thinks in loadings. Where an example is needed,
+it uses Profile~A of Table~\ref{tab:profiles}.
 \end{ataglance}
 
 This chapter presents the empirical evaluation of the proposed measurement model for the latent construct $H_{\text{potential}}$. The objective is to determine whether the theoretical framework developed in Chapter~\ref{ch:theory} can be operationalised as a statistically coherent higher-order latent variable within the National Health and Aging Trends Study (NHATS).
@@ -212,9 +211,9 @@ The clinical parallel is a diagnostic test's association with the disease it is
 meant to detect. A loading of 0.8 is a test that tracks the underlying state
 closely. A loading of 0.3 is a test that mostly measures something else.
 
-A cross-loading is the more interesting failure. Suppose Mrs~A's missed
-appointments were entered as an indicator of Systemic Burdens, on the reasoning
-that they record a transport barrier. If that indicator also loads on
+A cross-loading is the more interesting failure. Suppose missed appointments
+were entered as an indicator of Systemic Burdens, on the reasoning that they
+record a transport barrier. If that indicator also loads on
 Biomedical Potential, the model is saying that missed appointments partly track
 how ill people are, which is true and which makes the indicator a poor measure
 of structural constraint specifically. The remedy is conceptual rather than
@@ -351,13 +350,14 @@ ratio compares correlations across constructs with correlations within them,
 and it catches failures that Fornell--Larcker misses, which is why both are
 reported.
 
-The live risk here is between Social Modifiers and Systemic Burdens. Mrs~A's
-thin social support and her forty-minute bus journey are conceptually
-different, one relational and one structural, and they may not be empirically
-different, because the same disadvantage tends to produce both. An HTMT ratio
-near 1.0 between those two domains would mean the theory's three-way partition
-is a two-way partition in the data, and the honest response would be to report
-two domains rather than to insist on three.
+The main risk here lies between Social Modifiers and Systemic Burdens. In
+Profile~A both contextual domains are low. Weak social support and a barrier to
+reaching care are conceptually different, one relational and one structural,
+but they may not be empirically different, because the same disadvantage tends
+to produce both. An HTMT ratio near 1.0 between those two domains would mean
+the theory's three-way partition is a two-way partition in the data, and the
+right response would be to report two domains rather than to insist on
+three.
 \end{reading}
 
 \begin{workedexample}[meas-omega]{Composite reliability and AVE from a set of loadings}
@@ -526,9 +526,9 @@ mostly a biological and social construct, and that structural burden is largely
 doing its own work outside it.
 
 Collapsing to a scalar in that situation would average away the one domain a
-health system can act on directly. For Mrs~A it would mean her score improves
-if her knees improve and barely moves if the bus route changes, which inverts
-the practical point of measuring her at all. A weak third loading is therefore
+health system can act on directly. For Profile~A the scalar would rise with
+$P$ and barely move with $R$, which defeats the practical purpose of the
+measure. A weak third loading is therefore
 a reason to report the profile, not a reason to report the scalar with a
 caveat.
 \end{reading}
@@ -629,10 +629,10 @@ pressure reading is repeated before anyone acts on it.
 
 The consequence is systematic rather than random. People whose indicators all
 point the same way are estimated precisely and shrink little. People with an
-unusual pattern are estimated imprecisely and shrink a lot. Mrs~A, adequate
-biologically and poor on both contextual domains, is the second kind. Her point
-estimate will sit closer to the mean than her circumstances warrant, and her
-standard error will be wide.
+unusual pattern are estimated imprecisely and shrink a lot. Profile~A,
+moderate on the biomedical domain and low on both contextual domains, is the
+second kind. Its point estimate will sit closer to the mean than its domain
+values warrant, and its standard error will be wide.
 
 This matters for the next chapter. Shrinkage compresses the range of the
 predictor, and a compressed predictor produces a hazard ratio nearer to one
@@ -651,14 +651,14 @@ $\rho=4.557/5.557=0.820$ and the determinacy is $\sqrt{0.820}=0.906$.
 Simulate two hundred thousand people from the model, keep those whose true
 $\zeta$ lies within $0.05$ of $-2.00$, and average their scores. The
 proposition predicts $0.820\times(-2.00)=-1.64$, and the simulation returns
-$-1.64$. Someone genuinely two standard deviations below the mean is reported
+$-1.64$. A person two standard deviations below the mean is reported
 as $1.64$ below it.
 
 Now drop the two strongest indicators and score the same people on the
 remaining two. Information falls to $1.294$ and $\rho$ to $0.564$, so the
 proposition puts the same person at $0.564\times(-2.00)=-1.13$ and the
 simulation returns $-1.15$, the difference being Monte Carlo noise over the
-thousand or so people in the window. Nothing about her has changed. The
+thousand or so people in the window. The true value has not changed. The
 instrument has less to go on, so the model leans harder on the population
 average.
 
@@ -749,4 +749,4 @@ question had not arisen.
 \end{reading}
 
 \section{Summary}
-This chapter reported the development and validation of the $H_{\text{potential}}$ measurement model. Subject to the results above, it establishes whether the construct can be represented as a valid higher-order latent variable with acceptable fit, reliability, convergent validity, and discriminant validity, which is the first study hypothesis, and it derives the individual scores used in the analyses that follow. The next chapter tests whether those scores predict five-year all-cause mortality and first unplanned hospitalisation, and whether they add value over established measures.
+This chapter reported the development and validation of the $H_{\text{potential}}$ measurement model. Subject to the results above, it establishes whether the construct can be represented as a valid higher-order latent variable with acceptable fit, reliability, convergent validity, and discriminant validity, which is the first study hypothesis, and it derives the individual scores used in the analyses that follow. The next chapter tests whether those scores predict five-year all-cause mortality and first overnight hospital stay, and whether they add value over established measures.

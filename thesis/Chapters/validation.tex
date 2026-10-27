@@ -21,12 +21,11 @@ mechanisms in haemophilia, since a model can predict well and still be wrong
 about why. \S\ref{sec:hemo_roadmap} sets out the five phases of external
 validation that would settle the question with data.
 
-Mr~B carries the chapter. He is 58, has severe haemophilia~A with a high-titre
-inhibitor, a destroyed left knee and a target right ankle, and works part-time.
-His biology does not change between jurisdictions; his profile does, from
-roughly $(0.30,0.70,0.85)$ where treatment is funded to $(0.30,0.70,0.20)$
-where it is rationed. Every technical passage below is read back through that
-pair of numbers.
+Profile~B of Table~\ref{tab:profiles} serves as the reference case. Its
+biomedical coordinate is the same in every jurisdiction; its structural
+coordinate is not, and the profile moves from $(0.30,0.70,0.85)$ where
+treatment is funded to $(0.30,0.70,0.20)$ where it is rationed. The technical
+passages below are read against that pair of values.
 \end{ataglance}
 
 \begin{quote}
@@ -131,16 +130,16 @@ renaming $\boldsymbol\xi$ does not prove construct invariance.
 \begin{reading}[What indicator substitution does and does not buy]
 The derivation makes a narrow point with wide consequences. Calling a domain
 Biomedical Potential in both cohorts keeps the name; it does not keep the
-ruler. Mrs~A's biomedical score of about $0.55$ comes from gait speed, grip
-strength, cognition and chronic disease count. Mr~B's $0.30$ would come from
-joint health, bleed rate, inhibitor status and mobility. Nothing measured is
-common to the two, so the two numbers do not live on one scale, and the
-sentence ``Mr~B has less biomedical potential than Mrs~A'' is not supported by
-anything in the model.
+ruler. The biomedical score of about $0.55$ for Profile~A comes from gait
+speed, grip strength, cognition and chronic disease count. The $0.30$ for
+Profile~B would come from joint health, bleed rate, inhibitor status and
+mobility. No indicator is common to the two, so the two numbers do not lie on
+one scale, and the statement that Profile~B has less biomedical potential than
+Profile~A has no support in the model.
 
-What the numbers do support is position within a cohort. Mr~B at $0.30$ can be
-placed against other adults with haemophilia, and Mrs~A at $0.55$ against other
-older adults. Making the two comparable would need indicators measured in both
+What the numbers do support is position within a cohort. Profile~B at $0.30$
+can be placed against other adults with haemophilia, and Profile~A at $0.55$
+against other older adults. Making the two comparable would need indicators measured in both
 cohorts, or a linking study designed for the purpose. Neither exists here, and
 the chapter does not pretend otherwise.
 \end{reading}
@@ -192,8 +191,8 @@ where the indicators land. Health literacy loading on Biomedical Potential
 would say the assignment is wrong.
 
 The third is not a failure so much as a step that is easy to skip. Skip it and
-the haemophilia score has no stated units, at which point Mr~B's $0.30$ and
-Mrs~A's $0.55$ look like numbers on one ruler when they are numbers on two.
+the haemophilia score has no stated units, and the $0.30$ of Profile~B and
+the $0.55$ of Profile~A appear to share one scale when they lie on two.
 \end{reading}
 
 The three domains are taken one at a time below, starting with the biological
@@ -210,9 +209,10 @@ Annualised bleed rate (ABR) provides a complementary measure of disease activity
 
 Functional mobility constitutes another essential indicator. Although mobility is influenced partly by environmental and social factors, it remains closely linked to cumulative biological integrity in haemophilia because progressive arthropathy directly impairs physical function. Inhibitor status represents a further clinically important indicator: development of inhibitors against replacement clotting factor substantially complicates treatment, reduces therapeutic effectiveness and increases the risk of recurrent bleeding and progressive joint damage. Finally, age-related comorbidity becomes increasingly important as life expectancy improves, since older adults with haemophilia now experience hypertension, diabetes mellitus, cardiovascular disease, chronic kidney disease and other conditions that interact with haemophilia-specific pathology to influence functional reserve. Taken together, these indicators provide a multidimensional representation of Biomedical Potential that extends beyond laboratory measures of clotting factor activity.
 
-None of these indicators says whether the person can act on what it
-records. A destroyed knee means one thing to a man who lives twenty minutes
-from a haemophilia centre and another to a man who lives four hours from one.
+None of these indicators records whether the person can act on the capacity
+it measures. The same joint damage has different consequences for a person who
+lives twenty minutes from a haemophilia centre and for one who lives four
+hours from it.
 
 \subsection{Social Modifiers}
 
@@ -242,24 +242,22 @@ single latent construct actually rests.
 
 Although presented separately for conceptual clarity, the three domains are unlikely to operate independently, and their principal strength lies in their interaction. Excellent Biomedical Potential cannot be fully realised if Systemic Burdens prevent access to treatment. Similarly, optimal healthcare systems may achieve only limited benefit when severe biological impairment has already occurred. Social Modifiers mediate many of these relationships by determining whether patients are able to engage effectively with available healthcare resources and sustain appropriate long-term self-management. This interaction represents one of the principal conceptual advances of the $H_{\text{potential}}$: rather than treating biological disease, social context and healthcare systems as competing explanations for health outcomes, the framework views them as complementary determinants of a single latent capacity. The proposed mapping should consequently be regarded as a theoretically grounded starting point for empirical model development rather than a final measurement instrument.
 
-\begin{workedexample}[hem:mrb]{Mr~B's realised capability from haemophilia indicators}
-Score Mr~B on the indicators of Table~\ref{tab:hemo_mapping}. His Haemophilia
-Joint Health Score is poor, his annualised bleed rate is high, he carries a
-high-titre inhibitor and his mobility is limited, which puts Biomedical
-Potential at $P=0.30$. He attends a comprehensive-care centre, his partner
-administers treatment and his health literacy is good, giving Social Modifiers
-$S=0.70$. Systemic Burdens are scored from supply-chain stability, funding
+\begin{workedexample}[hem:mrb]{Realised capability of Profile~B from haemophilia indicators}
+Score Profile~B on the indicators of Table~\ref{tab:hemo_mapping}. A poor
+Haemophilia Joint Health Score, a high annualised bleed rate, a high-titre
+inhibitor and limited mobility put Biomedical Potential at $P=0.30$. Access to
+a comprehensive-care centre, caregiver support with treatment and good health
+literacy give Social Modifiers $S=0.70$. Systemic Burdens are scored from supply-chain stability, funding
 security and out-of-pocket cost, then reverse coded to structural freedom
 $R=1-B$. Under a funded regimen $R=0.85$; where bypassing agents are rationed
-and the nearest centre is in another province, $R=0.20$. The scores are
+and specialist care is distant, $R=0.20$. The scores are
 illustrative, since no haemophilia cohort is analysed here.
 
 With $\alpha=0.5$ the funded multiplier is $\sqrt{0.70\times0.85}=0.771$ and
 the rationed one is $\sqrt{0.70\times0.20}=0.374$. Realised capability is
-$H=0.30\times0.771=0.231$ funded and $H=0.30\times0.374=0.112$ rationed. Read
-as a fraction of what his biology allows, he reaches $77$ per cent of his
-biomedical potential under the funded regimen and $37$ per cent under the
-rationed one, and the ratio between the two states is $2.06$.
+$H=0.30\times0.771=0.231$ funded and $H=0.30\times0.374=0.112$ rationed. As a
+fraction of biomedical potential, $H$ is $77$ per cent under the funded regimen
+and $37$ per cent under the rationed one, and the ratio between the two states is $2.06$.
 
 \begin{wecode}[Python]
 from hpv.crf import H, contextual_mean
@@ -273,8 +271,8 @@ print(H(P, S, 0.85) / H(P, S, 0.20))    # 2.06
 \end{wecode}
 
 \weanswer{$H=0.231$ funded and $H=0.112$ rationed, that is $77$ and $37$ per
-cent of his biomedical potential, a ratio of $2.06$. Asserted by
-\texttt{test\_worked\_example\_hem\_mr\_b\_funded\_and\_rationed}.}
+cent of biomedical potential, a ratio of $2.06$. Asserted by
+\texttt{test\_worked\_example\_hem\_profile\_b\_favourable\_and\_unfavourable}.}
 \end{workedexample}
 
 A mapping of this kind is defensible only if the sequence that produced it is
@@ -476,10 +474,10 @@ decision the same afternoon, and doing so shows what a Biomedical Potential
 score is standing in for.
 
 \begin{workedexample}[hem:dose]{Moving the inhibitor threshold by changing the dose}
-Appendix~\ref{app:hemo_dynamics} fixes a regimen for Mr~B: delivered input
+Appendix~\ref{app:hemo_dynamics} fixes a regimen for Profile~B: delivered input
 $f+h=60$, neutralisation $\alpha=4$, half-neutralisation titre $K_I=5$~BU,
 Hill exponent $\beta=2$ and clearance $\lambda=1$, with a protective activity
-of $S_{\text{prot}}=20$. At that input the titre he can carry is $5.0$~BU. The
+of $S_{\text{prot}}=20$. At that input the tolerable titre is $5.0$~BU. The
 clinical question is not what the threshold is, but which way it moves when the
 dose moves, because the dose is the part the clinic controls.
 
@@ -492,7 +490,7 @@ so the last increment buys more than the first: $60$ to $75$ adds $2.4$~BU,
 while $75$ to $90$ adds $5.8$.
 
 Two ends of the range have no threshold at all. At an input of $100$ or above
-the regimen holds him at or over $S_{\text{prot}}$ whatever the titre, and at
+the regimen holds factor activity at or over $S_{\text{prot}}$ whatever the titre, and at
 $20$ or below it never reaches $S_{\text{prot}}$ even at zero titre. The code
 raises an error in both cases rather than returning a number.
 
@@ -512,17 +510,17 @@ except ValueError as e:
 
 \weanswer{Tolerable titres of $3.37$, $5.00$, $7.42$ and $13.23$~BU as the
 delivered input rises from $45$ to $90$. A half increase in dose nearly triples
-the titre Mr~B can carry. Asserted by
+the tolerable titre. Asserted by
 \texttt{test\_worked\_example\_hem\_threshold\_moves\_with\_dose}.}
 \end{workedexample}
 
 \begin{reading}[Why this belongs in a measurement chapter]
-Mr~B at $4$~BU is protected on the $60$ regimen and Mr~B at $8$~BU is not, yet
-both are recorded as ``inhibitor positive'' by the indicator in
+On the $60$ regimen a titre of $4$~BU is protected and a titre of $8$~BU is
+not, yet both are recorded as ``inhibitor positive'' by the indicator in
 Table~\ref{tab:hemo_mapping}. The indicator is a summary of a threshold that
-depends on the regimen as much as on the man, which is the sense in which
-Biomedical Potential in haemophilia is never purely biomedical: the dose he is
-on is a funding decision.
+depends on the regimen as much as on the person. In this sense Biomedical
+Potential in haemophilia is never purely biomedical, because the dose is a
+funding decision.
 
 That is an argument for scoring the domain from the titre and the regimen
 together where both are recorded, and for saying plainly, where they are not,
@@ -581,18 +579,18 @@ At a glance, the roadmap comprises the following steps.
   \item \textbf{Govern and report.} Obtain ethics approval, observe data-use agreements, and report against the same standards used in the development study.
 \end{enumerate}
 
-\begin{reading}[The five phases as they would apply to Mr~B]
-Phase 1 enrols him: 58, severe haemophilia~A, a high-titre inhibitor, one
-destroyed joint and part-time work, recorded with the same variables as
-everyone else in the registry. Phase 2 asks whether his joint score, bleed
-rate, inhibitor status and mobility behave as one domain in the data, and
+\begin{reading}[The five phases applied to Profile~B]
+Phase 1 enrols adults of the kind Profile~B represents and records them with
+the same variables as every other registry member. Phase 2 asks whether joint
+score, bleed rate, inhibitor status and mobility behave as one domain in the
+data, and
 whether the travel and funding items behave as two more. Phase 3 fixes what a
 score of, say, $0.23$ means in this population, since it need not mean what
-$0.23$ meant in NHATS. Phase 4 asks the only question a haematologist will care
-about: does the score, taken today, say anything about his next joint bleed or
-his next admission that his factor level and joint score had not already said?
-Phase 5 is the permission to ask any of it and the reporting that lets someone
-else check the answer.
+$0.23$ meant in NHATS. Phase 4 asks the question of clinical interest: does
+the score, taken at baseline, predict the next joint bleed or the next
+admission beyond what factor level and joint score already predict? Phase 5
+supplies the ethics approval for the study and the reporting that lets others
+check the answer.
 
 If phase 4 returns nothing, the framework has not been shown to be wrong about
 haemophilia. It has been shown to add nothing to what haemophilia care already
@@ -637,18 +635,18 @@ maps to absolute risk.
 \end{derivation}
 
 \begin{reading}[Two different operations both called recalibration]
-Suppose Mr~B scores $0.23$ in a jurisdiction that funds his treatment. Two
+Suppose Profile~B scores $0.23$ in a jurisdiction that funds treatment. Two
 questions follow, and the derivation keeps them apart.
 
 The first is what $0.23$ means. In the ageing cohort the lowest fifth of the
-distribution might begin at $0.28$, which would place Mr~B below it. Among
+distribution might begin at $0.28$, which would place Profile~B below it. Among
 adults with haemophilia and inhibitors the lowest fifth might begin at $0.19$,
-which would not. His score has not moved. The reference population has, and the
+which would not. The score has not moved. The reference population has, and the
 cut-point with it. Measurement recalibration is the re-estimation of loadings,
 intercepts and interpretive thresholds against the new distribution.
 
 The second is what $0.23$ predicts. If the model carried over from the ageing
-cohort puts his five-year risk of unplanned admission at 12 per cent and the
+cohort puts the five-year risk of hospitalisation at 12 per cent and the
 haemophilia cohort observes 20 per cent at that score, the intercept $a$
 absorbs the difference. If the model spreads high and low scorers too far
 apart, the slope $b$ falls below one and pulls predictions back towards the
@@ -672,9 +670,9 @@ anchored to a fixed observed clinical criterion therefore falls by
 $0.072/0.80=0.09$. A cut-point set at $\xi=0.28$ in the ageing cohort becomes
 $0.19$ in the haemophilia cohort.
 
-Mr~B scores $0.23$. Against the developmental cut-point he is below it and is
-flagged; against the recalibrated one he is above it and is not. His indicators
-have not changed and neither has his capability. What changed is the intercept,
+Profile~B scores $0.23$. The score lies below the developmental cut-point and
+is flagged; it lies above the recalibrated one and is not. The indicators have
+not changed and neither has the capability. What changed is the intercept,
 which is why Derivation~\ref{der:recalibration} treats the re-estimation of
 $\boldsymbol\tau^*$ as part of translation and not as a technical afterthought.
 
@@ -684,13 +682,13 @@ cut_dev = 0.28
 cut_hem = cut_dev - delta / lam
 print(f"cut-point {cut_dev:.2f} -> {cut_hem:.2f}  (shift {delta / lam:.2f})")
 
-mr_b = 0.23
+profile_b = 0.23
 for label, cut in (("developmental", cut_dev), ("recalibrated", cut_hem)):
-    print(f"{label:14s} flagged: {mr_b < cut}")
+    print(f"{label:14s} flagged: {profile_b < cut}")
 \end{wecode}
 
-\weanswer{The cut-point falls from $0.28$ to $0.19$, and Mr~B at $0.23$ crosses
-it in the direction that removes his flag. Asserted by
+\weanswer{The cut-point falls from $0.28$ to $0.19$, and Profile~B at $0.23$ crosses
+it in the direction that removes the flag. Asserted by
 \texttt{test\_worked\_example\_hem\_intercept\_shift\_moves\_cut\_point}.}
 \end{workedexample}
 

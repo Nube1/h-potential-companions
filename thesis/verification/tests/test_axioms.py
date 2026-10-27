@@ -155,8 +155,8 @@ def test_proposition_relational_denies_ceiling():
 
 def test_definition_deprivation_count():
     """Definition A.13 and Worked Example A.4: counting, not smoothing. At a
-    threshold of 0.5 Mrs A is deprived in two domains of three, Mr B rationed
-    in two of three, and Mr B funded in one of three."""
+    threshold of 0.5 Profile A is deprived in two domains of three, Profile B rationed
+    in two of three, and Profile B funded in one of three."""
     assert crf.deprivation_count((0.55, 0.35, 0.40)) == pytest.approx(2 / 3)
     assert crf.deprivation_count((0.30, 0.70, 0.20)) == pytest.approx(2 / 3)
     assert crf.deprivation_count((0.30, 0.70, 0.85)) == pytest.approx(1 / 3)
@@ -166,9 +166,9 @@ def test_definition_deprivation_count():
             == crf.deprivation_count((0.05, 0.9, 0.9)))
 
 
-def test_worked_example_four_distinct_objects_for_mrs_a():
+def test_worked_example_four_distinct_objects_for_profile_a():
     """Worked Example A.7: the aggregate is a rule, not a measurement.
-    Mrs A's profile is fixed, and the number attached to it moves with the
+    Profile A's profile is fixed, and the number attached to it moves with the
     substitution parameter alone. Nothing about her changes between rows."""
     profile = (0.55, 0.35, 0.40)
     geometric = crf.H(*profile, 0.0)

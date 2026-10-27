@@ -145,7 +145,7 @@ def test_time_varying_score_is_differentiable():
     assert numeric == pytest.approx(analytic, rel=1e-6)
 
 
-def test_worked_example_trough_level_for_mr_b():
+def test_worked_example_trough_level_for_profile_b():
     """Worked Example B.2: the fixed point read as a trough. Numerator over
     denominator, with the inhibitor sitting in the denominator, so doubling
     the denominator exactly halves the trough."""

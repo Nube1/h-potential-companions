@@ -87,7 +87,7 @@ def test_theorem_gap_decomposition_is_exact():
 
 
 def test_worked_example_gap_is_entirely_structural():
-    """Worked Example 4.3: Mr B funded against Mr B rationed. Nothing about
+    """Worked Example 4.3: Profile B funded against Profile B rationed. Nothing about
     his body or his relationships differs, so the whole gap is structural."""
     bio, soc, stc, total = crf.gap_decomposition(MR_B_FUNDED, MR_B_RATIONED)
     assert bio == pytest.approx(0.0, abs=1e-12)
@@ -98,7 +98,7 @@ def test_worked_example_gap_is_entirely_structural():
 
 
 def test_worked_example_policy_gradient_points_at_the_bottleneck():
-    """Worked Example 4.4: for Mrs A the marginal return is higher on the
+    """Worked Example 4.4: for Profile A the marginal return is higher on the
     domain she is worse in. The gradient finds the bottleneck without being
     told that bottlenecks matter."""
     gp, gs, gr = crf.gradients(*MRS_A)
@@ -118,7 +118,7 @@ def test_substitution_ordering_across_rho():
 
 
 def test_worked_example_rho_reverses_the_ranking():
-    """Worked Example 4.1: Mrs A against Mr B rationed. The additive rule
+    """Worked Example 4.1: Profile A against Profile B rationed. The additive rule
     ranks him first, the bottleneck rule ranks her first, the geometric rule
     calls them equal. The data cannot choose between the three."""
     a, b = (0.35, 0.40), (0.70, 0.20)
@@ -163,7 +163,7 @@ def test_worked_example_transfer_only_registers_above_eps_zero():
 
 def test_proposition_social_weight():
     """Proposition E.10: the marginal social weight is (EDE/H_i)^eps, so a
-    decision-maker at eps=2 is committed to counting Mrs A almost four times."""
+    decision-maker at eps=2 is committed to counting Profile A almost four times."""
     assert crf.social_weight(0.206, 0.40, 0.0) == pytest.approx(1.0)
     assert crf.social_weight(0.206, 0.40, 1.0) == pytest.approx(1.942, abs=1e-3)
     assert crf.social_weight(0.206, 0.40, 2.0) == pytest.approx(3.77, abs=1e-2)
@@ -199,7 +199,7 @@ def test_theorem_lit_choice_map_is_not_injective():
 
 def test_proposition_lit_heuristic_admits_negative_values():
     """Proposition 2.2: h = (LQ)S - B has range [-1, 1], so it cannot be a
-    capability scale. Mrs A's own profile puts her below zero."""
+    capability scale. Profile A's own profile puts her below zero."""
     h = lambda lq, s, b: lq * s - b
     assert h(0.55, 0.35, 0.60) == pytest.approx(-0.4075)
     assert h(0.0, 0.0, 1.0) == pytest.approx(-1.0)     # infimum, attained
@@ -242,7 +242,7 @@ def test_worked_example_lit_ranking_reversal():
 
 def test_worked_example_lit_qaly_versus_crf():
     """Worked example: a QALY calculation and the CRF rank two interventions
-    for Mrs A in opposite orders, because they answer different questions."""
+    for Profile A in opposite orders, because they answer different questions."""
     base = crf.H(0.55, 0.35, 0.40)
     knee = crf.H(0.70, 0.35, 0.40)          # raises P
     transport = crf.H(0.55, 0.35, 0.70)     # raises R

@@ -11,17 +11,13 @@
 \RequirePackage{booktabs}
 \tcbuselibrary{skins,breakable}
 
-% ---- roadmap box: the argument in outline, in plain words ----
-\newtcolorbox{ataglance}[1][At a glance]{%
-  breakable, enhanced, colback=black!3, colframe=black!55, boxrule=0.6pt,
-  arc=2pt, left=9pt, right=9pt, top=7pt, bottom=7pt,
-  title={#1}, fonttitle=\bfseries, coltitle=black, fontupper=\small}
+% ---- traditional layout: the former roadmap box is set as plain text ----
+% Examiners expect a conventional thesis, so the chapter outline reads as an
+% ordinary opening paragraph with no frame or title.
+\newenvironment{ataglance}[1][]{\par}{\par\medskip}
 
-% ---- reading box: what the equation means in the domain ----
-\newtcolorbox{reading}[1][Reading]{%
-  breakable, enhanced, colback=black!2, colframe=black!40,
-  boxrule=0pt, leftrule=2.2pt, arc=0pt, left=9pt, right=9pt, top=4pt, bottom=4pt,
-  title={#1}, fonttitle=\itshape, coltitle=black!60, fontupper=\small}
+% ---- the former reading box is set as ordinary paragraphs ----
+\newenvironment{reading}[1][]{\par}{\par}
 
 % ---- named step callouts (Seed / Junction / Perturbation / Stability) ----
 \newcommand{\hpstep}[2]{\par\smallskip\noindent\textbf{\textsf{#1.}}\quad #2\par\smallskip}
@@ -57,14 +53,9 @@
   \refstepcounter{workedexample}%
   \addcontentsline{workedexample}{workedexample}{\protect\numberline{\theworkedexample}#2}%
   \ifx\relax#1\relax\else\label{ex:#1}\fi
-  \begin{tcolorbox}[breakable, enhanced, sharp corners,
-    colback=black!2, colframe=black!65, boxrule=0pt, leftrule=2.6pt,
-    left=9pt, right=9pt, top=6pt, bottom=6pt,
-    title={Worked Example \theworkedexample\quad #2},
-    fonttitle=\bfseries\small, coltitle=black, colbacktitle=black!8,
-    fontupper=\small]%
+  \noindent\textbf{Example \theworkedexample}\enspace(#2).\enspace\ignorespaces
 }{%
-  \end{tcolorbox}\par\medskip
+  \par\medskip
 }
 
 % ---- code block inside a worked example ----
@@ -76,14 +67,14 @@
   showstringspaces=false, columns=fullflexible,
   xleftmargin=6pt, aboveskip=4pt, belowskip=4pt,
 }
-\lstnewenvironment{wecode}[1][Python]
-  {\lstset{style=hpcode,language=#1}}{}
+% Code listings are kept in the source and in the verification suite but are
+% not printed: a traditional thesis carries code in its repository and
+% appendices, not in the running text.
+\RequirePackage{comment}
+\excludecomment{wecode}
 
 % ---- the checked answer line that closes a worked example ----
-\newcommand{\weanswer}[1]{%
-  \par\smallskip\noindent
-  \begingroup\raggedright\small
-  $\blacktriangleright$\enspace\textbf{Answer.} #1\par\endgroup}
+\newcommand{\weanswer}[1]{\par\smallskip\noindent #1\par}
 
 % ---- pointer to the test that asserts a result ----
 % Replaces the V9 \volos macro, which announced test identifiers for tests

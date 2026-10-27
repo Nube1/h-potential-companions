@@ -20,8 +20,8 @@ a construct rather than a risk score.
 
 Three equations carry the chapter: the second-order factor model
 \eqref{eq:secondorder}, the factor score \eqref{eq:factorscore}, and the Cox
-model \eqref{eq:cox}. Each is read in plain words and applied to Mrs~A where it
-appears.
+model \eqref{eq:cox}. Each is read in plain words and applied to Profile~A
+(Table~\ref{tab:profiles}) where it appears.
 \end{ataglance}
 
 \noindent This chapter specifies the empirical strategy used to evaluate the theoretical proposition developed in Chapter~\ref{ch:theory}. The central methodological principle is that measurement and prediction are different inferential tasks. The measurement model asks what the construct is and whether the proposed indicators represent it coherently. The prognostic analysis asks whether the resulting construct is associated with subsequent outcomes. Indicators are therefore selected and the measurement structure specified without using future outcome information.
@@ -194,17 +194,17 @@ mostly doing its own work.
 \end{reading}
 
 The size of $\gamma_k$ is what decides whether a single $H_{\text{potential}}$
-number is defensible. For Mrs~A, the question is whether her arthritic knees,
-her isolation and her missed appointments are three readings of one underlying
-deficit or three separate problems that happen to co-occur in the same woman. If
+number is defensible. For Profile~A, the question is whether its low values on
+the three domains are three readings of one underlying deficit or three
+separate deficits that happen to co-occur in the same person. If
 $\gamma_{\mathrm{Bio}}$, $\gamma_{\mathrm{Soc}}$ and $\gamma_{\mathrm{Sys}}$
 are all near $0.8$, the domains move together and a summary score loses little.
 If $\gamma_{\mathrm{Sys}}$ is $0.3$ while the other two are $0.8$, then the
 structural domain is largely independent, and collapsing it into a single score
-would average away the one thing about Mrs~A that a health system could
-actually change. That is not a statistical inconvenience; it is the difference
-between a measure that directs a minibus to her street and a measure that
-records her as frail.
+would average away the domain of Profile~A that a health system could change.
+The difference is substantive: a score that keeps the structural domain points
+to a structural remedy, while a collapsed score records only a general
+deficit.
 
 Because only three first-order factors are proposed, the higher-order structure can be weakly informative or effectively just identified under common identification constraints. A good global fit statistic therefore cannot by itself establish the value of the second-order model. The analysis reports factor loadings, residual structure, factor determinacy \citep{grice_2001} and the substantive meaning of the domains, and compares the second-order model with the correlated-factor alternative.
 
@@ -272,11 +272,11 @@ that most published composite scores never report.
 This is the same logic as a Bayesian reading of a diagnostic test, and it has
 the same well-known consequence. A person with an unusual pattern of answers
 gets pulled towards the population average, because the model has little
-information about them and falls back on the base rate. Mrs~A, whose biomedical
-indicators are middling and whose structural indicators are poor, will be
-shrunk towards the mean more than a person whose indicators all point the same
-way. Her point estimate will therefore understate how badly she is placed, and
-the interval around it will be wide. Reporting $\widehat H_i$ without that
+information about them and falls back on the base rate. Profile~A, with middling
+biomedical indicators and poor structural indicators, will be shrunk towards
+the mean more than a profile whose indicators all point the same way. Its point
+estimate will therefore understate how low it lies, and the interval around it
+will be wide. Reporting $\widehat H_i$ without that
 interval would repeat the error the thesis is trying to avoid: presenting an
 estimate as though it were an observation.
 
@@ -287,7 +287,7 @@ The measurement half of the chapter ends here. Everything that follows asks whet
 \section{Prognostic Outcomes}
 \label{sec:prognostic}
 
-Two prospective outcomes are evaluated separately: five-year all-cause mortality and first unplanned hospitalisation. They are treated as distinct outcomes rather than combined into a single primary endpoint because they represent different processes. Mortality is terminal, whereas hospitalisation is a healthcare-use event influenced by disease, social context, healthcare access and practice patterns.
+Two prospective outcomes are evaluated separately: five-year all-cause mortality and first overnight hospital stay. They are treated as distinct outcomes rather than combined into a single primary endpoint because they represent different processes. Mortality is terminal, whereas hospitalisation is a healthcare-use event influenced by disease, social context, healthcare access and practice patterns.
 
 For hospitalisation, death before first hospitalisation creates a competing event. The primary association analysis uses a cause-specific hazard model \citep{prentice_1978}, with cumulative-incidence analysis and a subdistribution-hazard sensitivity analysis \citep{fine_gray_1999} used to distinguish etiological association from prediction of observed event probability.
 
@@ -487,10 +487,10 @@ follow-up.
 Suppose the analysis returns $\exp(\beta_H)=0.72$ per standard deviation. Read
 directly, a person one standard deviation above the mean in realised capability
 has roughly a $28$ per cent lower instantaneous risk of death than an otherwise
-identical person at the mean, throughout the five years. Mrs~A sits about one
-standard deviation below the mean, so her multiplier relative to the mean is
-$1/0.72\approx1.39$: about forty per cent more risk, every month, than a woman
-matched to her on everything in $\mathbf{x}_i$.
+identical person at the mean, throughout the five years. For a person one
+standard deviation below the mean, the multiplier relative to the mean is
+$1/0.72\approx1.39$: about forty per cent more risk, every month, than a
+person matched on everything in $\mathbf{x}_i$.
 
 The phrase ``matched on everything in $\mathbf{x}_i$'' is where the interesting
 question lives. If $\mathbf{x}_i$ already contains a frailty index, then
@@ -603,10 +603,10 @@ combine intervention effects with jurisdiction-specific costs, displaced
 health, budgets and distributive judgements. A failure at any stage limits the
 claim that may be carried to the next.
 
-This is the stage at which Mr~B enters. He is not in NHATS, he is not American
-in any necessary sense, and his disease was not represented in the calibration
-sample; the haemophilia work in Chapter~\ref{ch:translational} is therefore
-presented as the first three stages of this sequence and no further.
+Profile~B belongs to this stage. Haemophilia is not represented in the NHATS
+calibration sample, so the haemophilia work in
+Chapter~\ref{ch:translational} is presented as the first three stages of this
+sequence and no further.
 
 \section{Ethics}
 

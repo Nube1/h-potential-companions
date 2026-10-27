@@ -37,52 +37,33 @@ A third bridge concerns frailty and reserve. Frailty research provides a powerfu
 
 These bridges lead to the proposed construct, $H_{\text{potential}}$, introduced in Chapter~\ref{ch:introduction}. It is defined as health-related capability in later life: the combination of biological and functional capacities available to an individual and the enabling or constraining conditions through which those capacities can be realised. The definition is deliberately relational. It does not treat social disadvantage as a biological property, nor does it treat future mortality as part of the definition of health.
 
-Before the theory is developed, two illustrative profiles are introduced against which each later claim can be checked.
+Before the theory is developed, two reference profiles are fixed so that later results can be illustrated with the same numbers throughout.
 
-\section{Two illustrative profiles}
+\section{Two Reference Profiles}
 \label{sec:intro-cases}
 
-Abstract argument about health measurement is easy to agree with and hard to
-test. To keep the argument honest, two people are carried through the whole
-thesis. Neither is a real patient or a case study; both are composites assembled from the
-distributions in the data sources used here. They are introduced now, applied
-to every equation as it appears, and revisited in the final chapter.
+The formal results of this thesis are illustrated with two reference profiles. They are sets of domain values chosen to make the properties of the realisation function visible, not descriptions of patients, and no clinical or biographical detail is attached to them. Table~\ref{tab:profiles} gives their values.
 
-\begin{ataglance}[Mrs~A, the population case]
-Mrs~A is 78, widowed, and lives alone on the second floor of a walk-up flat.
-She has knee osteoarthritis, mild cognitive impairment, hypertension and early
-chronic kidney disease. She dresses and washes herself but no longer carries
-shopping up the stairs. Her income is a state pension. She does not drive; her
-clinic is forty minutes away by two buses, and she has missed three of her last
-eight appointments. Her daughter telephones daily and visits monthly from
-another city.
+Profile~A has moderate biomedical potential and low values on both contextual domains. It is used where the question concerns measurement, prediction or comparison within a general ageing population of the kind sampled by NHATS. Profile~B has low biomedical potential and a high value of social enablement, and it is given in two versions that differ only in structural freedom. It is used where the question concerns transportability across health systems, as in the haemophilia application of Chapter~\ref{ch:translational}. The two are chosen because they differ in opposite directions: in Profile~A the contextual domains do most of the work, while in Profile~B the biomedical domain is fixed and the structural domain alone changes.
 
-Mrs~A stands for the population the empirical work actually studies: an older
-adult of the kind sampled by the National Health and Aging Trends Study, whose
-clinical problems are unremarkable and whose circumstances do most of the work.
-She is the case used whenever the question is measurement, prediction or
-population comparison.
-\end{ataglance}
+\begin{table}[htbp]
+\centering
+\caption{Reference profiles used to illustrate the formal results. Values are on the unit scale of Definition~\ref{def:int:profile}; the natural-scale values of $P$ are in quality-adjusted life-years.}
+\label{tab:profiles}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{4.2cm} c c c c}
+\toprule
+\textbf{Profile} & $P$ (unit) & $P$ (natural) & $S$ & $R$ \\
+\midrule
+Profile A & 0.55 & 8.4 & 0.35 & 0.40 \\
+Profile B, structure favourable & 0.30 & 4.0 & 0.70 & 0.85 \\
+Profile B, structure unfavourable & 0.30 & 4.0 & 0.70 & 0.20 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{ataglance}[Mr~B, the translational case]
-Mr~B is 58 and has severe haemophilia~A with a high-titre inhibitor. He has a
-target right ankle and a destroyed left knee from bleeds sustained before
-prophylaxis was available to him, chronic pain, and the metabolic consequences
-of two decades of reduced mobility. He is employed part-time. Whether he
-receives emicizumab or on-demand bypassing agents depends on which country he
-lives in and which formulary applies to him.
-
-Mr~B stands for the translational question: what happens to a construct built
-in one population when it is carried to a disease, a health system and a
-funding regime it was not developed in. He is the case used whenever the
-question is transportability, treatment effect or the price of a decision.
-\end{ataglance}
-
-The two are chosen because they fail in different directions. Mrs~A has modest
-biology and hostile circumstances. Mr~B has severe, well-characterised biology
-and circumstances that swing between generous and punitive depending on
-jurisdiction. A construct that describes only one of them well has not done the
-job this thesis sets out.
+Where a later example changes one coordinate of a profile, for instance raising the structural freedom of Profile~A, the change is stated with the example and the other coordinates keep the values in Table~\ref{tab:profiles}.
 
 \section{What Does It Mean to Measure Health?}
 
@@ -135,17 +116,9 @@ What a person can do depends on their body. It depends on their surroundings.
 And, third, it depends on the two together in a way neither explains alone.
 The first two are uncontroversial. The third is the claim.
 
-The clinical case for it is easy to state. Two women have identical hip
-radiographs, identical grip strength and identical gait speed: the same $IC$.
-One lives in a bungalow with a stairlift-free front door and a supermarket
-across the road. The other lives on the second floor of a walk-up. Their $FA$
-differs, and it differs by more than either the hips or the stairs would
-predict separately, because the stairs matter more when the hips are worse.
-That excess is $IC_i\times E_i$.
+Consider two people with the same intrinsic capacity who live in environments that differ in a single respect, such as step-free access to their home. If their functional ability differs by more than the environmental difference alone would predict, because the barrier costs more where capacity is lower, the excess is the interaction $IC_i\times E_i$.
 
-A measure that omits the interaction is committed to saying the stairs cost
-every woman the same. They do not, and the cost of pretending they do falls
-hardest on the women for whom the answer matters most.
+A measure that omits the interaction assumes that an environmental barrier costs every person the same amount of function. Where that assumption fails, the error is largest for those with the least capacity.
 \end{reading}
 
 The conceptual sequence used in this thesis is \citep{who_2015_ageing}
@@ -176,17 +149,15 @@ and it does not assert an identified causal effect at any arrow.
 \end{definition}
 
 Each arrow in \eqref{eq:conceptual_sequence} is a place where information is
-lost, and naming the losses is the point of writing the sequence out. Mrs~A's
-osteoarthritis is a health condition. Her reduced quadriceps strength and
-slowed gait are the intrinsic capacities it produces. Her capability to leave
-the flat is what those capacities plus a second-floor walk-up amount to. Her
-functional ability is what she in fact does, which is to go out twice a week.
-Her observed outcome is a missed clinic appointment recorded in an
-administrative dataset.
+lost, and naming the losses is the point of writing the sequence out. A health
+condition produces reduced intrinsic capacities. Those capacities, taken
+together with the person's environment, set what the person is able to do.
+Functional ability is what the person in fact does, and the observed outcome
+is what an administrative dataset records of it.
 
-Reading backwards along that chain is where measurement goes wrong. The missed
-appointment is compatible with severe disease, with a difficult journey, or
-with a woman who had something better to do. Existing measures mostly sample
+Reading backwards along that chain is where measurement goes wrong. A single
+observed outcome is compatible with severe disease, with a barrier in the
+environment, or with a free choice. Existing measures mostly sample
 the right-hand end of the sequence and infer leftwards. This thesis samples the
 left and middle and refuses to infer from behaviour, which is the position the
 next equation formalises.
@@ -353,15 +324,14 @@ so that $P_i$ measures health and $E_i$ helps explain realised functional
 ability. This is a serious comparator, not a straw position. It protects the
 medical construct from expanding until every social good becomes health.
 
-Applied to Mr~B, the naturalist reads his health off his factor level, his
-joint scores and his inhibitor titre, and says his formulary is a fact about
-his country rather than a fact about him. There is something right in that. A
-haematologist who recorded ``poor drug funding'' in the problem list alongside
-``high-titre inhibitor'' would be making a category error, and a health measure
-that let policy failures show up as sickness in the patient would be doing the
-same thing at scale. The objection has to be answered rather than waved
-through, and the answer this thesis gives is the layered position at the end of
-this section: report $P$ separately, always.
+Applied to Profile~B, the naturalist reads health off the biomedical domain
+alone and treats the difference between the two versions of the profile, which
+lies only in $R$, as a fact about the health system rather than about the
+person. There is something right in that. A health measure that let policy
+failures show up as sickness in the patient would commit a category error at
+scale. The objection has to be answered, and the answer this thesis gives is
+the layered position at the end of this section: report $P$ separately,
+always.
 
 Nordenfelt's action-theoretic account moves in a different direction. Health is
 connected to a person's ability, under accepted circumstances, to achieve vital
@@ -542,23 +512,19 @@ and context replaces an unidentified quantity with an estimated one. That is
 progress only if the model is written down, published and allowed to fail.
 \end{reading}
 
-\begin{reading}[The identification problem, at the bedside]
-This is the most consequential piece of algebra in the chapter and it says
-something a clinician already knows. Observed behaviour is a choice made from
-an opportunity set, and only the choice is recorded.
+\begin{reading}[The identification problem]
+Observed behaviour is a choice made from an opportunity set, and only the
+choice is recorded. The same recorded outcome, such as non-attendance at a
+screening appointment, can arise from a cost barrier, from a limit on capacity,
+or from an informed decision not to attend. The recorded value $F_i$ is the
+same in each case, while the opportunity sets $\mathcal C_i$, and the
+appropriate responses, differ.
 
-Three people did not attend the diabetic eye-screening appointment. The first
-could not afford the bus. The second was too breathless to travel. The third
-read the invitation, weighed it, and decided her cataract surgery next month
-made it pointless. The administrative dataset records one variable, DNA, and
-$F_i$ is identical for all three. Their opportunity sets $\mathcal C_i$ are
-completely different, and so is what should be done about them.
-
-Now run it the other way. Two men both walk four hundred metres. One does it
-easily. One does it because he must collect his own medication and has spent
-the rest of the day recovering. Same $F$, different $\mathcal C$. Every measure
-built on observed functioning, which includes most activities-of-daily-living
-scales, is blind to this by construction.
+The converse also holds. Two people can record the same level of function,
+such as walking a given distance, when one does so with reserve and the other
+only at a cost that limits the rest of their activity. Every measure built on
+observed functioning, which includes most activities-of-daily-living scales,
+cannot distinguish these cases by construction.
 
 The formal statement $F_i=F_j\not\Rightarrow\mathcal C_i=\mathcal C_j$ is the
 reason the thesis models capability from capacity and context rather than
@@ -567,29 +533,28 @@ observable, so it must be inferred, and an inference can be wrong in ways an
 observation cannot.
 \end{reading}
 
-\begin{workedexample}[lit-identification]{Three people, one recorded outcome}
-Three women were invited to diabetic eye screening and none attended. The
-dataset records the same value of $F$ for all three: did not attend. Their
-capability sets are not the same.
+\begin{workedexample}[lit-identification]{Three capability sets, one recorded outcome}
+Take three capability sets that all produce the same recorded outcome,
+non-attendance at a screening appointment. The record holds the same value of
+$F$ for all three, but the sets are not the same.
 
 \begin{center}\small
 \begin{tabular}{p{0.20\linewidth}p{0.40\linewidth}p{0.28\linewidth}}
 \toprule
-Person & Capability set $\mathcal C_i$ & Recorded $F_i$ \\
+Constraint & Capability set $\mathcal C_i$ & Recorded $F_i$ \\
 \midrule
-No fare & \{home\} & did not attend \\
-Breathless & \{home, attend\} & did not attend \\
-Informed refusal & \{home, attend, attend and shop\} & did not attend \\
+Cost barrier & \{home\} & did not attend \\
+Capacity limit & \{home, attend\} & did not attend \\
+Informed choice & \{home, attend, attend and shop\} & did not attend \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent The sets have one, two and three elements. Theorem
 \ref{thm:lit-identification} applies with $k=3$: any rule that reads a
-capability set off the record returns one set, so it is right for one woman and
-wrong for two. The clinical responses differ completely. The first needs the
-fare, the second needs transport and a review of her breathlessness, the third
-needs nothing at all.
+capability set off the record returns one set, so it is right for one case
+and wrong for two. The appropriate responses also differ: removing the cost
+barrier, addressing the capacity limit, or no action.
 
 \begin{wecode}[Python]
 sets = {
@@ -651,21 +616,18 @@ of financial barriers may raise $R$. Equal total effects can therefore imply
 different budgets, responsible agencies and policy mechanisms.
 
 \begin{reading}[Why the profile effect is kept as a vector]
-Three interventions produce the same $\Delta H$ of $+0.05$ for Mrs~A. A knee
-replacement raises $P$. A befriending scheme raises $S$. Waiving her clinic
-co-payment raises $R$. A scalar records all three as identical and hands the
-decision-maker no information at all.
+Suppose three interventions produce the same $\Delta H$ of $+0.05$ for
+Profile~A. A clinical treatment raises $P$. A social support scheme raises $S$.
+Removal of a financial barrier to care raises $R$. A scalar records all three
+as identical and gives the decision-maker no information to choose between
+them.
 
 The vector $\Delta X$ records them as $(+0.05,0,0)$, $(0,+0.05,0)$ and
-$(0,0,+0.05)$, and the three go to different budgets. The first is an
-orthopaedic list with an eighteen-month wait. The second is a local-authority
-grant of a few hundred pounds. The third is a line in a finance director's
-spreadsheet and costs almost nothing to change. Equal capability effects,
-utterly unequal in cost, in who is responsible, and in how long they take.
+$(0,0,+0.05)$, and the three fall to different budgets. Equal capability
+effects can differ in cost, in who is responsible and in how long they take.
 
-This is the practical reason the framework refuses to collapse the profile.
-Not because a scalar is philosophically impure, but because the scalar deletes
-the only column a commissioner can act on.
+This is the practical reason the framework keeps the profile as a vector. The
+scalar deletes the information a commissioner needs in order to act.
 \end{reading}
 
 Opportunity cost remains unavoidable. Funding an intervention displaces other
@@ -698,10 +660,11 @@ Three distinct economic uses must therefore be separated:
 Only the first is supported by construct validation alone.
 
 The distinction is worth stating bluntly, because the slide from the first use
-to the third is how measures of this kind cause harm. Establishing that Mrs~A's
-constraint sits in the structural domain is a descriptive finding and the
-validation work in this thesis could support it. Concluding that she should
-therefore receive funding ahead of someone else is an allocative judgement, and
+to the third is how measures of this kind cause harm. Establishing that the
+binding constraint of Profile~A lies in the structural domain is a descriptive
+finding, and the validation work in this thesis could support it. Concluding
+that a person with that profile should therefore receive funding ahead of
+someone else is an allocative judgement, and
 nothing in a factor analysis licenses it. The sections that follow set out what
 would have to be true, and what procedures would have to be in place, before
 the framework could be used at the third level at all.
@@ -958,14 +921,14 @@ That is why the equation is kept as a statement of the intuition and the
 empirical model is built from axioms instead.
 \end{reading}
 
-\begin{workedexample}[lit-heuristic]{Mrs A scored by the original formula}
-Mrs~A's profile is $(P,S,R)=(0.55,0.35,0.40)$, so her structural burden is
-$B=1-R=0.60$. Reading her biomedical potential as the product $LQ=0.55$, the
+\begin{workedexample}[lit-heuristic]{Profile~A scored by the original formula}
+Profile~A is $(P,S,R)=(0.55,0.35,0.40)$, so its structural burden is
+$B=1-R=0.60$. Reading the biomedical potential as the product $LQ=0.55$, the
 original heuristic gives
 \[
   h=(0.55\times0.35)-0.60=0.1925-0.60=-0.4075 .
 \]
-Her burden would have to fall to $B=0.1925$, meaning $R=0.8075$, before the
+The burden would have to fall to $B=0.1925$, meaning $R=0.8075$, before the
 heuristic reported a non-negative capability at all. Everything below that is
 recorded as a negative number.
 
@@ -985,7 +948,7 @@ for b in (0.20, 0.40, 0.60, 0.80):
           f"CRF {crf.H(0.55, 0.35, 1 - b):+.4f}")
 \end{wecode}
 
-\weanswer{$h=-0.4075$ for Mrs~A, against a realisation-function value of
+\weanswer{$h=-0.4075$ for Profile~A, against a realisation-function value of
 $0.206$. Asserted by
 \texttt{test\_proposition\_lit\_heuristic\_admits\_negative\_values} and
 \texttt{test\_proposition\_lit\_heuristic\_negative\_on\_most\_of\_the\_cube}.}
@@ -1061,12 +1024,12 @@ scale of $P$, any statement about the \emph{ratio} of two people's realised
 capability, and the whole of the gap decomposition, is identical on both. Only
 the level changes.
 
-Mrs~A is the worked case for this. On the natural scale, with $P=8.4$ good
-years, she realises $3.1$ of them. On the unit scale, with $P=0.55$, she scores
-$0.206$. These are the same calculation and the same woman;
+Profile~A shows the conversion. On the natural scale, with $P=8.4$ good
+years, it realises $3.1$ of them. On the unit scale, with $P=0.55$, it scores
+$0.206$. These are the same calculation on the same profile;
 $0.206$ is not a number of years and $3.1$ is not a position in a
-distribution. Where a figure for her appears later without its scale named,
-$0.206$ is the unit-scale value.
+distribution. Where a figure for Profile~A appears later without its scale
+named, $0.206$ is the unit-scale value.
 
 Carrying two scales is a cost, not a feature. It is paid because the
 measurement model cannot deliver years without an external calibration study
@@ -1075,47 +1038,44 @@ distribution. \S\ref{sec:intro-maths} returns to why the thesis refuses to
 manufacture the missing calibration.
 \end{remark}
 
-The choice matters clinically, and the two running cases show why. Take Mrs~A
-first, with biomedical potential $P=8.4$ good years as above. Score her social
-enablement at $S=0.35$ (she lives alone, her daughter is three hours away, she
-has withdrawn from the church group she used to attend) and her structural
-freedom at $R=0.40$ (no car, two buses, missed appointments, a co-payment she
-notices). With $\alpha=0.5$ the multiplier is
-$\sqrt{0.35\times0.40}=0.37$, and her realised capability is
-$8.4\times0.37=3.1$ good years. An additive index that averaged her
-circumstances would give $(0.35+0.40)/2=0.375$ and $3.2$ good years. The two
-agree, which is exactly the uninformative case: her circumstances are equally
-poor on both sides, so no rule for trading them can matter.
+The choice of form matters, and the reference profiles show why. Take
+Profile~A first, with biomedical potential $P=8.4$ good years as above, social
+enablement $S=0.35$ and structural freedom $R=0.40$. With $\alpha=0.5$ the
+multiplier is $\sqrt{0.35\times0.40}=0.37$, and realised capability is
+$8.4\times0.37=3.1$ good years. An additive index that averaged the two
+contextual domains would give $(0.35+0.40)/2=0.375$ and $3.2$ good years. The
+two agree, which is the uninformative case: the contextual domains are equally
+low, so no rule for trading them can matter.
 
-Now change one thing. Suppose transport is solved: a community minibus takes
-her to clinic, so $R$ rises from $0.40$ to $0.90$, while her isolation is
-untouched at $S=0.35$. The geometric form gives
+Now change one coordinate. Raise the structural freedom of Profile~A from
+$R=0.40$ to $R=0.90$ and hold $S=0.35$. The geometric form gives
 $\sqrt{0.35\times0.90}=0.56$ and realised capability $4.7$ good years; the
 additive form gives $0.625$ and $5.3$. The gap has opened, and it opens further
-as one term approaches zero. Suppose instead that Mrs~A's daughter dies and she
-is left with no informal support at all, $S=0.05$, while the minibus keeps
-$R=0.90$. The geometric form returns $\sqrt{0.05\times0.90}=0.21$, so $1.8$
-good years. The additive form returns $0.475$, so $4.0$ good years, and would
-record her as more than twice as well off as she is. The additive index has
-allowed excellent transport to compensate for having nobody. That substitution
-is precisely what the non-compensation axiom forbids, and it is why the
-functional form is derived rather than picked.
+as one term approaches zero. Lower social enablement instead to $S=0.05$ and
+keep $R=0.90$. The geometric form returns $\sqrt{0.05\times0.90}=0.21$, so
+$1.8$ good years. The additive form returns $0.475$, so $4.0$ good years, more
+than twice the geometric value. The additive index has allowed high structural
+freedom to compensate for almost no social enablement. The non-compensation
+axiom forbids that substitution, and this is why the functional form is
+derived rather than picked.
 
-\begin{workedexample}[int:mrsa]{Mrs~A under the geometric rule and the additive rule}
-Take $P=8.4$ good years and $\alpha=0.5$, and compare three states of Mrs~A's
-circumstances. The question is how far the two rules disagree, and where.
+\begin{workedexample}[int:mrsa]{Profile~A under the geometric rule and the additive rule}
+Take $P=8.4$ good years and $\alpha=0.5$, and compare three settings of the
+contextual domains of Profile~A. The question is how far the two rules
+disagree, and where.
 
-As she is, $S=0.35$ and $R=0.40$. The geometric multiplier is
+At the values in Table~\ref{tab:profiles}, $S=0.35$ and $R=0.40$. The geometric multiplier is
 $\sqrt{0.35\times0.40}=0.374$ and the additive one is $(0.35+0.40)/2=0.375$, so
 the two rules return $3.14$ and $3.15$ good years. Neither rule is doing any
 work here, because there is nothing to trade.
 
-Give her the community minibus, $R=0.90$. The multipliers separate to $0.561$
-and $0.625$, which is $4.71$ good years against $5.25$. Now take the support
-away instead, $S=0.05$ with the minibus kept at $R=0.90$. The geometric
+Raise structural freedom to $R=0.90$. The multipliers separate to $0.561$
+and $0.625$, which is $4.71$ good years against $5.25$. Now lower social
+enablement instead to $S=0.05$, with $R$ kept at $0.90$. The geometric
 multiplier falls to $0.212$ and the additive one only to $0.475$: $1.78$ good
-years against $3.99$. The additive rule records her as $2.24$ times as well off
-as the geometric rule does, having let transport stand in for having nobody.
+years against $3.99$. The additive rule scores the profile $2.24$ times as high
+as the geometric rule does, having let structural freedom stand in for social
+enablement.
 
 \begin{wecode}[Python]
 from hpv.crf import contextual_mean, H
@@ -1132,29 +1092,27 @@ print(H(0.55, 0.35, 0.40))   # the same profile on the unit scale: 0.2058
 
 \weanswer{$3.14$, $4.71$ and $1.78$ good years under the CRF, against $3.15$,
 $5.25$ and $3.99$ under the additive rule. At $S=0.05$ the additive rule
-overstates Mrs~A by a factor of $2.24$. Asserted by
-\texttt{test\_worked\_example\_intro\_mrs\_a\_geometric\_versus\_additive}.}
+overstates Profile~A by a factor of $2.24$. Asserted by
+\texttt{test\_worked\_example\_profile\_a\_geometric\_versus\_additive}.}
 \end{workedexample}
 
-Mr~B shows the same structure from the other end. His biomedical potential is
-poor and well characterised: an inhibitor, a destroyed knee, chronic pain.
-Suppose $P=4.0$. In a system that funds emicizumab and staffs a haemophilia
-comprehensive-care centre, his structural freedom is high, $R=0.85$, and stable
-employment and a partner give $S=0.70$; his realised capability is
-$4.0\sqrt{0.70\times0.85}=3.1$, close to the ceiling his biology allows. Move
-him to a jurisdiction where bypassing agents are rationed and the nearest centre
-is in another province, $R=0.20$, and the same body yields
-$4.0\sqrt{0.70\times0.20}=1.5$. Nothing about Mr~B has changed. The formula
-attributes the entire difference to the system, which is the claim the thesis
-is making and which \S\ref{sec:intro-maths} must therefore be able to defend
-rather than assert. This single object does the work the heuristic could not: it proves the biomedical--context complementarity that is the mathematical form of the intersectional \citep{crenshaw_1991,bowleg_2008} claim, decomposes any capability gap exactly into biomedical, social and structural parts, and, through an equity-sensitive population functional and a budget-constrained policy gradient, turns individual capability into an integrated, distribution-aware policy calculation. It is also falsifiable: the chapter pre-specifies the head-to-head tests that would reject or narrow it. The construct's meaning and the CRF's parameters are fixed without reference to the outcomes, so the empirical chapters test the model rather than fit it.
+Profile~B shows the same structure from the other end. Its biomedical
+potential is low, $P=4.0$, and its social enablement is $S=0.70$. With
+structure favourable, $R=0.85$, realised capability is
+$4.0\sqrt{0.70\times0.85}=3.1$, close to the ceiling set by $P$. With
+structure unfavourable, $R=0.20$, the same $P$ and $S$ yield
+$4.0\sqrt{0.70\times0.20}=1.5$. Only $R$ differs between the two versions.
+The formula attributes the entire difference to the structural domain, which is
+the claim the thesis makes and which \S\ref{sec:intro-maths} must therefore
+defend rather than assert. This single object does the work the heuristic could not: it proves the biomedical--context complementarity that is the mathematical form of the intersectional \citep{crenshaw_1991,bowleg_2008} claim, decomposes any capability gap exactly into biomedical, social and structural parts, and, through an equity-sensitive population functional and a budget-constrained policy gradient, turns individual capability into an integrated, distribution-aware policy calculation. It is also falsifiable: the chapter pre-specifies the head-to-head tests that would reject or narrow it. The construct's meaning and the CRF's parameters are fixed without reference to the outcomes, so the empirical chapters test the model rather than fit it.
 
-\begin{workedexample}[int:mrb]{Mr~B funded and Mr~B rationed, one coordinate apart}
-On the unit scale Mr~B's profile is $(0.30,0.70,0.85)$ where his treatment is
-funded and $(0.30,0.70,0.20)$ where it is rationed. His biology and his
-household are identical in the two; only $R$ moves.
+\begin{workedexample}[int:mrb]{Profile~B with structure favourable and unfavourable, one coordinate apart}
+On the unit scale Profile~B is $(0.30,0.70,0.85)$ with structure favourable and
+$(0.30,0.70,0.20)$ with structure unfavourable. $P$ and $S$ are identical in
+the two; only $R$ moves.
 
-The CRF returns $H=0.231$ funded and $H=0.112$ rationed, a ratio of $2.06$. In
+The CRF returns $H=0.231$ with structure favourable and $H=0.112$ with
+structure unfavourable, a ratio of $2.06$. In
 the good-years units used above, with $P=4.0$, the same two multipliers give
 $3.09$ years and $1.50$ years. The exact gap decomposition of
 Chapter~\ref{chap:crf} splits the log ratio
@@ -1173,10 +1131,11 @@ print(f"biomedical {bio:.3f}  social {soc:.3f}  "
       f"structural {structural:.3f}  total {total:.3f}")
 \end{wecode}
 
-\weanswer{$H=0.231$ funded and $0.112$ rationed, a ratio of $2.06$. The
-decomposition puts $0.723$ of a total of $0.723$ on the health system and
-nothing on Mr~B. Asserted by
-\texttt{test\_worked\_example\_intro\_mr\_b\_funded\_versus\_rationed}.}
+\weanswer{$H=0.231$ with structure favourable and $0.112$ with structure
+unfavourable, a ratio of $2.06$. The decomposition puts $0.723$ of a total of
+$0.723$ on the structural domain and nothing on the biomedical or social
+domains. Asserted by
+\texttt{test\_worked\_example\_profile\_b\_favourable\_versus\_unfavourable}.}
 \end{workedexample}
 
 This distinction also resolves a potentially serious interpretive problem. A standardised latent factor is not automatically measured in years of healthy life. Unless an external calibration study establishes a mapping between the factor and a time-based health-expectancy scale, $H_{\text{potential}}$ must be reported as a latent score with an explicitly defined direction and uncertainty. The thesis will not infer a ``number of healthy years'' from an arbitrary standardisation.

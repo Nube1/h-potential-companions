@@ -11,7 +11,7 @@ def test_definition_net_health_benefit():
         econ.net_health_benefit(1.0, 100.0, 0.0)
 
 
-def test_worked_example_emicizumab_for_mr_b():
+def test_worked_example_treatment_change_for_profile_b():
     """Worked Example A.6: the drug works and is still net negative, because
     the money buys more health elsewhere. The sign is the whole content."""
     dQ, dC, lam = 1.8, 540_000.0, 30_000.0
@@ -79,8 +79,8 @@ def test_algorithm_one_daly_identity():
     assert total == pytest.approx(yld + yll)
 
 
-def test_worked_example_mr_b_daly_split():
-    """Worked Example D.1: for Mr B the burden is disability, not death.
+def test_worked_example_profile_b_daly_split():
+    """Worked Example D.1: for Profile B the burden is disability, not death.
     A mortality-only measure would record him as almost unaffected."""
     yld, yll, total = econ.daly(L0=30.0, w=0.28, E_L=28.0)
     assert yll == pytest.approx(2.0)               # treatment closed the gap

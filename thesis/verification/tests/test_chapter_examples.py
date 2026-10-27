@@ -14,10 +14,10 @@ from hpv import prognostic as prog
 # --------------------------------------------------------------------------
 # Chapter 1
 # --------------------------------------------------------------------------
-def test_worked_example_intro_mrs_a_geometric_versus_additive():
+def test_worked_example_profile_a_geometric_versus_additive():
     """Worked Example 1.1: 3.14, 4.71 and 1.78 good years under the CRF
     against 3.15, 5.25 and 3.99 under the additive rule. At S = 0.05 the
-    additive rule overstates Mrs A by a factor of 2.24."""
+    additive rule overstates Profile A by a factor of 2.24."""
     P = 8.4
     expected = {
         (0.35, 0.40): (3.14, 3.15),
@@ -40,7 +40,7 @@ def test_worked_example_intro_mrs_a_geometric_versus_additive():
     assert crf.H(0.55, 0.35, 0.40) == pytest.approx(0.2058, abs=5e-4)
 
 
-def test_worked_example_intro_mr_b_funded_versus_rationed():
+def test_worked_example_profile_b_favourable_versus_unfavourable():
     """Worked Example 1.2: H = 0.231 funded and 0.112 rationed, a ratio of
     2.06, with the whole of the log gap on the structural coordinate."""
     funded, rationed = (0.30, 0.70, 0.85), (0.30, 0.70, 0.20)
@@ -63,8 +63,8 @@ def test_worked_example_intro_mr_b_funded_versus_rationed():
 # --------------------------------------------------------------------------
 # Chapter 7
 # --------------------------------------------------------------------------
-def test_worked_example_hem_mr_b_funded_and_rationed():
-    """Worked Example 7.1: scored from haemophilia indicators, Mr B reaches
+def test_worked_example_hem_profile_b_favourable_and_unfavourable():
+    """Worked Example 7.1: scored from haemophilia indicators, Profile B reaches
     77 per cent of his biomedical potential funded and 37 per cent rationed."""
     P, S = 0.30, 0.70
     mult_f = crf.contextual_mean(S, 0.85)
@@ -105,7 +105,7 @@ def test_worked_example_hem_threshold_moves_with_dose():
 
 def test_worked_example_hem_intercept_shift_moves_cut_point():
     """Worked Example 7.3: an intercept 0.072 above the developmental value at
-    a loading of 0.80 moves a cut-point from 0.28 to 0.19, and Mr B at 0.23
+    a loading of 0.80 moves a cut-point from 0.28 to 0.19, and Profile B at 0.23
     crosses it."""
     lam, delta = 0.80, 0.072
     shift = delta / lam
@@ -114,9 +114,9 @@ def test_worked_example_hem_intercept_shift_moves_cut_point():
     cut_hem = cut_dev - shift
     assert cut_hem == pytest.approx(0.19, abs=5e-4)
 
-    mr_b = 0.23
-    assert mr_b < cut_dev          # flagged against the developmental cut-point
-    assert mr_b > cut_hem          # not flagged against the recalibrated one
+    profile_b = 0.23
+    assert profile_b < cut_dev          # flagged against the developmental cut-point
+    assert profile_b > cut_hem          # not flagged against the recalibrated one
 
     # the direction of the misclassification follows the sign of delta
     assert (cut_dev - shift) < cut_dev

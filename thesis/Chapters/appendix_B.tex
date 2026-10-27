@@ -25,8 +25,8 @@ The clinical reader may recognise the whole structure from pharmacokinetics.
 Layer one is a one-compartment model; layer two is that model with
 between-dose variability; layer three is the population-PK view in which the
 object of interest is the distribution of trough levels across a clinic rather
-than any one patient's curve. Mr~B is the worked case throughout, and
-Appendix~\ref{app:hemo_dynamics} makes the haemophilia version explicit.
+than any one patient's curve. Profile~B of Table~\ref{tab:profiles} is the
+reference case throughout, and Appendix~\ref{app:hemo_dynamics} makes the haemophilia version explicit.
 
 None of this is used in the empirical validation. It is a proposed direction.
 \end{ataglance}
@@ -150,7 +150,7 @@ factor level and the same regimen, they get the same trajectory. A model
 without it can produce two different predictions from one set of inputs, which
 would make any dosing recommendation drawn from it arbitrary.
 
-The Gr\"onwall bound is the stability half. It says that if Mr~B's true
+The Gr\"onwall bound is the stability half. It says that if the true
 starting factor activity differs from what the assay reported, the gap between
 the two predicted trajectories is bounded rather than growing without limit.
 Since every clinical input is measured with error, a model lacking this
@@ -168,7 +168,7 @@ proposition.
 \end{reading}
 
 \begin{workedexample}[apb-gronwall]{Two trajectories from two assay readings}
-Mr~B's true starting factor activity is $2$ and the assay reported $3$, so
+Let the true starting factor activity be $2$ and the assay reading $3$, so
 $\delta_0=1$. Take the illustrative parameter set of
 \texttt{verification/tests/test\_dynamics.py}: $V_{\max}=100$, $K_m=10$, $T=20$,
 $k_{\text{inh}}=0.05$, $Y=2$, $\gamma=30$, $K_d=50$, $n=2$, $Z=80$,
@@ -223,10 +223,10 @@ output: everything putting factor into the circulation, divided by everything
 taking it out. It is the same arithmetic as a steady-state drug concentration,
 dose rate over clearance, and it can be read the same way.
 
-For Mr~B the numerator is his infusion and whatever endogenous stabilisation
-von~Willebrand factor provides. The denominator has two parts, and only one is
+For Profile~B the numerator is the infused factor and whatever endogenous
+stabilisation von~Willebrand factor provides. The denominator has two parts, and only one is
 ordinary. Clearance $k_{\text{elim}}$ is the usual half-life term. The other,
-$k_{\text{inh}}Y$, is his inhibitor, and it enters the denominator, so anything
+$k_{\text{inh}}Y$, is the inhibitor, and it enters the denominator, so anything
 that doubles the denominator halves the steady state for a given dose.
 
 That is why the arithmetic of inhibitors is so unforgiving. Raising the dose
@@ -267,7 +267,7 @@ print("trough at Y=20:", round(equilibrium(**dict(P, Y=20.0)), 3))
 
 \weanswer{$X^\ast=98.044$, which the integrator reaches from any starting
 value; at $Y=20$ it is $49.022$, exactly half. Asserted by
-\texttt{test\_worked\_example\_trough\_level\_for\_mr\_b} and
+\texttt{test\_worked\_example\_trough\_level\_for\_profile\_b} and
 \texttt{test\_proposition\_equilibrium\_matches\_the\_solver}.}
 \end{workedexample}
 
@@ -323,9 +323,9 @@ The second says that when the drift is affine, the \emph{mean} of the
 stochastic paths follows the deterministic curve exactly. It is tempting to
 conclude that the deterministic model is therefore good enough. It is not,
 because clinical outcomes are rarely affine functions of the state. What
-matters for Mr~B is not his mean factor activity but the proportion of hours he
-spends below the protective threshold, and that is a highly non-linear function
-of the path.
+matters for Profile~B is the proportion of hours spent below the protective
+threshold, not mean factor activity, and that proportion is a highly
+non-linear function of the path.
 
 Two patients can share a mean trough of $3$~IU/dL, one holding steady and one
 oscillating between $0.5$ and $5.5$. The deterministic model calls them
@@ -510,11 +510,10 @@ circumstances that let them use those years. The value of improving social
 conditions, $\dot S$, is multiplied by $LQ$: worth more in someone whose
 biology still has something to give.
 
-For Mr~B this is the difference between two funding decisions taken at
-different ages. At $58$, with $L$ still substantial, a change in $S$ or $B$ buys
-a lot. The same change at $85$ buys much less, not because he matters less but
-because $L$ has shrunk. The model makes that trade explicit rather than
-leaving it to be made silently, which is the most it can honestly claim to do.
+For Profile~B this is the difference between two funding decisions taken at
+different ages. At age $58$, with $L$ still substantial, a change in $S$ or $B$
+buys a lot. The same change at age $85$ buys much less because $L$ has shrunk.
+The model states that trade openly; it claims no more than that.
 \end{reading}
 \checkedby{tests/test_dynamics.py::test_time_varying_score_is_differentiable}
 

@@ -26,8 +26,8 @@ money.
 
 A reader who wants the argument without the proofs can read the
 \emph{In plain language} remark after each result; they are written to stand
-alone. A reader who wants to know whether any of this matters at the bedside
-can follow Mrs~A and Mr~B, who are carried through
+alone. The two reference profiles of
+\S\ref{sec:intro-cases}, Profile~A and Profile~B, are carried through
 \S\ref{app:a-axioms}--\S\ref{app:a-threshold} with numbers attached.
 \end{ataglance}
 
@@ -104,39 +104,38 @@ enablement and relatively little burden. It does not yet combine these facts,
 and $0.8$ is not asserted to be literally twice $0.4$.
 \end{remark}
 
-\begin{workedexample}[apa-profiles]{The two running cases as profiles}
-Mrs~A has middling capacity for her age, thin enablement since her husband died
-and her daughter moved, and real structural constraint from transport and cost:
-$X=(0.55,0.35,0.40)$. Mr~B on emicizumab in a well-resourced system has poor
-biology, good support and few barriers: $(0.30,0.70,0.85)$. Rationed to
-on-demand bypassing agents in a system with one distant centre he is
-$(0.30,0.70,0.20)$, with only the third coordinate changed.
+\begin{workedexample}[apa-profiles]{The two reference profiles}
+Profile~A (Table~\ref{tab:profiles}) has moderate capacity, low enablement and
+low structural freedom: $X=(0.55,0.35,0.40)$. Profile~B has low capacity and
+high enablement. With structure favourable it is $(0.30,0.70,0.85)$; with
+structure unfavourable it is $(0.30,0.70,0.20)$, with only the third coordinate
+changed.
 
 Under the geometric rule of \S\ref{app:a-ces} with $\alpha=0.5$, these give
-$0.55\sqrt{0.35\times0.40}=0.206$ for Mrs~A, $0.30\sqrt{0.70\times0.85}=0.231$
-for Mr~B funded and $0.30\sqrt{0.70\times0.20}=0.112$ for Mr~B rationed. Funding
-alone accounts for a factor of two in his score.
+$0.55\sqrt{0.35\times0.40}=0.206$ for Profile~A, $0.30\sqrt{0.70\times0.85}=0.231$
+for Profile~B with structure favourable and $0.30\sqrt{0.70\times0.20}=0.112$
+with structure unfavourable. The structural coordinate alone accounts for a
+factor of two in the score.
 
 \begin{wecode}[Python]
 from hpv.crf import H
 
-cases = {"Mrs A": (0.55, 0.35, 0.40),
-         "Mr B funded": (0.30, 0.70, 0.85),
-         "Mr B rationed": (0.30, 0.70, 0.20)}
+cases = {"Profile A": (0.55, 0.35, 0.40),
+         "Profile B favourable": (0.30, 0.70, 0.85),
+         "Profile B unfavourable": (0.30, 0.70, 0.20)}
 for name, x in cases.items():
-    print(f"{name:<14} profile {x}  H = {H(*x):.3f}")
-print("funded / rationed =", H(0.30, 0.70, 0.85) / H(0.30, 0.70, 0.20))
+    print(f"{name:<22} profile {x}  H = {H(*x):.3f}")
+print("favourable / unfavourable =", H(0.30, 0.70, 0.85) / H(0.30, 0.70, 0.20))
 \end{wecode}
 
-\weanswer{$0.206$, $0.231$ and $0.112$; the funded-to-rationed ratio is
-$2.06$. Asserted by
+\weanswer{$0.206$, $0.231$ and $0.112$; the ratio of favourable to
+unfavourable is $2.06$. Asserted by
 \texttt{test\_running\_cases\_reproduce\_the\_thesis\_numbers}.}
 \end{workedexample}
 
-\begin{reading}[What a profile refuses to do]
-Notice what the profile refuses to do. It does not say whether Mrs~A is worse
-off than Mr~B, because $(0.55,0.35,0.40)$ and $(0.30,0.70,0.85)$ are not
-comparable by dominance: each is better in some coordinate. Producing an answer
+\begin{reading}[What a profile does not settle]
+A profile does not say whether Profile~A is worse off than Profile~B, because
+$(0.55,0.35,0.40)$ and $(0.30,0.70,0.85)$ are not comparable by dominance: each is better in some coordinate. Producing an answer
 requires an extra assumption, and the rest of the appendix is about which extra
 assumptions are defensible.
 \end{reading}
@@ -152,12 +151,12 @@ better somewhere. Profiles that trade strength in one domain against weakness
 in another cannot be ranked by dominance alone.
 \end{remark}
 
-Dominance settles the easy cases and is silent on every interesting one. Mr~B
-funded dominates Mr~B rationed, and nothing more is needed to say the funding
-helped. Mrs~A against Mr~B is unrankable. Since clinical and budgetary
-decisions are made mostly among unrankable profiles, something stronger than
-dominance is required, and the next section states the minimum price of
-getting it.
+Dominance settles some comparisons and not others. Profile~B with structure
+favourable dominates Profile~B with structure unfavourable, so the higher
+structural freedom is better without further assumption. Profile~A and
+Profile~B are not ranked by dominance. Since clinical and budgetary decisions
+are made mostly among such profiles, something stronger than dominance is
+required, and the next section states the least that it requires.
 
 \section{Axioms for Any Scalar Score}
 \label{app:a-axioms}
@@ -186,18 +185,15 @@ the score. It rules out a measure in which earning one rand above a means-test
 line halves a person's recorded capability.
 
 \textbf{Weak monotonicity} says that making something better cannot make the
-score worse. It rules out the perverse index in which giving Mrs~A a stairlift
-lowers her number because she now reports less difficulty and therefore
-qualifies for less.
+score worse. It rules out an index in which an improvement to a domain lowers the score.
 
 \textbf{Normalization} fixes the two ends of the ruler.
 
 \textbf{Capacity boundedness}, $H\le p$, is the contentious one. It says that
-Mr~B, with a destroyed knee and an inhibitor, cannot be scored above the
-ceiling his biology sets, no matter how good his health system is. A
-first-class comprehensive-care centre can bring him close to that ceiling; it
-cannot lift him past a man with intact joints. Readers who think an accessible
-environment is genuinely part of health rather than a support for it will
+Profile~B, with $P=0.30$, cannot be scored above the ceiling its biomedical
+coordinate sets, however high $S$ and $R$ are. A favourable context can bring
+the score close to that ceiling; it cannot lift it past $p$. Readers who hold
+that an accessible environment is part of health, not a support for it, will
 reject this axiom, and \S\ref{app:a-relational} is written for them.
 \end{reading}
 
@@ -270,26 +266,25 @@ a neutral default, and its classical representation requires independence
 conditions not guaranteed by fitting a regression. \citep{keeney_raiffa_1976}
 \end{remark}
 
-\begin{workedexample}[apa-additive]{An additive index rewards stranding a patient}
-Take equal weights, $w_P=w_S=w_R=1/3$, and Mr~B rationed: $(0.30,0.70,0.20)$.
-His additive score is $(0.30+0.70+0.20)/3=0.400$.
+\begin{workedexample}[apa-additive]{An additive index can rise when structural freedom collapses}
+Take equal weights, $w_P=w_S=w_R=1/3$, and Profile~B with structure
+unfavourable: $(0.30,0.70,0.20)$. Its additive score is
+$(0.30+0.70+0.20)/3=0.400$.
 
-Now suppose successful immune tolerance induction clears his inhibitor and
-raises his biomedical potential from $0.30$ to $0.60$, while at the same moment
-his health system withdraws funding for specialist follow-up, dropping
-structural freedom from $0.20$ to $0.04$. The additive score becomes
+Now raise biomedical potential from $0.30$ to $0.60$ and, at the same time,
+lower structural freedom from $0.20$ to $0.04$. The additive score becomes
 $(0.60+0.70+0.04)/3=0.447$. It has gone \emph{up}.
 
-The realisation function of \S\ref{app:a-ces} does the opposite, as it must:
+The realisation function of \S\ref{app:a-ces} moves the other way:
 $0.60\sqrt{0.70\times0.04}=0.100$ against $0.30\sqrt{0.70\times0.20}=0.112$, so
-his realised capability falls.
+realised capability falls.
 
 \begin{wecode}[Python]
 from hpv.crf import H, H_additive
 
 w = (1/3, 1/3, 1/3)
 before, after = (0.30, 0.70, 0.20), (0.60, 0.70, 0.04)
-for label, x in (("rationed", before), ("cleared but stranded", after)):
+for label, x in (("before", before), ("after", after)):
     print(f"{label:<22} additive {H_additive(*x, w):.4f}   CRF {H(*x):.4f}")
 print("additive change", H_additive(*after, w) - H_additive(*before, w))
 print("CRF change     ", H(*after) - H(*before))
@@ -302,11 +297,11 @@ is the sharpest form the disagreement can take. Asserted by
 \end{workedexample}
 
 \begin{reading}[Why the additive rule does this]
-On the additive measure, clearing Mr~B's inhibitor while stranding him without
-a haematologist counts as an improvement. The proposition above is what makes
-this happen: with equal weights, one unit
+On the additive measure, a gain in biomedical potential paired with a collapse
+in structural freedom counts as an improvement. The proposition above explains
+why: with equal weights, one unit
 of lost structural freedom is exactly cancelled by one unit of gained biology.
-Additivity does not merely permit that trade, it enforces it at a fixed rate
+Additivity permits that trade and fixes its rate
 everywhere on the scale, including at the bottom where the trade is least
 defensible. Any measure intended to detect the effect of health systems on
 people cannot use a rule that lets biology buy the system's failures back.
@@ -356,41 +351,43 @@ deprivation research reaches the same structure from ethics rather than
 physiology, which is some reason to think the form is not merely convenient.
 \end{reading}
 
-\begin{workedexample}[apa-rho]{Three values of $\rho$, two patients}
+\begin{workedexample}[apa-rho]{Three values of $\rho$, two profiles}
 Set $\alpha=0.5$ and compute the contextual mean $M_{\rho,\alpha}(s,r)$ at the
 three landmark values of $\rho$.
 
-For Mrs~A, whose enablers are both mediocre at $s=0.35$ and $r=0.40$: the
-arithmetic mean ($\rho=1$) is $0.375$, the geometric mean ($\rho=0$) is $0.374$
-and the bottleneck ($\rho\to-\infty$) is $0.350$. The three answers sit within
-seven per cent of each other, so the choice of $\rho$ barely matters for her.
+For Profile~A, whose contextual coordinates are balanced at $s=0.35$ and
+$r=0.40$: the arithmetic mean ($\rho=1$) is $0.375$, the geometric mean
+($\rho=0$) is $0.374$ and the bottleneck ($\rho\to-\infty$) is $0.350$. The
+three answers sit within seven per cent of each other, so the choice of $\rho$
+has little effect.
 
-For Mr~B rationed, whose enablers are badly unbalanced at $s=0.70$ and
-$r=0.20$: arithmetic $0.450$, geometric $0.374$, bottleneck $0.200$. Here the
-choice of $\rho$ changes his contextual mean by a factor of $2.25$, and it
+For Profile~B with structure unfavourable, whose contextual coordinates are
+unbalanced at $s=0.70$ and $r=0.20$: arithmetic $0.450$, geometric $0.374$,
+bottleneck $0.200$. Here the choice of $\rho$ changes the contextual mean by a
+factor of $2.25$, and it
 changes which of the two \emph{contexts} is ranked first.
 
 \begin{wecode}[Python]
 from hpv.crf import contextual_mean
 
-for name, (s, r) in (("Mrs A", (0.35, 0.40)), ("Mr B rationed", (0.70, 0.20))):
+for name, (s, r) in (("Profile A", (0.35, 0.40)), ("Profile B", (0.70, 0.20))):
     vals = [contextual_mean(s, r, rho) for rho in (1.0, 0.0, -800.0)]
     print(f"{name:<14} arithmetic {vals[0]:.3f}  geometric {vals[1]:.3f}  "
           f"bottleneck {vals[2]:.3f}  spread {max(vals)/min(vals):.2f}")
 \end{wecode}
 
-\weanswer{Mrs~A $0.375$, $0.374$, $0.350$, a spread of $1.07$; Mr~B rationed
-$0.450$, $0.374$, $0.200$, a spread of $2.25$. On the contextual mean the
-arithmetic rule ranks Mr~B's circumstances above Mrs~A's, the bottleneck rule
-ranks hers above his, and the geometric rule calls them equal. On realised
-capability $H$ she leads under all three, because her biomedical potential is
-higher. Asserted by
+\weanswer{Profile~A $0.375$, $0.374$, $0.350$, a spread of $1.07$; Profile~B
+with structure unfavourable $0.450$, $0.374$, $0.200$, a spread of $2.25$. On
+the contextual mean the arithmetic rule ranks the context of Profile~B above
+that of Profile~A, the bottleneck rule reverses the order, and the geometric
+rule calls them equal. On realised capability $H$ Profile~A leads under all
+three, because its biomedical potential is higher. Asserted by
 \texttt{test\_worked\_example\_rho\_reverses\_the\_ranking} and
 \texttt{test\_substitution\_ordering\_across\_rho}.}
 \end{workedexample}
 
-\noindent The parameter matters exactly where the profile is lopsided, which is
-exactly where health systems fail people.
+\noindent The parameter matters where the contextual coordinates are
+unbalanced.
 
 \begin{proposition}[Admissibility]
 $H_{\rho,\alpha}$ is continuous, weakly increasing, normalized and satisfies
@@ -469,10 +466,10 @@ clinical intervention buys different amounts of realised capability in
 different people, and the difference is systematic rather than random.
 
 This is testable and it is the claim most likely to be wrong. It predicts, for
-instance, that a knee replacement gives Mrs~A less realised capability than it
-gives an otherwise identical woman with a car and a daughter next door, and
-that the shortfall is larger than either the knee or the daughter would predict
-alone. An additive model predicts the two effects simply add. The empirical
+instance, that a given rise in $p$ yields less realised capability for
+Profile~A than for a profile with the same $p$ and higher $S$ and $R$, and that
+the shortfall is larger than either difference would predict alone. An additive
+model predicts that the two effects add. The empirical
 chapters test the interaction directly, and a null result would narrow the
 theory and not simply fail to support it.
 \end{reading}
@@ -541,17 +538,17 @@ calling general resources health. The two models embody rival views and must be
 reported as such.
 \end{remark}
 
-\begin{reading}[Where the two ontologies disagree about Mr~B]
-Under the ceiling model, Mr~B's destroyed knee sets a limit that no
-intervention short of a biological one can raise. A wheelchair, a ground-floor
-flat and a supportive employer bring him closer to that limit; they cannot pass
-it.
+\begin{reading}[Where the two ontologies disagree about Profile~B]
+Under the ceiling model, the biomedical coordinate of Profile~B, $P=0.30$, sets
+a limit that only a biomedical change can raise. Assistive technology,
+accessible housing and supportive employment, recorded in $S$ and $R$, bring
+realised capability closer to that limit; they cannot pass it.
 
-Under the relational model they can. If the point of a knee is to get a person
-to work, to the shops and to their friends, and a powered wheelchair achieves
-that, then on this account Mr~B's health-related capability is genuinely higher
-and not merely better supported. The disability-rights literature has argued
-this position for forty years and it is not a fringe view.
+Under the relational model they can. If assistive technology provides the
+functionings that biomedical capacity would otherwise provide, then on this
+account the health-related capability of Profile~B is higher, and not only
+better supported. The disability-rights literature has argued this position for
+forty years.
 
 The two models make different predictions about a specific case: a person with
 $p=0$ on every biomedical indicator. The ceiling model scores them zero by
@@ -595,35 +592,37 @@ measurement. \citep{alkire_foster_2011} Thresholds require clinical and public
 justification.
 \end{remark}
 
-\begin{workedexample}[apa-deprivation]{Counting deprivations for Mrs~A}
+\begin{workedexample}[apa-deprivation]{Counting deprivations for Profile~A}
 Set every threshold at $z_j=0.5$ and weight the domains equally at $1/3$.
-Mrs~A's profile $(0.55,0.35,0.40)$ clears the line on biomedical capacity and
+Profile~A, $(0.55,0.35,0.40)$, clears the threshold on biomedical capacity and
 falls below it on the other two, so $d(x)=(0,1,1)$ and $c(x)=2/3$. With a
-cut-off of $k=1/2$ she is classified as constrained; with $k=1$ she is not,
-because she is not deprived everywhere. Mr~B rationed, $(0.30,0.70,0.20)$, is
-deprived in biomedical capacity and structural freedom, so he too scores $2/3$,
-and the count cannot tell the two cases apart.
+cut-off of $k=1/2$ it is classified as constrained; with $k=1$ it is not,
+because it is not deprived in every domain. Profile~B with structure
+unfavourable, $(0.30,0.70,0.20)$, is deprived in biomedical capacity and
+structural freedom, so it also scores $2/3$, and the count does not distinguish
+the two profiles.
 
 \begin{wecode}[Python]
 from hpv.crf import deprivation_count
 
-for name, x in (("Mrs A", (0.55, 0.35, 0.40)),
-                ("Mr B rationed", (0.30, 0.70, 0.20)),
+for name, x in (("Profile A", (0.55, 0.35, 0.40)),
+                ("Profile B", (0.30, 0.70, 0.20)),
                 ("well placed", (0.90, 0.90, 0.90))):
     c = deprivation_count(x, z=(0.5, 0.5, 0.5))
     print(f"{name:<14} c(x) = {c:.4f}   constrained at k=1/2: {c >= 0.5}")
 \end{wecode}
 
-\weanswer{$c(x)=2/3$ for Mrs~A and for Mr~B rationed, and $0$ for the
-well-placed profile. Both running cases are constrained at $k=1/2$ and neither
+\weanswer{$c(x)=2/3$ for Profile~A and for Profile~B with structure
+unfavourable, and $0$ for the well-placed profile. Both reference profiles are
+constrained at $k=1/2$ and neither
 is at $k=1$. Asserted by \texttt{test\_definition\_deprivation\_count}.}
 \end{workedexample}
 
 \begin{reading}[What counting buys and what it costs]
-The appeal of this rule is that it never trades. Mrs~A's adequate biology does
-not offset her social and structural shortfalls; it simply is not counted
-against them. The cost is that it throws away magnitude. A woman at $0.49$ and
-a woman at $0.05$ are recorded identically, which is unacceptable if the
+This rule never trades one domain against another. The adequate biomedical
+coordinate of Profile~A does not offset its social and structural shortfalls;
+it is not counted against them. The cost is that the rule discards magnitude. A
+profile at $0.49$ and a profile at $0.05$ are recorded identically, which is unacceptable if the
 question is how much help each needs rather than whether either qualifies.
 
 This is the same trade-off as any diagnostic threshold. An HbA1c of $48$
@@ -676,8 +675,8 @@ and it would be a mistake to drop smoking from the score because it fails to
 correlate with the others.
 
 Biomedical Potential is closer to the first kind, and Systemic Burdens is
-closer to the second. Running Cronbach's alpha on Mrs~A's housing, income and
-transport indicators and rejecting one for lowering it would be the same error
+closer to the second. Running Cronbach's alpha on the housing, income and
+transport indicators of Profile~A and rejecting one for lowering it would be the same error
 as dropping smoking from a cardiovascular risk score.
 \end{reading}
 
@@ -702,9 +701,9 @@ constructed precisely so that results are comparable between laboratories using
 different thromboplastins; without that deliberate calibration step, a
 prothrombin time of $18$ seconds means different things in different
 laboratories. A standardised factor score has had no equivalent calibration
-performed. Reporting Mrs~A as $-1.2$ standard deviations says where she sits in
-the NHATS distribution and nothing else. It does not say she has lost $1.2$ of
-anything.
+performed. A score of $-1.2$ standard deviations for Profile~A states its position in
+the NHATS distribution and nothing else. It does not state a loss of $1.2$ of
+any quantity.
 
 \begin{proposition}[Second-order implied covariance]
 \label{prop:secondorder_cov}
@@ -760,26 +759,26 @@ and what happens later are different questions. A hazard ratio is not the
 definition of H-Potential.
 \end{remark}
 
-\begin{workedexample}[apa-four-objects]{The four objects, for Mrs~A}
-\textbf{(1) The profile.} $X=(0.55,0.35,0.40)$. A description of her
-circumstances and nothing more. It is a vector, and it has no units.
+\begin{workedexample}[apa-four-objects]{The four objects, for Profile~A}
+\textbf{(1) The profile.} $X=(0.55,0.35,0.40)$. A description of the domain
+values and nothing more. It is a vector, and it has no units.
 
 \textbf{(2) The normative aggregate.} $H_{0,0.5}=0.55\sqrt{0.35\times0.40}
-=0.206$. This is what the chosen ethical rule says her profile amounts to.
-Change $\rho$ and the number changes while her profile does not: $0.206$ at
+=0.206$. This is the value the chosen ethical rule assigns to the profile.
+Change $\rho$ and the number changes while the profile does not: $0.206$ at
 $\rho=0$, $0.205$ at $\rho=-1$, $0.193$ in the bottleneck limit. The additive
 rule on the same three numbers gives $0.433$, twice as large, because it is a
 different rule and not a better measurement.
 
 \textbf{(3) The latent estimate.} If the measurement model returns
 $\widehat H=-1.2$ with a standard error of $0.4$, that is what it infers from
-her questionnaire answers, on a scale whose zero and unit were chosen for
+the questionnaire answers, on a scale whose zero and unit were chosen for
 estimation. Theorem~\ref{thm:latent_scale} says the scale is not identified by
 the data, so this number cannot be compared with $0.206$ at all.
 
 \textbf{(4) The predicted risk.} If the hazard model of
 Chapter~\ref{ch:results2} returns a five-year mortality probability near
-$0.27$, that is a statement about what happens to people who look like her, on
+$0.27$, that is a statement about outcomes among people with similar profiles, on
 a probability scale, indexed by a time horizon.
 
 \begin{wecode}[Python]
@@ -793,7 +792,7 @@ print("additive rule on the same profile:", round(H_additive(*x), 4))
 
 \weanswer{$0.2058$, $0.2053$ and $0.1925$ as $\rho$ falls, against $0.4333$ for
 the additive rule. Four numbers, one unchanged profile. Asserted by
-\texttt{test\_worked\_example\_four\_distinct\_objects\_for\_mrs\_a}.}
+\texttt{test\_worked\_example\_four\_distinct\_objects\_for\_profile\_a}.}
 \end{workedexample}
 
 \begin{reading}[Which pairs get confused]
@@ -848,16 +847,16 @@ by spending the same resources elsewhere. H-Potential has no threshold
 $\lambda$ and cannot replace this calculation.
 \end{remark}
 
-\begin{workedexample}[apa-nhb]{Net health benefit for emicizumab}
-Suppose emicizumab prophylaxis gives Mr~B $\Delta Q=1.8$ QALYs over his
-remaining life and costs $\Delta C=\pounds 540{,}000$ more than on-demand
-treatment. At a threshold of $\lambda=\pounds 30{,}000$ per QALY, the health
+\begin{workedexample}[apa-nhb]{Net health benefit for a single intervention}
+Suppose an intervention for Profile~B gives $\Delta Q=1.8$ QALYs over the
+remaining lifetime and costs $\Delta C=\pounds 540{,}000$ more than the
+comparator. At a threshold of $\lambda=\pounds 30{,}000$ per QALY, the health
 displaced elsewhere is $540{,}000/30{,}000=18$ QALYs, so
 $\operatorname{NHB}=1.8-18=-16.2$ QALYs.
 
 The threshold is the only thing that can change the sign. At
-$\lambda=\pounds 300{,}000$ the displaced health is $1.8$ QALYs and the
-calculation is a dead heat; above that it is positive. Nothing clinical differs
+$\lambda=\pounds 300{,}000$ the displaced health is $1.8$ QALYs and
+NHB is zero; above that it is positive. Nothing clinical differs
 between the two answers.
 
 \begin{wecode}[Python]
@@ -872,19 +871,19 @@ for lam in (30_000.0, 100_000.0, 300_000.0, 400_000.0):
 \weanswer{$\operatorname{NHB}=-16.2$ QALYs at
 $\lambda=\pounds 30{,}000$, $-3.6$ at $\pounds 100{,}000$, $0.0$ at
 $\pounds 300{,}000$ and $+0.45$ at $\pounds 400{,}000$. Asserted by
-\texttt{test\_worked\_example\_emicizumab\_for\_mr\_b} and
+\texttt{test\_worked\_example\_treatment\_change\_for\_profile\_b} and
 \texttt{test\_definition\_net\_health\_benefit}.}
 \end{workedexample}
 
 \begin{reading}[Reading the sign]
-The negative sign does not mean the drug does not
-work. It works: it produces $1.8$ QALYs. It means that funding it from a fixed
+The negative sign does not mean the intervention is
+ineffective. It produces $1.8$ QALYs. It means that funding it from a fixed
 budget removes an estimated $18$ QALYs from people the decision-maker will
 never meet. Those people are invisible in the trial and are the whole content
 of $\lambda$.
 
-Mr~B's H-Potential profile would improve markedly under prophylaxis, and this
-calculation is indifferent to that. A measure of need and a measure of
+Any change in the H-Potential profile of Profile~B under the intervention
+does not enter this calculation. A measure of need and a measure of
 opportunity cost answer different questions, and the next proposition states
 formally that neither implies the other.
 \end{reading}
@@ -905,10 +904,10 @@ effective or a good use of scarce funds. Need, benefit, cost-effectiveness and
 affordability are different policy questions.
 \end{remark}
 
-The proof is almost trivial and the point is not. Health systems routinely
+The proof is short, but the point matters. Health systems routinely
 justify spending by pointing at need, and need is the one thing the
-calculation does not use. Mrs~A's low score is a reason to look for something
-that helps her; it is not evidence that any particular thing does. That said,
+calculation does not use. A low score for Profile~A is a reason to look for an
+intervention that helps; it is not evidence that any particular one does. That said,
 a rule that maximises net health benefit alone will systematically underserve
 people whose disadvantage makes interventions expensive to deliver, which is
 why the calculation is extended next rather than left as it stands.
@@ -1003,11 +1002,10 @@ equity, ethics or accountability into one number.
 
 The vector is deliberately not collapsed. Collapsing it would produce a single
 figure that a committee could rank, and would bury the disagreements that
-committee exists to have. Mr~B's case is decided differently in different
-countries not because they measure $\Delta X$ differently but because they
-weigh the remaining six coordinates differently, and the following proposition
-shows that this is a mathematical fact about the decision problem rather than
-an inconsistency to be tidied away.
+committee exists to have. A decision about Profile~B can differ between health
+systems that measure $\Delta X$ the same way, because they weigh the remaining
+six coordinates differently. The following proposition shows that this is a
+property of the decision problem, not an inconsistency.
 
 \begin{proposition}[A policy decision is not generally transportable]
 Suppose two jurisdictions $j$ and $k$ observe the same H-Potential profile

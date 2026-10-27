@@ -24,7 +24,7 @@ Two technical passages carry plain readings.
 Derivation~\ref{der:bridge} explains why the conceptual formula is not the
 scoring equation, and Derivation~\ref{der:uncertainty} explains how much
 predictive strength is lost by treating an estimated score as though it had
-been measured. Mrs~A and Mr~B appear in both.
+been measured. Both use the reference profiles of Table~\ref{tab:profiles}.
 \end{ataglance}
 
 \begin{quote}
@@ -55,21 +55,19 @@ it something to be tested against.
 The formal heart of the thesis is the Capability Realisation Model developed in Chapter~\ref{chap:crf}. Prior multidimensional health measures, including the earlier heuristic $(L\cdot Q)S-B$, assert an aggregation rule. The realisation model instead states the properties a realisation measure must satisfy, chief among them non-compensation, that complete social exclusion or complete structural obstruction cannot be cancelled by biomedical advantage, and derives the admissible family from those axioms. Its primary form, $H(P,S,R)=P\,S^{\alpha}R^{1-\alpha}$ with $R=1-B$, is characterised uniquely by constant contextual elasticities, and from it several results follow as theorems rather than assertions: biomedical--context complementarity, which is the mathematical form of the intersectional claim and which an additive index cannot represent; an exact decomposition of any capability gap into biomedical, social and structural parts without a residual term; a budget-constrained policy gradient that ranks marginal, model-implied gains from biomedical, social and burden-reducing interventions; and an equity-sensitive population functional whose inequality-aversion \citep{atkinson_1970} parameter makes the normative weighting of low-capability groups explicit rather than hidden. Together these turn an individual capability estimate into an integrated, distribution-aware policy calculation. The model is falsifiable: the chapter pre-specifies the head-to-head comparison, against an additive composite and the outcome-independent factor score, that would reject or narrow it, with its parameters frozen without reference to the outcomes. This is the contribution the rest of the thesis is built to test.
 
 \begin{reading}[Non-compensation with actual numbers]
-Set $\alpha=0.5$ and take Mr~B: 58, severe haemophilia~A with a high-titre
-inhibitor, working part-time. Where his treatment is funded his profile is
-about $(0.30,0.70,0.85)$, and
-$H=0.30\times\sqrt{0.70}\times\sqrt{0.85}=0.23$. Move him to a jurisdiction
-that rations bypassing agents and only the third number changes, to $0.20$:
-$H=0.30\times\sqrt{0.70}\times\sqrt{0.20}=0.11$. His biology is identical. His
-realised capability has halved.
+Set $\alpha=0.5$ and take Profile~B. With structure favourable the profile is
+$(0.30,0.70,0.85)$, and
+$H=0.30\times\sqrt{0.70}\times\sqrt{0.85}=0.23$. With structure unfavourable
+only the third coordinate changes, to $0.20$:
+$H=0.30\times\sqrt{0.70}\times\sqrt{0.20}=0.11$. Biomedical potential is
+unchanged, and realised capability has halved.
 
 An equally weighted additive index records the same move as a fall from $0.62$
 to $0.40$, a loss of about a third. The difference between the two arithmetics
 is the whole argument. The additive form lets the domains trade: it says the
-structural collapse can be bought off if his biomedical score rises far enough.
-The multiplicative form says how far. To return to $0.23$ under rationing, $P$
-would have to climb from $0.30$ to $0.62$, which nothing available to a man
-with an established inhibitor and a destroyed knee will deliver.
+structural loss can be offset if the biomedical score rises far enough. The
+multiplicative form says how far. To return to $0.23$ with structure
+unfavourable, $P$ would have to rise from $0.30$ to $0.62$.
 Non-compensation is not a preference about weighting. It is the claim that some
 deficits cannot be purchased from another domain at any price.
 \end{reading}
@@ -101,7 +99,7 @@ first down with it.
 
 The second contribution is methodological. The thesis operationalises the conceptual framework as a latent construct estimated through structural equation modelling and then evaluates that construct in a separate prognostic model. This two-stage design was chosen to reduce a common form of circularity in composite measure development. Many prognostic indices are constructed by selecting variables and estimating weights according to their observed relationships with the outcome they are intended to predict. Such approaches may be entirely appropriate when the sole objective is prediction; however, they make it difficult to distinguish the measurement of a theoretical construct from the optimisation of a prediction equation, and the resulting score may predict effectively while remaining uncertain in conceptual meaning.
 
-The present thesis separates these tasks. The measurement model is estimated without using the future clinical outcome to define the construct, and its evaluation is based upon factor structure, model fit, reliability and construct validity. Only after the factor scores are derived is the $H_{\text{potential}}$ entered into survival models predicting mortality and unplanned hospitalisation. Prognostic evaluation therefore tests whether an independently defined construct possesses future predictive value. This separation strengthens interpretability: if the construct predicts future outcomes, the result is evidence that the theoretically defined latent capability has prognostic relevance; if it does not, the measurement model does not become meaningless, but rather the result indicates that the construct, as operationalised, may not support the intended prognostic use. Measurement and prediction can therefore succeed or fail independently, allowing more precise scientific conclusions.
+The present thesis separates these tasks. The measurement model is estimated without using the future clinical outcome to define the construct, and its evaluation is based upon factor structure, model fit, reliability and construct validity. Only after the factor scores are derived is the $H_{\text{potential}}$ entered into survival models predicting mortality and hospitalisation. Prognostic evaluation therefore tests whether an independently defined construct possesses future predictive value. This separation strengthens interpretability: if the construct predicts future outcomes, the result is evidence that the theoretically defined latent capability has prognostic relevance; if it does not, the measurement model does not become meaningless, but rather the result indicates that the construct, as operationalised, may not support the intended prognostic use. Measurement and prediction can therefore succeed or fail independently, allowing more precise scientific conclusions.
 
 The design also provides a reusable methodological template. Researchers developing multidimensional measures in other fields can define the construct first, estimate it through an appropriate measurement model, and evaluate its predictive performance in a distinct analytical stage. A further methodological contribution lies in the breadth of the prognostic evaluation: the thesis does not treat a statistically significant hazard ratio as sufficient evidence of model value, but instead assesses association, discrimination, calibration, comparative model fit, incremental value, decision-analytic utility and optimism-corrected internal performance.
 
@@ -135,7 +133,7 @@ written down in advance as four aims, and each can now be answered.
 \begin{enumerate}
   \item \textbf{Develop the conceptual framework.} Chapter~\ref{ch:theory} set out the three-domain model and the conceptual formula that motivates it, and the bridge from that formula to the latent construct.
   \item \textbf{Develop and validate the measurement model.} Chapter~\ref{ch:results1} estimated the second-order structural equation model and evaluated its fit, reliability, and construct validity.
-  \item \textbf{Evaluate prognostic performance.} Chapter~\ref{ch:results2} tested the $H_{\text{potential}}$ against five-year mortality and first unplanned hospitalisation and compared it with established measures.
+  \item \textbf{Evaluate prognostic performance.} Chapter~\ref{ch:results2} tested the $H_{\text{potential}}$ against five-year mortality and first overnight hospital stay and compared it with established measures.
   \item \textbf{Assess translational relevance to haemophilia.} Chapter~\ref{ch:translational} mapped the domains to haemophilia indicators, set out the Delphi \citep{hasson_2000} step for face validity, and gave a roadmap for external validation.
 \end{enumerate}
 
@@ -181,17 +179,17 @@ and bifactor \citep{reise_2012} alternatives must therefore be compared before a
 \begin{reading}[Why the conceptual formula is not the score]
 $H^{(c)}=(LQ)S-B$ was written to say three things: that biology sets a ceiling,
 that social conditions scale it, and that burdens subtract from it. It was
-never meant to be evaluated on a person. If it were, Mrs~A, 78, alone on the
-second floor of a walk-up with knee osteoarthritis and mild cognitive
-impairment, would need $L$ and $Q$ read off an instrument that does not exist,
-and the subtraction of $B$ would let a large enough social score cancel her
-stairs and her two buses outright.
+never meant to be evaluated for an individual. If it were, Profile~A would
+need $L$ and $Q$ read off an instrument that does not exist, and the
+subtraction of $B$ would let a large enough social score cancel the structural
+burden outright.
 
 What is computed instead is $\widehat H_i$, the model's best estimate of a
-single unobserved quantity given her answers. Being a conditional expectation
-it carries an error bar, and it is pulled towards the population mean when her
-pattern of answers is unusual. Her profile of roughly $(0.55,0.35,0.40)$ comes
-out of that estimation, not out of the heuristic.
+single unobserved quantity given a respondent's answers. Being a conditional
+expectation it carries an error bar, and it is pulled towards the population
+mean when the pattern of answers is unusual. A profile such as
+$(0.55,0.35,0.40)$, Profile~A, comes out of that estimation, not out of the
+heuristic.
 
 The last sentence of the derivation is a warning about arithmetic. Three
 first-order factors leave a higher-order model with no spare degrees of freedom
@@ -220,7 +218,7 @@ different questions. The third aim asks the second of them.
 
 \subsection{Aim 3: Evaluate Prognostic Performance}
 
-The third aim was to test, as confirmatory evidence, whether the estimated $H_{\text{potential}}$ predicts clinically important future outcomes and adds value beyond established measures. Chapter~\ref{ch:results2} addressed this aim using five-year follow-up for two co-primary endpoints analysed separately, all-cause mortality and first unplanned hospitalisation, with a combined endpoint kept only as a sensitivity analysis. The prognostic analysis examined the association between the standardised latent score and time to event for each endpoint, first without adjustment and then after adjustment for age and sex; it also evaluated discrimination using Harrell's and Uno's concordance \citep{uno_2011} statistics, calibration through calibration-in-the-large and the calibration slope, comparative performance against established measures, and potential clinical utility through decision-curve analysis.
+The third aim was to test, as confirmatory evidence, whether the estimated $H_{\text{potential}}$ predicts clinically important future outcomes and adds value beyond established measures. Chapter~\ref{ch:results2} addressed this aim using five-year follow-up for two co-primary endpoints analysed separately, all-cause mortality and first overnight hospital stay, with a combined endpoint kept only as a sensitivity analysis. The prognostic analysis examined the association between the standardised latent score and time to event for each endpoint, first without adjustment and then after adjustment for age and sex; it also evaluated discrimination using Harrell's and Uno's concordance \citep{uno_2011} statistics, calibration through calibration-in-the-large and the calibration slope, comparative performance against established measures, and potential clinical utility through decision-curve analysis.
 
 \medskip
 \noindent\emph{[Placeholder: state the final verdict on Aim~3. Report whether a higher $H_{\text{potential}}$ was associated with lower risk of each co-primary outcome; whether the associations remained after adjustment; whether discrimination and calibration were acceptable; whether optimism correction materially reduced performance; and whether the construct was superior, non-inferior or inferior to the pre-specified comparators.]}
@@ -253,7 +251,7 @@ The first empirical hypothesis, the study's primary hypothesis, concerned whethe
 \medskip
 \noindent\emph{[Placeholder: state whether the measurement hypothesis was supported, partially supported or not supported, and identify the decisive evidence.]}
 
-The second empirical hypothesis, the first of the confirmatory hypotheses, concerned whether the $H_{\text{potential}}$ predicts five-year all-cause mortality and, separately, first unplanned hospitalisation.
+The second empirical hypothesis, the first of the confirmatory hypotheses, concerned whether the $H_{\text{potential}}$ predicts five-year all-cause mortality and, separately, first overnight hospital stay.
 
 \medskip
 \noindent\emph{[Placeholder: state whether the prognostic association hypothesis was supported and report the direction, magnitude and precision of the association.]}
@@ -313,13 +311,13 @@ This cuts two ways. A head-to-head comparison with a directly counted
 competitor, a frailty index built from recorded deficits, is unfair to the
 $H_{\text{potential}}$, since only one of the two scores is attenuated. It also
 means the construct may not be credited with predictive strength it has not
-shown: the honest report is the attenuated figure, with the correction given as
+shown: the report gives the attenuated figure, with the correction given as
 a sensitivity analysis.
 
 The joint model removes the problem by refusing to separate the two stages. It
 writes the measurement and the survival model as one likelihood and integrates
-over the unknown $H_i$, so uncertainty in Mrs~A's score travels into
-uncertainty about her predicted risk. It costs a great deal more computation
+over the unknown $H_i$, so uncertainty in each respondent's score carries into
+uncertainty about the predicted risk. It costs a great deal more computation
 and it lets errors in the measurement model contaminate the survival estimates,
 which is why it is proposed here as a check on the two-stage analysis and not
 as the analysis itself.
@@ -407,29 +405,30 @@ Affordability asks whether the required expenditure can be accommodated.
 H-Potential principally informs the first and may support heterogeneity analysis
 for the second. It does not answer the latter two.
 
-\begin{reading}[The four questions, asked about Mr~B]
-Need. Under rationing his profile is about $(0.30,0.70,0.20)$. The low third
-number, not the low first, is what the framework flags, and it points at the
-funding of bypassing agents. The body that can act is the payer, not the
+\begin{reading}[The four questions, asked about Profile~B]
+Need. With structure unfavourable the profile is $(0.30,0.70,0.20)$. The low
+third coordinate, not the low first, is what the framework flags, and it points
+at the funding of treatment. The body that can act is the payer, not the
 haemophilia centre. This is the diagnostic step, and it is the part the
 $H_{\text{potential}}$ is built to do.
 
-Effectiveness. Would continuous access change his bleed rate, his joint score,
-his admissions? The framework does not answer that. A trial or a carefully
+Effectiveness. Would better access change bleeding, joint health or
+admissions? The framework does not answer that. A trial or a carefully
 designed observational study does.
 
-Cost-effectiveness. Prophylaxis for an adult with a high-titre inhibitor is
-expensive, and money spent on it buys health that some other patient in the
-same budget now does not get. Whether the exchange is worth making turns on the
-health opportunity cost in that system, about which his profile says nothing.
+Cost-effectiveness. Money spent on the treatment buys health that some other
+patient in the same budget then does not get. Whether the exchange is worth
+making turns on the health opportunity cost in that system, about which the
+profile says nothing.
 
 Affordability. A favourable ratio can still exceed what a provincial budget
 carries in a given year. That is a question about cash and timing.
 
 Running these four together is how a measure of unmet need turns into a
-rationing rule. Mr~B scores low in part because his health system has failed
-him. A score read without the profile behind it could be taken as evidence that
-he is a poor investment, which inverts the finding exactly.
+rationing rule. Profile~B with structure unfavourable scores low in part
+because the health system has failed to supply treatment. A score read without
+the profile behind it could be taken as evidence of a poor investment, which
+inverts the finding.
 \end{reading}
 
 Future economic work should therefore embed profile change within conventional

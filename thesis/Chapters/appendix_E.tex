@@ -66,8 +66,8 @@ jurisdictions even when the clinical effect does
 (\S\ref{sec:E-transport}), and the whole construction is falsifiable by
 pre-specified tests (\S\ref{sec:E-falsification}).
 
-Mrs~A and Mr~B are carried through with numbers so that each result can be
-checked against a case rather than taken on trust.
+The reference profiles of \S\ref{sec:intro-cases}, Profile~A and Profile~B,
+are carried through with numbers so that each result can be checked.
 \end{ataglance}
 
 \section{Purpose and Status}
@@ -227,20 +227,20 @@ access'' and ``a single missing enabler is decisive''.
 \end{reading}
 
 \begin{reading}[What the substitution parameter is being asked]
-The parameter $\rho$ answers a question the data cannot: can a person's good
-social support make up for a system that will not supply their treatment?
+The parameter $\rho$ answers a question the data cannot: can high social
+enablement make up for low structural freedom?
 
 The admissible family here is restricted to $\rho\leq0$, so the geometric case
 sits at its upper edge and the bottleneck limit at the other. Set beside them
 the arithmetic mean, the $\rho=1$ member of the wider CES family and the rule an
 additive index implicitly uses, and the three give different answers about the
-same two people. Worked Example~\ref{ex:ape-rho} computes them.
+same two profiles. Worked Example~\ref{ex:ape-rho} computes them.
 
 Because the answers differ, $\rho$ is reported across a range rather than
 estimated once and forgotten. A committee shown only the additive answer would
 reach a conclusion the non-compensation axiom was written to prevent.
 
-Two cautions attach to comparing the two people at all. Their bracket values are
+Two cautions apply to comparing the two profiles. Their bracket values are
 comparable, because the bracket depends only on $S$ and $R$, which are defined
 the same way for both. Their full scores are not, because $P$ is measured from
 different indicator sets in a general ageing cohort and in haemophilia. The
@@ -248,41 +248,42 @@ comparison is about contextual rules, not about which of the two is worse off.
 \end{reading}
 
 \begin{workedexample}[ape-rho]{Three rules, one pair of contexts, three rankings}
-Set $\alpha=0.5$ and compare Mrs~A, whose enablers are both mediocre
-($S=0.35$, $R=0.40$), with Mr~B rationed, whose enablers are badly unbalanced
-($S=0.70$, $R=0.20$).
+Set $\alpha=0.5$ and compare Profile~A, whose contextual coordinates are
+balanced ($S=0.35$, $R=0.40$), with Profile~B with structure unfavourable, whose
+contextual coordinates are unbalanced ($S=0.70$, $R=0.20$).
 
 \begin{wecode}[Python]
 from hpv.crf import contextual_mean
 
-cases = {"Mrs A": (0.35, 0.40), "Mr B rationed": (0.70, 0.20)}
+cases = {"Profile A": (0.35, 0.40), "Profile B": (0.70, 0.20)}
 for label, rho in (("arithmetic (rho=1, excluded)", 1.0),
                    ("geometric  (rho=0)", 0.0),
                    ("bottleneck (rho->-inf)", -800.0)):
-    a = contextual_mean(*cases["Mrs A"], rho)
-    b = contextual_mean(*cases["Mr B rationed"], rho)
-    winner = "Mrs A" if a > b else ("Mr B" if b > a else "tie")
+    a = contextual_mean(*cases["Profile A"], rho)
+    b = contextual_mean(*cases["Profile B"], rho)
+    winner = "Profile A" if a > b else ("Profile B" if b > a else "tie")
     print(f"{label:32s} {a:.4f}  {b:.4f}   ranks first: {winner}")
 \end{wecode}
 
-\noindent The arithmetic rule gives $0.3750$ against $0.4500$ and ranks Mr~B
-first. The geometric rule gives $0.3742$ against $0.3742$, a dead heat to four
-decimal places. The bottleneck rule gives $0.3500$ against $0.2000$ and ranks
-Mrs~A first.
+\noindent The arithmetic rule gives $0.3750$ against $0.4500$ and ranks
+Profile~B first. The geometric rule gives $0.3742$ against $0.3742$, equal to
+four decimal places. The bottleneck rule gives $0.3500$ against $0.2000$ and
+ranks Profile~A first.
 
-Nothing about either person changed across the three lines. What changed is an
-answer to a question that is not empirical, and the ranking of their contexts
-reverses on it. The aggregation rule is an ethical commitment wearing the
-clothes of a modelling choice.
+Neither profile changed across the three lines. What changed is the answer to a
+question that is not empirical, and the ranking of the two contexts reverses
+with it. The choice of aggregation rule is an ethical commitment, not only a
+modelling choice.
 
-One thing this example does not show. The reversal is in the contextual mean
-$M_{\rho,\alpha}(S,R)$, with biomedical potential held aside. On realised
-capability $H$ itself Mrs~A leads under every rule, because her $P=0.55$
-against his $0.30$ dominates the comparison. What varies with $\rho$ is how
-their circumstances rank, and that is the quantity a policy acts on.
+The reversal is in the contextual mean $M_{\rho,\alpha}(S,R)$, with biomedical
+potential held aside. On realised capability $H$ itself Profile~A leads under
+every rule, because its $P=0.55$ against $0.30$ for Profile~B dominates the
+comparison. What varies with $\rho$ is the ranking of the contexts, and that is
+the quantity a policy acts on.
 
-\weanswer{Contexts ranked Mr~B first, tied, then Mrs~A first as $\rho$ falls
-from $1$ to $-\infty$, while $H$ ranks Mrs~A first throughout. Asserted by
+\weanswer{Contexts ranked Profile~B first, tied, then Profile~A first as
+$\rho$ falls from $1$ to $-\infty$, while $H$ ranks Profile~A first
+throughout. Asserted by
 \texttt{test\_worked\_example\_rho\_reverses\_the\_ranking}.}
 \end{workedexample}
 
@@ -355,16 +356,14 @@ that restriction testable against the wider family in Equation~\eqref{eq:crf_ces
 The theorem's load-bearing assumption is that
 $\partial\log H/\partial\log S$ equals the same $\alpha$ everywhere. In words:
 a one per cent improvement in social enablement raises realised capability by
-$\alpha$ per cent, and it does so whether the person started well supported or
-barely supported at all.
+$\alpha$ per cent, whatever the starting level of $S$.
 
-That is a strong claim and it is the one most worth doubting. It says a ten per
-cent improvement in Mrs~A's social enablement, from $0.35$ to $0.385$, buys the
-same proportional gain as a ten per cent improvement for a well-supported woman
-going from $0.80$ to $0.88$. Clinical intuition often says the opposite: the
-first hour of home help transforms a life and the tenth does not.
+That is a strong claim and the one most open to doubt. It says that raising the
+social enablement of Profile~A by ten per cent, from $S=0.35$ to $S=0.385$,
+yields the same proportional gain as a ten per cent rise from $S=0.80$ to
+$S=0.88$. Diminishing returns to enablement would contradict it.
 
-The theorem's value is that it makes this visible. If diminishing returns are
+The theorem makes this restriction explicit. If diminishing returns are
 real, elasticities are not constant, the primary form is wrong, and the wider
 CES family in \eqref{eq:crf_ces} should fit better. That is a testable
 difference, not a matter of preference, and it is one of the pre-specified
@@ -523,19 +522,19 @@ and what share is structural, using the same model that, at the level of an
 individual, keeps the domains interacting.
 \end{reading}
 
-\begin{workedexample}[ape-gap]{Decomposing a gap, with Mr~B against himself}
-The cleanest use of \eqref{eq:crf_gap} compares one person under two policy
-regimes, because the same instrument is measuring the same person and
+\begin{workedexample}[ape-gap]{Decomposing a gap within Profile~B}
+The simplest use of \eqref{eq:crf_gap} compares one profile under two values
+of structural freedom, because the same instrument measures both and
 comparability is not in question.
 
 \begin{wecode}[Python]
 from hpv.crf import H, gap_decomposition
 
-funded, rationed = (0.30, 0.70, 0.85), (0.30, 0.70, 0.20)
-print(f"funded   H = {H(*funded):.4f}")
-print(f"rationed H = {H(*rationed):.4f}\n")
+favourable, unfavourable = (0.30, 0.70, 0.85), (0.30, 0.70, 0.20)
+print(f"favourable   H = {H(*favourable):.4f}")
+print(f"unfavourable H = {H(*unfavourable):.4f}\n")
 
-bio, soc, struct, total = gap_decomposition(funded, rationed)
+bio, soc, struct, total = gap_decomposition(favourable, unfavourable)
 for name, part in (("biomedical", bio), ("social", soc),
                    ("structural", struct)):
     print(f"{name:12s} {part:+.4f}   {part / total:6.1%}")
@@ -543,22 +542,22 @@ print(f"{'total':12s} {total:+.4f}   residual "
       f"{total - (bio + soc + struct):+.1e}")
 \end{wecode}
 
-\noindent Funded he scores $0.2314$, rationed $0.1122$. The log ratio is
-$0.7235$, so funding roughly doubles his realised capability. The decomposition
+\noindent With structure favourable the score is $0.2314$; with structure
+unfavourable it is $0.1122$. The log ratio is $0.7235$, so the higher structural
+freedom roughly doubles realised capability. The decomposition
 attributes $0.0000$ to biomedical potential, $0.0000$ to social enablement and
 $0.7235$ to structural freedom, with a residual of order $10^{-16}$, which is
 floating-point noise rather than an interaction term.
 
-The reading is blunt. Nothing about Mr~B's body or his relationships differs
-between the two regimes, and the entire difference in realised capability is
-attributable to what his health system will pay for. A measure that reported
-only a summary score would record him as twice as healthy in one country as in
-the other and would not say why.
+The biomedical and social coordinates are the same in both versions, and the
+whole difference in realised capability is attributable to structural freedom.
+A measure that reported only a summary score would record a twofold difference
+and would not say why.
 
 One restriction has to be observed. The decomposition is exact whenever both
 profiles are measured on the same instrument, which holds here because both
-rows describe Mr~B. Comparing Mr~B with Mrs~A is a different matter: their
-indicators are drawn from different sets, so a log ratio between them would mix
+rows describe Profile~B. Comparing Profile~B with Profile~A is a different
+matter: their indicators are drawn from different sets, so a log ratio between them would mix
 a real difference in capability with an artefact of measurement.
 Chapter~\ref{ch:translational} sets out what would have to be established
 before such a comparison could be made.
@@ -608,7 +607,7 @@ treatment effects: acting on them requires separately identified response functi
 which is why the ranking is a way to read the model, not yet a policy in itself.
 \end{reading}
 
-\begin{workedexample}[ape-gradient]{Where the next pound goes, for Mrs~A}
+\begin{workedexample}[ape-gradient]{Marginal gains by domain, for Profile~A}
 From \eqref{eq:crf_gradients} the marginal gain per unit of each domain is
 $\partial H/\partial P=H/P$, $\partial H/\partial S=\alpha H/S$ and
 $\partial H/\partial R=(1-\alpha)H/R$.
@@ -616,9 +615,9 @@ $\partial H/\partial R=(1-\alpha)H/R$.
 \begin{wecode}[Python]
 from hpv.crf import H, gradients
 
-mrs_a = (0.55, 0.35, 0.40)
-gp, gs, gr = gradients(*mrs_a)
-print(f"H = {H(*mrs_a):.4f}\n")
+profile_a = (0.55, 0.35, 0.40)
+gp, gs, gr = gradients(*profile_a)
+print(f"H = {H(*profile_a):.4f}\n")
 for name, g in (("biomedical", gp), ("social", gs), ("structural", gr)):
     print(f"dH/d{name[:4]:<10} {g:.4f}")
 
@@ -629,22 +628,23 @@ print(f"\nper unit of spend:  social {gs / cost['social']:.4f}   "
 
 \noindent The gradients are $0.3742$ on biomedical potential, $0.2940$ on
 social enablement and $0.2572$ on structural freedom. Social enablement has the
-higher of the two contextual returns, because it is the domain Mrs~A is worse
-in. The non-compensatory structure points the gradient at the bottleneck
-without anyone having to declare that bottlenecks matter.
+higher of the two contextual returns, because it is the lower of the two
+contextual coordinates of Profile~A. The non-compensatory structure directs the
+gradient to the bottleneck without a separate assumption.
 
-The last two lines are the part that decides anything. Ranking by gain alone
-recommends acting on her isolation. Ranking by gain per unit of cost can
+The last two lines of output bear on the decision. Ranking by gain alone
+recommends acting on social enablement. Ranking by gain per unit of cost can
 reverse a recommendation of that kind, though at these illustrative costs it
 does not: social enablement leads on both, at $0.294$ per unit against $0.026$.
-It would reverse if a befriending scheme cost more than about eleven times a
-transport subsidy. The gradient is an input to the allocation problem of
+It would reverse only if a unit of social enablement cost more than about
+$0.2940/0.2572=1.14$ times a unit of structural freedom; at these costs it
+costs a tenth as much. The gradient is an input to the allocation problem of
 \eqref{eq:crf_policy}, not a solution to it.
 
 The whole calculation assumes the response functions
 $\mathrm{d}S/\mathrm{d}u_j$ are known. They are causal quantities and this
-model does not estimate them. The gradient says which door to try, not what is
-behind it.
+model does not estimate them. The gradient indicates where to act, not what an
+action will achieve.
 
 \weanswer{$0.2940$ social against $0.2572$ structural, so the gradient selects
 the weaker domain. Asserted by
@@ -782,24 +782,23 @@ a committee can be shown.
 from hpv.crf import H, social_weight
 
 ede = 0.40                        # population equally distributed equivalent
-h_a = H(0.55, 0.35, 0.40)         # Mrs A
-print(f"Mrs A H = {h_a:.4f}, population EDE = {ede:.2f}\n")
+h_a = H(0.55, 0.35, 0.40)         # Profile A
+print(f"Profile A H = {h_a:.4f}, population EDE = {ede:.2f}\n")
 for eps in (0.0, 0.5, 1.0, 2.0, 3.0):
     w = social_weight(h_a, ede, eps)
     print(f"eps = {eps:.1f}   weight = {w:5.2f}   "
           f"willing to pay up to {w:.1f}x per unit")
 \end{wecode}
 
-\noindent At $\varepsilon=0$ her weight is $1.00$: she counts the same as
-anyone. At $\varepsilon=1$ it is $1.94$. At $\varepsilon=2$ it is $3.78$. At
+\noindent At $\varepsilon=0$ the weight for Profile~A is $1.00$, the same as
+for any other profile. At $\varepsilon=1$ it is $1.94$. At $\varepsilon=2$ it is $3.78$. At
 $\varepsilon=3$ it is $7.34$.
 
 A decision-maker working at $\varepsilon=2$ is therefore committed to the
-statement that helping Mrs~A is worth almost four times as much per unit of
-capability as helping an average person, and would fund an intervention for her
-at almost four times the cost per unit. That is a defensible position and it is
-also an expensive one. Stating it as a number is the only way it can be argued
-with.
+statement that a gain to Profile~A is worth almost four times as much per unit
+of capability as a gain at the population equivalent, and would fund an
+intervention for Profile~A at almost four times the cost per unit. The position
+is defensible and costly. Stated as a number, it can be examined.
 
 The parameter also has a limit worth naming. As $\varepsilon$ grows the measure
 approaches the minimum, so the whole population's health becomes irrelevant

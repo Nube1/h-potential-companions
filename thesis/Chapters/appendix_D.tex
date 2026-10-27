@@ -76,12 +76,12 @@ otherwise have been. Years lived with disability is the remaining life weighted
 by how impaired it is. Their sum is the disability-adjusted life year, which is
 the currency the Global Burden of Disease study reports in.
 
-For Mr~B the two components separate cleanly. His years of life lost are now
+For Profile~B the two components separate cleanly. Years of life lost are now
 modest, because treatment has largely closed the survival gap that defined
-haemophilia before the 1990s. His years lived with disability are substantial,
-because a destroyed knee and chronic pain carry a high disability weight
-for the whole of his remaining life. A measure that reported only mortality
-would record him as almost unaffected, which is the reason the DALY was
+haemophilia before the 1990s. Years lived with disability are substantial,
+because joint damage and chronic pain carry a high disability weight for the
+whole of the remaining life. A measure that reported only mortality would
+record the profile as almost unaffected, which is the reason the DALY was
 invented and the reason biomedical potential is built from both terms.
 
 The final line, $BP=(L_{\text{adj}}/L_0)(1-\mathrm{DALY}/L_0)$, rescales that
@@ -89,10 +89,10 @@ onto the unit interval the rest of the framework uses. It is a normalisation
 step and carries no separate claim.
 \end{reading}
 
-\begin{workedexample}[apd-daly]{Mr~B's burden, split into its two parts}
-Suppose a man of Mr~B's age would without haemophilia expect $L_0=30$ further
-years, that treatment has brought his life expectancy to $\mathbb E[L]=28$
-years, and that his joint damage and chronic pain carry a disability weight
+\begin{workedexample}[apd-daly]{The burden of Profile~B, split into its two parts}
+Suppose that without haemophilia Profile~B would expect $L_0=30$ further
+years, that treatment has brought life expectancy to $\mathbb E[L]=28$
+years, and that joint damage and chronic pain carry a disability weight
 $w=0.28$. Take the quality index as $Q=0.72$.
 
 \begin{wecode}[Python]
@@ -102,26 +102,27 @@ yld, yll, total = daly(L0=30.0, w=0.28, E_L=28.0)
 print(f"YLD {yld:5.2f}   YLL {yll:5.2f}   DALY {total:5.2f}")
 print(f"biomedical potential {biomedical_potential(30.0, 0.72, total):.4f}")
 
-# the same man, in the era before prophylaxis reached him
+# the same profile, before prophylaxis
 yld0, yll0, total0 = daly(L0=30.0, w=0.28, E_L=15.0)
 print(f"\npre-prophylaxis: YLD {yld0:5.2f}   YLL {yll0:5.2f}   "
       f"DALY {total0:5.2f}")
 \end{wecode}
 
 \noindent Today: $\mathrm{YLD}=7.84$, $\mathrm{YLL}=2.00$, so a DALY of $9.84$
-of which eighty per cent is disability. In the era before prophylaxis reached
-him the same weights give $\mathrm{YLD}=4.20$ and $\mathrm{YLL}=15.00$, a DALY
+of which eighty per cent is disability. Before prophylaxis the same weights
+give $\mathrm{YLD}=4.20$ and $\mathrm{YLL}=15.00$, a DALY
 of $19.20$ of which seventy-eight per cent is death.
 
-The total halved and its composition inverted. That is the whole argument for
-this thesis in one calculation: a measure that tracked mortality alone would
-record the modern Mr~B as almost unaffected, having correctly recorded the
-1970s Mr~B as gravely affected, and would have nothing to say about the twenty
-years of reduced mobility that now constitute his burden.
+The total halved and its composition inverted. The calculation states the
+argument of this thesis in small form: a measure that tracked mortality alone
+would record the profile under modern treatment as almost unaffected, having
+correctly recorded the same profile in the 1970s as gravely affected, and would
+say nothing about the twenty years of reduced mobility that now make up the
+burden.
 
 \weanswer{$\mathrm{DALY}=9.84$, eighty per cent of it disability, giving
 $BP=0.484$. Asserted by \texttt{test\_algorithm\_one\_daly\_identity} and
-\texttt{test\_worked\_example\_mr\_b\_daly\_split}.}
+\texttt{test\_worked\_example\_profile\_b\_daly\_split}.}
 \end{workedexample}
 
 The cost side of the same decision needs its own arithmetic, and the difficulty
