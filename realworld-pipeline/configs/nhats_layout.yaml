@@ -181,6 +181,15 @@ auxiliary:
   dementia_reported:                     # HC2I dementia or Alzheimer's: 1 yes, 7 previously reported
     source: "hc{r}disescn9"
     flag_codes: [1, 7]
+  ad8_score:                             # AD8 proxy screen, 0-8 [instrument CP3; guide CP section]
+    kind: ad8
+    # CP3a-h: 1 yes, a change; 2 no change; 3 dementia reported by proxy
+    sources: ["cp{r}chgthink1", "cp{r}chgthink2", "cp{r}chgthink3", "cp{r}chgthink4",
+              "cp{r}chgthink5", "cp{r}chgthink6", "cp{r}chgthink7", "cp{r}chgthink8"]
+    prior_dementia: "cp{r}dad8dem"       # 1 = dementia reported in a prior AD8 (items skipped; score 8)
+    proxy: "is{r}resptype"
+    round5_fix:                          # User Guide data notice for cp#dad8dem, Rounds 4-9
+      residence: "r{r}dresid"
 
 # Comparators built from baseline items only, never from outcomes.
 comparators:
@@ -289,6 +298,18 @@ outcomes:
     # 79 unable to locate, 87 proxy refusal (may concern a death), 88 work
     # stopped, 89 other. A person is censored at the last round known alive.
     alive_codes: [60, 61, 63, 64, 75, 76, 77, 78, 80, 82, 83, 85]
+  # Months that date the outcomes, all public [crosswalk]. Interview month and
+  # year of the sample-person interview (tracker; NHATS supplies a revised
+  # month for Rounds 3-8, used where present), the month the case status was
+  # set (tracker), and the months from the last interview to death reported in
+  # the last-month-of-life interview (follow-up SP file, 0 = under a month).
+  # The exact month of death is restricted and is not used.
+  dates:
+    baseline: {month: "r{r}spstatdtmt", year: "r{r}spstatdtyr"}
+    interview: {month: "r{k}spstatdtmt", month_revised: "r{k}spstatdtmtrev", year: "r{k}spstatdtyr"}
+    status: {month: "r{k}casestdtmt", year: "r{k}casestdtyr"}
+    death_interval: "dmds{k}dintvl"
+    interview_codes: [60, 61, 63]        # statuses with a completed SP interview
   hospitalisation:
     sp_item: "hc{k}hosptstay"            # overnight stay since the last interview (continuing sample) [instrument HC7]
     present: [1]

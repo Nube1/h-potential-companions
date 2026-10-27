@@ -18,7 +18,7 @@ measurement:
   # why an indicator may be missing: a proxy answered, the proxy said the
   # person could not do the cognitive tests, or dementia was reported.
   # Thesis Appendix "Data Sources and Their Verification".
-  auxiliary: [proxy_respondent, cognition_not_asked, dementia_reported]
+  auxiliary: [proxy_respondent, cognition_not_asked, dementia_reported, ad8_score]
   rho_sensitivity: [-1.0, 0.5]
   # Preregistered scaling clips each domain to [~0, ~1] at the 1st and 99th
   # training percentiles. Sensitivity: the same bounds mapped onto [floor, 1].

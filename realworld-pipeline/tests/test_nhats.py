@@ -213,28 +213,82 @@ def test_income_prefers_twenty_imputations_and_equivalises(layout):
     assert score_item(frame, layout, spec).iloc[1] == pytest.approx(-np.log1p(99.0))
 
 
-def test_deaths_without_proxy_count_and_untraced_rounds_do_not_extend_follow_up(tmp_path, layout):
-    """86 (deceased, no proxy) is a death; 79 (unable to locate) is not a sign of life."""
-    from hpotential.nhats.ingest import _latest_tracker, read_table
+def test_deaths_and_follow_up_are_dated_from_nhats_months(tmp_path, layout):
+    """62 with a reported interval, 86 without one, and an untraced round.
+
+    Months since the Round 5 interview: a death with a last-month-of-life
+    interview is dated last interview + interval; a death with no proxy at the
+    midpoint between the last month alive and the month it was recorded; an
+    untraced round (79) does not extend follow-up.
+    """
+    from hpotential.nhats.ingest import MONTH_DAYS, _latest_tracker, find_file, read_table
 
     write_synthetic_nhats(tmp_path, layout, n=400, seed=5, fmt=".csv")
     first, _ = build(tmp_path, layout)
-    a, b = (int(x) for x in first["participant_id"].iloc[:2])
+    a, b, c = (int(x) for x in first["participant_id"].iloc[:3])
     _, tpath = _latest_tracker(tmp_path, layout)
     tr = read_table(tpath)
     pid = layout.name(layout.raw["ids"]["person"])
-    for k in layout.follow_ups:
-        col = layout.name("r{k}status", k)
-        tr.loc[tr[pid] == a, col] = 86 if k >= 7 else 60  # dies between Rounds 6 and 7, no proxy
-        tr.loc[tr[pid] == b, col] = 60 if k == 6 else 79  # seen in Round 6, then untraced
+
+    def put(person, k, status, month, year, interview=True):
+        row = tr[pid] == person
+        tr.loc[row, layout.name("r{k}status", k)] = status
+        tr.loc[row, layout.name("r{k}casestdtmt", k)] = month
+        tr.loc[row, layout.name("r{k}casestdtyr", k)] = year
+        tr.loc[row, layout.name("r{k}spstatdtmt", k)] = month if interview else -1
+        tr.loc[row, layout.name("r{k}spstatdtyr", k)] = year if interview else -1
+
+    for person in (a, b, c):
+        tr.loc[tr[pid] == person, layout.name("r{r}spstatdtmt")] = 6  # June 2015
+        tr.loc[tr[pid] == person, layout.name("r{r}spstatdtyr")] = 2015
+        put(person, 6, 60, 6, 2016)  # interviewed 12 months on
+    put(b, 6, 60, 8, 2016)  # interviewed 14 months on
+    for k in range(7, 11):
+        put(a, k, 86, 7, 2017, interview=False)  # death, no proxy, recorded at 25 months
+        put(b, k, 79, 7, 2017, interview=False)  # untraced
+        put(c, k, 62, 7, 2017, interview=False)  # death with a proxy interview
     tr.to_csv(tpath, index=False)
-    frame, _ = build(tmp_path, layout)
+    sp7 = find_file(tmp_path, layout.raw["files"]["sp"].format(r=7, k=7).lower())
+    f = read_table(sp7)
+    f.loc[f[pid] == c, "dmds7dintvl"] = 5
+    f.loc[f[pid] == a, "dmds7dintvl"] = -1
+    f.to_csv(sp7, index=False)
+
+    frame, flow = build(tmp_path, layout)
     rows = frame.set_index("participant_id")
-    d = layout.days_per_round
+    assert flow["outcome_timing"] == "interview months"
     assert rows.loc[str(a), "mortality_event"] == 1
-    assert rows.loc[str(a), "mortality_time"] == pytest.approx(1.5 * d)
+    assert rows.loc[str(a), "mortality_time"] == pytest.approx((12 + 25) / 2 * MONTH_DAYS)
+    assert rows.loc[str(c), "mortality_event"] == 1
+    assert rows.loc[str(c), "mortality_time"] == pytest.approx((12 + 5) * MONTH_DAYS)
     assert rows.loc[str(b), "mortality_event"] == 0
-    assert rows.loc[str(b), "mortality_time"] == pytest.approx(1.0 * d)  # censored at Round 6
+    assert rows.loc[str(b), "mortality_time"] == pytest.approx(14 * MONTH_DAYS)
+
+
+def test_hospital_stay_dated_between_interviews(layout):
+    from hpotential.nhats.ingest import MONTH_DAYS, _dated_first_event
+
+    idx = pd.Index([1, 2])
+    answered = pd.DataFrame({6: [True, True], 7: [True, True]}, index=idx)
+    stays = pd.DataFrame({6: [False, False], 7: [True, False]}, index=idx)
+    dates = pd.DataFrame({6: [12.0, 13.0], 7: [24.0, 26.0]}, index=idx)
+    t, e = _dated_first_event(answered, stays, dates, layout)
+    assert e.tolist() == [1.0, 0.0]
+    assert t.iloc[0] == pytest.approx(18 * MONTH_DAYS)  # midpoint of 12 and 24
+    assert t.iloc[1] == pytest.approx(26 * MONTH_DAYS)  # censored at the last interview
+
+
+def test_ad8_score_follows_nhats_scoring(layout):
+    from hpotential.nhats.ingest import ad8_score
+
+    spec = layout.raw["auxiliary"]["ad8_score"]
+    cols = [layout.name(s) for s in spec["sources"]]
+    frame = pd.DataFrame([[1, 1, 3, 2, 2, 2, 2, 2], [-1] * 8, [-1] * 8, [-1] * 8], columns=cols)
+    frame[layout.name(spec["prior_dementia"])] = [-1, 1, -1, -1]
+    frame[layout.name(spec["proxy"])] = [2, 2, 1, 2]
+    frame[layout.name(spec["round5_fix"]["residence"])] = [1, 1, 1, 1]
+    out = ad8_score(frame, layout, spec)
+    assert out.tolist() == [3.0, 8.0, 0.0, 8.0]  # last row: Round 5 data notice applies
 
 
 def test_income_file_found_under_another_name(tmp_path, layout):

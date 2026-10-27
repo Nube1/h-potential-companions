@@ -111,6 +111,14 @@ def write_synthetic_nhats(
     cannot = proxy & (rng.random(n) < 0.5)
     for item in ("cg{r}dwrdimmrc", "cg{r}dwrddlyrc", "cg{r}dclkdraw"):
         sp[name(item)] = np.where(cannot, -2, sp[name(item)])
+    # AD8, asked of proxies only: 1 change, 2 no change, 3 dementia reported.
+    prior_dem = proxy & (rng.random(n) < 0.1)
+    p_change = 1 / (1 + np.exp(0.5 + 1.2 * bio))
+    for j in range(1, 9):
+        ans = np.where(rng.random(n) < p_change, 1, 2)
+        ans = np.where((ans == 1) & (rng.random(n) < 0.1), 3, ans)
+        sp[name(f"cp{{r}}chgthink{j}")] = np.where(proxy & ~prior_dem, ans, -1)
+    sp[name("cp{r}dad8dem")] = np.where(prior_dem, 1, -1)
     pain = -0.8 * bio + rng.normal(0, 0.9, n)
     sp[name("ss{r}painbothr")] = _with_missing(rng, np.where(pain > 0.1, 1, 2))
     sp[name("ss{r}painlimts")] = _with_missing(rng, np.where(pain > 0.9, 1, 2))
@@ -186,6 +194,13 @@ def write_synthetic_nhats(
     death_codes = layout.raw["outcomes"]["mortality"]["event_codes"]
     # Most deaths have a last-month-of-life interview (62); some have no proxy (86).
     death_code = np.where(rng.random(n) < 0.06, death_codes[-1], death_codes[0])
+    # Interview months: baseline between May and November 2015, then roughly a
+    # year apart; months are written as NHATS does, month and year separately.
+    base = 2015 * 12 + rng.integers(4, 11, n)
+    tracker[name("r{r}spstatdtmt")] = base % 12 + 1
+    tracker[name("r{r}spstatdtyr")] = base // 12
+    last_iv = np.zeros(n)  # months since baseline of the last SP interview
+    died_before = np.zeros(n, bool)
     paths = []
     for k in ks:
         years = k - r
@@ -194,7 +209,22 @@ def write_synthetic_nhats(
         status = np.where(dead, death_code, 60)  # 60: interview completed
         status = np.where(lost, 79, status)  # 79: unable to locate
         tracker[name("r{k}status", k)] = status
+        when = base + 12 * years + rng.integers(-1, 3, n)
+        alive_now = ~dead & ~lost
+        iv_m = np.where(alive_now, when % 12 + 1, -1)
+        iv_y = np.where(alive_now, when // 12, -1)
+        tracker[name("r{k}spstatdtmt", k)] = iv_m
+        tracker[name("r{k}spstatdtyr", k)] = iv_y
+        tracker[name("r{k}casestdtmt", k)] = when % 12 + 1
+        tracker[name("r{k}casestdtyr", k)] = when // 12
         fu = pd.DataFrame({name(layout.raw["ids"]["person"]): sp.iloc[:, 0]})
+        # Months from the last interview to death, from the last-month-of-life
+        # interview (62 only); -1 otherwise.
+        new_death = dead & ~died_before
+        gap = np.clip(np.floor(death_years * 12 - last_iv), 0, 17)
+        fu[name("dmds{k}dintvl", k)] = np.where(new_death & (death_code == death_codes[0]), gap, -1)
+        died_before |= dead
+        last_iv = np.where(alive_now, when - base, last_iv)
         alive = ~dead & ~lost
         stayed = (hosp_years <= years) & (hosp_years > years - 1)
         item = np.where(stayed, 1, 2).astype(float)

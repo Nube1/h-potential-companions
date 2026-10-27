@@ -131,10 +131,31 @@ class Layout:
         item = self.raw["outcomes"]["hospitalisation"]["sp_item"]
         return [self.name(self.raw["ids"]["person"]), self.name(item, k)]
 
+    def date_variables(self, latest: int) -> dict[str, list[str]]:
+        """Optional tracker and follow-up SP variables that date the outcomes.
+
+        Without them event times fall back to interval midpoints in whole rounds.
+        """
+        d = self.raw["outcomes"].get("dates")
+        if not d:
+            return {"tracker": [], "sp": []}
+        ks = [k for k in self.follow_ups if k <= latest]
+        tr = [self.name(d["baseline"]["month"]), self.name(d["baseline"]["year"])]
+        for k in ks:
+            for part in ("interview", "status"):
+                tr += [self.name(v, k) for v in d[part].values()]
+        sp = [self.name(d["death_interval"], k) for k in ks]
+        return {"tracker": tr, "sp": sp}
+
 
 def _sources(spec: dict) -> list[str]:
     if spec.get("kind") == "neg_log_income":
         return list(spec["fallback_imputations"]) + [spec["couple"]["source"]]
+    if spec.get("kind") == "ad8":
+        extra = [spec["prior_dementia"], spec["proxy"]]
+        if spec.get("round5_fix"):
+            extra.append(spec["round5_fix"]["residence"])
+        return list(spec["sources"]) + extra
     if "source" in spec:
         return [spec["source"]]
     if "sources" in spec:
@@ -328,6 +349,9 @@ def check(data_dir: str | Path, layout: Layout) -> CheckReport:
         report.missing_variables["tracker"] = [
             v for v in layout.tracker_variables(k) if v not in have
         ]
+        gone = [v for v in layout.date_variables(k)["tracker"] if v not in have]
+        if gone:
+            report.optional_missing["outcome_dates"] = gone
         status_cols = [v for v in layout.tracker_variables(k)[1:] if v in have]
         if status_cols:
             st = read_table(path, status_cols)
@@ -523,6 +547,37 @@ def auxiliary_flag(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series
     return hit.astype(float).where(usable)
 
 
+def ad8_score(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
+    """AD8 dementia screen score, 0 to 8, as NHATS recommends (User Guide, CP section).
+
+    Each item counts 1 if the proxy reports a change (1) or reports dementia
+    (3). A person whose proxy reported dementia in an earlier round is not
+    asked again and scores 8. The Round 5 data notice is applied: the prior-
+    dementia flag is set for proxy cases at Round 5 whose items were skipped.
+    Sample persons who answer for themselves are not asked and score 0; the
+    proxy flag in the imputation model separates the two groups.
+    """
+    items = pd.DataFrame(
+        {
+            layout.name(s): pd.to_numeric(frame[layout.name(s)], errors="coerce")
+            for s in spec["sources"]
+        }
+    )
+    answered = items.isin([1.0, 2.0, 3.0])
+    score = items.isin([1.0, 3.0]).sum(axis=1).astype(float)
+    score = score * items.shape[1] / answered.sum(axis=1).replace(0, np.nan)
+    prior = pd.to_numeric(frame[layout.name(spec["prior_dementia"])], errors="coerce").eq(1)
+    proxy = pd.to_numeric(frame[layout.name(spec["proxy"])], errors="coerce").eq(2)
+    fix = spec.get("round5_fix")
+    if fix:
+        res = pd.to_numeric(frame[layout.name(fix["residence"])], errors="coerce")
+        first = pd.to_numeric(frame[layout.name(spec["sources"][0])], errors="coerce")
+        prior |= res.isin([1.0, 2.0, 4.0]) & proxy & first.eq(-1)
+    score = score.where(answered.sum(axis=1) >= np.ceil(MIN_OBSERVED_SHARE * items.shape[1]))
+    score = score.mask(prior, 8.0)
+    return score.mask(~proxy & score.isna(), 0.0)
+
+
 def neg_log_income(frame: pd.DataFrame, layout: Layout, spec: dict) -> pd.Series:
     """Income shortfall: minus the mean log equivalised income over NHATS imputations.
 
@@ -639,6 +694,127 @@ def _fill_from_earlier_rounds(sp: pd.DataFrame, data_dir: Path, layout: Layout) 
     return counts
 
 
+MONTH_DAYS = 365.25 / 12
+
+
+def _month_index(frame: pd.DataFrame, month: str, year: str, special: list[float]) -> pd.Series:
+    """Calendar month as a running count (year * 12 + month), missing if either is."""
+    if month not in frame or year not in frame:
+        return pd.Series(np.nan, index=frame.index)
+    m = _clean(frame[month], special)
+    y = _clean(frame[year], special)
+    ok = m.between(1, 12) & y.gt(1900)
+    return (y * 12 + m - 1).where(ok)
+
+
+def _dated_mortality(
+    status: pd.DataFrame,
+    dead: pd.DataFrame,
+    known: pd.DataFrame,
+    tracker: pd.DataFrame,
+    intervals: pd.DataFrame,
+    layout: Layout,
+) -> tuple[pd.Series, pd.Series, pd.DataFrame]:
+    """Time to death in days from the Round 5 interview month, using NHATS dates.
+
+    Alive rounds are dated by the month of the sample-person interview (the
+    revised month where NHATS supplies one) or, without an interview, by the
+    month the case status was set. A death with a last-month-of-life
+    interview is dated by the months from the last interview to death that
+    the proxy reported; a death without one by the midpoint between the last
+    month known alive and the month the death was recorded. Any date NHATS
+    does not supply falls back to whole rounds. Returns the times, the event
+    flags and the per-round alive dates (months since baseline), which date
+    the hospital outcome too.
+    """
+    d = layout.raw["outcomes"]["dates"]
+    special = layout.special_missing
+    base = _month_index(
+        tracker, layout.name(d["baseline"]["month"]), layout.name(d["baseline"]["year"]), special
+    )
+    ks = list(status.columns)
+    sp_codes = [float(c) for c in d.get("interview_codes", [60, 61, 63])]
+    iv, st = {}, {}
+    for k in ks:
+        i = d["interview"]
+        month = layout.name(i.get("month_revised", i["month"]), k)
+        if month not in tracker:
+            month = layout.name(i["month"], k)
+        iv[k] = _month_index(tracker, month, layout.name(i["year"], k), special) - base
+        s = d["status"]
+        st[k] = (
+            _month_index(tracker, layout.name(s["month"], k), layout.name(s["year"], k), special)
+            - base
+        )
+    iv, st = pd.DataFrame(iv), pd.DataFrame(st)
+    fallback = pd.DataFrame({k: pd.Series(12.0 * (k - layout.r), index=status.index) for k in ks})
+    had_sp = status.isin(sp_codes)
+    alive_date = iv.where(had_sp, st).where(lambda x: x > 0).fillna(fallback).where(known & ~dead)
+    sp_date = iv.where(had_sp).where(lambda x: x > 0).fillna(fallback).where(had_sp & known & ~dead)
+
+    ev = dead.to_numpy(bool)
+    has = ev.any(axis=1)
+    first = np.where(has, ev.argmax(axis=1), -1)
+    times = np.full(len(status), np.nan)
+    for row in range(len(status)):
+        if has[row]:
+            j = first[row]
+            before_alive = alive_date.iloc[row, :j].max()
+            before_sp = sp_date.iloc[row, :j].max()
+            last_alive = 0.0 if np.isnan(before_alive) else before_alive
+            last_sp = 0.0 if np.isnan(before_sp) else before_sp
+            gap = intervals.iloc[row, j] if j < intervals.shape[1] else np.nan
+            when = st.iloc[row, j]
+            if not np.isnan(gap) and gap >= 0:
+                t = last_sp + max(gap, 0.5)  # 0 = "less than a month"
+            elif not np.isnan(when) and when > last_alive:
+                t = (last_alive + when) / 2
+            else:
+                t = 12.0 * (ks[j] - layout.r) - 6.0
+            times[row] = max(t, last_alive + 0.5)
+        else:
+            last = alive_date.iloc[row].max()
+            times[row] = last if not np.isnan(last) else np.nan
+    time = pd.Series(times * MONTH_DAYS, index=status.index)
+    event = pd.Series(has.astype(float), index=status.index).where(time.notna())
+    return time, event, sp_date
+
+
+def _dated_first_event(
+    answered: pd.DataFrame, events: pd.DataFrame, sp_date: pd.DataFrame, layout: Layout
+) -> tuple[pd.Series, pd.Series]:
+    """First event reported "since the last interview": midpoint of that interval, in days.
+
+    Interview dates come from ``sp_date`` (months since baseline); a round
+    without one falls back to whole rounds.
+    """
+    ks = list(events.columns)
+    dates = pd.DataFrame(
+        {
+            k: (sp_date[k] if k in sp_date else pd.Series(np.nan, index=events.index)).fillna(
+                12.0 * (k - layout.r)
+            )
+            for k in ks
+        }
+    )
+    ev = events.to_numpy(bool)
+    ans = answered.to_numpy(bool)
+    D = dates.to_numpy(float)
+    times = np.full(len(events), np.nan)
+    has = ev.any(axis=1)
+    for row in range(len(events)):
+        if has[row]:
+            j = ev[row].argmax()
+            prev = [D[row, i] for i in range(j) if ans[row, i]]
+            start = prev[-1] if prev else 0.0
+            times[row] = (start + D[row, j]) / 2
+        elif ans[row].any():
+            j = len(ks) - 1 - ans[row, ::-1].argmax()
+            times[row] = D[row, j]
+    time = pd.Series(times * MONTH_DAYS, index=events.index)
+    return time, pd.Series(has.astype(float), index=events.index).where(time.notna())
+
+
 def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     """Canonical analytic extract and a disclosure-safe flow summary."""
     data_dir = Path(data_dir)
@@ -692,7 +868,10 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     if skipped:
         flow["comparators_skipped"] = {k: f"{len(v)} variables absent" for k, v in skipped.items()}
     for name, spec in layout.raw.get("auxiliary", {}).items():
-        out[name] = auxiliary_flag(sp, layout, spec)
+        if spec.get("kind") == "ad8":
+            out[name] = ad8_score(sp, layout, spec)
+        else:
+            out[name] = auxiliary_flag(sp, layout, spec)
     for name, src in layout.raw.get("conditions", {}).items():
         x = _clean(sp[layout.name(src)], layout.special_missing)
         out[f"cond_{name}"] = x.isin([1.0, 7.0]).astype(float).where(x.notna())
@@ -708,7 +887,10 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     latest, tracker_path = _latest_tracker(data_dir, layout)
     ks = [k for k in layout.follow_ups if k <= latest]
     mort = layout.raw["outcomes"]["mortality"]
-    tracker = read_table(tracker_path, layout.tracker_variables(latest)).set_index(pid)
+    tcols = layout.tracker_variables(latest)
+    have_t = available_columns(tracker_path)
+    tcols += [v for v in layout.date_variables(latest)["tracker"] if v in have_t]
+    tracker = read_table(tracker_path, tcols).set_index(pid)
     tracker = tracker.reindex(out.index)
     status = pd.DataFrame(
         {k: _clean(tracker[layout.name(mort["status"], k)], layout.special_missing) for k in ks}
@@ -721,7 +903,27 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
         known = status.isin([float(c) for c in mort["alive_codes"]]) | dead
     else:
         known = status.notna()
-    out["mortality_time"], out["mortality_event"] = _outcome_times(known, dead, layout)
+    dates = layout.raw["outcomes"].get("dates")
+    sp_date = pd.DataFrame(index=out.index)
+    intervals = pd.DataFrame(index=out.index)
+    if dates:
+        gap = {}
+        for k in ks:
+            path = find_file(data_dir, layout.raw["files"]["sp"].format(r=k, k=k).lower())
+            col = layout.name(dates["death_interval"], k)
+            if path is not None and col in available_columns(path):
+                f = read_table(path, [pid, col]).set_index(pid).reindex(out.index)
+                gap[k] = _clean(f[col], layout.special_missing)
+            else:
+                gap[k] = pd.Series(np.nan, index=out.index)
+        intervals = pd.DataFrame(gap)
+        out["mortality_time"], out["mortality_event"], sp_date = _dated_mortality(
+            status, dead, known, tracker, intervals, layout
+        )
+        dated = layout.name(dates["baseline"]["month"]) in tracker
+        flow["outcome_timing"] = "interview months" if dated else "whole rounds (no dates)"
+    else:
+        out["mortality_time"], out["mortality_event"] = _outcome_times(known, dead, layout)
 
     # First overnight hospital stay from follow-up SP files, censored at death.
     hosp = layout.raw["outcomes"]["hospitalisation"]
@@ -737,7 +939,10 @@ def build(data_dir: str | Path, layout: Layout) -> tuple[pd.DataFrame, dict]:
     if stays:
         stays_df = pd.DataFrame(stays)
         first_stay = stays_df & ~stays_df.shift(1, axis=1, fill_value=False).cummax(axis=1)
-        t, e = _outcome_times(pd.DataFrame(answered), first_stay, layout)
+        if dates:
+            t, e = _dated_first_event(pd.DataFrame(answered), first_stay, sp_date, layout)
+        else:
+            t, e = _outcome_times(pd.DataFrame(answered), first_stay, layout)
         # A death in the interval straight after the last stay-free interview is
         # a competing event: the person was seen stay-free, then died before the
         # next interview could ask. A death after missed interviews stays
