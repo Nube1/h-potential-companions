@@ -1,0 +1,32 @@
+% Chapter 2 (literature.tex), Figure fig:lit-model. Greyscale; boxes, line styles and labels carry every distinction.
+{\hpdiagramsizes
+\begin{tikzpicture}[font=\small]
+% measured region (left), outcome region (right)
+\node[hpbox, text width=3.5cm, anchor=west] (bp) at (0,2.7)
+  {\textbf{Biomedical Potential}, $P$\\[1pt]\footnotesize multimorbidity\\ ADL/IADL limitation\\ cognitive function};
+\node[hpbox, text width=3.5cm, anchor=west] (sm) at (0,0)
+  {\textbf{Social Modifiers}, $S$\\[1pt]\footnotesize social participation\\ support network\\ communication};
+\node[hpbox, text width=3.5cm, anchor=west, fill=black!14] (sb) at (0,-2.7)
+  {\textbf{Systemic Burdens}, $B$\\[1pt]\footnotesize economic vulnerability\\ home access barriers\\ healthcare barriers};
+\node[hpnote, anchor=north] at (sb.south) {\footnotesize enters as freedom $R=1-B$};
+\node[hpkey, text width=2.75cm, minimum height=2.0cm] (crf) at (5.75,0)
+  {\textbf{Realisation function}\\[3pt] $H=P\,S^{\alpha}R^{1-\alpha}$};
+\node[hpbox, text width=1.7cm, minimum height=1.6cm, fill=white, very thick] (h) at (8.75,0)
+  {\textbf{Realised capability}\\ $H$};
+\draw[hparrow] (bp.east) -- (crf.north west);
+\draw[hparrow] (sm.east) -- (crf.west);
+\draw[hparrow] (sb.east) -- (crf.south west);
+\draw[hparrow] (crf) -- (h);
+% boundary
+\draw[line width=1.2pt, dash pattern=on 6pt off 3pt] (9.95,4.2) -- (9.95,-4.0);
+\node[hpnote, anchor=south, text width=9.6cm] at (4.8,4.05)
+  {\textbf{Measured without outcomes}: one interview (NHATS Round~5)};
+\node[hpnote, anchor=south, text width=3.3cm] at (11.75,4.05)
+  {\textbf{Outcomes}: followed up after the interview};
+% outcomes
+\node[draw, dashed, thick, rounded corners=2pt, fill=white, align=center, text width=2.3cm, minimum height=1.1cm] (death) at (11.75,1.2) {Death};
+\node[draw, dashed, thick, rounded corners=2pt, fill=white, align=center, text width=2.3cm, minimum height=1.1cm] (adm) at (11.75,-1.2) {Hospital admission\\ \footnotesize (death competes)};
+\draw[hparrow, dotted] (h.east) -- (death.west);
+\draw[hparrow, dotted] (h.east) -- (adm.west);
+\node[hpnote, text width=3.2cm, anchor=north] at (11.75,-2.15) {dotted arrows: tested against, never used to build the score};
+\end{tikzpicture}}

@@ -88,6 +88,8 @@ Measurement begins with a construct, not an algorithm. A score can be calculated
 
 The WHO healthy-ageing framework provides an important starting point because it explicitly distinguishes intrinsic capacity from functional ability. Intrinsic capacity refers to the composite of an individual's physical and mental capacities, while functional ability emerges from the interaction between those capacities and relevant environmental characteristics. The environment is defined broadly, including physical, social and policy contexts and the systems and relationships through which people live. \citep{who_2015_ageing,who_healthy_ageing_2026} This formulation prevents a common measurement error: interpreting an observed limitation as evidence that the underlying biological capacity is absent when the observed limitation may instead reflect an environmental barrier.
 
+The rest of this section uses a small amount of notation, and each piece is read in plain words where it appears, so that a clinical reader can follow the argument from those readings alone. The first equation does one job. It writes down the WHO statement that what a person can do depends on their capacity, on their surroundings and on the way the two combine.
+
 The distinction can be expressed conceptually, for person $i$, as
 \begin{equation}
 \boxed{FA_i=f(IC_i,E_i,IC_i\times E_i)},
@@ -99,6 +101,8 @@ translation of the WHO conceptual architecture into notation; it is not an
 equation estimated or endorsed by WHO. Writing the interaction among the
 arguments of $f$ does not assert a linear interaction term, a multiplicative
 production function or any particular scale.
+
+In clinical terms, $IC_i$ is what a physical and cognitive examination would find, $E_i$ is what a home visit or a social history would find, and $FA_i$ is what the person manages from day to day. The definition below fixes the statement so that later sections can refer to it.
 
 \begin{definition}[Functional ability in the WHO framework]
 \label{def:lit-fa}
@@ -112,6 +116,8 @@ function $f$ with
 The definition fixes no scale for $IC$ or $E$, no sign for the interaction and
 no functional form for $f$. \citep{who_2015_ageing,who_healthy_ageing_2026}
 \end{definition}
+
+The definition allows body and surroundings to combine in any way. The assumption that follows says that they do not simply add up: the effect of the environment depends on how much capacity the person has. Clinical researchers know this as effect modification, in which a treatment works differently in different subgroups of patients. Formally it is stated through the cross-partial derivative $\partial^2 f/\partial IC\,\partial E$, which measures how far the effect of a change in the environment itself changes as capacity changes. A value of zero everywhere would mean no effect modification.
 
 \begin{assumption}[The interaction is not redundant]
 \label{ass:lit-interaction}
@@ -137,6 +143,8 @@ Consider two people with the same intrinsic capacity who live in environments th
 
 A measure that omits the interaction assumes that an environmental barrier costs every person the same amount of function. Where that assumption fails, the error is largest for those with the least capacity.
 \end{reading}
+
+The next display places these quantities in order, from a disease process to what a dataset records about the person, so that each measure discussed later can be located on the chain.
 
 The conceptual sequence used in this thesis is \citep{who_2015_ageing}
 \begin{equation}
@@ -166,7 +174,7 @@ and it does not assert an identified causal effect at any arrow.
 \end{definition}
 
 Each arrow in \eqref{eq:conceptual_sequence} is a place where information is
-lost, and naming the losses is the point of writing the sequence out. A health
+lost, and naming the losses is the point of writing the sequence out. A many-to-one map is one in which different starting points can end at the same place, as different lesions can produce the same symptom. A health
 condition produces reduced intrinsic capacities. Those capacities, taken
 together with the person's environment, set what the person is able to do.
 Functional ability is what the person in fact does, and the observed outcome
@@ -245,6 +253,42 @@ snapshot; the dynamic version is Appendix~\ref{app:dynamical}. And there is no
 outcome on either side, which is the separation the whole design turns on.
 \end{reading}
 
+Figure~\ref{fig:lit-model} draws the construct as the thesis uses it. The three domains sit on the left, each shown with three of the eleven NHATS indicators that score it; the full list is set out in Chapter~\ref{ch:methods}. The realisation function introduced in Section~\ref{sec:intro-maths} combines them into a single value of realised capability. Everything to the left of the dashed line comes from one interview and is fixed before any outcome is examined. Death and hospital admission lie to the right of the line. They are recorded in later rounds and serve only to test the score. The arrangement follows the rule of a diagnostic accuracy study, in which the index test is read without knowledge of the reference standard. The parallel has a limit. Death and admission are consequences the construct should predict, not a reference standard for what it measures, so a score that predicted them perfectly would not thereby be shown to measure capability; the argument about circularity later in this section explains why.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/lit_model}
+\caption{The H-Potential construct as a conceptual model. Three domains, each scored from NHATS indicators (three examples shown for each), are combined by the realisation function into realised capability $H$. Everything left of the dashed boundary is measured at one interview without reference to outcomes. Death and hospital admission, recorded at later follow-up, are used only to test the score (dotted arrows). Systemic Burdens are shaded darker because they enter the function reversed, as structural freedom $R=1-B$.}
+\label{fig:lit-model}
+\end{figure}
+
+Table~\ref{tab:lit-domains} defines each domain in plain words and states what it includes and what it leaves out. The exclusions matter as much as the inclusions. Income is scored in Systemic Burdens and not in Biomedical Potential, which keeps a social condition from being described as a property of the body; diagnosed disease is scored in Biomedical Potential and not in either contextual domain. The last row names the clinical record that collects similar information. It says where comparable information comes from in practice. It does not claim that the NHATS items have been validated against those records.
+
+\begin{table}[htbp]
+\centering
+\caption{The three domains of H-Potential: definitions, boundaries, NHATS indicators and clinical counterparts.}
+\label{tab:lit-domains}
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{3.85cm} >{\raggedright\arraybackslash}p{3.85cm} >{\raggedright\arraybackslash}p{3.85cm}}
+\toprule
+ & \textbf{Biomedical Potential} & \textbf{Social Modifiers} & \textbf{Systemic Burdens} \\
+\midrule
+Plain definition & The physical, mental and cognitive capacity that a person's body and mind make available, as far as a survey can record it & The relationships, participation and everyday communication through which a person puts that capacity to use & Constraints set by money, schooling, the home and the health system that limit what capacity and support can achieve \\
+\addlinespace
+Includes & Chronic disease burden; limitation in self-care, mobility and household activities; memory and executive function; depressive and anxiety symptoms & Visits, religious services, clubs and outings; the number of people a person talks to about important matters; hearing and vision for conversation and reading & Low household income; little formal schooling; stairs or no ramp at the home entrance; no regular doctor \\
+\addlinespace
+Excludes & Income, housing and services; death and hospital admission, which are outcomes & Diagnosed disease and functional limitation (Biomedical Potential); income and services (Systemic Burdens) & Personal choice and personal merit: a high burden describes circumstances, not a deficit in the person \\
+\addlinespace
+NHATS indicators & Multimorbidity (ten conditions); ADL/IADL limitation; cognitive function (word recall, clock drawing); psychological wellbeing (four items) & Social participation (four activities); support network (0 to 5 people); communication (four hearing and vision items) & Economic vulnerability (income, adjusted for couples); educational attainment; environmental stress (home access barriers); healthcare barriers \\
+\addlinespace
+Role in $H$ & Enters as $P$; higher is better & Enters as $S$; higher is better & Scored as burden $B$, higher is worse; enters as $R=1-B$ \\
+\addlinespace
+Clinical counterpart & The problem list, functional assessment and cognitive screen of a geriatric assessment & The social history taken before discharge: who helps the person, and whether they can hear and read instructions & The access questions of a social work assessment: cost, home adaptations, a usual source of care \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{table}[htbp]
 \centering
 \caption{Conceptual and empirical roles in the H-Potential argument}
@@ -274,7 +318,7 @@ However, the capability approach cannot be imported into health measurement with
 
 The present thesis therefore uses the term \emph{health-related capability} in a deliberately restricted sense. It refers to the capacity and opportunity to sustain health-related functioning under the biological and social conditions in which an individual lives. It is not intended to measure total human capability, flourishing, life satisfaction or general wellbeing. This boundary is necessary for discriminant validity: if the construct can only be distinguished from general wellbeing by its name, its theoretical specification is inadequate.
 
-A further distinction is required between a latent construct and a prognostic outcome. A score derived from NHATS is not itself future health. It is an estimate of a latent state hypothesised to be associated with subsequent outcomes. Mortality and hospitalisation therefore cannot be used to define the construct without creating circularity. The measurement model must be developed before the prognostic model is evaluated. Prediction is evidence relevant to validity, but prediction alone does not establish construct meaning.
+A further distinction is required between a latent construct and a prognostic outcome. A score derived from NHATS is not itself future health. It is an estimate of a latent state, meaning a state inferred from several observations and never measured directly, as glomerular filtration rate is inferred from creatinine and cystatin~C. That state is hypothesised to be associated with subsequent outcomes. Mortality and hospitalisation therefore cannot be used to define the construct without creating circularity. The measurement model must be developed before the prognostic model is evaluated. Prediction is evidence relevant to validity, but prediction alone does not establish construct meaning.
 
 The circularity is easy to fall into and worth showing in general terms. Suppose indicators are chosen, or weighted, because they predict death. The resulting score will then predict death well in the sample used to build it, and that performance will be reported as evidence that the score measures health capability. But the score was shaped to predict death, so its predictive performance is evidence only that the shaping worked. It says nothing about whether the score measures capability rather than, for example, proximity to the end of life. Keeping outcomes out of construction is what allows prediction to count as an independent test. The cost is that the construct will usually predict less well than a model built for prediction alone, and the thesis accepts that cost (Chapter~\ref{ch:results2}).
 
@@ -285,7 +329,7 @@ If several conceptions of health are in play, the first task is to lay them out 
 
 The previous section established that ``health'' is used for quantities at different levels, from capacities to outcomes. It did not say which traditions use it for which, or where they leave a gap. That is the work of this section.
 
-Five ontological traditions define what the word \emph{health} names, and each answers
+Five ontological traditions, that is, five accounts of what kind of thing health is, define what the word \emph{health} names, and each answers
 a different question. To make the gap the thesis addresses precise, they are set out as
 a taxonomy rather than a list, alongside the health-economic, social-vulnerability and
 capability-wellbeing measures that serve as comparators. Table~\ref{tab:taxonomy}
@@ -549,6 +593,8 @@ treats capability as something a person has. Nobody has ever observed one.
 
 The ontologies of the previous section say what capability is. They do not say how anyone could find out how much of it a person has, and the obvious answer, look at what the person does, turns out to fail. This section shows why it fails and what has to replace it.
 
+A laboratory parallel states the problem before the notation does. A prolonged activated partial thromboplastin time can come from a factor deficiency, from an inhibitor or from heparin in the sample. The clotting time alone cannot say which, and the laboratory settles the question with further information, such as a mixing study, a thrombin time or a factor assay. Observed functioning is in the same position: one recorded behaviour is compatible with several underlying situations. The parallel breaks at the next step. The laboratory has a further test to run. For capability there is no direct test, and the extra information has to come from a model of capacity and context, which is an assumption and must be stated as one. The notation below sets this out. The capability set $\mathcal C_i$ is the list of things a person could genuinely do, and the selector $\chi_i$ is the choice that picks one of them. The theorem then shows that no rule applied to the recorded behaviour alone can recover the list.
+
 Let $\mathcal C_i$ be the set of health-related functionings genuinely
 available to person $i$, and let the achieved functioning be
 \[
@@ -575,6 +621,8 @@ where the selector $\chi_i$ represents choice under the person's information,
 preferences and circumstances. Only $F_i$ is recorded.
 \end{definition}
 
+The theorem uses one technical word. A map is injective, or one-to-one, when different inputs always give different outputs. A clotting time is not injective as a function of its cause, since different causes give the same time, and the theorem says the same of recorded behaviour as a function of the capability set.
+
 \begin{theorem}[Observed functioning does not identify the capability set]
 \label{thm:lit-identification}
 Let $\mathcal C$ range over the non-empty subsets of $\mathcal U$ and let
@@ -588,6 +636,8 @@ candidate inverse $g$ with $g(F)\in2^{\mathcal U}$, and any $F$ chosen from $k$
 distinct capability sets, $g$ returns the right set for at most one of the $k$
 people and is wrong for the other $k-1$.
 \end{theorem}
+
+The proof needs only one example of two different capability sets that lead to the same recorded behaviour. The counting claim then follows because any rule gives one answer for each record.
 
 \begin{proof}[Proof sketch]
 Take $u\in\mathcal U$ and any two distinct sets $\mathcal C_i,\mathcal C_j$ that
@@ -825,6 +875,8 @@ the framework could be used at the third level at all.
 
 \subsection{The policy evidence vector and its calculations}
 
+This subsection uses the notation of health economics, and its point can be taken without the algebra. An appraisal of an intervention needs seven separate pieces of evidence: the change in the domain profile, the change in an established health outcome, the extra cost, the effect on the budget, who gains and who pays, how uncertain each estimate is, and what governance the use would need. These are kept as a list and never added into one number, in the way a laboratory report gives each analyte with its own units and reference range rather than one summary figure for the panel. The formulas show how the economic items are computed. The worked figures that follow show that the same clinical effect can be worth funding in one health system and not in another.
+
 Because the foregoing distinctions are easy to lose once a score enters a
 decision process, the minimum policy object can be written explicitly. Let
 $a$ denote an intervention and let $j$ denote the jurisdiction in which it is
@@ -863,7 +915,7 @@ aggregation rule, weights and compensation assumptions have been defended; it
 does not follow from subtraction alone.
 
 The economic coordinates use conventional incremental analysis. For a time
-horizon $T$, discount factor $d_t=(1+r)^{-t}$, intervention arm $a$ and
+horizon $T$, discount factor $d_t=(1+r)^{-t}$ (which counts a cost or health gain in year $t$ for less than the same amount now, at annual rate $r$), intervention arm $a$ and
 comparator $0$,
 \[
 \Delta Q_j(a)=\sum_{t=0}^{T}d_t
@@ -879,6 +931,8 @@ monetary benefit is \citep{stinnett_mullahy_1998}
 \operatorname{INMB}_j(a)=
 \lambda_j\Delta Q_j(a)-\Delta C_j(a).
 \]
+In words, net monetary benefit is the value of the health gained, priced at what the health system is prepared to pay for a unit of health, minus the extra cost. A positive value means the intervention yields more health than the same money is expected to produce if spent on other care.
+
 For an eligible population of size $N_{jt}$ and a budget-period cost difference
 $\Delta c_{jt}(a)$, a transparent budget-impact calculation is
 \[
@@ -1086,6 +1140,8 @@ Multiplication by $S$ assumes that social conditions proportionally scale every 
 
 The formula should not be dismissed wholesale, because two of its features survive into the replacement. It puts biomedical potential first and lets context act on it, which is the ordering of the WHO architecture. And it multiplies rather than adds the social term, which already expresses the idea that context changes what capacity is worth, the interaction that Assumption~\ref{ass:lit-interaction} makes formal. What fails is the treatment of burden. Subtracting $B$ makes burden a fixed toll, the same for a person with much capacity as for one with little, and it lets the toll exceed what there is to pay. Both consequences run against the interaction the formula was meant to express, since a barrier ought to cost a person in proportion to what it blocks. The proposition below states the second consequence precisely.
 
+In laboratory terms, the proposition shows that the formula can report a value below zero for a quantity that cannot be negative, as an assay extrapolated beyond its calibration range can report a negative concentration. A laboratory would not release such a result. The proposition also gives the share of possible inputs for which this happens when each input is equally likely to take any value between zero and one.
+
 \begin{proposition}[The heuristic is not bounded below by zero]
 \label{prop:lit-heuristic}
 Let $L,Q,S,B\in[0,1]$ and write $h=(LQ)S-B$. Then
@@ -1100,6 +1156,8 @@ function has this property: every aggregator satisfying the normalisation and
 capacity-boundedness axioms of Appendix~\ref{app:mathematical_foundations}
 returns a value in $[0,P]$.
 \end{proposition}
+
+The proof checks the two extreme cases and then computes an average over all inputs.
 
 \begin{proof}[Proof sketch]
 $(LQ)S$ ranges over $[0,1]$ and $B$ ranges over $[0,1]$ independently, so their
@@ -1192,7 +1250,7 @@ the form was chosen rather than assumed.
 
 The form has a further property that the later chapters use and that is easy to
 miss. Taking logarithms of \eqref{eq:crf_intro} gives
-$\log H=\log P+\alpha\log S+(1-\alpha)\log R$, which is additive. The
+$\log H=\log P+\alpha\log S+(1-\alpha)\log R$, which is additive. This is the step that turns a fold-change in an antibody titre or a viral load into a difference on the log scale, where changes from separate sources can be added. The
 interaction between capacity and context therefore lives on the level scale and
 disappears on the log scale. That is what makes the exact gap decomposition of
 Chapter~\ref{chap:crf} possible: a ratio of two people's realised capability
@@ -1363,6 +1421,8 @@ With the formal object in place, the candidate representations that compete with
 
 The previous section derived a primary form, but derivation from axioms is only as good as the axioms, and an examiner who doubts the non-compensation axiom is owed a fair comparison with the forms that drop it. This section sets out those forms and the tests that would choose between them.
 
+The four formulas below differ in one respect that a clinician can judge without the algebra: how far a good score in one domain can make up for a poor score in another. The additive form lets any domain make up for any other at a fixed rate. The interaction form adds a single term that lets the effect of biological capacity depend on social enablement, the effect modification of Assumption~\ref{ass:lit-interaction}. The multiplicative and CES forms build the dependence into the structure, so that a domain near zero pulls the whole value towards zero, as a very low platelet count rules out elective surgery whatever the clotting screen shows. CES stands for constant elasticity of substitution, the economists' name for a form whose single parameter $\rho$ sets how easily one input can stand in for another. In each formula $\beta$, $\gamma$ and $\delta$ are weights and $\varepsilon_i$ is the part of the score the domains do not explain.
+
 Equation~\ref{eq:hp_general_class} defines a class of admissible models rather
 than selecting one. Four candidates expose the principal aggregation assumptions \citep{arrow_chenery_1961}:
 \begin{align}
@@ -1403,6 +1463,8 @@ the whole range from full substitution to none. More flexible forms, such as
 splines or tree ensembles, are not among the candidates. They might fit
 better, but they have no parameter that answers the substitution question, and
 a construct whose aggregation rule cannot be stated cannot be argued about.
+
+The proposition below gives a two-person example in which the choice of formula alone decides who is ranked as better placed.
 
 \begin{proposition}[Aggregation can reverse a ranking]
 \label{prop:lit-reversal}
@@ -1456,6 +1518,8 @@ between the first rule and the other two. Asserted by
 \texttt{test\_worked\_example\_lit\_ranking\_reversal}.}
 \end{workedexample}
 
+Derivatives give a compact way to ask the same question of the original heuristic. The first derivative is the change in the score for a small change in one input, the slope of a dose-response curve. The cross derivative is the change in that slope when a second input changes, which is effect modification again.
+
 For the heuristic $(LQ)S-B$,
 \begin{equation}
 \frac{\partial H_P}{\partial L}=QS,
@@ -1467,6 +1531,8 @@ The positive cross-partial is a substantive complementarity claim: support
 raises the marginal contribution of biological capacity. Additive barriers also
 require commensurability between $B$ and $(LQ)S$. Failure of either assumption
 rejects that functional form, not automatically the general construct.
+
+The next equation is the measurement model, and it has a direct laboratory counterpart. An assay signal is read as an intercept plus a slope times the analyte concentration plus random error, and the calibration curve is used in reverse to infer the concentration from the signal. Equation~\eqref{eq:reflective_measurement_bridge} has the same form. The indicator $x_{ij}$ plays the part of the signal and the latent domain score $\eta_i$ the part of the concentration. The intercept is $\nu_j$; the factor loading $\lambda_j$ is the slope, which says how strongly that indicator tracks the domain; and $\epsilon_{ij}$ is the error. Several indicators of one domain are like several assays of one analyte. The parallel breaks in one place. A calibration uses standards of known concentration, whereas no person's true domain score is ever known, so the scale of $\eta_i$ has to be fixed by convention, and the score is a position relative to the sample, not an amount.
 
 The transition from construct to measurement is separate. For a reflective
 domain $\eta_i$, indicator $j$ is represented as \citep{bollen_1989,kline_2015}
@@ -1491,6 +1557,17 @@ any indicator that failed to correlate with the rest. The indicators most
 likely to be discarded would be those that capture a distinct barrier, which
 are the ones the structural domain most needs. Chapter~\ref{ch:methods}
 specifies how each domain is modelled.
+
+Figure~\ref{fig:lit-reflective} sets the two directions side by side, with a clinical example of each. In panel~(a), factor~VIII activity in a plasma sample is the quantity, and the one-stage clotting assay and the chromogenic assay are two readings of it, each with its own error. If the activity rises, both readings should rise, and a laboratory that dropped one assay would still be measuring the same thing. In panel~(b), a composite cardiovascular risk score is built from age, blood pressure, cholesterol and smoking. These need not correlate with one another, since a heavy smoker can have a low cholesterol, and a score with smoking removed measures a different risk.
+
+\begin{figure}[htbp]
+\centering
+\input{Figures/diagrams/lit_reflective}
+\caption{Reflective and formative measurement. (a) Reflective: an underlying quantity, here factor~VIII activity, causes each reading, and each reading carries its own error $\epsilon$. (b) Formative: the indicators make up the construct, here a composite cardiovascular risk score, and $\zeta$ is the part of the construct they do not capture. The direction of the arrows, not the shading, carries the distinction.}
+\label{fig:lit-reflective}
+\end{figure}
+
+The difference matters for this thesis for three reasons. First, the two kinds of model are checked in different ways: agreement among indicators is evidence for a reflective domain and says nothing about a formative one. Second, reliability statistics such as internal consistency, the questionnaire counterpart of assay precision across replicates, mean something only for reflective domains. Third, a model that wrongly treats formative indicators as reflective will mark weakly correlated indicators as poor and favour dropping them, and in the structural domain those are the indicators that record separate barriers. The factor~VIII example also shows how a reflective model can fail. In some forms of mild haemophilia~A the one-stage and chromogenic assays give discordant results, so the two readings do not track the same quantity in the same way in every patient group. That is the laboratory form of a failure of measurement invariance, meaning that an indicator gives the same reading for the same underlying level in every group, and the equity proposition of Section~\ref{sec:lit-propositions} tests for it across demographic and socioeconomic groups.
 
 The more defensible conceptual representation is therefore
 \begin{equation}
@@ -1562,16 +1639,23 @@ The pairings are not exact synonyms. They are close enough that a reader who
 understands one side will not be lost on the other, which is all a glossary can
 honestly do.
 
-\begin{table}[htbp]
-\centering
-\caption{Quantitative terms and their clinical counterparts, as used in this thesis.}
-\label{tab:bilingual}
-\footnotesize
+{\footnotesize
 \renewcommand{\arraystretch}{1.25}
-\begin{tabular}{p{3.3cm} p{3.9cm} p{6.2cm}}
+\begin{longtable}{p{3.3cm} p{3.9cm} p{6.2cm}}
+\caption{Quantitative terms and their clinical counterparts, as used in this thesis.}\label{tab:bilingual}\\
 \toprule
 \textbf{Quantitative term} & \textbf{Clinical counterpart} & \textbf{What both are naming} \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\textit{Continued from the previous page}}\\
+\toprule
+\textbf{Quantitative term} & \textbf{Clinical counterpart} & \textbf{What both are naming} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{@{}r}{\textit{Continued on the next page}}\\
+\endfoot
+\endlastfoot
 Endogeneity & Confounding by indication & The exposure was chosen because of something that also affects the outcome. \\
 \addlinespace
 Attenuation bias & Regression dilution & Measuring the predictor with error pulls its estimated effect towards no effect. \\
@@ -1612,8 +1696,8 @@ Net benefit & Finding a case against over-treating & The trade a clinician makes
 \addlinespace
 Internal validation & The model marking its own homework & How much of the apparent performance will survive a new sample. \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
+}
 
 \section{A Systems View of the Theoretical Framework}
 \label{sec:lit-systems}
@@ -1676,6 +1760,10 @@ Every model draws a boundary, and the choice reflects a purpose rather than a fa
 Each exclusion buys something and costs something. The main cost is that some excluded elements respond to the score. An institution that uses the score to target support changes $R$ and $S$ for the people it targets, so the structural domain is not a fixed input once the measure is in use. A boundary drawn so that a responsive element is treated as fixed is a known source of error in system models \citep{sterman_2000}, and it is the reason Chapter~\ref{ch:systems} treats the measurement instrument and the people who act on it as part of the system under study (Section~\ref{sec:sys-control}). Drawing the boundary wider is not a free remedy either. The philosophical section showed that a boundary drawn to include every circumstance makes health indistinguishable from welfare.
 
 The framework is a model of a person in context, and it will be wrong in some respects. Box's advice was to ask which of a model's simplifications matter \citep{box_1976}. On the argument of this section, three matter most: the absence of feedback among the domains, the absence of time, and the treatment of context as unaffected by the measure. None of them invalidates the cross-sectional test the thesis runs, but each limits what a passed test can be taken to show, and each is a reason the next chapter is needed.
+
+\section*{What Is New in This Chapter}
+
+Before this chapter the ingredients existed separately. The WHO framework stated in words that functional ability arises from intrinsic capacity, environment and their interaction. Capability theory separated achieved functioning from the opportunity to achieve it. Frailty and social-vulnerability indices scored deficits and disadvantage. The thesis itself began from a heuristic formula, $(L\cdot Q)S-B$. The chapter adds five things. It divides health-related capability into three domains with stated contents, exclusions and directions (Table~\ref{tab:lit-domains}), and fixes a boundary that keeps death and admission out of the construction of the score (Figure~\ref{fig:lit-model}). It proves that observed functioning cannot identify a capability set (Theorem~\ref{thm:lit-identification}), which is the reason capability is modelled from capacity and context. It proves that the original heuristic returns negative values, with probability seven-eighths when its four inputs are independent and uniform (Proposition~\ref{prop:lit-heuristic}), and replaces it with a realisation function whose value stays between zero and biomedical potential, derived from axioms in Chapter~\ref{chap:crf}. It carries the capacity-ceiling and relational ontologies as two sensitivity models instead of choosing between them by fit. And it states seven propositions, with the consequence of each failure fixed before any result is known, and sorts the links of the framework into causal claims and definitions (Table~\ref{tab:lit-links}). Each addition can be checked. The proofs can be read line by line; the worked examples are asserted by named tests in the code (Appendix~\ref{app:verification}); the interaction assumption is tested in Chapter~\ref{ch:results2}; and the propositions are tested in the empirical chapters in the order of dependence set out in Section~\ref{sec:lit-propositions}.
 
 \section{What the Chapter Settles and What It Leaves Open}
 \label{sec:lit-close}

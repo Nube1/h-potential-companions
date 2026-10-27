@@ -1,0 +1,34 @@
+% Chapter 2 (literature.tex), Figure fig:lit-reflective. Greyscale; arrow direction, shape and labels carry the distinction.
+{\hpdiagramsizes
+\begin{tikzpicture}[font=\small,
+  latent/.style={draw, ellipse, very thick, fill=black!18, align=center, text width=2.6cm, inner sep=2pt, minimum height=1.3cm},
+  ind/.style={hpbox, fill=black!6, text width=1.6cm, inner sep=2pt, minimum height=1.0cm, font=\footnotesize},
+  err/.style={draw, circle, inner sep=1pt, font=\footnotesize}]
+% ---- reflective panel ----
+\node[font=\small\bfseries] at (3.0,4.3) {(a) Reflective};
+\node[latent] (eta) at (3.0,3.0) {Factor~VIII activity in the sample};
+\node[ind, text width=2.0cm] (x1) at (1.6,0.8) {One-stage clotting assay};
+\node[ind, text width=2.0cm] (x2) at (4.4,0.8) {Chromogenic assay};
+\draw[hparrow] (eta) -- (x1);
+\draw[hparrow] (eta) -- (x2);
+\node[err] (e1) at (1.6,-0.6) {$\epsilon_1$};
+\node[err] (e2) at (4.4,-0.6) {$\epsilon_2$};
+\draw[hparrow] (e1) -- (x1);
+\draw[hparrow] (e2) -- (x2);
+\node[hpnote, text width=5.2cm, anchor=north] at (3.0,-1.15)
+  {Arrows run from the quantity to the readings. The readings should agree; dropping one assay leaves the quantity unchanged.};
+% ---- divider ----
+\draw[hpdash, black!50] (6.3,4.5) -- (6.3,-2.6);
+% ---- formative panel ----
+\node[font=\small\bfseries] at (10.20,4.3) {(b) Formative};
+\node[ind] (z1) at (7.35,3.0) {Age};
+\node[ind] (z2) at (9.25,3.0) {Blood pressure};
+\node[ind] (z3) at (11.15,3.0) {Cholesterol};
+\node[ind] (z4) at (13.05,3.0) {Smoking};
+\node[latent] (risk) at (10.20,0.8) {Composite cardio\-vascular risk score};
+\foreach \z in {z1,z2,z3,z4} \draw[hparrow] (\z.south) -- (risk);
+\node[err] (zeta) at (12.95,0.8) {$\zeta$};
+\draw[hparrow] (zeta) -- (risk);
+\node[hpnote, text width=5.9cm, anchor=north] at (10.20,-1.15)
+  {Arrows run from the ingredients to the score. The ingredients need not agree; dropping one changes what the score means.};
+\end{tikzpicture}}
