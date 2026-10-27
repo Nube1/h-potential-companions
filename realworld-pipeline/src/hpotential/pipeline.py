@@ -15,6 +15,7 @@ from .data import load_and_validate, write_manifest
 from .evaluation import equity_metrics, fit_predict_cox, metrics
 from .measurement import (
     candidate_scores,
+    factor_scores,
     fit_measurement,
     save_frozen_model,
     transform_measurement,
@@ -33,6 +34,7 @@ def _predictor_sets(cov_cols: list[str], cfg) -> dict[str, list[str]]:
         "baseline": base,
         "additive": ["additive", *base],
         "geometric_crf": ["geometric_crf", *base],
+        "factor_score": ["factor_score", *base],
     }
     if cfg.raw["measurement"].get("floor_sensitivity"):
         sets["geometric_crf_floor"] = ["geometric_crf_floor", *base]
@@ -62,6 +64,8 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     alpha = cfg.raw["measurement"]["alpha"]
     domains = transform_measurement(df, model, cfg).reset_index(drop=True)
     scores = candidate_scores(domains, alpha, cfg.raw["measurement"]["rho_sensitivity"])
+    # The second-order factor score: the outcome-independent comparator.
+    scores["factor_score"] = factor_scores(df, model, cfg).to_numpy()
     # Sensitivity: the same frozen bounds mapped onto [floor, 1].
     floor = float(cfg.raw["measurement"].get("floor_sensitivity", 0) or 0)
     if floor:
@@ -72,6 +76,16 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
     cov = _encoded_covariates(analysis, cfg)
     analysis = pd.concat([analysis, cov.add_prefix("cov_")], axis=1)
     predictors = _predictor_sets(list(cov.columns), cfg)
+    omitted = {}
+    for name in list(predictors):
+        score = predictors[name][0]
+        if name != "baseline" and score in analysis and analysis[score].isna().all():
+            del predictors[name]
+            omitted[name] = (
+                "second-order model not admissible in any imputation (H2)"
+                if name == "factor_score"
+                else "score unavailable"
+            )
 
     weight = cfg.raw["data"]["weight"]
     train, test = analysis.iloc[tr_idx], analysis.iloc[te_idx]
@@ -125,6 +139,7 @@ def run(data_path, cfg, output_dir="outputs") -> pd.DataFrame:
         "data_path": str(Path(data_path).resolve()),
         "n_train": int(len(tr_idx)),
         "n_test": int(len(te_idx)),
+        "models_omitted": omitted,
     }
     (out / "run_audit.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")
     return pd.DataFrame(results)

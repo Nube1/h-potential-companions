@@ -38,7 +38,7 @@ def write_synthetic_nhats(
     name = layout.name
 
     bio, soc, sysb = rng.multivariate_normal(
-        [0, 0, 0], [[1, 0.3, -0.25], [0.3, 1, -0.3], [-0.25, -0.3, 1]], n
+        [0, 0, 0], [[1, 0.5, -0.45], [0.5, 1, -0.4], [-0.45, -0.4, 1]], n
     ).T
     age_band = np.clip(1 + rng.poisson(1.6, n), 1, 6)
     bio = bio - 0.35 * (age_band - 3)

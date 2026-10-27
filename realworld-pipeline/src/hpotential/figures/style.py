@@ -15,10 +15,25 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-SHADES = ["#1a1a1a", "#2f4b7c", "#6b6b6b", "#9a9a9a", "#4f6f8f", "#c4c4c4"]
-LINES = ["-", "--", ":", "-.", (0, (5, 1, 1, 1)), (0, (1, 1))]
-HATCHES = ["", "///", "...", "xxx", "\\\\\\", "ooo"]
-MARKERS = ["o", "s", "^", "D", "v", "P"]
+# Twelve series. Shades repeat after six, but never with the same line style
+# or marker, so every pair of series still differs twice.
+SHADES = ["#1a1a1a", "#2f4b7c", "#6b6b6b", "#9a9a9a", "#4f6f8f", "#c4c4c4"] * 2
+LINES = [
+    "-",
+    "--",
+    ":",
+    "-.",
+    (0, (5, 1, 1, 1)),
+    (0, (1, 1)),
+    (0, (3, 1, 1, 1, 1, 1)),
+    (0, (8, 2)),
+    (0, (2, 2)),
+    (0, (4, 1, 2, 1)),
+    (0, (6, 1)),
+    (0, (1, 2)),
+]
+HATCHES = ["", "///", "...", "xxx", "\\\\\\", "ooo", "---", "+++", "|||", "**", "OO", ".."]
+MARKERS = ["o", "s", "^", "D", "v", "P", "X", "<", ">", "h", "*", "p"]
 MIN_CELL = 11  # suppress any group or count below this
 
 

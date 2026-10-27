@@ -232,6 +232,16 @@ class CFAResult:
             out.append(self._delta(f))
         return out
 
+    def second_order_admissible(self) -> bool:
+        """True when every second-order loading is defined and below one.
+
+        A loading of one or more implies a negative residual variance for that
+        domain (a Heywood case); a non-positive factor correlation leaves the
+        loadings undefined. Either way no general factor is retained (H2).
+        """
+        gam = np.array([e for e, _ in self.second_order()])
+        return bool(np.all(np.isfinite(gam)) and np.all(gam < 1))
+
     def reliability(self):
         """Omega and AVE per domain, first group, standardised metric."""
         L, Phi, th, *_ = self.group(0)
@@ -275,7 +285,9 @@ class CFAResult:
         return kap + (np.asarray(X, float) - mu) @ inv @ L @ Phi
 
     def general_scores(self, X):
-        """Regression scores for the second-order general factor."""
+        """Regression scores for the second-order general factor (NaN if inadmissible)."""
+        if not self.second_order_admissible():
+            return np.full(len(X), np.nan)
         gam = np.array([e for e, _ in self.second_order()])
         L, Phi, inv, mu, _ = self._weights(0)
         return (np.asarray(X, float) - mu) @ inv @ L @ gam
@@ -285,14 +297,18 @@ class CFAResult:
         M = Phi @ L.T @ inv @ L @ Phi
         dom = np.sqrt(np.diag(M) / np.diag(Phi))
         gam = np.array([e for e, _ in self.second_order()])
-        gen = float(np.sqrt(gam @ L.T @ inv @ L @ gam))
+        gen = (
+            float(np.sqrt(gam @ L.T @ inv @ L @ gam)) if self.second_order_admissible() else np.nan
+        )
         return {**dict(zip(self.factors, dom.tolist(), strict=True)), "general": gen}
 
 
 # ---------------------------------------------------------------------- fit
 
 
-def fit_cfa(groups, pattern: dict, weights=None, level: str = "configural") -> CFAResult:
+def fit_cfa(
+    groups, pattern: dict, weights=None, level: str = "configural", se: bool = True
+) -> CFAResult:
     """Fit the CFA to one or more groups of complete data.
 
     ``groups`` is a list of (n x p) arrays (or one array). ``pattern`` maps each
@@ -336,10 +352,10 @@ def fit_cfa(groups, pattern: dict, weights=None, level: str = "configural") -> C
     v = best.x
     # Standard errors: cov = (2/N) H^-1, H the Hessian of the fit function.
     q = len(v)
-    H = np.zeros((q, q))
+    H = np.full((q, q), np.nan) if not se else np.zeros((q, q))
     h = 1e-4
     f0 = obj(v)
-    for i in range(q):
+    for i in range(q if se else 0):
         for j in range(i, q):
             e_i = np.zeros(q)
             e_j = np.zeros(q)
@@ -355,7 +371,7 @@ def fit_cfa(groups, pattern: dict, weights=None, level: str = "configural") -> C
                     + obj(v - e_i - e_j)
                 ) / (4 * h**2)
     try:
-        cov = 2 / N * np.linalg.inv(H)
+        cov = 2 / N * np.linalg.inv(H) if se else np.full((q, q), np.nan)
     except np.linalg.LinAlgError:
         cov = np.full((q, q), np.nan)
     chi2 = N * best.fun

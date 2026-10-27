@@ -90,7 +90,7 @@ def write_manifest(manifest: dict, path: str | Path):
 def synthetic_dataset(cfg, n=750, seed=20260905):
     """Clearly labelled CI/tutorial data; never substantive evidence."""
     rng = np.random.default_rng(seed)
-    z = rng.multivariate_normal(np.zeros(3), [[1, 0.25, 0.15], [0.25, 1, 0.2], [0.15, 0.2, 1]], n)
+    z = rng.multivariate_normal(np.zeros(3), [[1, 0.5, 0.45], [0.5, 1, 0.4], [0.45, 0.4, 1]], n)
     df = pd.DataFrame(
         {
             cfg.raw["data"]["id"]: [f"S{i:05d}" for i in range(n)],

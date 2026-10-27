@@ -392,15 +392,16 @@ class Export:
     def internal_table(self) -> None:
         """Harrell's bootstrap optimism, refitting the whole pipeline in each resample.
 
-        The measurement model (domain bounds) and the Cox models are refitted
-        on each bootstrap sample, evaluated there and on the original rows; the
-        mean difference is the optimism.
+        In each resample the imputation models, the joint CFA, the domain bounds
+        and the Cox models are refitted on the bootstrap rows, then evaluated on
+        those rows and on the original rows; the mean difference is the optimism.
+        The measurement model is fitted once per resample and shared by both
+        endpoints.
         """
         cfg, alpha = self.cfg, self.cfg.raw["measurement"]["alpha"]
         base = self.raw
 
-        def scored(fit_rows: pd.DataFrame, rows: pd.DataFrame) -> pd.DataFrame:
-            model = fit_measurement(fit_rows, cfg)
+        def scored(model, rows: pd.DataFrame) -> pd.DataFrame:
             dom = transform_measurement(rows, model, cfg).reset_index(drop=True)
             h = candidate_scores(dom, alpha, [])["geometric_crf"]
             out = rows.reset_index(drop=True).assign(geometric_crf=h.to_numpy())
@@ -420,26 +421,31 @@ class Export:
             )
             return _performance(test, spec, risk, self.horizon)
 
-        rows, self.internal = [], {}
-        full = scored(base, base)
-        for e_i, endpoint in enumerate(PRIMARY):
-            spec = self.endpoints[endpoint]
-            apparent = perf(full, full, spec)
-            optimism = {k: [] for k in apparent}
-            n = len(base)
-            for _ in range(self.reps):
-                idx = self.rng.integers(0, n, n)
-                b_rows = base.iloc[idx].reset_index(drop=True)
+        full = scored(fit_measurement(base, cfg, se=False), base)
+        apparent = {e: perf(full, full, self.endpoints[e]) for e in PRIMARY}
+        optimism = {e: {k: [] for k in apparent[e]} for e in PRIMARY}
+        n = len(base)
+        for _ in range(self.reps):
+            idx = self.rng.integers(0, n, n)
+            b_rows = base.iloc[idx].reset_index(drop=True)
+            try:
+                model = fit_measurement(b_rows, cfg, se=False)
+                b, orig = scored(model, b_rows), scored(model, base)
+            except (ValueError, ZeroDivisionError, np.linalg.LinAlgError):
+                continue
+            for endpoint in PRIMARY:
+                spec = self.endpoints[endpoint]
                 try:
-                    b = scored(b_rows, b_rows)
-                    orig = scored(b_rows, base)
                     on_boot, on_orig = perf(b, b, spec), perf(b, orig, spec)
                 except (ValueError, ZeroDivisionError):
                     continue
-                for k in apparent:
-                    optimism[k].append(on_boot[k] - on_orig[k])
-            corrected = {k: apparent[k] - np.nanmean(optimism[k]) for k in apparent}
-            self.internal[endpoint] = (apparent, corrected, len(optimism["harrell"]))
+                for k in apparent[endpoint]:
+                    optimism[endpoint][k].append(on_boot[k] - on_orig[k])
+        rows, self.internal = [], {}
+        for e_i, endpoint in enumerate(PRIMARY):
+            app, opt = apparent[endpoint], optimism[endpoint]
+            corrected = {k: app[k] - np.nanmean(opt[k]) for k in app}
+            self.internal[endpoint] = (app, corrected, len(opt["harrell"]))
             rows.append(rf"\multicolumn{{3}}{{l}}{{\textit{{{NAMES[endpoint].capitalize()}}}}} \\")
             for lab, k in [
                 ("Harrell's C", "harrell"),
@@ -447,7 +453,7 @@ class Export:
                 ("Calibration slope", "slope"),
                 ("Calibration-in-the-large", "citl"),
             ]:
-                rows.append(rf"\quad {lab} & {apparent[k]:.3f} & {corrected[k]:.3f} \\")
+                rows.append(rf"\quad {lab} & {app[k]:.3f} & {corrected[k]:.3f} \\")
             if e_i == 0:
                 rows.append(r"\addlinespace")
         self.rows["internal"] = "\n".join(rows) + "\n" + self._stamp_rows(3)
@@ -611,7 +617,7 @@ class Export:
                     f"{app['slope']:.3f} against {cor['slope']:.3f}"
                 )
             paras["optimism"] = (
-                f"Refitting the domain factor models, the median imputation, the domain scaling "
+                f"Refitting the multiple imputation, the joint factor model, the domain scaling "
                 f"and the Cox models in each of {n_ok} bootstrap samples gave "
                 + "; ".join(bits)
                 + " (Table~\\ref{tab:internal})."
@@ -671,10 +677,6 @@ class Export:
             "filled": self.filled,
             "not_filled": self.unfilled,
             "differs_from_protocol": [
-                "The protocol scores H from a confirmatory factor model with multiple imputation. "
-                "The pipeline fits a one-factor model to each domain separately in the development "
-                "split, fills missing indicators with the development-split median, and scales each "
-                "domain between its 1st and 99th percentiles. The bootstrap refits all of that.",
                 "NHATS asks about any overnight hospital stay since the last interview; it does "
                 "not separate planned from unplanned stays.",
                 "A death in the interval straight after the last stay-free interview counts as "

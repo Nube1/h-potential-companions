@@ -11,6 +11,9 @@ data:
   max_column_missing: 0.60
 measurement:
   alpha: 0.50
+  # Multiple imputation by chained equations, then the joint three-domain CFA
+  # fitted to each imputed development set; scores are averaged over imputations.
+  imputations: 10
   rho_sensitivity: [-1.0, 0.5]
   # Preregistered scaling clips each domain to [~0, ~1] at the 1st and 99th
   # training percentiles. Sensitivity: the same bounds mapped onto [floor, 1].

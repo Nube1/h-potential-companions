@@ -40,7 +40,12 @@ def test_measurement_is_bounded_and_outcome_blind(cfg):
     assert set(s) == {"biomedical", "social", "systemic"}
     assert ((s > 0) & (s < 1)).all().all()
     assert ((c["geometric_crf"] > 0) & (c["geometric_crf"] < 1)).all()
-    assert "mortality" not in str(m) and "hospital" not in str(m)
+    # The imputation model sees indicators, age and sex only, never an outcome.
+    assert not any("mortality" in c or "hospital" in c for c in m.columns)
+    assert m.imputers[0].n_features_in_ == len(m.columns) + 2
+    pooled = m.pooled()
+    assert pooled["imputations"] == cfg.raw["measurement"]["imputations"]
+    assert 0 < pooled["fit"]["cfi"] <= 1
 
 
 def test_noncompensation():
