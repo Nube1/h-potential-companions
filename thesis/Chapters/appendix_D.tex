@@ -36,12 +36,16 @@ pipeline.
 \section{Relationship to the Empirical Analysis}
 \label{sec:D_relationship}
 The empirical measurement and prognostic models of Chapters~\ref{ch:methods} to
-\ref{ch:results2} are intended to be estimated in R using \texttt{lavaan} for
-structural equation modelling, \texttt{survival} for the Cox models, and
-\texttt{mice} for imputation \citep{vanbuuren_2011}. The V2 archive includes an executable analysis
-scaffold under \texttt{analysis/}; it validates inputs and records session
-information, but cannot reproduce numerical results until a documented NHATS
-extract and variable mapping are supplied. The dynamical simulation described
+\ref{ch:results2} are estimated in Python, in the \texttt{hpotential} package
+that accompanies the thesis: multiple imputation by chained equations
+\citep{vanbuuren_2011}, the joint confirmatory factor model and its invariance
+tests by maximum likelihood, cause-specific Cox models, and the performance
+measures. The scripts under \texttt{analysis/} check the extract against the
+data dictionary, run the analysis and write the results into the thesis
+through \texttt{hpotential thesis-export}. They cannot reproduce numerical
+results until the documented NHATS extract is supplied, and every result in
+Chapters~\ref{ch:results1} and~\ref{ch:results2} comes from that export
+rather than being typed in. The dynamical simulation described
 here is separate and remains a proposed future direction, not part of the
 empirical validation.
 

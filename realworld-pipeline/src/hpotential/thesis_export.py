@@ -254,6 +254,242 @@ class Export:
 
     # --------------------------------------------------------------- tables
 
+    # ------------------------------------------------------------ Chapter 5
+
+    def measurement_chapter(self) -> None:
+        """Fill Chapter 5 from the joint CFA refitted on the development rows.
+
+        The refit uses the same seed and rows as the pipeline, so it reproduces
+        the pipeline's measurement model exactly.
+        """
+        import yaml
+        from scipy.stats import chi2 as chi2_dist
+        from scipy.stats import t as t_dist
+
+        from .api import DEFAULT_LAYOUT
+        from .cfa import invariance, rmsea_interval
+        from .measurement import DOMAINS, fit_measurement
+
+        cfg = self.cfg
+        idc = cfg.raw["data"]["id"]
+        train_ids = set(self.data.loc[self.data["split"] == "train", idc])
+        train = self.raw[self.raw[idc].isin(train_ids)].reset_index(drop=True)
+        mm = fit_measurement(train, cfg)
+        pooled = mm.pooled()
+        self.measurement = pooled
+        labels = {}
+        try:
+            layout = yaml.safe_load(Path(DEFAULT_LAYOUT).read_text())
+            labels = {k: v.get("label", k) for k, v in layout["indicators"].items()}
+        except (OSError, KeyError):
+            pass
+        titles = {
+            "biomedical": "Biomedical Potential",
+            "social": "Social Modifiers",
+            "systemic": "Systemic Burdens (reverse coded)",
+        }
+
+        # Fit
+        f = pooled["fit"]
+        n = pooled["n"]
+        p_chi = float(chi2_dist.sf(f["chi2"], f["df"]))
+        lo, hi = rmsea_interval(f["chi2"], int(f["df"]), n)
+        self.rows["fit"] = (
+            rf"$\chi^2$ (df), $p$ & {f['chi2']:.1f} ({f['df']:.0f}), {_p(p_chi)} & {DASH} & -- \\"
+            "\n"
+            rf"CFI & {f['cfi']:.3f} & {DASH} & $\geq 0.95$ \\"
+            "\n"
+            rf"TLI & {f['tli']:.3f} & {DASH} & $\geq 0.95$ \\"
+            "\n"
+            rf"RMSEA (90\% CI) & {f['rmsea']:.3f} ({lo:.3f} to {hi:.3f}) & {DASH} & $\leq 0.06$ \\"
+            "\n"
+            rf"SRMR & {f['srmr']:.3f} & {DASH} & $\leq 0.08$ \\"
+            "\n" + self._stamp_rows(4)
+        )
+
+        # Loadings
+        rows = []
+        for d in DOMAINS:
+            rows.append(rf"\multicolumn{{4}}{{l}}{{\textit{{{titles[d]}}}}} \\")
+            for c in cfg.indicators[d]["indicators"]:
+                ld = pooled["loadings"][c]
+                z = ld["estimate"] / ld["se"] if ld["se"] > 0 else np.inf
+                dof = ld["df"] if np.isfinite(ld["df"]) else 1e6
+                pv = float(2 * t_dist.sf(abs(z), dof))
+                rows.append(
+                    rf"\quad {labels.get(c, c)} & {ld['estimate']:.3f} ({ld['se']:.3f}) & "
+                    rf"{_p(pv)} & {ld['estimate'] ** 2:.3f} \\"
+                )
+            if d != DOMAINS[-1]:
+                rows.append(r"\addlinespace")
+        self.rows["loadings"] = "\n".join(rows) + "\n" + self._stamp_rows(4)
+
+        # Reliability
+        rel = pooled["reliability"]
+        self.rows["reliability"] = (
+            "\n".join(
+                rf"{titles[d]} & {rel[d]['omega']:.3f} & {rel[d]['alpha']:.3f} & {rel[d]['ave']:.3f} \\"
+                for d in DOMAINS
+            )
+            + "\n"
+            + self._stamp_rows(4)
+        )
+
+        # Discriminant validity: sqrt(AVE) on the diagonal, correlation [HTMT] off it
+        R = np.array(pooled["factor_correlations"])
+        H = np.array(pooled["htmt"])
+        rows = []
+        for i, d in enumerate(DOMAINS):
+            cells = []
+            for j in range(3):
+                if j == i:
+                    cells.append(rf"\textbf{{{np.sqrt(rel[d]['ave']):.3f}}}")
+                elif j < i:
+                    cells.append(f"{R[i, j]:.3f} [{H[i, j]:.3f}]")
+                else:
+                    cells.append("")
+            rows.append(rf"{titles[d]} & " + " & ".join(cells) + r" \\")
+        self.rows["discriminant"] = "\n".join(rows) + "\n" + self._stamp_rows(4)
+
+        # Second order
+        so = pooled["second_order"]
+        adm = pooled["second_order_admissible"]
+        if adm > 0:
+            gam = np.array([so[d]["estimate"] for d in DOMAINS])
+            w = gam / gam.sum()
+            self.rows["secondorder"] = (
+                "\n".join(
+                    rf"{titles[d]} & {so[d]['estimate']:.3f} ({so[d]['se']:.3f}) & "
+                    rf"{so[d]['estimate']:.3f} & {w[i]:.3f} \\"
+                    for i, d in enumerate(DOMAINS)
+                )
+                + "\n"
+                + self._stamp_rows(4)
+            )
+        else:
+            self.unfilled["tab:secondorder"] = "second-order model not admissible in any imputation"
+
+        # Invariance across sex and across age band, averaged over imputations
+        Xs = mm.imputed(train, cfg)
+        w_all = pd.to_numeric(train[self.weight], errors="coerce").fillna(0).to_numpy()
+        female = train["sex"].astype(str).str.lower().eq("female").to_numpy()
+        old = pd.to_numeric(train["age"], errors="coerce").ge(80).to_numpy()
+        inv = {}
+        for gname, mask in (("sex", female), ("age band (80 and over)", old)):
+            if min(mask.sum(), (~mask).sum()) < 100:
+                continue
+            per = [
+                invariance([X[~mask], X[mask]], mm.pattern, [w_all[~mask], w_all[mask]]) for X in Xs
+            ]
+            inv[gname] = {
+                lvl: {
+                    k: float(np.mean([r[lvl][k] for r in per]))
+                    for k in per[0][lvl]
+                    if k in ("cfi", "rmsea", "delta_cfi", "delta_rmsea")
+                }
+                for lvl in ("configural", "metric", "scalar")
+            }
+        self.invariance = inv
+
+        # Leave one indicator out (first imputation)
+        from .cfa import fit_cfa
+
+        X0 = Xs[0]
+        base = mm.fits[0]
+        base_std = np.array([e for e, _ in base.standardised_loadings()])
+        shifts, dcfi = [], []
+        for j in range(X0.shape[1]):
+            keep = [i for i in range(X0.shape[1]) if i != j]
+            pat = {}
+            for d, cols in mm.pattern.items():
+                pat[d] = [keep.index(i) for i in cols if i != j]
+            if any(len(v) < 2 for v in pat.values()):
+                continue
+            fj = fit_cfa(X0[:, keep], pat, w_all, se=False)
+            std_j = np.array([e for e, _ in fj.standardised_loadings()])
+            shifts.append(float(np.max(np.abs(std_j - base_std[keep]))))
+            dcfi.append(fj.cfi - base.cfi)
+        self.loo = {"max_shift": max(shifts) if shifts else np.nan, "dcfi": dcfi}
+        self.filled += [
+            "tab:fit (ML column)",
+            "tab:loadings",
+            "tab:reliability",
+            "tab:discriminant",
+        ] + (["tab:secondorder"] if adm > 0 else [])
+        self.unfilled["tab:fit WLSMV column"] = (
+            "WLSMV (polychoric DWLS with mean-and-variance adjustment) is not implemented in the "
+            "Python CFA engine; the column stays a placeholder."
+        )
+
+    def measurement_text(self, tdir: Path) -> dict:
+        pooled, paras = self.measurement, {}
+        f = pooled["fit"]
+        stamp = "\\hpstamp\\ " if self.synthetic else ""
+        paras["estimation"] = (
+            f"The correlated three-domain model was fitted by maximum likelihood, with the survey "
+            f"weights, to each of {pooled['imputations']} imputed copies of the development split "
+            f"(n = {pooled['n']:,}). Missing indicators were imputed by chained equations from the "
+            "indicators, age and sex; outcomes were not used. Loadings and second-order loadings "
+            "were pooled by Rubin's rules; fit indices are averages over imputations. The second-"
+            "order model was admissible in "
+            f"{pooled['second_order_admissible']:.0%} of imputations.".replace("%", "\\%")
+        )
+        paras["fit"] = (
+            f"Averaged over imputations, CFI was {f['cfi']:.3f}, TLI {f['tli']:.3f}, RMSEA "
+            f"{f['rmsea']:.3f} and SRMR {f['srmr']:.3f}, against the thresholds in "
+            "Table~\\ref{tab:fit}."
+        )
+        lds = pooled["loadings"]
+        lo_c = min(lds, key=lambda c: lds[c]["estimate"])
+        paras["loadings"] = (
+            "Standardised loadings ranged from "
+            f"{min(v['estimate'] for v in lds.values()):.3f} to "
+            f"{max(v['estimate'] for v in lds.values()):.3f} "
+            f"(Table~\\ref{{tab:loadings}}); the lowest was for {lo_c.replace('_', ' ')}."
+        )
+        rel = pooled["reliability"]
+        R = np.array(pooled["factor_correlations"])
+        H = np.array(pooled["htmt"])
+        iu = np.triu_indices(3, 1)
+        paras["reliability"] = (
+            "Composite reliability ranged from "
+            f"{min(r['omega'] for r in rel.values()):.3f} to {max(r['omega'] for r in rel.values()):.3f} "
+            f"and AVE from {min(r['ave'] for r in rel.values()):.3f} to "
+            f"{max(r['ave'] for r in rel.values()):.3f}. The largest factor correlation was "
+            f"{np.abs(R[iu]).max():.3f} and the largest HTMT ratio {H[iu].max():.3f} "
+            "(Tables~\\ref{tab:reliability} and~\\ref{tab:discriminant})."
+        )
+        if pooled["second_order_admissible"] > 0:
+            so = pooled["second_order"]
+            paras["secondorder"] = (
+                "The second-order loadings were "
+                + ", ".join(f"{so[d]['estimate']:.3f} for the {d} domain" for d in so)
+                + f". The general factor score had determinacy {pooled['determinacy']['general']:.3f}, "
+                "against domain-score determinacies of "
+                + ", ".join(f"{pooled['determinacy'][d]:.3f}" for d in so)
+                + " (Table~\\ref{tab:secondorder}). With three domains the second-order model fits "
+                "exactly as well as the correlated model, so its fit is not separate evidence for "
+                "a general factor."
+            )
+        inv_txt = []
+        for g, r in self.invariance.items():
+            inv_txt.append(
+                f"across {g}, CFI changed by {r['metric']['delta_cfi']:+.3f} from configural to "
+                f"metric and {r['scalar']['delta_cfi']:+.3f} from metric to scalar"
+            )
+        paras["robustness"] = (
+            ("Measurement invariance: " + "; ".join(inv_txt) + ". " if inv_txt else "")
+            + "Removing each indicator in turn changed the remaining standardised loadings by at "
+            f"most {self.loo['max_shift']:.3f}, and CFI by at most "
+            f"{max((abs(x) for x in self.loo['dcfi']), default=float('nan')):.3f}. "
+            "The WLSMV comparison is not yet available."
+        )
+        for k, body in paras.items():
+            (tdir / f"{k}.tex").write_text(
+                f"\\noindent {stamp}{body}\n\\hpinterpret\n", encoding="utf-8"
+            )
+            self.filled.append(f"text:{k}")
+
     def sample_table(self) -> None:
         d, n = self.data, len(self.data)
         female = int(d["female"].sum())
@@ -696,6 +932,8 @@ class Export:
                 + "; ".join(bits)
                 + " (Table~\\ref{tab:internal})."
             )
+        if getattr(self, "measurement", None):
+            self.measurement_text(tdir)
         for key, body in paras.items():
             stamp = "\\hpstamp\\ " if self.synthetic else ""
             (tdir / f"{key}.tex").write_text(
@@ -749,6 +987,7 @@ class Export:
             shutil.rmtree(self.out)
         self.out.mkdir(parents=True)
         self.sample_table()
+        self.measurement_chapter()
         self.events_table()
         self.hr_table()
         self.discrimination_table()

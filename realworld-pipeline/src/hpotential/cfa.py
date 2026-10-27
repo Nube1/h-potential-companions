@@ -165,6 +165,10 @@ class CFAResult:
         r = self.chi2 / self.df if self.df else 1.0
         return float((r0 - r) / (r0 - 1))
 
+    def rmsea_ci(self, level: float = 0.90):
+        """Confidence interval for RMSEA from the noncentral chi-square."""
+        return rmsea_interval(self.chi2, self.df, self.n.sum(), level)
+
     def fit_indices(self):
         return {
             "chi2": self.chi2,
@@ -251,7 +255,14 @@ class CFAResult:
             idx = self.assign == fi
             lam = L[idx, fi] * np.sqrt(Phi[fi, fi])
             omega = lam.sum() ** 2 / (lam.sum() ** 2 + th[idx].sum())
-            res[name] = {"omega": float(omega), "ave": float(np.mean(std[idx] ** 2))}
+            C = self.S[0][np.ix_(idx, idx)]
+            k = int(idx.sum())
+            alpha = k / (k - 1) * (1 - np.trace(C) / C.sum()) if k > 1 else np.nan
+            res[name] = {
+                "omega": float(omega),
+                "alpha": float(alpha),
+                "ave": float(np.mean(std[idx] ** 2)),
+            }
         return res
 
     def htmt(self):
@@ -423,6 +434,29 @@ def invariance(groups, pattern, weights=None) -> dict:
         rows[lvl] = row
         prev = f
     return rows
+
+
+def rmsea_interval(chi2: float, df: int, n: float, level: float = 0.90):
+    """Lower and upper RMSEA limits by inverting the noncentral chi-square."""
+    from scipy.optimize import brentq
+    from scipy.stats import ncx2
+
+    if df <= 0:
+        return 0.0, 0.0
+    tail = (1 - level) / 2
+
+    def limit(p):
+        f = lambda lam: ncx2.cdf(chi2, df, lam) - p  # noqa: E731
+        if f(1e-9) < 0:
+            return 0.0
+        hi = max(chi2, 10.0)
+        while f(hi) > 0:
+            hi *= 2
+        return brentq(f, 1e-9, hi)
+
+    lo, up = limit(1 - tail), limit(tail)
+    scale = df * (n - 1)
+    return float(np.sqrt(lo / scale)), float(np.sqrt(up / scale))
 
 
 # ------------------------------------------------------------ Rubin pooling

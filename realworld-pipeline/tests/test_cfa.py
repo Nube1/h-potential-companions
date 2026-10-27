@@ -70,3 +70,12 @@ def test_rubin_pooling():
     out = rubin([1.0, 1.2, 0.8], [0.04, 0.04, 0.04])
     assert out["estimate"] == pytest.approx(1.0)
     assert out["se"] == pytest.approx(np.sqrt(0.04 + (4 / 3) * 0.04), rel=1e-9)
+
+
+def test_rmsea_interval_brackets_estimate():
+    fit = fit_cfa(simulate(1500, 9), PATTERN)
+    lo, hi = fit.rmsea_ci()
+    assert lo <= fit.rmsea <= hi
+    assert 0 <= lo < hi < 0.1
+    rel = fit.reliability()["bio"]
+    assert 0 < rel["alpha"] <= rel["omega"] + 0.02

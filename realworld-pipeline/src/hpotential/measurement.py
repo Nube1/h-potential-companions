@@ -100,7 +100,10 @@ class MeasurementModel:
         fit_keys = ("chi2", "df", "cfi", "tli", "rmsea", "srmr")
         fit_mean = {k: float(np.mean([f.fit_indices()[k] for f in fits])) for k in fit_keys}
         rel = {
-            d: {k: float(np.mean([f.reliability()[d][k] for f in fits])) for k in ("omega", "ave")}
+            d: {
+                k: float(np.mean([f.reliability()[d][k] for f in fits]))
+                for k in ("omega", "alpha", "ave")
+            }
             for d in DOMAINS
         }
         corr = np.mean([f.factor_correlations() for f in fits], axis=0)
@@ -116,7 +119,11 @@ class MeasurementModel:
             "indicators": self.columns,
             "fit": fit_mean,
             "loadings": {
-                c: {"estimate": float(pl["estimate"][i]), "se": float(pl["se"][i])}
+                c: {
+                    "estimate": float(pl["estimate"][i]),
+                    "se": float(pl["se"][i]),
+                    "df": float(pl["df"][i]),
+                }
                 for i, c in enumerate(self.columns)
             },
             "second_order_admissible": float(np.mean(admissible)),

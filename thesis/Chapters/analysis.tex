@@ -82,12 +82,12 @@ Reported care delayed for cost or transport, n (\%) & [\,--\,] \\
 \label{sec:anal-estimation}
 The measurement model was estimated by confirmatory factor analysis within the structural equation modelling framework of Chapter~\ref{ch:methods}. Three correlated first-order latent variables were specified, each measured by its own observed indicators, and together they define a single second-order latent factor representing $H_{\text{potential}}$. Fixing the pattern of loadings in advance, rather than letting the data determine which indicators belong to which factor, is what makes this a confirmatory test of the theory rather than an exploratory search.
 
-Maximum likelihood estimation with robust standard errors served as the primary estimator, because it is efficient under approximately continuous measurement and tolerant of moderate departures from multivariate normality. Because several indicators are ordinal or categorical, the model was re-estimated with the weighted least squares mean- and variance-adjusted (WLSMV) estimator, which treats ordinal indicators through a threshold model rather than assuming interval measurement \citep{muthen_1984,rhemtulla_2012}, as implemented in \texttt{lavaan} \citep{rosseel_2012}. Agreement between the two estimators is not a formality: it provides evidence that the recovered structure reflects stable relationships in the data rather than an artefact of a single set of distributional assumptions. Where the two disagree, the WLSMV solution is given greater weight for the ordinal indicators, and the disagreement is reported.
+Maximum likelihood served as the primary estimator, because it is efficient under approximately continuous measurement. The model was fitted with the survey weights to each imputed copy of the development split, with standard errors from the observed information, and estimates were pooled across imputations by Rubin's rules \citep{rubin_1987}. The estimation code is the Python package that accompanies the thesis (Appendix~\ref{app:computation}). Because several indicators are ordinal or categorical, the protocol also specifies re-estimation with the weighted least squares mean- and variance-adjusted (WLSMV) estimator, which treats ordinal indicators through a threshold model rather than assuming interval measurement \citep{muthen_1984,rhemtulla_2012}. Agreement between the two estimators is not a formality: it provides evidence that the recovered structure reflects stable relationships in the data rather than an artefact of a single set of distributional assumptions. Where the two disagree, the WLSMV solution is given greater weight for the ordinal indicators, and the disagreement is reported.
 
 Estimation was checked for convergence, admissibility, and local identification. Particular attention was paid to Heywood cases, negative residual variances, non-positive-definite covariance matrices, and standardised loadings at or above one, each of which can signal misspecification, empirical underidentification, or insufficient separation between constructs. Where a solution was inadmissible, the source was diagnosed before any change was made. Model respecification was considered only where a modification was supported at the same time by a substantive reading of the indicator and by the statistical evidence; changes driven by modification indices alone, without a theoretical rationale, were not made, since these capitalise on chance and inflate apparent fit.
 
 \medskip
-\noindent\emph{[Placeholder: convergence status, chosen estimator, treatment of ordinal indicators, admissibility of the solution, and any respecification with its justification.]}
+\hptext{estimation}{\noindent\emph{[Placeholder: convergence status, chosen estimator, treatment of ordinal indicators, admissibility of the solution, and any respecification with its justification.]}}
 
 \begin{reading}[Heywood cases and what they mean]
 A Heywood case is a negative residual variance: the model says an indicator
@@ -125,17 +125,19 @@ The model chi-square is reported for completeness, but is not used as the primar
 \toprule
 \textbf{Index} & \textbf{ML estimate} & \textbf{WLSMV estimate} & \textbf{Threshold} \\
 \midrule
+\hprows{fit}{%
 $\chi^2$ (df), $p$ & [\,--\,] & [\,--\,] & -- \\
 CFI & [\,--\,] & [\,--\,] & $\geq 0.95$ \\
 TLI & [\,--\,] & [\,--\,] & $\geq 0.95$ \\
 RMSEA (90\% CI) & [\,--\,] & [\,--\,] & $\leq 0.06$ \\
 SRMR & [\,--\,] & [\,--\,] & $\leq 0.08$ \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \medskip
-\noindent\emph{[Placeholder: whether the model meets the fit criteria under each estimator, and interpretation of any index that does not.]}
+\hptext{fit}{\noindent\emph{[Placeholder: whether the model meets the fit criteria under each estimator, and interpretation of any index that does not.]}}
 
 \begin{reading}[Why the chi-square test is set aside]
 The model chi-square tests a null hypothesis that the model reproduces the
@@ -178,6 +180,7 @@ The proportion of variance explained ($R^2$) for each indicator estimates its re
 \toprule
 \textbf{Indicator} & \textbf{Loading (SE)} & \textbf{$p$} & \textbf{$R^2$} \\
 \midrule
+\hprows{loadings}{%
 \multicolumn{4}{l}{\textit{Biomedical Potential}} \\
 \quad Multimorbidity & [\,--\,] & [\,--\,] & [\,--\,] \\
 \quad ADL/IADL limitation & [\,--\,] & [\,--\,] & [\,--\,] \\
@@ -194,12 +197,13 @@ The proportion of variance explained ($R^2$) for each indicator estimates its re
 \quad Educational attainment & [\,--\,] & [\,--\,] & [\,--\,] \\
 \quad Environmental stress & [\,--\,] & [\,--\,] & [\,--\,] \\
 \quad Healthcare barriers & [\,--\,] & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \medskip
-\noindent\emph{[Placeholder: which indicators load as expected, which are weak or cross-load, and what this implies for the domain definitions.]}
+\hptext{loadings}{\noindent\emph{[Placeholder: which indicators load as expected, which are weak or cross-load, and what this implies for the domain definitions.]}}
 
 \begin{reading}[Reading a loading, and reading a cross-loading]
 A standardised loading is the correlation between an indicator and the latent
@@ -311,9 +315,11 @@ Values below about $0.85$ are taken to support discriminant validity
 \toprule
 \textbf{Domain} & \textbf{Composite reliability} & \textbf{Cronbach's $\alpha$} & \textbf{AVE} \\
 \midrule
+\hprows{reliability}{%
 Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
 Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
 Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
@@ -328,15 +334,17 @@ Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
 \toprule
 \textbf{Domain} & \textbf{Biomedical} & \textbf{Social} & \textbf{Systemic} \\
 \midrule
+\hprows{discriminant}{%
 Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
 Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
 Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \medskip
-\noindent\emph{[Placeholder: reliability and validity interpretation, and whether the three domains are empirically distinguishable under both criteria.]}
+\hptext{reliability}{\noindent\emph{[Placeholder: reliability and validity interpretation, and whether the three domains are empirically distinguishable under both criteria.]}}
 
 \begin{reading}[Discriminant validity, and why it is the test this thesis can fail]
 Discriminant validity asks whether two instruments are measuring the same thing
@@ -451,15 +459,17 @@ The second-order loadings are interpreted as associations between the candidate 
 \toprule
 \textbf{Domain} & \textbf{$\hat{\gamma}_k$ (SE)} & \textbf{$\hat{\gamma}_k^{\text{std}}$} & \textbf{Weight $w_k$} \\
 \midrule
+\hprows{secondorder}{%
 Biomedical Potential & [\,--\,] & [\,--\,] & [\,--\,] \\
 Social Modifiers & [\,--\,] & [\,--\,] & [\,--\,] \\
 Systemic Burdens & [\,--\,] & [\,--\,] & [\,--\,] \\
+}
 \bottomrule
 \end{tabular}
 \end{table}
 
 \medskip
-\noindent\emph{[Placeholder: whether the second-order structure holds, whether the loading directions match the hypotheses of Chapter~\ref{ch:theory}, and how the domain weights are distributed.]}
+\hptext{secondorder}{\noindent\emph{[Placeholder: whether the second-order structure holds, whether the loading directions match the hypotheses of Chapter~\ref{ch:theory}, and how the domain weights are distributed.]}}
 
 
 \begin{proposition}[The higher-order layer with three domains is just identified]
@@ -725,7 +735,7 @@ for the reason given in \S\ref{sec:anal-fit} \citep{vandenberg_lance_2000}.
 \end{definition}
 
 \medskip
-\noindent\emph{[Placeholder: agreement between estimators, sensitivity to the indicator set, the level of measurement invariance achieved, and any limit this places on the generality of the construct.]}
+\hptext{robustness}{\noindent\emph{[Placeholder: agreement between estimators, sensitivity to the indicator set, the level of measurement invariance achieved, and any limit this places on the generality of the construct.]}}
 
 \begin{reading}[Why invariance is not optional for this particular measure]
 Measurement invariance asks whether the instrument means the same thing in
